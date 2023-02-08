@@ -1748,8 +1748,6 @@ export class HealthForumComponent implements OnInit {
       flag = false;
     } else if (!this.createEditHFEventForm.value.endMeridiem) {
       flag = false;
-    } else if (this.createEditHFEventForm.value.staffPresent != 'Y' && this.createEditHFEventForm.value.ssPresent != 'Y') {
-      flag = false;
     } else if (!this.createEditHFEventForm.value.eventConduction) {
       flag = false;
     } else if (!this.createEditHFEventForm.value.lastMonTopic) {
@@ -1762,6 +1760,10 @@ export class HealthForumComponent implements OnInit {
       if (this.diseaseListID.filter(x => x.active_flag == 'A').length < 1) {
         flag = false;
       }
+    } else if (!this.createEditHFEventForm.value.staffPresent) {
+      flag = false;
+    } else if (!this.createEditHFEventForm.value.ssPresent) {
+      flag = false;
     }
 
     this.visitorDetails.visitorInfo.forEach(y => {

@@ -288,6 +288,7 @@ export class EscortRerefRegisterComponent implements OnInit {
   createEscortRefer_Form() {
     this.createEscortReferForm = this.fb.group({
       type: ['', Validators.required],
+      place: ['', Validators.required],
     })
   }
 

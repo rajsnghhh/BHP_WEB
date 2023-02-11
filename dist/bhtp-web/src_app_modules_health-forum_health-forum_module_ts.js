@@ -4361,7 +4361,7 @@ HealthForumComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](49, "th", 26);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](50, "Event");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](51, "br");
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](52, "App./ C");
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](52, "Apv./ C");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](53, "th", 28);
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](54, "Family");
@@ -4374,7 +4374,7 @@ HealthForumComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](60, "Attended");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementStart"](61, "th", 29);
-      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](62, "App.");
+      _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](62, "Apv.");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelement"](63, "br");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵtext"](64, "Status");
       _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵelementEnd"]();

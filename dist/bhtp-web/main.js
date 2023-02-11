@@ -2640,12 +2640,12 @@ const environment = {
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
   // New Staging Server
-  apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
+  // apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
   // Production
   // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
   // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
   // New Production Server
-  // apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
+  apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
   // Soumen Machine
   // apiUrl: 'http://192.168.153.58:6180/bhp/api/v1/'
   // Chayan Machine

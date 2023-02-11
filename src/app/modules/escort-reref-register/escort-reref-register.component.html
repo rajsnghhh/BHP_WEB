@@ -304,18 +304,42 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div><br>
 
-                <div class="form-group col-md-4">
-                    <label for="type">Type selection :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <select class="form-select" formControlName="type" id="type" [ngClass]="{'is-invalid': e.type.invalid && e.type.touched,  'is-valid': 
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label for="type">Type selection :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="type" id="type" [ngClass]="{'is-invalid': e.type.invalid && e.type.touched,  'is-valid': 
                                         e.type.valid && (e.type.dirty || e.type.touched) }">
-                        <option value="">-- Select Type --</option>
-                        <option value="escort">Escort </option>
-                        <option value="refer">Refer</option>
-                    </select>
-                    <div *ngIf="e.type.errors" class="invalid-feedback">
-                        <div *ngIf="e.type.errors.required">Type selection is required</div>
+                            <option value="">-- Select Type --</option>
+                            <option value="escort">Escort </option>
+                            <option value="refer">Refer</option>
+                        </select>
+                        <div *ngIf="e.type.errors" class="invalid-feedback">
+                            <div *ngIf="e.type.errors.required">Type selection is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md" *ngIf="createEscortReferForm.value.type">
+                        <label for="type" *ngIf="createEscortReferForm.value.type =='refer'">Referred By :&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        <label for="type" *ngIf="createEscortReferForm.value.type =='escort'">Escorted By :&nbsp;<span
+                                class="text-danger">*&nbsp;</span></label>
+                        Staff: <input class="form-check-input" type="checkbox" value=""
+                            id="flexCheckDefault">&nbsp;&nbsp;&nbsp;
+                        SS: <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="place">Place List :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="place" id="place" [ngClass]="{'is-invalid': e.place.invalid && e.place.touched,  'is-valid': 
+                                            e.place.valid && (e.place.dirty || e.place.touched) }">
+                            <option value="">-- Select Place --</option>
+                            <option *ngFor="let place of placeList" value="place.placeId">{{place.placeName}}</option>
+                        </select>
+                        <div *ngIf="e.place.errors" class="invalid-feedback">
+                            <div *ngIf="e.place.errors.required">Place selection is required</div>
+                        </div>
                     </div>
                 </div>
 
@@ -336,7 +360,8 @@
                                     <tr *ngFor="let reason of reasonList; index as i;">
                                         <td style="width: 5%;">{{i+1}}</td>
                                         <td style="width: 25%;">{{reason.reasonName}}</td>
-                                        <td>-</td>
+                                        <td><input class=" form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault" [checked]="true"></td>
                                         <!-- <td style="width: 5%;"> <input
                                             *ngIf="disease.isChecked== true"
                                             class="form-check-input" type="checkbox" value=""
@@ -354,19 +379,6 @@
                         </div>
                     </div>
                 </fieldset>
-
-                <div class="form-group col-md-4">
-                    <label for="place">Place List :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <select class="form-select" formControlName="place" id="place" [ngClass]="{'is-invalid': e.place.invalid && e.place.touched,  'is-valid': 
-                                        e.place.valid && (e.place.dirty || e.place.touched) }">
-                        <option value="">-- Select Place --</option>
-                        <!-- <option value="" *ngFor=""> </option> -->
-                    </select>
-                    <div *ngIf="e.place.errors" class="invalid-feedback">
-                        <div *ngIf="e.place.errors.required">Place selection is required</div>
-                    </div>
-                </div>
-
 
             </form>
         </div>

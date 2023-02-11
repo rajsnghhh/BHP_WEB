@@ -1,1 +1,382 @@
-<p>escort-reref-register works!</p>
+<app-loader [hidden]="loader"></app-loader>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Escort/ Refer Register</h2>
+
+                    <!-- <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="search by staff or ss name ..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- *ngIf="!viewEscortReferForm.value.gram || !createMode" -->
+                    <!-- <div class="form-group col-md" style="display: flex; justify-content:flex-end" *ngIf="!viewEscortReferForm.value.gram">
+                        <i class=" fas fa-plus-circle"
+                        style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
+                        title="Create Escort/ Refer Register"></i>
+                    </div> -->
+
+                    <!-- *ngIf="(viewEscortReferForm.value.gram && createMode) || (lowerRankbranchId && createMode)" -->
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                        <i class="fas fa-plus-circle"
+                            style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
+                            title="Create Escort/ Refer Register" (click)="createEscortRefer(createER)"></i>
+                    </div>
+                </div>
+
+                <form class="form-signin" [formGroup]="viewEscortReferForm">
+
+                    <div class="row" *ngIf="regionBranchHide">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region"
+                                [ngClass]="{'is-invalid': m.region.invalid
+                                 && m.region.touched,  'is-valid':  m.region.valid && (m.region.dirty || m.region.touched) }">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="m.region.errors" class="invalid-feedback">
+                                <div *ngIf="m.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBranch($event.target.value)"
+                                formControlName="branch" id="branch" [ngClass]="{'is-invalid': m.branch.invalid && m.branch.touched,
+                              'is-valid': m.branch.valid && (m.branch.dirty || m.branch.touched) }">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.branch.errors" class="invalid-feedback">
+                                <div *ngIf="m.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" id="block" [ngClass]="{'is-invalid': m.block.invalid 
+                                && m.block.touched,'is-valid': m.block.valid && 
+                                (m.block.dirty || m.block.touched) }">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of villagesOfBranch" value="{{block.blockMasterId}}">
+                                    {{ block.blockName }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.block.errors" class="invalid-feedback">
+                                <div *ngIf="m.block.errors.required">Block selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{'is-invalid': m.gp.invalid && m.gp.touched,
+                              'is-valid': m.gp.valid && (m.gp.dirty || m.gp.touched) }">
+                                <option value="">-- Select GP/ Municipality --</option>
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                    {{ gp.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.gp.errors" class="invalid-feedback">
+                                <div *ngIf="m.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gram">Village/ Gram Sansad/ Locality
+                                :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeVillage($event.target.value)"
+                                formControlName="gram" id="gram" [ngClass]="{'is-invalid': m.gram.invalid && m.gram.touched,
+                              'is-valid': m.gram.valid && (m.gram.dirty || m.gram.touched) }">
+                                <option value="">-- Select Village --</option>
+                                <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
+                                    {{ vill.villageName }}
+                                </option>
+                            </select>
+                            <div *ngIf="m.gram.errors" class="invalid-feedback">
+                                <div *ngIf="m.gram.errors.required">
+                                    Village selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="white_box_tittle list_header">
+
+                        <div class="QA_table">
+                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                                <table
+                                    class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                    <thead id="header-fixed">
+                                        <tr>
+                                            <th style="width: 4%;">Sl.<br>No.</th>
+                                            <th style="width: 7%;">Date</th>
+                                            <th style="width: 4%;">Family No.</th>
+                                            <th style="width: 25%;">Name</th>
+                                            <th style="width: 20%;">Guardian Name</th>
+                                            <th style="width: 20%;">Beneficiary Name</th>
+                                            <th style="width: 20%;">Beneficiary Status</th>
+                                            <th style="width: 15%;">Reason</th>
+                                            <th style="width: 15%;">Place</th>
+                                            <th style="width: 15%;">Type</th>
+                                            <th style="width: 15%;">Done by- <br>Staff/ SS</th>
+                                        </tr>
+                                    </thead>
+
+                                    <!-- <tbody style="text-align: center;">
+                                        <tr
+                                            *ngFor="let mat of materialDistributionList | materialDistributionFilter: {family_number : 
+                                                registerSearch, first_name :registerSearch,middle_name : registerSearch, 
+                                                lastlast_nameName:registerSearch } | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td style="width: 6%;">{{i+1}}</td>
+                                            <td style="width: 10%;">{{mat.family_number}}</td>
+                                            <td style="width: 25%;">
+                                                {{mat.first_name}}{{mat.middle_name}} {{mat.last_name}}</td>
+                                            <td style="width: 20%;">{{mat.husband_or_guardian_name}}</td>
+                                            <td style="width: 15%;">{{mat.distributionCount}}</td>
+                                            <td style="width: 15%;"
+                                                (click)="viewdistributionDetails(detailsOfDistribution, mat)"
+                                                style="cursor: pointer; color: blue;">
+                                                view</td>
+                                        </tr>
+                                    </tbody> -->
+
+                                </table>
+                                <!-- <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                    (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
+                                </pagination-controls> -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #createER>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="dialog-title">Create Escort/ Refer Register
+                </h3>
+                <!-- <h3 class="dialog-title" *ngIf="editHF_eventDetails?.healthForumEventId;">Edit Escort/ Refer Register
+                </h3> -->
+            </div>
+
+            <div class="col-md">
+                <span class="close" (click)="createERModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <form class="form-signin" [formGroup]="viewFamilyForm">
+                <div class="form-group col-md-4">
+                    <label for="date">Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <input type="date" class="form-control" formControlName="date" [min]="minDate"
+                        (keydown)="restrictTypeOfDate()" (change)="changeDate()" [ngClass]="{'is-invalid': r.date.invalid
+                            && r.date.touched,'is-valid': r.date.valid && (r.date.dirty || r.date.touched) }">
+                    <div *ngIf="r.date.errors" class="invalid-feedback">
+                        <div *ngIf="r.date.errors.required">Date selection is required</div>
+                    </div>
+                </div>
+
+                <div id="tbodyFam">
+                    <div id="table_wrapper">
+                        <table class="table table-striped" id="table_wrapper">
+                            <thead id="header_fixed">
+                                <tr style="text-align: center;">
+                                    <th style="width: 3%;">Sl. No.</th>
+                                    <th style="width: 3%;">Family No.</th>
+                                    <th style="width: 30%;">Name</th>
+                                    <th style="width: 25%;">Guardian Name</th>
+                                    <th style="width: 25%;">Village</th>
+                                    <th style="width: 25%;">Name of SS </th>
+                                    <th style="width: 25%;">Name of Staff</th>
+                                    <th style="width: 2%;">Beneficiary</th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align:center;">
+                                <tr *ngFor="let fami of familyList; index as i">
+                                    <td style="width: 3%;">{{i+1}}</td>
+                                    <td style="width: 3%;">{{fami.familyNumber}}</td>
+                                    <td style="width: 40%;">{{fami.firstName}}{{fami.middleName}} {{fami.lastName}}</td>
+                                    <td style="width: 25%;">{{fami.husbandOrGuardianName}}</td>
+                                    <td style="width: 25%;">{{villageName}}</td>
+                                    <td style="width: 25%;">{{fami.followUpSSName ? fami.followUpSSName : '-'}}</td>
+                                    <td style="width: 2%;">{{fami.staffDetails? fami.staffDetails.staffFirstNAme:
+                                        '-'}}{{fami?.staffDetails?.staffMiddleName}}
+                                        {{fami?.staffDetails?.staffLastName}}
+                                    </td>
+                                    <td class="btn-link"
+                                        style="width: 5%; color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                        (click)="viewSelectBenificiary(fami, Benificiary)">view</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</ng-template>
+
+<ng-template #Benificiary>
+
+    <div class="modal-contents">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="dialog-title">View Beneficiary
+                </h3>
+                <!-- <h3 class="dialog-title" *ngIf="editHF_eventDetails?.healthForumEventId;">Edit Escort/ Refer Register
+                                                        </h3> -->
+            </div>
+
+            <div class="col-md">
+                <span class="close" (click)="viewSelectBenificiaryModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body" style="overflow-y: auto; height: 400px;">
+            <form class="form-signin" [formGroup]="createEscortReferForm">
+
+                <div id="tbodybenificiary">
+                    <div id="table_wrapper">
+                        <table class="table table-striped" id="table_wrapper">
+                            <thead id="header_fixed">
+                                <tr style="text-align: center;">
+                                    <th style="width: 4%;">Sl. No.</th>
+                                    <th style="width: 25%;">Name</th>
+                                    <th style="width: 20%;">Age</th>
+                                    <th style="width: 10%;">Sex</th>
+                                    <th style="width: 30%;">Status</th>
+                                    <th style="width: 5%;">Select</th>
+                                </tr>
+                            </thead>
+
+                            <tbody style="text-align:center;">
+                                <tr *ngFor="let ben of viewBeneficiaryDetails; index as i">
+                                    <td style="width: 4%;">{{i+1}}</td>
+                                    <td style="width: 25%;">{{ben.Name}}</td>
+                                    <td style="width: 20%;">{{ben.Age}}</td>
+                                    <td style="width: 10%;">{{ben.Sex}}</td>
+                                    <td style="width: 30%;">{{ben.Status}}</td>
+                                    <td style="width: 5%;"><input class=" form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault" [checked]="true"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label for="type">Type selection :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" formControlName="type" id="type" [ngClass]="{'is-invalid': e.type.invalid && e.type.touched,  'is-valid': 
+                                        e.type.valid && (e.type.dirty || e.type.touched) }">
+                        <option value="">-- Select Type --</option>
+                        <option value="escort">Escort </option>
+                        <option value="refer">Refer</option>
+                    </select>
+                    <div *ngIf="e.type.errors" class="invalid-feedback">
+                        <div *ngIf="e.type.errors.required">Type selection is required</div>
+                    </div>
+                </div>
+
+                <fieldset class="scheduler-border" style="height: 190px;">
+                    <legend class="scheduler-border">Reasons List</legend>
+                    <div id="tbodyReason">
+                        <div id="table_wrapper">
+                            <table class="table table-striped" id="table_wrapper">
+                                <thead id="header_fixed">
+                                    <tr style="text-align: center;">
+                                        <th style="width: 5%;">Sl. No.</th>
+                                        <th style="width: 25%;">Reason Name</th>
+                                        <th style="width: 5%;">Select</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="text-align:center;">
+                                    <tr *ngFor="let reason of reasonList; index as i;">
+                                        <td style="width: 5%;">{{i+1}}</td>
+                                        <td style="width: 25%;">{{reason.reasonName}}</td>
+                                        <td>-</td>
+                                        <!-- <td style="width: 5%;"> <input
+                                            *ngIf="disease.isChecked== true"
+                                            class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault" checked
+                                            (change)="selectMultipleDisease($event,disease)">
+                                        <input *ngIf="disease.isChecked== false"
+                                            class="form-check-input" type="checkbox" value=""
+                                            id="flexCheckDefault"
+                                            (change)="selectMultipleDisease($event,disease)">
+                                    </td> -->
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group col-md-4">
+                    <label for="place">Place List :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" formControlName="place" id="place" [ngClass]="{'is-invalid': e.place.invalid && e.place.touched,  'is-valid': 
+                                        e.place.valid && (e.place.dirty || e.place.touched) }">
+                        <option value="">-- Select Place --</option>
+                        <!-- <option value="" *ngFor=""> </option> -->
+                    </select>
+                    <div *ngIf="e.place.errors" class="invalid-feedback">
+                        <div *ngIf="e.place.errors.required">Place selection is required</div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <!--  [disabled]="!rescheduleSave()" -->
+                <button type="button" class=" btn btn-primary btn-sm" (click)="saveEscortRefer()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

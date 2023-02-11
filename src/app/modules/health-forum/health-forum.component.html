@@ -87,10 +87,11 @@
                                             <th style="width: 7%;">Topic</th>
                                             <th style="width: 7%;">Village<br>List</th>
                                             <th style="width: 7%;" *ngIf="eventViewMode">Event<br>Details</th>
-                                            <th style="width: 7%;">Event<br>App./ C</th>
+                                            <th style="width: 7%;">Event<br>Apv./ C</th>
                                             <th style="width: 9%;">Family<br>Attended</th>
                                             <th style="width: 9%;">Member<br>Attended</th>
-                                            <th style="width: 22%;">Action</th>
+                                            <th style="width: 6%;">Apv.<br>Status</th>
+                                            <th style="width: 19%;">Action</th>
                                         </tr>
                                     </thead>
 
@@ -131,7 +132,12 @@
                                             <td style="width: 9%;">{{health.forumFamilyPresent}}</td>
                                             <td style="width: 9%;">{{health.forumAdolescentGirlPresent+
                                                 health.forumFamilyHeadPresent}}</td>
-                                            <td style="width: 22%;">
+                                            <td style="width: 6%;"><i class="fa fa-circle fa-lg" title="HF Approved"
+                                                    style="color: #24d524;" *ngIf="health.approvalStatus == 'A'"></i>
+                                                <i class="fa fa-circle fa-lg" title="HF Unapproved"
+                                                    *ngIf="health.approvalStatus != 'A'"></i>
+                                            </td>
+                                            <td style="width: 19%;">
                                                 <i class="fas fa-edit" title="Edit Health Forum"
                                                     (click)="editHealthForum(createHF, health)" *ngIf="updateMode"></i>
                                                 <i class="fas fa-trash" title="Delete Health Forum"
@@ -511,24 +517,9 @@
                 </div>
 
                 <div class="form-group col-md">
-                    <label for="topic">Topic :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <select class="form-select" formControlName="topic" id="topic"
-                        [ngClass]="{'is-invalid': 
-                        c.topic.invalid && c.topic.touched, 'is-valid': c.topic.valid && (c.topic.dirty || c.topic.touched) }">
-                        <option value="">-- Select Topic --</option>
-                        <option *ngFor="let topic of topicList" value="{{topic.ss_training_event_topic_id}}">
-                            {{topic.ss_training_event_topic_name}}
-                        </option>
-                    </select>
-                    <div *ngIf="c.topic.errors" class="invalid-feedback">
-                        <div *ngIf="c.topic.errors.required">Topic selection is required</div>
-                    </div>
-                </div>
-
-                <div class="form-group col-md">
 
                     <fieldset class="scheduler-border" style="height: 190px;">
-                        <legend class="scheduler-border">Last Month Topics</legend>
+                        <legend class="scheduler-border">Last Mon. Training Topics</legend>
                         <div id="table_wrapper">
                             <table class="table table-striped" id="table_wrapper">
                                 <thead id="header_fixed">
@@ -551,6 +542,21 @@
                             </table>
                         </div>
                     </fieldset>
+                </div>
+
+                <div class="form-group col-md">
+                    <label for="topic">Topic :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" formControlName="topic" id="topic"
+                        [ngClass]="{'is-invalid': 
+                        c.topic.invalid && c.topic.touched, 'is-valid': c.topic.valid && (c.topic.dirty || c.topic.touched) }">
+                        <option value="">-- Select Topic --</option>
+                        <option *ngFor="let topic of topicList" value="{{topic.ss_training_event_topic_id}}">
+                            {{topic.ss_training_event_topic_name}}
+                        </option>
+                    </select>
+                    <div *ngIf="c.topic.errors" class="invalid-feedback">
+                        <div *ngIf="c.topic.errors.required">Topic selection is required</div>
+                    </div>
                 </div>
 
                 <div class="form-group col-md">

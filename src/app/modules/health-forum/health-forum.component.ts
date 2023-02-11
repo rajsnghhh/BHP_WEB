@@ -612,19 +612,23 @@ export class HealthForumComponent implements OnInit {
     }
 
     console.log(saveObj, 'savObj');
+    console.log(saveObj.villageList);
 
     if (saveObj.villageList.length == 0) {
       this.showError('Area selection is required');
       return;
     }
 
+    this.loader= false;
     this.healthForumService.HFSaveOrUpdate(saveObj).subscribe((res: any) => {
       console.log(res);
       if (res.status == true) {
+        this.loader= true;
         this.showSuccess(res.message);
         this.changeBranch(this.branchId || this.lowerRankbranchId);
         this.createHFModalDismiss();
       } else {
+        this.loader= true;
         this.showError(res.message);
       }
     })
@@ -817,14 +821,12 @@ export class HealthForumComponent implements OnInit {
     console.log(this.editHF_eventDetails);
 
     if (this.editHF_eventDetails?.healthForumEventId) {
-      console.log('edit wala h');
       if (this.editHF_eventDetails.createdOn != currentTime) {
         this.showError('Event update is only accessible  on' + ' ' + this.editHF_eventDetails?.createdOn?.split("-").reverse().join("-"))
         this.editHF_eventDetails = [];
         return;
       }
     } else {
-      console.log('create wala h');
       if (this.viewForumList?.rescheduleDetails?.rescheduleToDate) {
         if (this.viewForumList?.rescheduleDetails?.rescheduleToDate != currentTime) {
           this.showError('Event create is only accessible on' + ' ' + this.viewForumList?.rescheduleDetails?.rescheduleToDate.split("-").reverse().join("-"));
@@ -1760,7 +1762,10 @@ export class HealthForumComponent implements OnInit {
       if (this.diseaseListID.filter(x => x.active_flag == 'A').length < 1) {
         flag = false;
       }
-    } else if (!this.createEditHFEventForm.value.staffPresent) {
+    } 
+    
+    if (!this.createEditHFEventForm.value.staffPresent) {
+      console.log(this.createEditHFEventForm.value.staffPresent);
       flag = false;
     } else if (!this.createEditHFEventForm.value.ssPresent) {
       flag = false;

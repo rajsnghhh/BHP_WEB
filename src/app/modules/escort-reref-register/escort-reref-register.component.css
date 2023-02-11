@@ -1,0 +1,118 @@
+.modal-content {
+  height: 570px;
+  width: 1000px;
+  margin-left: -190px;
+  border: 10px solid white;
+}
+
+.modal-contents {
+  height: 570px;
+  width: 1000px;
+  margin-left: -190px;
+  border: 10px solid white;
+  background: white;
+}
+
+.dialog-title {
+  background-color: #499;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  color: #ffffff;
+  margin-left: -15px;
+}
+
+.dialog-title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -14px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #277;
+  border-right: 7px solid #277;
+  border-bottom: 7px solid #0000;
+  border-left: 7px solid #0000;
+}
+
+#table_wrapper .table thead {
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFFFFF;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0;
+  background: #499;
+  text-align: center;
+  overflow-y: auto;
+}
+
+#table_wrapper .table tbody td {
+  padding: 4px;
+}
+
+#header_fixed {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+
+#tbodyFam {
+  display: block;
+  height: 331px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#tbodybenificiary {
+  display: block;
+  height: 200px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+fieldset.scheduler-border {
+  border: 1px groove #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: -12px 0 1.5em 0 !important;
+  height: 140px;
+}
+
+legend.scheduler-border {
+  border: 1px groove #ddd !important;
+  background-color: gray;
+  width: 200px;
+  color: #ddd;
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  font-family: ui-sans-serif;
+}
+
+#tbodyReason {
+  display: block;
+  height: 130px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

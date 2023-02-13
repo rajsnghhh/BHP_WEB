@@ -148,28 +148,25 @@
                                         </tr>
                                     </thead>
 
-                                    <!-- <tbody style="text-align: center;">
-                                        <tr
-                                            *ngFor="let mat of materialDistributionList | materialDistributionFilter: {family_number : 
-                                                registerSearch, first_name :registerSearch,middle_name : registerSearch, 
-                                                lastlast_nameName:registerSearch } | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                    <tbody style="text-align: center;" *ngFor="let es of escortview;index as e">
+                                        <!-- <tr
+                                            *ngFor="let escort of es.familyList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td style="width: 6%;">{{i+1}}</td>
-                                            <td style="width: 10%;">{{mat.family_number}}</td>
-                                            <td style="width: 25%;">
-                                                {{mat.first_name}}{{mat.middle_name}} {{mat.last_name}}</td>
+                                             <td style="width: 10%;">{{es.visitDate}}</td>
+                                            <td style="width: 25%;">{{escort.familyId}}</td>
                                             <td style="width: 20%;">{{mat.husband_or_guardian_name}}</td>
                                             <td style="width: 15%;">{{mat.distributionCount}}</td>
                                             <td style="width: 15%;"
                                                 (click)="viewdistributionDetails(detailsOfDistribution, mat)"
                                                 style="cursor: pointer; color: blue;">
-                                                view</td>
-                                        </tr>
-                                    </tbody> -->
+                                                view</td>  
+                                        </tr>-->
+                                    </tbody>
 
                                 </table>
-                                <!-- <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
                                     (pageChange)="p = $event" (pageBoundsCorrection)="p = $event ">
-                                </pagination-controls> -->
+                                </pagination-controls>
 
                             </div>
                         </div>
@@ -243,7 +240,7 @@
                                     </td>
                                     <td class="btn-link"
                                         style="width: 5%; color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                        (click)="viewSelectBenificiary(fami, Benificiary)">view</td>
+                                        (click)="viewSelectBenificiary(fami, Benificiary)">create</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -261,7 +258,7 @@
         <div class="modal-header">
 
             <div class="col-md">
-                <h3 class="dialog-title">View Beneficiary
+                <h3 class="dialog-title">Create Beneficiary
                 </h3>
                 <!-- <h3 class="dialog-title" *ngIf="editHF_eventDetails?.healthForumEventId;">Edit Escort/ Refer Register
                                                         </h3> -->
@@ -277,34 +274,41 @@
         <div class="modal-body" style="overflow-y: auto; height: 400px;">
             <form class="form-signin" [formGroup]="createEscortReferForm">
 
-                <div id="tbodybenificiary">
-                    <div id="table_wrapper">
-                        <table class="table table-striped" id="table_wrapper">
-                            <thead id="header_fixed">
-                                <tr style="text-align: center;">
-                                    <th style="width: 4%;">Sl. No.</th>
-                                    <th style="width: 25%;">Name</th>
-                                    <th style="width: 20%;">Age</th>
-                                    <th style="width: 10%;">Sex</th>
-                                    <th style="width: 30%;">Status</th>
-                                    <th style="width: 5%;">Select</th>
-                                </tr>
-                            </thead>
+                <fieldset class="scheduler-border" style="height: 190px;">
+                    <legend class="scheduler-border">Beneficiary List</legend>
+                    <div id="tbodybenificiary">
+                        <div id="table_wrapper">
+                            <table class="table table-striped" id="table_wrapper">
+                                <thead id="header_fixed">
+                                    <tr style="text-align: center;">
+                                        <th style="width: 4%;">Sl. No.</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th style="width: 20%;">Age</th>
+                                        <th style="width: 10%;">Sex</th>
+                                        <th style="width: 30%;">Status</th>
+                                        <th style="width: 5%;">Select</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody style="text-align:center;">
-                                <tr *ngFor="let ben of viewBeneficiaryDetails; index as i">
-                                    <td style="width: 4%;">{{i+1}}</td>
-                                    <td style="width: 25%;">{{ben.Name}}</td>
-                                    <td style="width: 20%;">{{ben.Age}}</td>
-                                    <td style="width: 10%;">{{ben.Sex}}</td>
-                                    <td style="width: 30%;">{{ben.Status}}</td>
-                                    <td style="width: 5%;"><input class=" form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault" [checked]="true"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                <tbody style="text-align:center;">
+                                    <tr *ngFor="let ben of viewBeneficiaryDetails; index as i">
+                                        <td style="width: 4%;">{{i+1}}</td>
+                                        <td style="width: 25%;">{{ben.childName}}</td>
+                                        <td style="width: 20%;">{{ben.age}}</td>
+                                        <td style="width: 10%;">{{ben.sex}}</td>
+                                        <td style="width: 30%;">{{ben.status}}</td>
+                                        <td style="width: 5%;"><input class=" form-check-input" type="checkbox" value=""
+                                                id="flexCheckDefault"></td>
+                                    </tr>
+                                    <tr *ngIf="viewBeneficiaryDetails.length == 0">
+                                        <td colspan="6">No list is available.</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div><br>
+                </fieldset>
 
                 <div class="row">
                     <div class="form-group col-md">
@@ -320,14 +324,29 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md" *ngIf="createEscortReferForm.value.type">
+                    <div class="form-group col-md" *ngIf="createEscortReferForm.value.type" style="margin-top: 27px;">
                         <label for="type" *ngIf="createEscortReferForm.value.type =='refer'">Referred By :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
                         <label for="type" *ngIf="createEscortReferForm.value.type =='escort'">Escorted By :&nbsp;<span
-                                class="text-danger">*&nbsp;</span></label>
-                        Staff: <input class="form-check-input" type="checkbox" value=""
-                            id="flexCheckDefault">&nbsp;&nbsp;&nbsp;
-                        SS: <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                class="text-danger">*&nbsp;</span></label>&nbsp;
+                        Staff: <input class="form-check-input" type="checkbox" value="staff" id="flexCheckDefault"
+                            style="margin-top: 3px;" formControlName="staff">&nbsp;&nbsp;&nbsp;
+                        SS: <input class="form-check-input" type="checkbox" value="ss" id="flexCheckDefault"
+                            style="margin-top: 3px;" formControlName="ss">
+                    </div>
+
+                    <div class="form-group col-md">
+                        <label for="user">Staff List :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="user" id="user" [ngClass]="{'is-invalid': e.user.invalid && e.user.touched,  'is-valid': 
+                                            e.user.valid && (e.user.dirty || e.user.touched) }">
+                            <option value="">-- Select Staff --</option>
+                            <option *ngFor="let user of staffList" value="user.user_id">{{user.user_firstname}}{{user.user_middlename}}
+                                {{user.user_lastname}}
+                            </option>
+                        </select>
+                        <div *ngIf="e.user.errors" class="invalid-feedback">
+                            <div *ngIf="e.user.errors.required">Staff selection is required</div>
+                        </div>
                     </div>
 
                     <div class="form-group col-md">
@@ -360,18 +379,13 @@
                                     <tr *ngFor="let reason of reasonList; index as i;">
                                         <td style="width: 5%;">{{i+1}}</td>
                                         <td style="width: 25%;">{{reason.reasonName}}</td>
-                                        <td><input class=" form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault" [checked]="true"></td>
-                                        <!-- <td style="width: 5%;"> <input
-                                            *ngIf="disease.isChecked== true"
-                                            class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault" checked
-                                            (change)="selectMultipleDisease($event,disease)">
-                                        <input *ngIf="disease.isChecked== false"
-                                            class="form-check-input" type="checkbox" value=""
-                                            id="flexCheckDefault"
-                                            (change)="selectMultipleDisease($event,disease)">
-                                    </td> -->
+                                        <td style="width: 5%;"> <input *ngIf="reason.isChecked== true"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleReason($event,reason)">
+                                            <input *ngIf="reason.isChecked== false" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleReason($event,reason)">
+                                        </td>
                                     </tr>
                                 </tbody>
 

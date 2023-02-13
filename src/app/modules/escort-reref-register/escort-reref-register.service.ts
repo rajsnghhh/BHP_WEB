@@ -26,4 +26,12 @@ export class EscortRerefRegisterService {
     return this.http.post(`${this.baseURL}escortreferregister/getEscortReferRegisterPrerequisites`, obj)
   }
 
+  getEscortReferRegistersaveOrUpdate(obj): any {
+    return this.http.post(`${this.baseURL}escortreferregister/saveOrUpdate`, obj)
+  }
+
+  getEscortReferRegisterview(obj): any {
+    return this.http.post(`${this.baseURL}escortreferregister/view`, obj)
+  }
+
 }

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { EscortRerefRegisterService } from './escort-reref-register.service';
@@ -41,6 +42,7 @@ export class EscortRerefRegisterComponent implements OnInit {
   placeList: Array<any> = [];
   staffList: Array<any> = [];
   reasonList: Array<any> = [];
+  beneficiaryListID: Array<any> = [];
   reasonListID: Array<any> = [];
   escortview: Array<any> = [];
   p: any;
@@ -48,7 +50,7 @@ export class EscortRerefRegisterComponent implements OnInit {
 
   constructor(private sidebarService: SidebarService, private http: HttpClient, private router: Router, private fb: FormBuilder,
     private httpService: HttpService, private escortReferService: EscortRerefRegisterService, private modalService: NgbModal,
-    config: NgbModalConfig,) {
+    config: NgbModalConfig, private toaster: ToastrService,) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -190,8 +192,9 @@ export class EscortRerefRegisterComponent implements OnInit {
   changeDate() {
     let famReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      escortRefRegDate: this.viewFamilyForm.value.date ? '2022-01-01' : this.viewFamilyForm.value.date,
-      villageId: null
+      escortRefRegDate: this.viewFamilyForm.value.date,
+      /*  this.viewFamilyForm.value.date ? '2022-01-01' : this.viewFamilyForm.value.date */
+      villageId: this.viewEscortReferForm.value.gram
     };
 
     this.loader = false;
@@ -208,7 +211,6 @@ export class EscortRerefRegisterComponent implements OnInit {
       console.log(tt, 'presentInPregnantWoman');
       console.log(tt2, 'below5YearsChildren');
       console.log(tt3, 'adolescentGilrChildren');
-
     })
 
   }
@@ -235,17 +237,17 @@ export class EscortRerefRegisterComponent implements OnInit {
     this.onclickBenFamDetails = fami;
     console.log(this.onclickBenFamDetails, 'onclickBenFamDetails');
     if (fami.presentInPregnantWoman == 'Y') {
-      this.viewBeneficiaryDetails.push({ childName: fami.firstName + fami.middleName + '' + fami.lastName, age: fami.familyAge, sex: 'F', status: 'PW' });
+      this.viewBeneficiaryDetails.push({ childName: fami.firstName + fami.middleName + '' + fami.lastName, age: fami.familyAge, sex: 'F', status: 'PW', is_checked: false });
     }
 
     if (fami.adolescentGilrChildren.length > 0) {
       fami.adolescentGilrChildren.forEach(z => {
         this.viewBeneficiaryDetails.push(z);
         this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
-          status = 'AG',
+          status = 'AG', is_checked = false,
           ...rest
         }) => ({
-          status,
+          status, is_checked,
           ...rest
         }));
       });
@@ -262,7 +264,7 @@ export class EscortRerefRegisterComponent implements OnInit {
         })
         console.log(this.year, this.month, this.day);
 
-        if (y.latestMuac != null && y.latestMuac < 13.5) {
+        if (y.presentInPem == 'Y') {
           this.muacPEM = 'PEM';
         } else {
           this.muacPEM = '';
@@ -282,10 +284,10 @@ export class EscortRerefRegisterComponent implements OnInit {
 
         this.viewBeneficiaryDetails.push(y);
         this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
-          status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive,
+          status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive, is_checked = false,
           ...rest
         }) => ({
-          status,
+          status, is_checked,
           ...rest
         }));
 
@@ -362,19 +364,45 @@ export class EscortRerefRegisterComponent implements OnInit {
 
   }
 
+
+  selectMultipleBeneficiary(e, ben) {
+    this.beneficiaryListID = [];
+    console.log(e.target.checked, ben);
+    if (e.target.checked == true) {
+      ben.is_checked = true;
+    } else {
+      ben.is_checked = false;
+    }
+
+    console.log(this.viewBeneficiaryDetails);
+
+    this.viewBeneficiaryDetails.filter(x => x.status != 'PW').forEach(y => {
+      this.beneficiaryListID.push({
+        escortReferChildMapId: 0, childDetailId: y.childDetailId, childName: y.childName, dob: y.dob, age: y.age, sex: y.sex, presentInPem: y.presentInPem,
+        latestMuacRegisterId: y.latestMuacRegisterId, latestMuac: y.latestMuac, latestMuacRegisterTag: y.latestMuacRegisterTag,
+        latestMuacIndicatorName: y.latestMuacIndicatorName, active_flag: y.is_checked == true ? 'A' : 'NC',
+      })
+      console.log(this.beneficiaryListID, 'beneficiaryListID');
+    });
+  }
+
   saveEscortRefer() {
+    console.log(this.viewBeneficiaryDetails.filter(x => x.is_checked == true && x.status == 'PW')?.[0]);
+    console.log(this.viewBeneficiaryDetails);
+    console.log(this.beneficiaryListID);
+
     let saveReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       escortReferRegisterId: 0,
       familyId: this.onclickBenFamDetails.familyDetailId,
       visitDate: this.viewFamilyForm.value.date,
-      isFamilyHerselfBeneficiary: this.onclickBenFamDetails.presentInPregnantWoman == 'Y' ? 'Y' : 'N',
+      isFamilyHerselfBeneficiary: this.viewBeneficiaryDetails.filter(x => x.is_checked == true && x.status == 'PW')?.[0]?.is_checked == true ? 'Y' : 'N',
       escortOrReferType: this.createEscortReferForm.value.type == 'escort' ? 'E' : 'R',
       visitingPlaceId: this.createEscortReferForm.value.place,
       escortedReferredByStaff: this.createEscortReferForm.value.staff == true ? 'Y' : 'N',
       escorteeRefereeStaffId: this.createEscortReferForm.value.user,
       escortedReferredBySS: this.createEscortReferForm.value.ss == true ? 'Y' : 'N',
-      // escorteeRefereeSsId: 10,
+      escorteeRefereeSsId: this.onclickBenFamDetails.followUpSSId,
       presentInPregnantWoman: this.onclickBenFamDetails.presentInPregnantWoman,
       presentInLactatingMother: this.onclickBenFamDetails.presentInLactatingMother,
       hasChildPresentInPem: this.onclickBenFamDetails.hasChildPresentInPem,
@@ -382,32 +410,33 @@ export class EscortRerefRegisterComponent implements OnInit {
       hasAdolescentGirlChildren: this.onclickBenFamDetails.hasAdolescentGirlChildren,
       active_flag: 'A',
       reasonList: this.reasonListID,
-      // childDetailList: [
-      //   {
-      //     escortReferChildMapId: 0,
-      //     childDetailId: 9946,
-      //     childName: amrita roy,
-      //     dob: 2020 - 11 - 28,
-      //     age: 2 year 2 month 2 day,
-      //     sex: F,
-      //     presentInPem: Y,
-      //     latestMuacRegisterId: 148,
-      //     latestMuac: 11.5,
-      //     latestMuacRegisterTag: ACR,
-      //     latestMuacIndicatorName: RED,
-      //     active_flag: A
-      //   }
-      // ]
+      childDetailList: this.beneficiaryListID
     }
-    console.log(this.viewBeneficiaryDetails);
-    
-    console.log(this.createEscortReferForm.value.staff, 'staff');
-    console.log(this.createEscortReferForm.value.ss, 'ss');
+    console.log(saveReq, 'savereq');
 
+    this.escortReferService.getEscortReferRegistersaveOrUpdate(saveReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.viewSelectBenificiaryModalDismiss();
+      } else {
+        this.showError(res.message);
+      }
 
+    })
 
-    console.log(saveReq, 'savereq')
+  }
 
+  showSuccess(message) {
+    this.toaster.success(message, 'Escort-Reref Register', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Escort-Reref Register', {
+      timeOut: 3000,
+    });
   }
 
 }

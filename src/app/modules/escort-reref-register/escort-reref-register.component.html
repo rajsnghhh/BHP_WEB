@@ -149,18 +149,23 @@
                                     </thead>
 
                                     <tbody style="text-align: center;" *ngFor="let es of escortview;index as e">
-                                        <!-- <tr
+                                        <tr
                                             *ngFor="let escort of es.familyList | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td style="width: 6%;">{{i+1}}</td>
-                                             <td style="width: 10%;">{{es.visitDate}}</td>
-                                            <td style="width: 25%;">{{escort.familyId}}</td>
-                                            <td style="width: 20%;">{{mat.husband_or_guardian_name}}</td>
-                                            <td style="width: 15%;">{{mat.distributionCount}}</td>
+                                            <td style="width: 10%;">{{es.visitDate}}</td>
+                                            <td style="width: 25%;">{{escort.familyNumber}}</td>
+                                            <td style="width: 20%;">{{escort.husbandOrGuardianName}}</td>
+                                            <td style="width: 15%;">-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-}</td>
+                                            <td>{{escort.visitingPlaceName}}</td>
+                                            <td>{{escort.escortOrReferType =='E' ? 'Escort' : 'Refer' }}</td>
                                             <td style="width: 15%;"
                                                 (click)="viewdistributionDetails(detailsOfDistribution, mat)"
                                                 style="cursor: pointer; color: blue;">
-                                                view</td>  
-                                        </tr>-->
+                                                view</td>
+                                        </tr>
                                     </tbody>
 
                                 </table>
@@ -297,8 +302,13 @@
                                         <td style="width: 20%;">{{ben.age}}</td>
                                         <td style="width: 10%;">{{ben.sex}}</td>
                                         <td style="width: 30%;">{{ben.status}}</td>
-                                        <td style="width: 5%;"><input class=" form-check-input" type="checkbox" value=""
-                                                id="flexCheckDefault"></td>
+                                        <td style="width: 5%;"> <input *ngIf="ben.is_checked== true"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleBeneficiary($event,ben)">
+                                            <input *ngIf="ben.is_checked== false" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleBeneficiary($event,ben)">
+                                        </td>
                                     </tr>
                                     <tr *ngIf="viewBeneficiaryDetails.length == 0">
                                         <td colspan="6">No list is available.</td>
@@ -332,7 +342,10 @@
                         Staff: <input class="form-check-input" type="checkbox" value="staff" id="flexCheckDefault"
                             style="margin-top: 3px;" formControlName="staff">&nbsp;&nbsp;&nbsp;
                         SS: <input class="form-check-input" type="checkbox" value="ss" id="flexCheckDefault"
-                            style="margin-top: 3px;" formControlName="ss">
+                            style="margin-top: 3px;" *ngIf="onclickBenFamDetails.followUpSSId ==null" disabled>
+                        <input class="form-check-input" type="checkbox" value="ss" id="flexCheckDefault"
+                            style="margin-top: 3px;" formControlName="ss"
+                            *ngIf="onclickBenFamDetails.followUpSSId !=null">
                     </div>
 
                     <div class="form-group col-md">
@@ -340,7 +353,8 @@
                         <select class="form-select" formControlName="user" id="user" [ngClass]="{'is-invalid': e.user.invalid && e.user.touched,  'is-valid': 
                                             e.user.valid && (e.user.dirty || e.user.touched) }">
                             <option value="">-- Select Staff --</option>
-                            <option *ngFor="let user of staffList" value="user.user_id">{{user.user_firstname}}{{user.user_middlename}}
+                            <option *ngFor="let user of staffList" value="{{user.user_id}}">
+                                {{user.user_firstname}}{{user.user_middlename}}
                                 {{user.user_lastname}}
                             </option>
                         </select>
@@ -354,7 +368,8 @@
                         <select class="form-select" formControlName="place" id="place" [ngClass]="{'is-invalid': e.place.invalid && e.place.touched,  'is-valid': 
                                             e.place.valid && (e.place.dirty || e.place.touched) }">
                             <option value="">-- Select Place --</option>
-                            <option *ngFor="let place of placeList" value="place.placeId">{{place.placeName}}</option>
+                            <option *ngFor="let place of placeList" value="{{place.placeId}}">{{place.placeName}}
+                            </option>
                         </select>
                         <div *ngIf="e.place.errors" class="invalid-feedback">
                             <div *ngIf="e.place.errors.required">Place selection is required</div>

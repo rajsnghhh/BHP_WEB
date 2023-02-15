@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
+import { EscortReferRegisterMatModalComponent } from './escort-refer-register-mat-modal/escort-refer-register-mat-modal.component';
 import { EscortRerefRegisterService } from './escort-reref-register.service';
 
 @Component({
@@ -33,9 +35,11 @@ export class EscortRerefRegisterComponent implements OnInit {
   familyList: Array<any> = [];
   villageName: any;
   viewBeneficiaryDetails: Array<any> = [];
+  beneficiaryDetails: Array<any> = [];
   muacPEM: any;
   muacLM: any;
   twotofive: any;
+  adolStatus: any;
   year: any;
   month: any;
   day: any;
@@ -45,12 +49,14 @@ export class EscortRerefRegisterComponent implements OnInit {
   beneficiaryListID: Array<any> = [];
   reasonListID: Array<any> = [];
   escortview: Array<any> = [];
+  escortviewData: Array<any> = [];
   p: any;
   onclickBenFamDetails: any;
+  editEscortDetails: any;
 
   constructor(private sidebarService: SidebarService, private http: HttpClient, private router: Router, private fb: FormBuilder,
     private httpService: HttpService, private escortReferService: EscortRerefRegisterService, private modalService: NgbModal,
-    config: NgbModalConfig, private toaster: ToastrService,) {
+    config: NgbModalConfig, private toaster: ToastrService, public dialog: MatDialog,) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -100,6 +106,34 @@ export class EscortRerefRegisterComponent implements OnInit {
     //   .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
     //   .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
     //   .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+
+    // let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: 1, visitDate: null };
+    // this.escortReferService.getEscortReferRegisterview(viewreq).subscribe((res: any) => {
+    //   this.escortview = res.responseObject;
+    //   this.escortview.forEach((x) => {
+    //     x.familyList = x.familyList?.map(({
+    //       visitDate = x.visitDate, isIndex = 0,
+    //       ...rest
+    //     }) => ({
+    //       visitDate, isIndex,
+    //       ...rest
+    //     }));
+    //   })
+    //   console.log(this.escortview, 'escortview');
+    //   this.escortview.forEach(y => {
+    //     console.log(y);
+    //     y.familyList.forEach(z => {
+    //       console.log(z);
+    //       this.escortviewData.push(z)
+    //     })
+    //     console.log(this.escortviewData, 'escortviewData');
+    //   })
+
+    //   this.escortviewData.forEach((i, index) => {
+    //     i.isIndex = index;
+    //   });
+    //   console.log(this.escortviewData, 'escortviewData');
+    // })
   }
 
   viewEscort_ReferForm() {
@@ -171,13 +205,37 @@ export class EscortRerefRegisterComponent implements OnInit {
   }
 
   changeVillage(villageId) {
+    this.escortviewData = []
     console.log(villageId, 'villageId');
 
     let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
     this.escortReferService.getEscortReferRegisterview(viewreq).subscribe((res: any) => {
       this.escortview = res.responseObject;
+      this.escortview.forEach((x) => {
+        x.familyList = x.familyList?.map(({
+          visitDate = x.visitDate, isIndex = 0,
+          ...rest
+        }) => ({
+          visitDate, isIndex,
+          ...rest
+        }));
+      })
       console.log(this.escortview, 'escortview');
+      this.escortview.forEach(y => {
+        console.log(y);
+        y.familyList.forEach(z => {
+          console.log(z);
+          this.escortviewData.push(z)
+        })
+        console.log(this.escortviewData, 'escortviewData');
+      })
+
+      this.escortviewData.forEach((i, index) => {
+        i.isIndex = index;
+      });
+      console.log(this.escortviewData, 'escortviewData');
     })
+
   }
 
   createEscortRefer(createER) {
@@ -232,86 +290,112 @@ export class EscortRerefRegisterComponent implements OnInit {
     return this.viewFamilyForm.controls;
   }
 
-  viewSelectBenificiary(fami, Benificiary) {
-    this.viewBeneficiaryDetails = [];
-    this.onclickBenFamDetails = fami;
-    console.log(this.onclickBenFamDetails, 'onclickBenFamDetails');
-    if (fami.presentInPregnantWoman == 'Y') {
-      this.viewBeneficiaryDetails.push({ childName: fami.firstName + fami.middleName + '' + fami.lastName, age: fami.familyAge, sex: 'F', status: 'PW', is_checked: false });
-    }
-
-    if (fami.adolescentGilrChildren.length > 0) {
-      fami.adolescentGilrChildren.forEach(z => {
-        this.viewBeneficiaryDetails.push(z);
-        this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
-          status = 'AG', is_checked = false,
-          ...rest
-        }) => ({
-          status, is_checked,
-          ...rest
-        }));
-      });
-    }
-
-    if (fami.below5YearsChildren.length > 0) {
-      fami.below5YearsChildren.forEach(y => {
-        var t = [];
-        y.age.split(/[year,month,days]+/).forEach(x => {
-          t.push(x)
-          this.year = t[0];
-          this.month = t[1];
-          this.day = t[2];
-        })
-        console.log(this.year, this.month, this.day);
-
-        if (y.presentInPem == 'Y') {
-          this.muacPEM = 'PEM';
-        } else {
-          this.muacPEM = '';
-        }
-
-        if (this.year < 2) {
-          this.muacLM = 'LM';
-        } else {
-          this.muacLM = '';
-        }
-
-        if (this.year >= 2 && this.year <= 5) {
-          this.twotofive = '2 to 5';
-        } else {
-          this.twotofive = '';
-        }
-
-        this.viewBeneficiaryDetails.push(y);
-        this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
-          status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive, is_checked = false,
-          ...rest
-        }) => ({
-          status, is_checked,
-          ...rest
-        }));
-
-      })
-
-    }
-
-    console.log(this.viewBeneficiaryDetails);
-
-    this.modalContent = '';
-    this.viewBeneficiaryModal = this.modalService.open(Benificiary, {
-      windowClass: 'Benificiary',
-    });
+  viewSelectBenificiary(Benificiary, fami) {
+    console.log(this.editEscortDetails, 'editEscortDetails');
     this.createEscortRefer_Form();
     this.getEscortReferRegisterPrerequisites();
+    if (this.editEscortDetails?.escortReferRegisterId) {
+      setTimeout(() => {
+        this.modalContent = '';
+        this.viewBeneficiaryModal = this.modalService.open(Benificiary, {
+          windowClass: 'Benificiary',
+        });
+      }, 500);
+
+
+    } else {
+      this.viewBeneficiaryDetails = [];
+      this.onclickBenFamDetails = fami;
+      console.log(this.onclickBenFamDetails, 'onclickBenFamDetails');
+      if (fami.presentInPregnantWoman == 'Y') {
+        this.viewBeneficiaryDetails.push({ childName: fami.firstName + fami.middleName + '' + fami.lastName, age: fami.familyAge, sex: 'F', status: 'PW', is_checked: false });
+      }
+
+      if (fami.adolescentGilrChildren.length > 0) {
+        fami.adolescentGilrChildren.forEach(z => {
+          this.viewBeneficiaryDetails.push(z);
+          this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
+            status = 'AG', is_checked = false,
+            ...rest
+          }) => ({
+            status, is_checked,
+            ...rest
+          }));
+        });
+      }
+
+      if (fami.below5YearsChildren.length > 0) {
+        fami.below5YearsChildren.forEach(y => {
+          var t = [];
+          y.age.split(/[year,month,days]+/).forEach(x => {
+            t.push(x)
+            this.year = t[0];
+            this.month = t[1];
+            this.day = t[2];
+          })
+          console.log(this.year, this.month, this.day);
+
+          if (y.presentInPem == 'Y') {
+            this.muacPEM = 'PEM';
+          } else {
+            this.muacPEM = '';
+          }
+
+          if (this.year < 2) {
+            this.muacLM = 'LM';
+          } else {
+            this.muacLM = '';
+          }
+
+          if (this.year >= 2 && this.year < 5) {
+            this.twotofive = '2 to 5';
+          } else {
+            this.twotofive = '';
+          }
+
+          this.viewBeneficiaryDetails.push(y);
+          this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
+            status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive, is_checked = false,
+            ...rest
+          }) => ({
+            status, is_checked,
+            ...rest
+          }));
+
+        })
+
+      }
+
+      console.log(this.viewBeneficiaryDetails);
+
+      this.modalContent = '';
+      this.viewBeneficiaryModal = this.modalService.open(Benificiary, {
+        windowClass: 'Benificiary',
+      });
+
+    }
+
+  }
+
+  editEscort(Benificiary, escort) {
+    this.editEscortDetails = escort;
+    this.viewSelectBenificiary(Benificiary, escort);
   }
 
   createEscortRefer_Form() {
+    // console.log(this.editEscortDetails, 'editEscortDetails');
+    if (this.editEscortDetails?.escortOrReferType == "R") {
+      var type = 'refer'
+    } else {
+      type = 'escort'
+    }
+
     this.createEscortReferForm = this.fb.group({
-      type: ['', Validators.required],
-      staff: ['', Validators.required],
-      ss: ['', Validators.required],
-      user: ['', Validators.required],
-      place: ['', Validators.required],
+      type: [type ? type : '', Validators.required],
+      staff: [this.editEscortDetails?.escortedReferredByStaff == 'Y' ? true : '', Validators.required],
+      ss: [this.editEscortDetails?.escortedReferredBySS == 'Y' ? true : '', Validators.required],
+      user: [this.editEscortDetails?.escorteeRefereeStaffId ? this.editEscortDetails?.escorteeRefereeStaffId : '', Validators.required],
+      place: [this.editEscortDetails?.visitingPlaceId ? this.editEscortDetails?.visitingPlaceId : '', Validators.required],
     })
   }
 
@@ -332,7 +416,14 @@ export class EscortRerefRegisterComponent implements OnInit {
       console.log(this.reasonList, 'this.reasonList ');
       console.log(this.placeList, ' this.placeList');
       console.log(this.staffList, ' this.staffList');
+      console.log(this.editEscortDetails.reasonList);
+      this.editEscortDetails.reasonList.forEach(x => {
+        this.reasonList.filter(v => v.reasonId == x.reasonId).forEach(z => {
+          z.isChecked = true
+        })
+      })
     })
+
   }
 
   get e() {
@@ -340,7 +431,17 @@ export class EscortRerefRegisterComponent implements OnInit {
   }
 
   viewSelectBenificiaryModalDismiss() {
-    this.viewBeneficiaryModal.close();
+    var ID = this.editEscortDetails?.escortReferRegisterId;
+
+    if (ID) {
+      this.editEscortDetails = '';
+      ID = 0;
+      this.viewBeneficiaryModal.close();
+    }
+    else {
+      this.viewBeneficiaryModal.close();
+      this.viewBeneficiaryDetails = []
+    }
   }
 
   restrictTypeOfDate() {
@@ -361,9 +462,7 @@ export class EscortRerefRegisterComponent implements OnInit {
       this.reasonListID.push({ escortReferReasonMapId: 0, reasonId: y.reasonId, active_flag: 'A' })
       console.log(this.reasonListID, ' this.reasonListID');
     });
-
   }
-
 
   selectMultipleBeneficiary(e, ben) {
     this.beneficiaryListID = [];
@@ -419,12 +518,77 @@ export class EscortRerefRegisterComponent implements OnInit {
       if (res.status == true) {
         this.showSuccess(res.message);
         this.viewSelectBenificiaryModalDismiss();
+        this.changeVillage(this.viewEscortReferForm.value.gram)
       } else {
         this.showError(res.message);
       }
 
     })
 
+  }
+
+  openDialog(escort) {
+    console.log(escort);
+    this.beneficiaryDetails = [];
+    if (escort.isFamilyHerselfBeneficiary == 'Y') {
+      this.beneficiaryDetails.push({ childName: escort.familyName, age: escort.familyAge, sex: 'F', status: 'PW' });
+    }
+
+    if (escort.childDetailList.length > 0) {
+      escort.childDetailList.filter(x => x.active_flag != 'NC').forEach(y => {
+        var t = [];
+        y.age.split(/[year,month,days]+/).forEach(x => {
+          t.push(x)
+          this.year = t[0];
+          this.month = t[1];
+          this.day = t[2];
+        })
+        console.log(this.year, this.month, this.day);
+
+        if (y.presentInPem == 'Y') {
+          this.muacPEM = 'PEM';
+        } else {
+          this.muacPEM = '';
+        }
+
+        if (this.year < 2) {
+          this.muacLM = 'LM';
+        } else {
+          this.muacLM = '';
+        }
+
+        if (this.year >= 2 && this.year < 5) {
+          this.twotofive = '2 to 5';
+        } else {
+          this.twotofive = '';
+        }
+
+        if (this.year >= 14 && this.year < 18) {
+          this.adolStatus = 'AG';
+        } else {
+          this.adolStatus = '';
+        }
+
+        this.beneficiaryDetails.push(y);
+        this.beneficiaryDetails = this.beneficiaryDetails?.map(({
+          status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive + ' ' + this.adolStatus,
+          ...rest
+        }) => ({
+          status,
+          ...rest
+        }));
+
+      })
+
+    }
+
+    console.log(this.beneficiaryDetails, 'beneficiaryDetails');
+
+    this.dialog.open(EscortReferRegisterMatModalComponent, {
+      width: '700px',
+      height: '250px',
+      data: { ben: this.beneficiaryDetails, famNo: escort.familyNumber }
+    });
   }
 
   showSuccess(message) {
@@ -438,5 +602,6 @@ export class EscortRerefRegisterComponent implements OnInit {
       timeOut: 3000,
     });
   }
+
 
 }

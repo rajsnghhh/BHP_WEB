@@ -1,0 +1,31 @@
+<div mat-dialog-content>
+    Family No: {{famNo}}
+    <i class="fas fa-times" (click)="closeDialog()" style="float: right;"></i><br>
+    <div class="white_box_tittle list_header">
+        <div class="QA_table">
+
+            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                <table class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                    role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                    <thead id="header_fixed" style="text-align:center">
+                        <tr>
+                            <th style="width:8%;">Sl. No.</th>
+                            <th style="width:25%;">Beneficiary Name</th>
+                            <th style="width:30%;">Beneficiary Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of this.benData; index as i">
+                            <td style="width:8%;">{{i+1}}</td>
+                            <td style="width:25%;">{{item.childName}}</td>
+                            <td style="width:30%;">{{item.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -6,14 +6,16 @@ import { EscortRerefRegisterComponent } from './escort-reref-register.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoaderModule } from '../shared/loader/loader.module';
+import { EscortReferRegisterMatModalComponent } from './escort-refer-register-mat-modal/escort-refer-register-mat-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [EscortRerefRegisterComponent],
+  declarations: [EscortRerefRegisterComponent, EscortReferRegisterMatModalComponent],
   imports: [
     CommonModule,
     EscortRerefRegisterRoutingModule,
     ReactiveFormsModule,
-    NgxPaginationModule, LoaderModule
+    NgxPaginationModule, LoaderModule, MatDialogModule
   ]
 })
 

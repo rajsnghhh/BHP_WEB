@@ -1,0 +1,55 @@
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #header_fixed {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: #499;
+    color: #FFFFFF;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: grey;
+  }
+  
+  table tbody {
+    display: block;
+    height: 165px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  
+  table thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .QA_table .table tbody td {
+    text-align: center;
+    padding: 6px;
+  }
+  
+  ::ng-deep .mat-dialog-container {
+    padding: 12px 17px;
+    overflow: hidden;
+  }
+  

@@ -21,15 +21,15 @@
                         </div>
                     </div> -->
 
-                    <!-- *ngIf="!viewEscortReferForm.value.gram || !createMode" -->
-                    <!-- <div class="form-group col-md" style="display: flex; justify-content:flex-end" *ngIf="!viewEscortReferForm.value.gram">
-                        <i class=" fas fa-plus-circle"
-                        style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
-                        title="Create Escort/ Refer Register"></i>
-                    </div> -->
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="!viewEscortReferForm.value.gram">
+                        <i class="fas fa-plus-circle"
+                            style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
+                            title="Create Escort/ Refer Register"></i>
+                    </div>
 
-                    <!-- *ngIf="(viewEscortReferForm.value.gram && createMode) || (lowerRankbranchId && createMode)" -->
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="viewEscortReferForm.value.gram">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
                             title="Create Escort/ Refer Register" (click)="createEscortRefer(createER)"></i>
@@ -196,7 +196,7 @@
                                                 <i class="fas fa-edit" title="Edit Escort/ Refer Register"
                                                     (click)="editEscort(Benificiary, escort)"></i>
                                                 <i class="fas fa-trash" title="Delete Escort/ Refer Register"
-                                                    (click)="deleteEscort(escort, i)"></i>
+                                                    (click)="deleteEscort(escort)"></i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -223,10 +223,7 @@
         <div class="modal-header">
 
             <div class="col-md">
-                <h3 class="dialog-title">Create Escort/ Refer Register
-                </h3>
-                <!-- <h3 class="dialog-title" *ngIf="editHF_eventDetails?.healthForumEventId;">Edit Escort/ Refer Register
-                </h3> -->
+                <h3 class="dialog-title">List Of Families</h3>
             </div>
 
             <div class="col-md">
@@ -255,12 +252,12 @@
                                 <tr style="text-align: center;">
                                     <th style="width: 3%;">Sl. No.</th>
                                     <th style="width: 3%;">Family No.</th>
-                                    <th style="width: 30%;">Name</th>
+                                    <th style="width: 25%;">Name</th>
                                     <th style="width: 25%;">Guardian Name</th>
-                                    <th style="width: 25%;">Village</th>
-                                    <th style="width: 25%;">Name of SS </th>
+                                    <th style="width: 30%;">Village</th>
+                                    <th style="width: 30%;">Name of SS </th>
                                     <th style="width: 25%;">Name of Staff</th>
-                                    <th style="width: 2%;">Beneficiary</th>
+                                    <th style="width: 5%;">Beneficiary</th>
                                 </tr>
                             </thead>
 
@@ -268,11 +265,11 @@
                                 <tr *ngFor="let fami of familyList; index as i">
                                     <td style="width: 3%;">{{i+1}}</td>
                                     <td style="width: 3%;">{{fami.familyNumber}}</td>
-                                    <td style="width: 40%;">{{fami.firstName}}{{fami.middleName}} {{fami.lastName}}</td>
+                                    <td style="width: 25%;">{{fami.firstName}}{{fami.middleName}} {{fami.lastName}}</td>
                                     <td style="width: 25%;">{{fami.husbandOrGuardianName}}</td>
-                                    <td style="width: 25%;">{{villageName}}</td>
-                                    <td style="width: 25%;">{{fami.followUpSSName ? fami.followUpSSName : '-'}}</td>
-                                    <td style="width: 2%;">{{fami.staffDetails? fami.staffDetails.staffFirstNAme:
+                                    <td style="width: 30%;">{{villageName}}</td>
+                                    <td style="width: 30%;">{{fami.followUpSSName ? fami.followUpSSName : '-'}}</td>
+                                    <td style="width: 25%;">{{fami.staffDetails? fami.staffDetails.staffFirstNAme:
                                         '-'}}{{fami?.staffDetails?.staffMiddleName}}
                                         {{fami?.staffDetails?.staffLastName}}
                                     </td>
@@ -296,8 +293,10 @@
         <div class="modal-header">
 
             <div class="col-md">
-                <h3 class="dialog-title" *ngIf="!editEscortDetails?.escortReferRegisterId">Create Beneficiary</h3>
-                <h3 class="dialog-title" *ngIf="editEscortDetails?.escortReferRegisterId">Edit Beneficiary</h3>
+                <h3 class="dialog-title" *ngIf="!editEscortDetails?.escortReferRegisterId">Create Escort/ Refer Register
+                </h3>
+                <h3 class="dialog-title" *ngIf="editEscortDetails?.escortReferRegisterId">Edit Escort/ Refer Register
+                </h3>
             </div>
 
             <div class="col-md">
@@ -373,10 +372,7 @@
                         Staff: <input class="form-check-input" type="checkbox" value="staff" id="flexCheckDefault"
                             style="margin-top: 3px;" formControlName="staff">&nbsp;&nbsp;&nbsp;
                         SS: <input class="form-check-input" type="checkbox" value="ss" id="flexCheckDefault"
-                            style="margin-top: 3px;" *ngIf="onclickBenFamDetails?.followUpSSId ==null" disabled>
-                        <input class="form-check-input" type="checkbox" value="ss" id="flexCheckDefault"
-                            style="margin-top: 3px;" formControlName="ss"
-                            *ngIf="onclickBenFamDetails?.followUpSSId !=null">
+                            style="margin-top: 3px;" formControlName="ss">
                     </div>
 
                     <div class="form-group col-md">
@@ -445,8 +441,8 @@
 
         <div class="modal-footer">
             <div class="row">
-                <!--  [disabled]="!rescheduleSave()" -->
-                <button type="button" class=" btn btn-primary btn-sm" (click)="saveEscortRefer()">Save</button>
+                <button type="button" class=" btn btn-primary btn-sm" (click)="saveEscortRefer()"
+                    [disabled]="!disableSave()">Save</button>
             </div>
         </div>
 

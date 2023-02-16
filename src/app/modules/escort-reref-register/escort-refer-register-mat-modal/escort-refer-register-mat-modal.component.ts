@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./escort-refer-register-mat-modal.component.css']
 })
 export class EscortReferRegisterMatModalComponent {
-  benData: Array<any> = []
+  benData: Array<any> = [];
   famNo: any;
 
   constructor(

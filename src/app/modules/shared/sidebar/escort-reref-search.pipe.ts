@@ -1,9 +1,9 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 
-
 @Pipe({
-    name: 'escortRegisterFilter'
+    name: 'escortRegisterFilter',
+    pure: false
 })
 
 export class escortRerefFilterPipe implements PipeTransform {
@@ -34,4 +34,3 @@ export class escortRerefFilterPipe implements PipeTransform {
         }
     }
 }
-

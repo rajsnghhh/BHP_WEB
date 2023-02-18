@@ -222,10 +222,16 @@ export class EscortRerefRegisterComponent implements OnInit {
       })
 
       this.escortviewData.forEach(x => {
+        if(x.escortOrReferType =='R'){
+          x.escortOrReferType ='Refer'
+        } else{
+          x.escortOrReferType ='Escort'
+        }
+        
         this.filterDate.push(x.visitDate);
-        console.log(this.filterDate);
+        // console.log(this.filterDate);
         this.filterDate = this.filterDate.filter((item, index) => this.filterDate.indexOf(item) === index)
-        console.log(this.filterDate);
+        // console.log(this.filterDate);
       });
 
 
@@ -261,9 +267,9 @@ export class EscortRerefRegisterComponent implements OnInit {
         this.familyList = res.responseObject[0]?.familyList;
         console.log(this.familyList, ' this.familyList');
         console.log(this.villageName, ' this.villageName');
-        var tt = this.familyList.filter(x => x.presentInPregnantWoman == 'Y');
-        var tt2 = this.familyList.filter(x => x.below5YearsChildren.length > 0);
-        var tt3 = this.familyList.filter(x => x.adolescentGilrChildren.length > 0);
+        var tt = this.familyList?.filter(x => x.presentInPregnantWoman == 'Y');
+        var tt2 = this.familyList?.filter(x => x.below5YearsChildren.length > 0);
+        var tt3 = this.familyList?.filter(x => x.adolescentGilrChildren.length > 0);
         console.log(tt, 'presentInPregnantWoman');
         console.log(tt2, 'below5YearsChildren');
         console.log(tt3, 'adolescentGilrChildren');
@@ -485,9 +491,9 @@ export class EscortRerefRegisterComponent implements OnInit {
 
   createEscortRefer_Form() {
     // console.log(this.editEscortDetails, 'editEscortDetails');
-    if (this.editEscortDetails?.escortOrReferType == "R") {
+    if (this.editEscortDetails?.escortOrReferType == "Refer") {
       var type = 'refer'
-    } else if (this.editEscortDetails?.escortOrReferType == "E") {
+    } else if (this.editEscortDetails?.escortOrReferType == "Escort") {
       type = 'escort'
     } else {
       type = ''
@@ -817,6 +823,17 @@ export class EscortRerefRegisterComponent implements OnInit {
     })
   }
 
+  filterList(e) {
+    if (e) {
+      var filter = this.escortviewFilterData.filter(x => x.visitDate == e)
+      console.log(filter);
+      this.escortviewData = filter;
+    } else {
+      this.escortviewData = this.escortviewFilterData;
+    }
+
+  }
+
   showSuccess(message) {
     this.toaster.success(message, 'Escort-Reref Register', {
       timeOut: 3000,
@@ -827,17 +844,6 @@ export class EscortRerefRegisterComponent implements OnInit {
     this.toaster.error(message, 'Escort-Reref Register', {
       timeOut: 3000,
     });
-  }
-
-  filterList(e) {
-    if (e) {
-      var filter = this.escortviewFilterData.filter(x => x.visitDate == e)
-      console.log(filter);
-      this.escortviewData = filter;
-    } else {
-      this.escortviewData = this.escortviewFilterData;
-    }
-
   }
 
 }

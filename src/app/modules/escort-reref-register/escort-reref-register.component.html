@@ -10,31 +10,29 @@
                             <h2 class="page-title">Escort/ Refer Register</h2>
                         </div>
 
-                        <!-- <div *ngIf="escortviewData.length>0"> -->
-                            <div class="form-group col-md">
-                                <select class="form-select" id="viewChild" (change)="filterList($event.target.value)"
-                                    [ngClass]=" searchFullscreen? 'filter_inner_fullscreen ' : ' filter_inner' ">
-                                    <option value="">-- Filter List By --</option>
-                                    <option value="{{date}}" *ngFor="let date of filterDate">
-                                        {{date.split("-").reverse().join("-")}}</option>
-                                </select>
-                            </div>
+                        <div class="form-group col-md" *ngIf="escortviewData.length>0">
+                            <select class="form-select" id="viewChild" (change)="filterList($event.target.value)"
+                                [ngClass]=" searchFullscreen? 'filter_inner_fullscreen ' : ' filter_inner' ">
+                                <option value="">-- Filter List By Date --</option>
+                                <option value="{{date}}" *ngFor="let date of filterDate">
+                                    {{date.split("-").reverse().join("-")}}</option>
+                            </select>
+                        </div>
 
-                            <div class="form-group col-md">
-                                <div class="serach_field_2">
-                                    <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
-                                        <form active="#">
-                                            <div class="search_field">
-                                                <input type="text" name="search"
-                                                    placeholder="search by fam, name & place ..."
-                                                    [(ngModel)]="escortSearch">
-                                            </div>
-                                            <button type="submit"> <i class="fa fa-search"></i> </button>
-                                        </form>
-                                    </div>
+                        <div class="form-group col-md" *ngIf="escortviewData.length>0">
+                            <div class="serach_field_2">
+                                <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                    <form active="#">
+                                        <div class="search_field">
+                                            <input type="text" name="search"
+                                                placeholder="search fam, name, place, type ..."
+                                                [(ngModel)]="escortSearch">
+                                        </div>
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
                                 </div>
                             </div>
-                        <!-- </div> -->
+                        </div>
                     </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
@@ -163,10 +161,11 @@
                                             <th style="width: 12%;">Action</th>
                                         </tr>
                                     </thead>
-                                    <!--  escortRegisterFilter: {familyNumber :  escortSearch, familyName :escortSearch, visitingPlaceName : escortSearch} | -->
+
                                     <tbody style="text-align: center;">
-                                        <tr
-                                            *ngFor="let escort of escortviewData | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                        <tr *ngFor="let escort of escortviewData |escortRegisterFilter: {familyNumber :  escortSearch,
+                                                 familyName :escortSearch, visitingPlaceName : escortSearch, escortOrReferType:escortSearch}|
+                                                  paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td style="width: 4%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td style="width: 15%;">{{escort.visitDate.split("-").reverse().join("-")}}
                                             </td>
@@ -206,8 +205,7 @@
                                                 </div>
                                             </td>
                                             <td style="width: 25%;">{{escort.visitingPlaceName}}</td>
-                                            <td style="width: 11%;">{{escort.escortOrReferType =='E' ? 'Escort' :
-                                                'Refer'}}</td>
+                                            <td style="width: 11%;">{{escort.escortOrReferType}}</td>
                                             <td style="width: 12%;">
                                                 <i class="fas fa-edit" title="Edit Escort/ Refer Register"
                                                     (click)="editEscort(Benificiary, escort)"></i>
@@ -391,7 +389,7 @@
                             style="margin-top: 3px;" formControlName="ss">&nbsp;&nbsp;
                         <span
                             *ngIf="(editEscortDetails?.escorteeRefereeSsName )||( onclickBenFamDetails?.followUpSSName)">({{
-                            editEscortDetails.escorteeRefereeSsName ? editEscortDetails?.escorteeRefereeSsName
+                            editEscortDetails?.escorteeRefereeSsName ? editEscortDetails?.escorteeRefereeSsName
                             :onclickBenFamDetails?.followUpSSName}})</span>
                         <span
                             *ngIf="(!editEscortDetails?.escorteeRefereeSsName )&& (!onclickBenFamDetails?.followUpSSName)">(No

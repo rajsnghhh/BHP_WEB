@@ -170,7 +170,7 @@ legend.scheduler-border {
 
 .search_inner button {
   padding-right: 1px;
-  margin-left: 202px;
+  margin-left: 175px;
   margin-top: -1px;
 }
 
@@ -190,14 +190,14 @@ legend.scheduler-border {
 }
 
 .search_inner input {
-  width: 62%;
-  margin-left: 194px;
+  width: 60%;
+  margin-left: 166px;
   margin-bottom: 4px;
 }
 
 .search_inner_fullscreen input {
   width: 75%;
-  margin-left: 273px;
+  margin-left: 242px;
   margin-bottom: 5px;
   font-size: 13px;
   height: 40px;
@@ -217,17 +217,17 @@ legend.scheduler-border {
 .serach_field_2 .search_inner_fullscreen button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: -825px;
+  margin-left: -887px;
   margin-bottom: 11px;
   margin-top: 10px;
 }
 
 .filter_inner_fullscreen {
-  margin-left: 136px;
-  width: 155%;
+  margin-left: 124px;
+  width: 148%;
 }
 
 .filter_inner {
-  margin-left: 96px;
-  width: 144%;
+  margin-left: 83px;
+  width: 135%;
 }

@@ -36,14 +36,14 @@
                     </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="!viewEscortReferForm.value.gram">
+                        *ngIf="!viewEscortReferForm.value.gram || !createMode">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
                             title="Create Escort/ Refer Register"></i>
                     </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="viewEscortReferForm.value.gram">
+                        *ngIf="viewEscortReferForm.value.gram && createMode">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
                             title="Create Escort/ Refer Register" (click)="createEscortRefer(createER)"></i>
@@ -158,7 +158,7 @@
                                             <th style="width: 12%;">Done by- <br>Staff/ SS</th>
                                             <th style="width: 25%;">Place</th>
                                             <th style="width: 11%;">Type</th>
-                                            <th style="width: 12%;">Action</th>
+                                            <th style="width: 12%;" *ngIf="deleteMode || updateMode">Action</th>
                                         </tr>
                                     </thead>
 
@@ -208,9 +208,9 @@
                                             <td style="width: 11%;">{{escort.escortOrReferType}}</td>
                                             <td style="width: 12%;">
                                                 <i class="fas fa-edit" title="Edit Escort/ Refer Register"
-                                                    (click)="editEscort(Benificiary, escort)"></i>
+                                                    (click)="editEscort(Benificiary, escort)" *ngIf="updateMode"></i>
                                                 <i class="fas fa-trash" title="Delete Escort/ Refer Register"
-                                                    (click)="deleteEscort(escort)"></i>
+                                                    (click)="deleteEscort(escort)" *ngIf="deleteMode"></i>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -205,6 +205,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/health-forum']);
     }
 
+    if (routeId == 266 || routeId == 267 || routeId == 268 || routeId == 269) {
+      this.router.navigate(['/escort-reref-register']);
+    }
+
   }
 
   ngAfterViewInit(): void {

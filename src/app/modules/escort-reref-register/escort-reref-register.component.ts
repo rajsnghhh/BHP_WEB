@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { EscortReferRegisterMatModalComponent } from './escort-refer-register-mat-modal/escort-refer-register-mat-modal.component';
 import { EscortRerefRegisterService } from './escort-reref-register.service';
@@ -51,15 +52,26 @@ export class EscortRerefRegisterComponent implements OnInit {
   reasonListID: Array<any> = [];
   escortview: Array<any> = [];
   escortviewData: Array<any> = [];
+  escortviewFilterData: Array<any> = [];
   p: any;
   onclickBenFamDetails: any;
   editEscortDetails: any;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  escortSearch: any;
+  searchFullscreen: boolean;
+  filterDate: Array<any> = [];
 
   constructor(private sidebarService: SidebarService, private http: HttpClient, private router: Router, private fb: FormBuilder,
     private httpService: HttpService, private escortReferService: EscortRerefRegisterService, private modalService: NgbModal,
-    config: NgbModalConfig, private toaster: ToastrService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService,) {
+    config: NgbModalConfig, public validationService: ValidationService, private toaster: ToastrService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService,) {
     config.backdrop = 'static';
     config.keyboard = false;
+  }
+
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
   }
 
   ngOnInit(): void {
@@ -88,25 +100,25 @@ export class EscortRerefRegisterComponent implements OnInit {
       }
     });
 
-    // this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
-    //   .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/material-distribution-register']) : this.router.navigate(['/error']);
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 266 || item.subFunctionMasterId == 267 || item.subFunctionMasterId == 268 || item.subFunctionMasterId == 269)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/escort-reref-register']) : this.router.navigate(['/error']);
 
-    // this.createMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
-    //   .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 266 || item.subFunctionMasterId == 267 || item.subFunctionMasterId == 268 || item.subFunctionMasterId == 269)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
 
-    // this.updateMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
-    //   .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 266 || item.subFunctionMasterId == 267 || item.subFunctionMasterId == 268 || item.subFunctionMasterId == 269)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
 
-    // this.deleteMode = this.sidebarService.subMenuList
-    //   .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
-    //   .find(item => item.subFunctionMasterId == 226 || item.subFunctionMasterId == 227 || item.subFunctionMasterId == 228 || item.subFunctionMasterId == 229)?.accessDetailList
-    //   .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 266 || item.subFunctionMasterId == 267 || item.subFunctionMasterId == 268 || item.subFunctionMasterId == 269)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
   }
 
@@ -184,6 +196,7 @@ export class EscortRerefRegisterComponent implements OnInit {
 
   changeVillage(villageId) {
     this.escortviewData = [];
+    this.filterDate = [];
     console.log(villageId, 'villageId');
 
     let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
@@ -191,10 +204,10 @@ export class EscortRerefRegisterComponent implements OnInit {
       this.escortview = res.responseObject;
       this.escortview?.forEach((x) => {
         x.familyList = x.familyList?.map(({
-          visitDate = x.visitDate, isIndex = 0,
+          visitDate = x.visitDate,
           ...rest
         }) => ({
-          visitDate, isIndex,
+          visitDate,
           ...rest
         }));
       })
@@ -202,16 +215,23 @@ export class EscortRerefRegisterComponent implements OnInit {
       this.escortview?.forEach(y => {
         console.log(y);
         y.familyList.forEach(z => {
-          // console.log(z);
           this.escortviewData.push(z)
         })
         console.log(this.escortviewData, 'escortviewData');
+
       })
 
-      this.escortviewData.forEach((i, index) => {
-        i.isIndex = index;
+      this.escortviewData.forEach(x => {
+        this.filterDate.push(x.visitDate);
+        console.log(this.filterDate);
+        this.filterDate = this.filterDate.filter((item, index) => this.filterDate.indexOf(item) === index)
+        console.log(this.filterDate);
       });
+
+
+      this.escortviewFilterData = this.escortviewData
       console.log(this.escortviewData, 'escortviewData');
+      console.log(this.filterDate, 'this.filterDate');
     })
 
   }
@@ -807,6 +827,17 @@ export class EscortRerefRegisterComponent implements OnInit {
     this.toaster.error(message, 'Escort-Reref Register', {
       timeOut: 3000,
     });
+  }
+
+  filterList(e) {
+    if (e) {
+      var filter = this.escortviewFilterData.filter(x => x.visitDate == e)
+      console.log(filter);
+      this.escortviewData = filter;
+    } else {
+      this.escortviewData = this.escortviewFilterData;
+    }
+
   }
 
 }

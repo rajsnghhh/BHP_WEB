@@ -111,7 +111,7 @@
                                         <td style="width:20%;"
                                             (click)="viewParticipantsDetails(detailsOfParticipants, event)"
                                             style="cursor: pointer; color: blue;">View</td>
-                                        <td style="width: 20%;" *ngIf="updateMode || deleteMode">
+                                        <td style="width: 20%;" *ngIf="updateMode || deleteMode || approveMode">
                                             <i class="fas fa-edit" title="Edit SS Training Event"
                                                 (click)="editSSTrainingEvents(event, SSTraining)" *ngIf="updateMode">
                                             </i>

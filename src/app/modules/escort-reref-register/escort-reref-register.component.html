@@ -261,7 +261,7 @@
                     <div class="form-group col-md-2"></div>
                     <div class="form-group col-md-4">
                         <label for="date">Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <input type="date" class="form-control" formControlName="date" [min]="minDate"
+                        <input type="date" class="form-control" formControlName="date" [min]="minDate" [max]="maxDate"
                             (keydown)="restrictTypeOfDate()" (change)="changeDate()" [ngClass]="{'is-invalid': r.date.invalid
                             && r.date.touched,'is-valid': r.date.valid && (r.date.dirty || r.date.touched) }">
                         <div *ngIf="r.date.errors" class="invalid-feedback">

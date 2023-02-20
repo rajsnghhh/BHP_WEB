@@ -34,6 +34,7 @@ export class EscortRerefRegisterComponent implements OnInit {
   createERRegisterModal: any;
   viewBeneficiaryModal: any;
   minDate: any;
+  maxDate: any;
   familyList: Array<any> = [];
   villageName: any;
   viewBeneficiaryDetails: Array<any> = [];
@@ -245,11 +246,13 @@ export class EscortRerefRegisterComponent implements OnInit {
   createEscortRefer(createER) {
     this.escortSearch = '';
     this.modalContent = '';
+    
     this.createERRegisterModal = this.modalService.open(createER, {
       windowClass: 'createER',
     });
     this.viewFamily_Form();
     this.minDate = moment(new Date()).subtract(7, "days").format("YYYY-MM-DD");
+    this.maxDate = moment(new Date()).add(0, "days").format("YYYY-MM-DD");
   }
 
   changeDate() {

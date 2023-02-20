@@ -6,6 +6,7 @@ import { RoleAccessService } from './role-access.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/login/login.service';
 
 @Component({
   selector: 'app-role-access',
@@ -20,19 +21,36 @@ export class RoleAccessComponent implements OnInit {
   subFunctionList: Array<any> = [];
   searchFullscreen: boolean;
   loader: boolean = true;
-  // accessList: Array<any> = [];
-
-
+  viewDisable: any;
 
   constructor(private httpService: HttpService, private roleService: RoleAccessService, private fb: UntypedFormBuilder,
     private toaster: ToastrService, private validationService: ValidationService, private sidebarService: SidebarService,
-    private router: Router) { }
+    private router: Router, private accountService: LoginService,) { }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
   }
 
   ngOnInit(): void {
+
+    var tt = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionShortName == 'System Administration')?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 5 || item.subFunctionMasterId == 6 || item.subFunctionMasterId == 7 ||
+        item.subFunctionMasterId == 8)?.accessDetailList
+    console.log(tt);
+
+    if (tt.length == 1) {
+      tt.forEach(x => {
+        console.log(x);
+        if (x.accessType == 'view') {
+          console.log(true);
+          this.viewDisable = 'view';
+        } else {
+          console.log(false);
+        }
+
+      })
+    }
+
 
     this.createForm();
 
@@ -118,10 +136,10 @@ export class RoleAccessComponent implements OnInit {
     // this.accessList=[]
     this.roleList = this.subFunctionList.find((role) => role.subMenuName == subFunctionName)?.roleAccessDtoList;
     console.log(this.roleList, 'roleList');
-//     this.roleList.forEach(x => {
-//       this.accessList.push(x.accessDtoList);
-//     })
-// console.log(  this.accessList);
+    //     this.roleList.forEach(x => {
+    //       this.accessList.push(x.accessDtoList);
+    //     })
+    // console.log(  this.accessList);
 
 
   }
@@ -173,5 +191,17 @@ export class RoleAccessComponent implements OnInit {
     this.toaster.error(message, 'Role Menu Map', {
       timeOut: 3000,
     });
+  }
+
+  disableSave() {
+    let flag = true;
+    if (!this.roleAccessForm.value.mainfunction) {
+      flag = false;
+    } else if (this.viewDisable == 'view') {
+      flag = false;
+    }
+
+    return flag;
+
   }
 }

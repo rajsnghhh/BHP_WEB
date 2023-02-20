@@ -222,12 +222,12 @@ export class EscortRerefRegisterComponent implements OnInit {
       })
 
       this.escortviewData.forEach(x => {
-        if(x.escortOrReferType =='R'){
-          x.escortOrReferType ='Refer'
-        } else{
-          x.escortOrReferType ='Escort'
+        if (x.escortOrReferType == 'R') {
+          x.escortOrReferType = 'Refer'
+        } else {
+          x.escortOrReferType = 'Escort'
         }
-        
+
         this.filterDate.push(x.visitDate);
         // console.log(this.filterDate);
         this.filterDate = this.filterDate.filter((item, index) => this.filterDate.indexOf(item) === index)
@@ -243,6 +243,7 @@ export class EscortRerefRegisterComponent implements OnInit {
   }
 
   createEscortRefer(createER) {
+    this.escortSearch = '';
     this.modalContent = '';
     this.createERRegisterModal = this.modalService.open(createER, {
       windowClass: 'createER',
@@ -283,6 +284,7 @@ export class EscortRerefRegisterComponent implements OnInit {
 
   createERModalDismiss() {
     this.createERRegisterModal.close();
+    this.escortSearch = '';
     this.villageName = [];
     this.familyList = [];
   }
@@ -321,7 +323,7 @@ export class EscortRerefRegisterComponent implements OnInit {
 
       var tt = []
       if (this.editEscortDetails.presentInPregnantWoman == 'Y') {
-        tt.push({ childName: this.editEscortDetails.familyName, age: this.editEscortDetails.familyAge, sex: 'F', status: 'PW', is_checked: false });
+        tt.push({ childName: this.editEscortDetails.familyName, age: this.editEscortDetails.familyAge, sex: 'F', status: 'PW, ', is_checked: false });
       }
 
       if (this.editEscortDetails.childDetailList.length > 0) {
@@ -336,32 +338,32 @@ export class EscortRerefRegisterComponent implements OnInit {
           console.log(this.year, this.month, this.day);
 
           if (y.presentInPem == 'Y') {
-            this.muacPEM = 'PEM';
+            this.muacPEM = 'PEM, ';
           } else {
             this.muacPEM = '';
           }
 
           if (this.year < 2) {
-            this.muacLM = 'LM';
+            this.muacLM = 'LM, ';
           } else {
             this.muacLM = '';
           }
 
           if (this.year >= 2 && this.year < 5) {
-            this.twotofive = '2 to 5';
+            this.twotofive = '2 to 5, ';
           } else {
             this.twotofive = '';
           }
 
           if (this.year >= 14 && this.year < 18) {
-            this.adolStatus = 'AG';
+            this.adolStatus = 'AG, ';
           } else {
             this.adolStatus = '';
           }
 
           tt.push(y);
           tt = tt?.map(({
-            status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive + ' ' + this.adolStatus, is_checked = false,
+            status = this.muacPEM + this.muacLM + this.twotofive + this.adolStatus, is_checked = false,
             ...rest
           }) => ({
             status, is_checked,
@@ -373,6 +375,9 @@ export class EscortRerefRegisterComponent implements OnInit {
       }
 
       console.log(tt, 'tt');
+      tt.forEach(x => {
+        x.status = x.status.substring(0, x.status.length - 2);
+      })
       this.viewBeneficiaryDetails = tt;
       console.log(this.viewBeneficiaryDetails);
 
@@ -415,14 +420,14 @@ export class EscortRerefRegisterComponent implements OnInit {
       }
 
       if (fami.presentInPregnantWoman == 'Y') {
-        this.viewBeneficiaryDetails.push({ childName: fami.firstName + fami.middleName + '' + fami.lastName, age: fami.familyAge, sex: 'F', status: 'PW', is_checked: false });
+        this.viewBeneficiaryDetails.push({ childName: fami.firstName + fami.middleName + '' + fami.lastName, age: fami.familyAge, sex: 'F', status: 'PW, ', is_checked: false });
       }
 
       if (fami.adolescentGilrChildren.length > 0) {
         fami.adolescentGilrChildren.forEach(z => {
           this.viewBeneficiaryDetails.push(z);
           this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
-            status = 'AG', is_checked = false,
+            status = 'AG, ', is_checked = false,
             ...rest
           }) => ({
             status, is_checked,
@@ -443,26 +448,26 @@ export class EscortRerefRegisterComponent implements OnInit {
           console.log(this.year, this.month, this.day);
 
           if (y.presentInPem == 'Y') {
-            this.muacPEM = 'PEM';
+            this.muacPEM = 'PEM, ';
           } else {
             this.muacPEM = '';
           }
 
           if (this.year < 2) {
-            this.muacLM = 'LM';
+            this.muacLM = 'LM, ';
           } else {
             this.muacLM = '';
           }
 
           if (this.year >= 2 && this.year < 5) {
-            this.twotofive = '2 to 5';
+            this.twotofive = '2 to 5, ';
           } else {
             this.twotofive = '';
           }
 
           this.viewBeneficiaryDetails.push(y);
           this.viewBeneficiaryDetails = this.viewBeneficiaryDetails?.map(({
-            status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive, is_checked = false,
+            status = this.muacPEM + this.muacLM + this.twotofive, is_checked = false,
             ...rest
           }) => ({
             status, is_checked,
@@ -474,6 +479,10 @@ export class EscortRerefRegisterComponent implements OnInit {
       }
 
       console.log(this.viewBeneficiaryDetails);
+
+      this.viewBeneficiaryDetails.forEach(x => {
+        x.status = x.status.substring(0, x.status.length - 2);
+      })
 
       this.modalContent = '';
       this.viewBeneficiaryModal = this.modalService.open(Benificiary, {
@@ -507,7 +516,9 @@ export class EscortRerefRegisterComponent implements OnInit {
       place: [this.editEscortDetails?.visitingPlaceId ? this.editEscortDetails?.visitingPlaceId : '', Validators.required],
     })
 
-    // console.log(this.onclickBenFamDetails);
+    if (this.editEscortDetails?.escortReferRegisterId) {
+      return this.createEscortReferForm.markAllAsTouched();
+    }
   }
 
   getEscortReferRegisterPrerequisites() {
@@ -704,7 +715,8 @@ export class EscortRerefRegisterComponent implements OnInit {
       flag = false;
     } else if (!this.createEscortReferForm.value.type) {
       flag = false;
-    } else if (this.createEscortReferForm.value.staff == false || this.createEscortReferForm.value.ss == false) {
+    } else if (this.createEscortReferForm.value.staff == false &&
+      (this.createEscortReferForm.value.ss == false || this.createEscortReferForm.value.ss == undefined)) {
       flag = false;
     } else if (!this.createEscortReferForm.value.user) {
       flag = false;
@@ -721,7 +733,7 @@ export class EscortRerefRegisterComponent implements OnInit {
     console.log(escort);
     this.beneficiaryDetails = [];
     if (escort.isFamilyHerselfBeneficiary == 'Y') {
-      this.beneficiaryDetails.push({ childName: escort.familyName, age: escort.familyAge, sex: 'F', status: 'PW' });
+      this.beneficiaryDetails.push({ childName: escort.familyName, age: escort.familyAge, sex: 'F', status: 'PW, ' });
     }
 
     if (escort.childDetailList.length > 0) {
@@ -736,37 +748,41 @@ export class EscortRerefRegisterComponent implements OnInit {
         console.log(this.year, this.month, this.day);
 
         if (y.presentInPem == 'Y') {
-          this.muacPEM = 'PEM';
+          this.muacPEM = 'PEM, ';
         } else {
           this.muacPEM = '';
         }
 
         if (this.year < 2) {
-          this.muacLM = 'LM';
+          this.muacLM = 'LM, ';
         } else {
           this.muacLM = '';
         }
 
         if (this.year >= 2 && this.year < 5) {
-          this.twotofive = '2 to 5';
+          this.twotofive = '2 to 5, ';
         } else {
           this.twotofive = '';
         }
 
         if (this.year >= 14 && this.year < 18) {
-          this.adolStatus = 'AG';
+          this.adolStatus = 'AG, ';
         } else {
           this.adolStatus = '';
         }
 
         this.beneficiaryDetails.push(y);
         this.beneficiaryDetails = this.beneficiaryDetails?.map(({
-          status = this.muacPEM + ' ' + this.muacLM + ' ' + this.twotofive + ' ' + this.adolStatus,
+          status = this.muacPEM + this.muacLM + this.twotofive + this.adolStatus,
           ...rest
         }) => ({
           status,
           ...rest
         }));
+
+        this.beneficiaryDetails.forEach(x => {
+          x.status = x.status.substring(0, x.status.length - 2);
+        })
 
       })
 

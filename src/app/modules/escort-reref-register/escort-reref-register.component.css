@@ -225,9 +225,71 @@ legend.scheduler-border {
 .filter_inner_fullscreen {
   margin-left: 124px;
   width: 148%;
-}
+} 
 
 .filter_inner {
   margin-left: 83px;
   width: 135%;
+} 
+
+.serach_field_23 .search_inner input {
+  color: #000;
+  font-size: 13px;
+  height: 40px;
+  width: 77%;
+  border-radius: 5px;
+  padding-left: 55px;
+  border: 1px solid #2daab8;
+  padding-right: 15px;
+  margin-left: 15px;
+  margin-top: 19px;
+}
+
+.serach_field_23 {
+  width: 430px;
+  position: relative;
+  margin-right: 0px;
+}
+
+.serach_field_23 .search_inner input::placeholder {
+  font-size: 13px;
+  font-weight: 300;
+  color: #7e7172;
+}
+
+.serach_field_23 .search_inner input:focus {
+  outline: none;
+}
+
+.serach_field_23 .search_inner button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: transparent;
+  font-size: 12px;
+  border: 0;
+  padding-left: 19px;
+  margin-left: 6px;
+  margin-top: 6px;
+}
+
+.serach_field_23 .search_inner button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-top: 6px;
+}
+
+.serach_field_23 .search_inner button::before {
+  position: absolute;
+  width: 1px;
+  height: 24px;
+  content: "";
+  background: #2daab8;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0;
 }

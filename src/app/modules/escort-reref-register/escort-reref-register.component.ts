@@ -246,7 +246,7 @@ export class EscortRerefRegisterComponent implements OnInit {
   createEscortRefer(createER) {
     this.escortSearch = '';
     this.modalContent = '';
-    
+
     this.createERRegisterModal = this.modalService.open(createER, {
       windowClass: 'createER',
     });
@@ -307,12 +307,14 @@ export class EscortRerefRegisterComponent implements OnInit {
     this.createEscortRefer_Form();
     this.getEscortReferRegisterPrerequisites();
 
+    this.loader = false;
     if (this.editEscortDetails?.escortReferRegisterId) {
       setTimeout(() => {
         this.modalContent = '';
         this.viewBeneficiaryModal = this.modalService.open(Benificiary, {
           windowClass: 'Benificiary',
         });
+        this.loader = true;
       }, 500);
 
       if (this.editEscortDetails?.escorteeRefereeSsId == null) {
@@ -736,7 +738,7 @@ export class EscortRerefRegisterComponent implements OnInit {
     console.log(escort);
     this.beneficiaryDetails = [];
     if (escort.isFamilyHerselfBeneficiary == 'Y') {
-      this.beneficiaryDetails.push({ childName: escort.familyName, age: escort.familyAge, sex: 'F', status: 'PW, ' });
+      this.beneficiaryDetails.push({ childName: escort.familyName, age: escort.familyAge, sex: 'F', status: 'PW, '.substring(0, 'PW, '.length - 2) });
     }
 
     if (escort.childDetailList.length > 0) {
@@ -775,17 +777,14 @@ export class EscortRerefRegisterComponent implements OnInit {
         }
 
         this.beneficiaryDetails.push(y);
+        console.log(this.beneficiaryDetails, 'beneficiaryDetails');
         this.beneficiaryDetails = this.beneficiaryDetails?.map(({
-          status = this.muacPEM + this.muacLM + this.twotofive + this.adolStatus,
+          status = (this.muacPEM + this.muacLM + this.twotofive + this.adolStatus).substring(0, (this.muacPEM + this.muacLM + this.twotofive + this.adolStatus).length - 2),
           ...rest
         }) => ({
           status,
           ...rest
-        }));
-
-        this.beneficiaryDetails.forEach(x => {
-          x.status = x.status.substring(0, x.status.length - 2);
-        })
+        })); 
 
       })
 

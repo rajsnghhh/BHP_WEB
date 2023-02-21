@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
@@ -18,6 +18,7 @@ import { SsService } from './ss.service';
 export class SsSetupComponent implements OnInit {
   ssForm: UntypedFormGroup;
   ssCreateForm: UntypedFormGroup;
+  approveSSForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   staffWiseSSLists: Array<any> = [];
@@ -28,6 +29,7 @@ export class SsSetupComponent implements OnInit {
   ssList: Array<any> = [];
   modalContent: any;
   modalReference: any;
+  appModal: any;
   branchId: any;
   blockList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -44,10 +46,15 @@ export class SsSetupComponent implements OnInit {
   role: any;
   regionBranchHide: boolean;
   branchID: any;
+  approvalItem: any;
+  loader: boolean = false;
 
   constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal, private http: HttpClient,
-    private validationService: ValidationService, private confirmationDialogService: ConfirmationDialogService, private router: Router) { }
+    private validationService: ValidationService, config: NgbModalConfig, private confirmationDialogService: ConfirmationDialogService, private router: Router) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+  }
 
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
@@ -63,6 +70,7 @@ export class SsSetupComponent implements OnInit {
 
       if (res.regionBranchHide) {
         this.regionList = res.region;
+        this.loader = true;
         this.regionBranchHide = res.regionBranchHide;
       } else {
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
@@ -75,6 +83,7 @@ export class SsSetupComponent implements OnInit {
         }
         this.regionBranchHide = res.regionBranchHide;
         this.http.post(`${this.sidebarService.baseURL}village/getVillagesOfABranch`, Dto).subscribe((res: any) => {
+          this.loader = true;
           if (res.sessionDTO.status == true) {
             this.villagesOfBranch = res.responseObject;
           }
@@ -217,12 +226,14 @@ export class SsSetupComponent implements OnInit {
       this.changeBlock(this.editssData?.blockDto?.blockId);
       this.changeGP(this.editssData?.gpDto?.gpId);
     })
+    this.loader = false;
 
     setTimeout(() => {
       this.modalContent = '';
       this.modalReference = this.modalService.open(createSS, {
         windowClass: 'createMuac',
       });
+      this.loader = true;
       this.createSSForm();
     }, 1000);
 
@@ -407,13 +418,13 @@ export class SsSetupComponent implements OnInit {
 
 
   showSuccess(message) {
-    this.toaster.success(message, 'Create Swasthya Sahayika', {
+    this.toaster.success(message, 'Swasthya Sahayika', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Create Swasthya Sahayika', {
+    this.toaster.error(message, 'Swasthya Sahayika', {
       timeOut: 3000,
     });
   }
@@ -432,6 +443,78 @@ export class SsSetupComponent implements OnInit {
       console.log(this.staffIdWiseList);
     }
 
+  }
+
+  approveSS(item, approve) {
+    if (item.status == 'A') {
+      this.showError('Already Approved');
+      return;
+    } else {
+      this.approvalItem = item;
+      if (item.numberOfBasicTrainingDaysAttended >= 4) {
+        this.appApi(item);
+      } else {
+        this.appForm();
+        this.modalContent = '';
+        this.appModal = this.modalService.open(approve, {
+          windowClass: 'approve',
+        });
+      }
+    }
+
+  }
+
+  appApi(item) {
+    let app_req = {
+      dataAccessDTO: this.httpService.dataAccessDTO, swasthyaSahayikaMasterId: item.ssId,
+      approvalComment: this.approveSSForm?.value?.comment ? this.approveSSForm?.value?.comment.trim() : null
+    }
+    console.log(app_req);
+
+    this.ssService.ssApprove(app_req).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        if (this.approveSSForm?.value?.comment) {
+          this.approveSSModalDismiss();
+        }
+        this.ssLists();
+      }
+      else {
+        this.showError(res.message);
+      }
+    })
+  }
+
+  saveApprove() {
+    this.appApi(this.approvalItem);
+  }
+
+  approveSSModalDismiss() {
+    this.appModal.close();
+  }
+
+  appForm() {
+    this.approveSSForm = this.fb.group({
+      comment: ['', Validators.required]
+    })
+  }
+
+  get r() {
+    return this.approveSSForm.controls;
+  }
+
+  disabledSave() {
+    let flag = true;
+    if (!this.approveSSForm.value.comment) {
+      flag = false;
+    }
+
+    if (this.approveSSForm.value.comment.trim().length === 0) {
+      flag = false;
+    }
+
+    return flag;
   }
 
 }

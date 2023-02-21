@@ -1,3 +1,4 @@
+<app-loader [hidden]="loader"></app-loader>
 <div class="container">
 
     <div class="row">
@@ -93,14 +94,15 @@
 
                                     <thead id="header-fixed">
                                         <tr>
-                                            <th style="width: 6%;">SL <br>No</th>
-                                            <th style="width: 17%;">Name</th>
+                                            <th style="width: 3%;">SL<br>No</th>
+                                            <th style="width: 20%;">Name</th>
                                             <th style="width: 20%;">Guardian Name</th>
-                                            <th style="width: 10%;">Mobile</th>
-                                            <th style="width: 17%;">Village/ Gram <br>Sansad/ Locality</th>
-                                            <th style="width: 15%;">Staff In<br> Charge</th>
-                                            <th>User<br> Active</th>
-                                            <th *ngIf="updateMode || deleteMode">Action</th>
+                                            <th style="width: 12%;">Mobile</th>
+                                            <th style="width: 20%;">Village/ Gram <br>Sansad/ Locality</th>
+                                            <th style="width: 20%;">Staff In<br> Charge</th>
+                                            <th style="width: 10%;">User<br> Active</th>
+                                            <th style="width: 8%;">Apv.<br>Status</th>
+                                            <th *ngIf="updateMode || deleteMode" style="width: 15%;">Action</th>
                                         </tr>
                                     </thead>
 
@@ -108,21 +110,30 @@
 
                                         <tr
                                             *ngFor="let item of staffWiseSSLists | filter:  searchText | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                            <td style="width: 6%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td style="width: 17%;">{{item.ssName}} </td>
+                                            <td style="width: 3%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 20%;">{{item.ssName}} </td>
                                             <td style="width: 20%;">{{item.ssHusbandOrGuardianName}}</td>
-                                            <td style="width: 10%;">{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
-                                            <td style="width: 17%;">{{item.villageDto.villageName}}</td>
-                                            <td style="width: 15%;"> {{ item.userDto? item.userDto.userFirstName :
+                                            <td style="width: 12%;">{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
+                                            <td style="width: 20%;">{{item.villageDto.villageName}}</td>
+                                            <td style="width: 20%;"> {{ item.userDto? item.userDto.userFirstName :
                                                 '-'}} {{item.userDto ? item.userDto.userMiddleName : '-'}}
                                                 {{item.userDto ? item.userDto.userLastName : '-'}}</td>
-                                            <td>{{item.userDto ? item.userDto.isMappedUserActive :
+                                            <td style="width: 10%;">{{item.userDto ? item.userDto.isMappedUserActive :
                                                 '-'}}</td>
-                                            <td *ngIf="updateMode || deleteMode"><i class="fas fa-edit" title="Edit SS"
-                                                    *ngIf="updateMode" (click)="editSSForm(item, createSS)"></i>
+                                            <td style="width: 8%;"><i class="fa fa-circle fa-lg" title="SS Approved"
+                                                    style="color: #24d524;" *ngIf="item.status == 'A'"></i>
+                                                <i class="fa fa-circle fa-lg" title="SS Unapproved"
+                                                    *ngIf="item.status != 'A'"></i>
+                                            </td>
+                                            <td style="width: 15%;" *ngIf="updateMode || deleteMode"><i
+                                                    class="fas fa-edit" title="Edit SS" *ngIf="updateMode"
+                                                    (click)="editSSForm(item, createSS)"></i>
 
                                                 <i class="fas fa-trash" title="Delete SS" *ngIf="deleteMode"
                                                     (click)="deleteSSForm(item, i)"></i>
+
+                                                <i class="fas fa-check-circle" title="Approve SS"
+                                                    (click)="approveSS(item, approve)"></i>
 
                                             </td>
 
@@ -331,4 +342,49 @@
 
     </div>
 
+</ng-template>
+
+
+<ng-template #approve>
+
+    <div class="modal-HF">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title">Approve SS</h3>
+            </div>
+
+            <div class="col-md">
+                <span (click)="approveSSModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body" style="height: 25vh; overflow-y: hidden;">
+            <form class="form-signin" [formGroup]="approveSSForm">
+
+                <div class="form-group col-md">
+                    <label for="comment">Comments :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <textarea rows="4" cols="50" style="resize: none; height: 5em;" class="form-control"
+                        formControlName="comment"
+                        [ngClass]="{'is-invalid': r.comment.invalid
+                            && r.comment.touched,'is-valid': r.comment.valid && (r.comment.dirty || r.comment.touched) }">
+                    </textarea>
+                    <div *ngIf="r.comment.errors" class="invalid-feedback">
+                        <div *ngIf="r.comment.errors.required">Comment is required for approving</div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary btn-sm" (click)="saveApprove()"
+                    [disabled]="!disabledSave()">Save</button>
+            </div>
+        </div>
+
+    </div>
 </ng-template>

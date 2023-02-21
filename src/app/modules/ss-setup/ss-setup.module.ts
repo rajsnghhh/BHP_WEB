@@ -6,6 +6,7 @@ import { SsSetupComponent } from './ss-setup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     ReactiveFormsModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    FormsModule
+    FormsModule, LoaderModule
   ]
 })
 export class SsSetupModule { }

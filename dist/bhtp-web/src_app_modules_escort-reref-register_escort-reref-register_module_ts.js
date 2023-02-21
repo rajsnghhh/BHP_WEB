@@ -1515,11 +1515,13 @@ class EscortRerefRegisterComponent {
     this.createEscortRefer_Form();
     this.getEscortReferRegisterPrerequisites();
     if (this.editEscortDetails?.escortReferRegisterId) {
+      this.loader = false;
       setTimeout(() => {
         this.modalContent = '';
         this.viewBeneficiaryModal = this.modalService.open(Benificiary, {
           windowClass: 'Benificiary'
         });
+        this.loader = true;
       }, 500);
       if (this.editEscortDetails?.escorteeRefereeSsId == null) {
         this.createEscortReferForm.controls['ss'].disable();
@@ -1950,7 +1952,7 @@ class EscortRerefRegisterComponent {
         childName: escort.familyName,
         age: escort.familyAge,
         sex: 'F',
-        status: 'PW, '
+        status: 'PW, '.substring(0, 'PW, '.length - 2)
       });
     }
     if (escort.childDetailList.length > 0) {
@@ -1984,16 +1986,14 @@ class EscortRerefRegisterComponent {
           this.adolStatus = '';
         }
         this.beneficiaryDetails.push(y);
+        console.log(this.beneficiaryDetails, 'beneficiaryDetails');
         this.beneficiaryDetails = this.beneficiaryDetails?.map(({
-          status = this.muacPEM + this.muacLM + this.twotofive + this.adolStatus,
+          status = (this.muacPEM + this.muacLM + this.twotofive + this.adolStatus).substring(0, (this.muacPEM + this.muacLM + this.twotofive + this.adolStatus).length - 2),
           ...rest
         }) => ({
           status,
           ...rest
         }));
-        this.beneficiaryDetails.forEach(x => {
-          x.status = x.status.substring(0, x.status.length - 2);
-        });
       });
     }
     console.log(this.beneficiaryDetails, 'beneficiaryDetails');

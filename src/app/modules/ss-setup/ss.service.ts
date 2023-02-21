@@ -34,4 +34,8 @@ export class SsService {
     return this.http.post(`${this.baseURL}swasthyasahayika/saveOrUpdate`, obj)
   }
 
+  ssApprove(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/approve`, obj)
+  }
+
 }

@@ -60,11 +60,6 @@
   margin-top: -5px;
 }
 
-.fa {
-  margin-left: -1335px;
-  margin-top: 22px;
-}
-
 .fa-plus-circle {
   color: #499;
   font-size: 20px;
@@ -77,4 +72,15 @@
   font-size: 20px;
   margin-left: 820px;
   cursor: pointer;
+}
+
+.fa-check-circle:hover {
+  color: darkgreen !important;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
+.modal-HF {
+  height: 300px;
+  width: 498px;
 }

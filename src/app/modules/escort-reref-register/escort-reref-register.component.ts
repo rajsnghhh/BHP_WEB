@@ -307,8 +307,9 @@ export class EscortRerefRegisterComponent implements OnInit {
     this.createEscortRefer_Form();
     this.getEscortReferRegisterPrerequisites();
 
-    this.loader = false;
+   
     if (this.editEscortDetails?.escortReferRegisterId) {
+      this.loader = false;
       setTimeout(() => {
         this.modalContent = '';
         this.viewBeneficiaryModal = this.modalService.open(Benificiary, {

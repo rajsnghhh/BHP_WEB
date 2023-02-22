@@ -95,14 +95,15 @@
                                     <thead id="header-fixed">
                                         <tr>
                                             <th style="width: 3%;">SL<br>No</th>
-                                            <th style="width: 20%;">Name</th>
-                                            <th style="width: 20%;">Guardian Name</th>
+                                            <th style="width: 25%;">Name</th>
+                                            <th style="width: 25%;">Guardian Name</th>
                                             <th style="width: 12%;">Mobile</th>
-                                            <th style="width: 20%;">Village/ Gram <br>Sansad/ Locality</th>
-                                            <th style="width: 20%;">Staff In<br> Charge</th>
-                                            <th style="width: 10%;">User<br> Active</th>
-                                            <th style="width: 8%;">Apv.<br>Status</th>
-                                            <th *ngIf="updateMode || deleteMode" style="width: 15%;">Action</th>
+                                            <th style="width: 25%;">Village/ Gram <br>Sansad/ Locality</th>
+                                            <th style="width: 25%;">Staff In<br> Charge</th>
+                                            <th style="width: 7%;">User<br> Active</th>
+                                            <th style="width: 6%;">SS<br>Type</th>
+                                            <th style="width: 10%;">Apv.<br>Status</th>
+                                            <th *ngIf="updateMode || deleteMode" style="width: 20%;">Action</th>
                                         </tr>
                                     </thead>
 
@@ -111,21 +112,23 @@
                                         <tr
                                             *ngFor="let item of staffWiseSSLists | filter:  searchText | paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td style="width: 3%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td style="width: 20%;">{{item.ssName}} </td>
-                                            <td style="width: 20%;">{{item.ssHusbandOrGuardianName}}</td>
+                                            <td style="width: 25%;">{{item.ssName}} </td>
+                                            <td style="width: 25%;">{{item.ssHusbandOrGuardianName}}</td>
                                             <td style="width: 12%;">{{item.ssContactNo ? item.ssContactNo : '-'}}</td>
-                                            <td style="width: 20%;">{{item.villageDto.villageName}}</td>
-                                            <td style="width: 20%;"> {{ item.userDto? item.userDto.userFirstName :
+                                            <td style="width: 25%;">{{item.villageDto.villageName}}</td>
+                                            <td style="width: 25%;"> {{ item.userDto? item.userDto.userFirstName :
                                                 '-'}} {{item.userDto ? item.userDto.userMiddleName : '-'}}
                                                 {{item.userDto ? item.userDto.userLastName : '-'}}</td>
-                                            <td style="width: 10%;">{{item.userDto ? item.userDto.isMappedUserActive :
+                                            <td style="width: 7%;">{{item.userDto ? item.userDto.isMappedUserActive :
                                                 '-'}}</td>
-                                            <td style="width: 8%;"><i class="fa fa-circle fa-lg" title="SS Approved"
+                                            <td style="width: 6%;">{{item.freshReplacementDetails?
+                                                item.freshReplacementDetails.ss_type:'-'}}</td>
+                                            <td style="width: 10%;"><i class="fa fa-circle fa-lg" title="SS Approved"
                                                     style="color: #24d524;" *ngIf="item.status == 'A'"></i>
                                                 <i class="fa fa-circle fa-lg" title="SS Unapproved"
                                                     *ngIf="item.status != 'A'"></i>
                                             </td>
-                                            <td style="width: 15%;" *ngIf="updateMode || deleteMode"><i
+                                            <td style="width: 20%;" *ngIf="updateMode || deleteMode"><i
                                                     class="fas fa-edit" title="Edit SS" *ngIf="updateMode"
                                                     (click)="editSSForm(item, createSS)"></i>
 
@@ -134,6 +137,9 @@
 
                                                 <i class="fas fa-check-circle" title="Approve SS"
                                                     (click)="approveSS(item, approve)"></i>
+
+                                                <i class="fas fa-rotate-right" title="Fresh/ Replace SS"
+                                                    (click)="replaceSS(item, replace)"></i>
 
                                             </td>
 
@@ -383,6 +389,80 @@
             <div class="row">
                 <button type="button" class=" btn btn-primary btn-sm" (click)="saveApprove()"
                     [disabled]="!disabledSave()">Save</button>
+            </div>
+        </div>
+
+    </div>
+</ng-template>
+
+
+<ng-template #replace>
+
+    <div class="modalReplace">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="modal-title" id="modal-basic-title">SS Fresh/ Replacement</h3>
+            </div>
+
+            <div class="col-md">
+                <span (click)="replaceSSModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body" style="height: 35vh; overflow-y: auto;">
+            <form class="form-signin" [formGroup]="replaceSSForm">
+
+                <div class="form-group col-md" *ngIf="replaceData.freshReplacementDetails.replacing_which_ss">
+                    &nbsp;&nbsp;&nbsp;&nbsp;SS is already replaced, select this option to fresh ups
+                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class="form-check-input" type="checkbox" value="staff" id="flexCheckDefault"
+                        style="margin-top: 3px;" formControlName="fresh">
+                </div>
+
+                <!-- <div class="form-group col-md" *ngIf="!replaceData.freshReplacementDetails.replacing_which_ss">
+                    &nbsp;&nbsp;&nbsp;&nbsp;Select this option to replace {{replaceData.ssName}}
+                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class="form-check-input" type="checkbox" value="staff" id="flexCheckDefault"
+                        style="margin-top: 3px;" formControlName="fresh">
+                </div> -->
+
+                <div class="form-group col-md">
+                    <label for="ss">SS List :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" formControlName="ss" [ngClass]="{'is-invalid': s.ss.invalid && s.ss.touched,
+                        'is-valid': s.ss.valid && (s.ss.dirty || s.ss.touched)}">
+                        <option value="">-- Select ss --</option>
+                        <option *ngFor="let ss of ssDropdown; index as i" value="{{ss.ssId}}">
+                            {{ss.ssName}}</option>
+                    </select>
+                    <div *ngIf="s.ss.errors" class="invalid-feedback">
+                        <div *ngIf="s.ss.errors.required">
+                            SS selection is required
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md">
+                    <label for="comment">Comments :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <textarea rows="4" cols="50" style="resize: none; height: 5em;" class="form-control"
+                        formControlName="comment"
+                        [ngClass]="{'is-invalid': s.comment.invalid
+                            && s.comment.touched,'is-valid': s.comment.valid && (s.comment.dirty || s.comment.touched) }">
+                    </textarea>
+                    <div *ngIf="s.comment.errors" class="invalid-feedback">
+                        <div *ngIf="s.comment.errors.required">Comment is required for replacing</div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <button type="button" class=" btn btn-primary btn-sm" (click)="saveReplace()"
+                    [disabled]="!disabledReplaceSave()">Save</button>
             </div>
         </div>
 

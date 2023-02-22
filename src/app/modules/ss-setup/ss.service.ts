@@ -38,4 +38,8 @@ export class SsService {
     return this.http.post(`${this.baseURL}swasthyasahayika/approve`, obj)
   }
 
+  markSsAsFreshOrReplacement(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/markSsAsFreshOrReplacement`, obj)
+  }
+
 }

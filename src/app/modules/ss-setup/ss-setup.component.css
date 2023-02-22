@@ -80,7 +80,18 @@
   font-size: 1.5em;
 }
 
+.fa-rotate-right:hover {
+  color: darkgreen !important;
+  cursor: pointer;
+  font-size: 1.5em;
+}
+
 .modal-HF {
   height: 300px;
+  width: 498px;
+}
+
+.modalReplace {
+  height: 400px;
   width: 498px;
 }

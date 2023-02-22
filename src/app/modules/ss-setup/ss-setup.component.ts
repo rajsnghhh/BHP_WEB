@@ -19,6 +19,7 @@ export class SsSetupComponent implements OnInit {
   ssForm: UntypedFormGroup;
   ssCreateForm: UntypedFormGroup;
   approveSSForm: UntypedFormGroup;
+  replaceSSForm: UntypedFormGroup;
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   staffWiseSSLists: Array<any> = [];
@@ -30,6 +31,7 @@ export class SsSetupComponent implements OnInit {
   modalContent: any;
   modalReference: any;
   appModal: any;
+  replaceModal: any;
   branchId: any;
   blockList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
@@ -48,6 +50,8 @@ export class SsSetupComponent implements OnInit {
   branchID: any;
   approvalItem: any;
   loader: boolean = false;
+  ssDropdown: Array<any> = [];
+  replaceData: any
 
   constructor(private fb: UntypedFormBuilder, private httpService: HttpService, private sidebarService: SidebarService,
     private ssService: SsService, private toaster: ToastrService, private modalService: NgbModal, private http: HttpClient,
@@ -188,6 +192,12 @@ export class SsSetupComponent implements OnInit {
         this.staffWiseSSLists = this.ssList;
         this.ssForm.markAllAsTouched();
       }
+
+      // this.ssList.forEach(x => {
+      //   this.ssDropdown.push({ ssName: x.ssName, ssId: x.ssId });
+      //   console.log(this.ssDropdown);
+
+      // })
     });
 
   }
@@ -517,4 +527,94 @@ export class SsSetupComponent implements OnInit {
     return flag;
   }
 
+  replaceSS(item, replace) {
+    this.ssDropdown = [];
+    this.replaceData = item;
+    console.log(item);
+    this.replace_ssForm();
+    this.modalContent = '';
+    this.replaceModal = this.modalService.open(replace, {
+      windowClass: 'replace',
+    });
+
+    this.ssList.filter(x => x.ssId != item.ssId).forEach(x => {
+      this.ssDropdown.push({ ssName: x.ssName, ssId: x.ssId });
+      // console.log(this.ssDropdown);
+    })
+
+    if (this.replaceData.freshReplacementDetails.replacing_which_ss) {
+      this.replaceSSForm.controls['ss'].disable();
+    }
+    if (this.replaceData.freshReplacementDetails.comment) {
+      this.replaceSSForm.controls['comment'].disable();
+    }
+  }
+
+  replace_ssForm() {
+    this.replaceSSForm = this.fb.group({
+      fresh: [''],
+      ss: [this.replaceData.freshReplacementDetails.replacing_which_ss ? this.replaceData.freshReplacementDetails.replacing_which_ss : '', Validators.required],
+      comment: [this.replaceData.freshReplacementDetails.comment ? this.replaceData.freshReplacementDetails.comment : '', Validators.required]
+    })
+  }
+
+  get s() {
+    return this.replaceSSForm.controls
+  }
+
+  replaceSSModalDismiss() {
+    this.replaceModal.close();
+  }
+
+  disabledReplaceSave() {
+    let flag = true;
+
+    if (this.replaceData.freshReplacementDetails.replacing_which_ss) {
+      if (this.replaceSSForm.value.fresh != true) {
+        flag = false;
+      }
+    } else {
+      if (!this.replaceSSForm.value.ss) {
+        flag = false;
+      }
+
+      if (!this.replaceSSForm.value.comment) {
+        flag = false;
+      }
+    }
+
+    return flag;
+  }
+
+  saveReplace() {
+    console.log(this.replaceData.freshReplacementDetails.ss_type)
+    console.log(this.replaceSSForm.value.fresh == true);
+    if (this.replaceSSForm.value.fresh == true) {
+      var replace_req = {
+        dataAccessDTO: this.httpService.dataAccessDTO, swasthyaSahayikaMasterId: this.replaceData.ssId,
+        markingType: this.replaceData.freshReplacementDetails.ss_type == 'F' ? 'R' : 'F', replacingSsId: null,
+        comment: null
+      }
+    } else {
+      replace_req = {
+        dataAccessDTO: this.httpService.dataAccessDTO, swasthyaSahayikaMasterId: this.replaceData.ssId,
+        markingType: this.replaceData.freshReplacementDetails.ss_type == 'F' ? 'R' : 'F', replacingSsId: this.replaceSSForm.value.ss,
+        comment: this.replaceSSForm?.value?.comment ? this.replaceSSForm?.value?.comment.trim() : null
+      }
+    }
+
+    console.log(replace_req);
+
+    this.ssService.markSsAsFreshOrReplacement(replace_req).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.replaceSSModalDismiss();
+        this.ssLists();
+      }
+      else {
+        this.showError(res.message);
+      }
+    })
+  }
 }

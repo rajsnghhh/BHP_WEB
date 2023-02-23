@@ -62,7 +62,6 @@ export class EscortRerefRegisterComponent implements OnInit {
   deleteMode: boolean;
   escortSearch: any;
   searchFullscreen: boolean;
-  filterDate: Array<any> = [];
 
   constructor(private sidebarService: SidebarService, private http: HttpClient, private router: Router, private fb: FormBuilder,
     private httpService: HttpService, private escortReferService: EscortRerefRegisterService, private modalService: NgbModal,
@@ -129,7 +128,8 @@ export class EscortRerefRegisterComponent implements OnInit {
       branch: ['', Validators.required],
       block: ['', Validators.required],
       gp: ['', Validators.required],
-      gram: ['', Validators.required]
+      gram: ['', Validators.required],
+      filterDate: ['']
     })
   }
 
@@ -197,7 +197,7 @@ export class EscortRerefRegisterComponent implements OnInit {
 
   changeVillage(villageId) {
     this.escortviewData = [];
-    this.filterDate = [];
+    this.viewEscortReferForm.controls.filterDate.setValue('')
     console.log(villageId, 'villageId');
 
     let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
@@ -228,17 +228,10 @@ export class EscortRerefRegisterComponent implements OnInit {
         } else {
           x.escortOrReferType = 'Escort'
         }
-
-        this.filterDate.push(x.visitDate);
-        // console.log(this.filterDate);
-        this.filterDate = this.filterDate.filter((item, index) => this.filterDate.indexOf(item) === index)
-        // console.log(this.filterDate);
       });
-
 
       this.escortviewFilterData = this.escortviewData
       console.log(this.escortviewData, 'escortviewData');
-      console.log(this.filterDate, 'this.filterDate');
     })
 
   }
@@ -307,7 +300,7 @@ export class EscortRerefRegisterComponent implements OnInit {
     this.createEscortRefer_Form();
     this.getEscortReferRegisterPrerequisites();
 
-   
+
     if (this.editEscortDetails?.escortReferRegisterId) {
       this.loader = false;
       setTimeout(() => {
@@ -573,7 +566,8 @@ export class EscortRerefRegisterComponent implements OnInit {
     }
     else {
       this.viewBeneficiaryModal.close();
-      this.viewBeneficiaryDetails = []
+      this.viewBeneficiaryDetails = [];
+      this.onclickBenFamDetails = [];
     }
   }
 
@@ -621,6 +615,12 @@ export class EscortRerefRegisterComponent implements OnInit {
       });
     }
 
+  }
+
+  staffChange(e) {
+    if (e.target.checked == false) {
+      this.createEscortReferForm.controls.user.setValue('')
+    }
   }
 
   selectMultipleBeneficiary(e, ben) {
@@ -724,12 +724,16 @@ export class EscortRerefRegisterComponent implements OnInit {
     } else if (this.createEscortReferForm.value.staff == false &&
       (this.createEscortReferForm.value.ss == false || this.createEscortReferForm.value.ss == undefined)) {
       flag = false;
-    } else if (!this.createEscortReferForm.value.user) {
-      flag = false;
     } else if (!this.createEscortReferForm.value.place) {
       flag = false;
     } else if (this.reasonList.filter(x => x.isChecked == true).length == 0) {
       flag = false;
+    }
+
+    if (this.createEscortReferForm.value.staff == true) {
+      if (!this.createEscortReferForm.value.user) {
+        flag = false;
+      }
     }
 
     return flag;
@@ -785,7 +789,7 @@ export class EscortRerefRegisterComponent implements OnInit {
         }) => ({
           status,
           ...rest
-        })); 
+        }));
 
       })
 
@@ -813,17 +817,6 @@ export class EscortRerefRegisterComponent implements OnInit {
       familyId: escort.familyId,
       visitDate: escort.visitDate,
       isFamilyHerselfBeneficiary: escort.isFamilyHerselfBeneficiary,
-      // escortOrReferType: this.createEscortReferForm.value.type == 'escort' ? 'E' : 'R',
-      // visitingPlaceId: this.createEscortReferForm.value.place,
-      // escortedReferredByStaff: this.createEscortReferForm.value.staff == true ? 'Y' : 'N',
-      // escorteeRefereeStaffId: this.createEscortReferForm.value.user,
-      // escortedReferredBySS: this.createEscortReferForm.value.ss == true ? 'Y' : 'N',
-      // escorteeRefereeSsId: ssid,
-      // presentInPregnantWoman: this.editEscortDetails?.presentInPregnantWoman ? this.editEscortDetails?.presentInPregnantWoman : this.onclickBenFamDetails?.presentInPregnantWoman,
-      // presentInLactatingMother: this.editEscortDetails?.presentInLactatingMother ? this.editEscortDetails?.presentInLactatingMother : this.onclickBenFamDetails?.presentInLactatingMother,
-      // hasChildPresentInPem: this.editEscortDetails?.hasChildPresentInPem ? this.editEscortDetails?.hasChildPresentInPem : this.onclickBenFamDetails?.hasChildPresentInPem,
-      // has2to5yearsOldChildren: this.editEscortDetails?.has2to5yearsOldChildren ? this.editEscortDetails?.has2to5yearsOldChildren : this.onclickBenFamDetails?.has2to5yearsoldChildren,
-      // hasAdolescentGirlChildren: this.editEscortDetails?.hasAdolescentGirlChildren ? this.editEscortDetails?.hasAdolescentGirlChildren : this.onclickBenFamDetails?.hasAdolescentGirlChildren,
       active_flag: 'D',
       reasonList: escort.reasonList,
       childDetailList: escort.childDetailList
@@ -843,6 +836,8 @@ export class EscortRerefRegisterComponent implements OnInit {
   }
 
   filterList(e) {
+    console.log(e);
+
     if (e) {
       var filter = this.escortviewFilterData.filter(x => x.visitDate == e)
       console.log(filter);

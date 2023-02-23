@@ -11,15 +11,6 @@
                         </div>
 
                         <div class="form-group col-md" *ngIf="escortviewData.length>0">
-                            <select class="form-select" id="viewChild" (change)="filterList($event.target.value)"
-                                [ngClass]=" searchFullscreen? 'filter_inner_fullscreen ' : ' filter_inner' ">
-                                <option value="">-- Filter List By Date --</option>
-                                <option value="{{date}}" *ngFor="let date of filterDate">
-                                    {{date.split("-").reverse().join("-")}}</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group col-md" *ngIf="escortviewData.length>0">
                             <div class="serach_field_2">
                                 <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                                     <form active="#">
@@ -33,7 +24,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
@@ -150,8 +140,12 @@
 
                                     <thead>
                                         <tr>
-                                            <th style="width: 4%;">Sl.<br>No.</th>
-                                            <th style="width: 15%;">Date</th>
+                                            <th style="width: 6%;">Sl.<br>No.</th>
+                                            <th style="width: 20%;">Date
+                                                <input type="date" class="form-controls" formControlName="filterDate"
+                                                    (change)="filterList($event.target.value)"
+                                                    *ngIf="viewEscortReferForm.value.gram">
+                                            </th>
                                             <th style="width: 8%;">Family<br>No.</th>
                                             <th style="width: 25%;">Name</th>
                                             <th style="width: 25%;">Guardian Name</th>
@@ -168,8 +162,8 @@
                                         <tr *ngFor="let escort of escortviewData |escortRegisterFilter: {familyNumber :  escortSearch,
                                                  familyName :escortSearch, visitingPlaceName : escortSearch, escortOrReferType:escortSearch}|
                                                   paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                            <td style="width: 4%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td style="width: 15%;">{{escort.visitDate.split("-").reverse().join("-")}}
+                                            <td style="width: 6%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 20%;">{{escort.visitDate.split("-").reverse().join("-")}}
                                             </td>
                                             <td style="width: 8%;">{{escort.familyNumber}}</td>
                                             <td style="width: 25%;">{{escort.familyName}}</td>
@@ -412,7 +406,8 @@
                         <label for="type" *ngIf="createEscortReferForm.value.type =='escort'">Escorted By :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label><br>
                         Staff: <input class="form-check-input" type="checkbox" value="staff" id="flexCheckDefault"
-                            style="margin-top: 3px;" formControlName="staff">&nbsp;&nbsp;&nbsp;&nbsp;
+                            style="margin-top: 3px;" formControlName="staff"
+                            (change)="staffChange($event)">&nbsp;&nbsp;&nbsp;&nbsp;
                         SS: <input class="form-check-input" type="checkbox" value="ss" id="flexCheckDefault"
                             style="margin-top: 3px;" formControlName="ss">&nbsp;&nbsp;
                         <span
@@ -424,7 +419,7 @@
                             ss is available)</span>
                     </div>
 
-                    <div class="form-group col-md">
+                    <div class="form-group col-md" *ngIf="createEscortReferForm.value.staff == true ">
                         <label for="user">Staff List :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <select class="form-select" formControlName="user" id="user" [ngClass]="{'is-invalid': e.user.invalid && e.user.touched,  'is-valid': 
                                             e.user.valid && (e.user.dirty || e.user.touched) }">

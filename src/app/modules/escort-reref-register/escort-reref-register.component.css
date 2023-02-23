@@ -170,7 +170,7 @@ legend.scheduler-border {
 
 .search_inner button {
   padding-right: 1px;
-  margin-left: 175px;
+  margin-left: 485px;
   margin-top: -1px;
 }
 
@@ -191,13 +191,13 @@ legend.scheduler-border {
 
 .search_inner input {
   width: 60%;
-  margin-left: 166px;
+  margin-left: 474px;
   margin-bottom: 4px;
 }
 
 .search_inner_fullscreen input {
   width: 75%;
-  margin-left: 242px;
+  margin-left: 591px;
   margin-bottom: 5px;
   font-size: 13px;
   height: 40px;
@@ -217,7 +217,7 @@ legend.scheduler-border {
 .serach_field_2 .search_inner_fullscreen button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: -887px;
+  margin-left: -186px;
   margin-bottom: 11px;
   margin-top: 10px;
 }
@@ -225,12 +225,12 @@ legend.scheduler-border {
 .filter_inner_fullscreen {
   margin-left: 124px;
   width: 148%;
-} 
+}
 
 .filter_inner {
   margin-left: 83px;
   width: 135%;
-} 
+}
 
 .serach_field_23 .search_inner input {
   color: #000;
@@ -292,4 +292,38 @@ legend.scheduler-border {
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 0;
+}
+
+.serach_field_23 .search_inner_fullscreen input {
+  width: 75%;
+  margin-left: 8px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 55px;
+  border: 1px solid #2daab8;
+  padding-right: 15px;
+  margin-top: 19px;
+}
+
+.serach_field_23 .search_inner_fullscreen button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: -1359px;
+  margin-top: 21px;
+}
+
+.form-controls {
+  display: block;
+  width: 100%;
+  font-weight: 400;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

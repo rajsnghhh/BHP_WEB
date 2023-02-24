@@ -302,6 +302,7 @@ export class EscortRerefRegisterComponent implements OnInit {
 
 
     if (this.editEscortDetails?.escortReferRegisterId) {
+      this.beneficiaryListID = [];
       this.loader = false;
       setTimeout(() => {
         this.modalContent = '';
@@ -521,6 +522,7 @@ export class EscortRerefRegisterComponent implements OnInit {
   }
 
   getEscortReferRegisterPrerequisites() {
+    this.reasonListID = [];
     let prerequisite_req = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: this.viewEscortReferForm.value.gram };
     this.escortReferService.getEscortReferRegisterPrerequisites(prerequisite_req).subscribe((res: any) => {
       console.log(res.responseObject);
@@ -684,7 +686,7 @@ export class EscortRerefRegisterComponent implements OnInit {
       escortOrReferType: this.createEscortReferForm.value.type == 'escort' ? 'E' : 'R',
       visitingPlaceId: this.createEscortReferForm.value.place,
       escortedReferredByStaff: this.createEscortReferForm.value.staff == true ? 'Y' : 'N',
-      escorteeRefereeStaffId: this.createEscortReferForm.value.user,
+      escorteeRefereeStaffId: this.createEscortReferForm.value.user ? this.createEscortReferForm.value.user : null,
       escortedReferredBySS: this.createEscortReferForm.value.ss == true ? 'Y' : 'N',
       escorteeRefereeSsId: ssid,
       presentInPregnantWoman: this.editEscortDetails?.presentInPregnantWoman ? this.editEscortDetails?.presentInPregnantWoman : this.onclickBenFamDetails?.presentInPregnantWoman,

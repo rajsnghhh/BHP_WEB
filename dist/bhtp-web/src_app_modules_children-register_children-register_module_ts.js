@@ -822,7 +822,9 @@ class ChildrenRegisterCreateComponent {
       sex: '',
       status: 'A'
     });
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then(res => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;

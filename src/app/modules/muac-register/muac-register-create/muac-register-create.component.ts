@@ -92,7 +92,9 @@ export class MuacRegisterCreateComponent implements OnInit {
       createdDateTime: new Date().toISOString().slice(0, 10)
     });
 
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;
@@ -502,7 +504,7 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   deleteMuac(item, i) {
     console.log(item);
-    
+
     const post = {
       activeStatus: "A",
       dataAccessDTO: this.httpService.dataAccessDTO,

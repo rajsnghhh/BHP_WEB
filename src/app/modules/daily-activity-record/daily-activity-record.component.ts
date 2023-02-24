@@ -51,7 +51,9 @@ export class DailyActivityRecordComponent implements OnInit {
     console.log(this.roleAccess);
     this.darForms();
 
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       this.lowerRankbranchId = res.branchId;
       if (res.regionBranchHide) {
         this.regionList = res.region;
@@ -375,8 +377,8 @@ export class DailyActivityRecordComponent implements OnInit {
 
   viewSSName(ssDetail, ssNames) {
     this.ssDateOrUniqueShow = ssDetail;
-    console.log(this.ssDateOrUniqueShow,'this.ssDateOrUniqueShow');
-    
+    console.log(this.ssDateOrUniqueShow, 'this.ssDateOrUniqueShow');
+
     if (ssDetail.followUpSSDetailsUnique) {
       this.ssDetails = ssDetail.followUpSSDetailsUnique;
       // console.log(1);

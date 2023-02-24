@@ -109,11 +109,12 @@ export class HealthForumComponent implements OnInit {
 
   ngOnInit(): void {
     this.healthForumForms();
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       this.lowerRankbranchId = res.branchId;
       if (res.regionBranchHide) {
         this.regionList = res.region;
-        this.loader = true;
         this.regionBranchHide = res.regionBranchHide;
       } else {
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));
@@ -619,16 +620,16 @@ export class HealthForumComponent implements OnInit {
       return;
     }
 
-    this.loader= false;
+    this.loader = false;
     this.healthForumService.HFSaveOrUpdate(saveObj).subscribe((res: any) => {
       console.log(res);
       if (res.status == true) {
-        this.loader= true;
+        this.loader = true;
         this.showSuccess(res.message);
         this.changeBranch(this.branchId || this.lowerRankbranchId);
         this.createHFModalDismiss();
       } else {
-        this.loader= true;
+        this.loader = true;
         this.showError(res.message);
       }
     })
@@ -1762,8 +1763,8 @@ export class HealthForumComponent implements OnInit {
       if (this.diseaseListID.filter(x => x.active_flag == 'A').length < 1) {
         flag = false;
       }
-    } 
-    
+    }
+
     if (!this.createEditHFEventForm.value.staffPresent) {
       console.log(this.createEditHFEventForm.value.staffPresent);
       flag = false;

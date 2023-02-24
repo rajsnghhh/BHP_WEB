@@ -722,7 +722,9 @@ class MuacRegisterCreateComponent {
       userId: this.sidebarService.userId,
       createdDateTime: new Date().toISOString().slice(0, 10)
     });
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then(res => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;

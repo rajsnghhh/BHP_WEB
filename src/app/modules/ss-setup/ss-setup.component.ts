@@ -69,7 +69,9 @@ export class SsSetupComponent implements OnInit {
     console.log(this.role);
     this.createForm();
 
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       this.branchID = res.branchId;
 
       if (res.regionBranchHide) {

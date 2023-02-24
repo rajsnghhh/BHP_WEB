@@ -56,11 +56,11 @@ export class PwRegisterComponent implements OnInit {
 
   constructor(private httpService: HttpService, private http: HttpClient, private fb: UntypedFormBuilder, private sidebarService: SidebarService,
     private baselineService: BaselineSurveyService, public dialog: MatDialog, private toaster: ToastrService,
-    private activatedRoute: ActivatedRoute, private router: Router,public validationService: ValidationService,) { }
+    private activatedRoute: ActivatedRoute, private router: Router, public validationService: ValidationService,) { }
 
-    ngDoCheck(): void {
-      this.searchFullscreen = this.validationService.val;
-    }
+  ngDoCheck(): void {
+    this.searchFullscreen = this.validationService.val;
+  }
 
   ngOnInit(): void {
 
@@ -82,7 +82,9 @@ export class PwRegisterComponent implements OnInit {
     } else {
       this.createForm();
 
+      this.loader = false;
       this.sidebarService.checkRoledetailDTO().then((res: any) => {
+        this.loader = true;
         if (res.regionBranchHide) {
           this.regionList = res.region;
           this.regionBranchHide = res.regionBranchHide;

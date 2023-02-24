@@ -76,8 +76,9 @@ export class BaselineViewComponent implements OnInit {
     this.createForm();
     this.householdFamDetails();
 
-
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;

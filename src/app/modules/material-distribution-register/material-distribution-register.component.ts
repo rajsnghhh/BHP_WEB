@@ -82,7 +82,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   ngOnInit(): void {
 
     this.view_materialDistributionForm();
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;

@@ -1658,7 +1658,9 @@ class DailyActivityRecordComponent {
     this.roleAccess = roleAccessDTO.responseObject?.RoledetailDTO?.roleShortName;
     console.log(this.roleAccess);
     this.darForms();
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then(res => {
+      this.loader = true;
       this.lowerRankbranchId = res.branchId;
       if (res.regionBranchHide) {
         this.regionList = res.region;

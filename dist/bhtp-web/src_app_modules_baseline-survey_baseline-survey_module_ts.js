@@ -4293,7 +4293,9 @@ class BaselineViewComponent {
     this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionShortName == 'Household Info')?.subMenuDetailList.find(item => item.subFunctionMasterId == 73 || item.subFunctionMasterId == 74 || item.subFunctionMasterId == 75 || item.subFunctionMasterId == 76)?.accessDetailList.find(accessType => accessType.accessType == 'view')?.accessType ? this.route.navigate(['/Baseline-Survey/view']) : this.route.navigate(['/error']);
     this.createForm();
     this.householdFamDetails();
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then(res => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;

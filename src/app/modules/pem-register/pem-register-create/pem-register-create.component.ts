@@ -114,7 +114,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       this.locForm();
       this.createForm(this.pemDataSave);
 
+      this.loader = false;
       this.sidebarService.checkRoledetailDTO().then((res: any) => {
+        this.loader = true;
         if (res.regionBranchHide) {
           this.regionList = res.region;
           this.regionBranchHide = res.regionBranchHide;
@@ -556,7 +558,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         childId: this.childrenId,
         height: item.height ? Math.trunc(item.height * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
         weight: item.weight ? Math.trunc(item.weight * Math.pow(10, 3)) / Math.pow(10, 3) : 0,
-        muac:  Math.trunc(item.muac * Math.pow(10, 1)) / Math.pow(10, 1),
+        muac: Math.trunc(item.muac * Math.pow(10, 1)) / Math.pow(10, 1),
         active_flag: 'A'
       },
       pemCounsellingDataDto: {
@@ -756,7 +758,7 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
         childId: set.childId,
         height: item.height ? Math.trunc(item.height * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
         weight: item.weight ? Math.trunc(item.weight * Math.pow(10, 3)) / Math.pow(10, 3) : 0,
-        muac: item.muac ? Math.trunc(item.muac * Math.pow(10, 1)) / Math.pow(10, 1): 0,
+        muac: item.muac ? Math.trunc(item.muac * Math.pow(10, 1)) / Math.pow(10, 1) : 0,
         active_flag: 'A'
       },
       pemCounsellingDataDto: {

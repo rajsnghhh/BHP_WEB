@@ -2546,11 +2546,12 @@ class HealthForumComponent {
   }
   ngOnInit() {
     this.healthForumForms();
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then(res => {
+      this.loader = true;
       this.lowerRankbranchId = res.branchId;
       if (res.regionBranchHide) {
         this.regionList = res.region;
-        this.loader = true;
         this.regionBranchHide = res.regionBranchHide;
       } else {
         let dataAccessDTO = JSON.parse(localStorage.getItem('dataAccessDTO'));

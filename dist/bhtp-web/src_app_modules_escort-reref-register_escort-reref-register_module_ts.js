@@ -1911,14 +1911,17 @@ class EscortRerefRegisterComponent {
       childDetailList: this.beneficiaryListID
     };
     console.log(saveReq, 'savereq');
+    this.loader = false;
     this.escortReferService.getEscortReferRegistersaveOrUpdate(saveReq).subscribe(res => {
       console.log(res);
       if (res.status == true) {
+        this.loader = true;
         this.showSuccess(res.message);
         this.viewSelectBenificiaryModalDismiss();
         this.changeVillage(this.viewEscortReferForm.value.gram);
       } else {
         this.showError(res.message);
+        this.loader = true;
       }
     });
   }

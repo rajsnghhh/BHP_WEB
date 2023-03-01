@@ -39,12 +39,14 @@ export class SsSetupComponent implements OnInit {
   villList: Array<any> = [];
   staffList: Array<any> = [];
   editssData: any;
-  isDisabled: boolean = false;
+  // isDisabled: boolean = false;
   searchText: any;
   searchFullscreen: boolean;
   createMode: boolean;
   updateMode: boolean;
   deleteMode: boolean;
+  approveMode: boolean;
+  markMode: boolean;
   role: any;
   regionBranchHide: boolean;
   branchID: any;
@@ -120,6 +122,16 @@ export class SsSetupComponent implements OnInit {
       .find(item => item.subFunctionMasterId == 177 || item.subFunctionMasterId == 178 || item.subFunctionMasterId == 179 || item.subFunctionMasterId == 180)?.accessDetailList
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
 
+    this.approveMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 177 || item.subFunctionMasterId == 178 || item.subFunctionMasterId == 179 || item.subFunctionMasterId == 180)?.accessDetailList
+      .find(accessType => accessType.accessType == 'approve')?.accessType ? true : false;
+
+    this.markMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 177 || item.subFunctionMasterId == 178 || item.subFunctionMasterId == 179 || item.subFunctionMasterId == 180)?.accessDetailList
+      .find(accessType => accessType.accessType == 'mark')?.accessType ? true : false;
+
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
 
@@ -160,6 +172,7 @@ export class SsSetupComponent implements OnInit {
 
     if (this.editssData?.ssId) {
       this.ssCreateForm.markAllAsTouched();
+      this.ssCreateForm.controls['staff'].disable();
     }
   }
 
@@ -229,6 +242,7 @@ export class SsSetupComponent implements OnInit {
   createSwasthyaSahayika(createSS) {
     console.log(this.editssData?.ssId, 'this.editssData?.ssIdcreate');
     console.log('branchId', this.branchId);
+
 
     let obj = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId ? this.branchId : this.branchID }
 
@@ -338,15 +352,18 @@ export class SsSetupComponent implements OnInit {
       return;
     }
 
-    if (!this.ssCreateForm.value.staff) {
-      this.showError('Please Select Staff In Charge');
-      return;
+    if (!this.editssData?.ssId) {
+      if (!this.ssCreateForm.value.staff) {
+        this.showError('Please Select Staff In Charge');
+        return;
+      }
     }
+
     console.log(this.editssData);
 
     let postBody = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      hcoOrHcoIOrTLId: this.ssCreateForm.value.staff,
+      hcoOrHcoIOrTLId: this.editssData?.ssId ? this.editssData.userDto.userId : this.ssCreateForm.value.staff,
       swasthyaSahayikaDTO: {
         swasthyaSahayikaMasterId: this.editssData?.ssId ? this.editssData?.ssId : 0,
         name: this.validationService.camelize(this.ssCreateForm.value.ssName.trim()),

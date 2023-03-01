@@ -702,14 +702,17 @@ export class EscortRerefRegisterComponent implements OnInit {
     }
     console.log(saveReq, 'savereq');
 
+    this.loader = false;
     this.escortReferService.getEscortReferRegistersaveOrUpdate(saveReq).subscribe((res: any) => {
       console.log(res);
       if (res.status == true) {
+        this.loader = true;
         this.showSuccess(res.message);
         this.viewSelectBenificiaryModalDismiss();
         this.changeVillage(this.viewEscortReferForm.value.gram)
       } else {
         this.showError(res.message);
+        this.loader = true;
       }
 
     })

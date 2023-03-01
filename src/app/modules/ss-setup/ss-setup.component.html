@@ -103,7 +103,8 @@
                                             <th style="width: 7%;">User<br> Active</th>
                                             <th style="width: 6%;">SS<br>Type</th>
                                             <th style="width: 10%;">Apv.<br>Status</th>
-                                            <th *ngIf="updateMode || deleteMode" style="width: 20%;">Action</th>
+                                            <th *ngIf="updateMode || deleteMode || approveMode || markMode"
+                                                style="width: 20%;">Action</th>
                                         </tr>
                                     </thead>
 
@@ -128,18 +129,19 @@
                                                 <i class="fa fa-circle fa-lg" title="SS Unapproved"
                                                     *ngIf="item.status != 'A'"></i>
                                             </td>
-                                            <td style="width: 20%;" *ngIf="updateMode || deleteMode"><i
+                                            <td style="width: 20%;"
+                                                *ngIf="updateMode || deleteMode || approveMode || markMode"><i
                                                     class="fas fa-edit" title="Edit SS" *ngIf="updateMode"
                                                     (click)="editSSForm(item, createSS)"></i>
 
                                                 <i class="fas fa-trash" title="Delete SS" *ngIf="deleteMode"
                                                     (click)="deleteSSForm(item, i)"></i>
 
-                                                <i class="fas fa-check-circle" title="Approve SS"
+                                                <i class="fas fa-check-circle" title="Approve SS" *ngIf="approveMode"
                                                     (click)="approveSS(item, approve)"></i>
 
                                                 <i class="fas fa-rotate-right" title="Fresh/ Replace SS"
-                                                    (click)="replaceSS(item, replace)"></i>
+                                                    *ngIf="markMode" (click)="replaceSS(item, replace)"></i>
 
                                             </td>
 
@@ -299,7 +301,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md" *ngIf="!editssData?.ssId">
+                    <div class="form-group col-md">
                         <label for="staff">Staff In Charge:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                         <select class="form-select" formControlName="staff" id="staff" [ngClass]="{
                           'is-invalid': c.staff.invalid && c.staff.touched,
@@ -317,24 +319,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md" *ngIf="editssData?.ssId">
-                        <label for="staff">Staff In Charge:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                        <select class="form-select" formControlName="staff" id="staff" [attr.disabled]="isDisabled"
-                            [ngClass]="{
-                          'is-invalid': c.staff.invalid && c.staff.touched,
-                          'is-valid': c.staff.valid && (c.staff.dirty || c.staff.touched)
-                        }">
-                            <option value="">-- Select Staff --</option>
-                            <option *ngFor="let staff of staffList" value="{{staff.user_id}}">
-                                {{ staff.user_firstname}} {{staff.user_middlename}} {{staff.user_lastname}}
-                            </option>
-                        </select>
-                        <div *ngIf="c.staff.errors" class="invalid-feedback">
-                            <div *ngIf="c.staff.errors.required">
-                                Staff Incharge selection is required
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
             </form>

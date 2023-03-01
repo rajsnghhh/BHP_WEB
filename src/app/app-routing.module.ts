@@ -47,6 +47,7 @@ const routes: Routes = [
   { path: 'daily-activity-record', loadChildren: () => import('./modules/daily-activity-record/daily-activity-record.module').then(m => m.DailyActivityRecordModule), canActivate: [AuthGuard] },
   { path: 'health-forum', loadChildren: () => import('./modules/health-forum/health-forum.module').then(m => m.HealthForumModule), canActivate: [AuthGuard] },
   { path: 'escort-reref-register', loadChildren: () => import('./modules/escort-reref-register/escort-reref-register.module').then(m => m.EscortRerefRegisterModule), canActivate: [AuthGuard] },
+  { path: 'sattu-register', loadChildren: () => import('./modules/sattu-register/sattu-register.module').then(m => m.SattuRegisterModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

@@ -46,7 +46,7 @@ export class SsSetupComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   approveMode: boolean;
-  markMode: boolean;
+  replaceMode: boolean;
   role: any;
   regionBranchHide: boolean;
   branchID: any;
@@ -127,10 +127,10 @@ export class SsSetupComponent implements OnInit {
       .find(item => item.subFunctionMasterId == 177 || item.subFunctionMasterId == 178 || item.subFunctionMasterId == 179 || item.subFunctionMasterId == 180)?.accessDetailList
       .find(accessType => accessType.accessType == 'approve')?.accessType ? true : false;
 
-    this.markMode = this.sidebarService.subMenuList
+    this.replaceMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionShortName == 'Branch Setup')?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 177 || item.subFunctionMasterId == 178 || item.subFunctionMasterId == 179 || item.subFunctionMasterId == 180)?.accessDetailList
-      .find(accessType => accessType.accessType == 'mark')?.accessType ? true : false;
+      .find(accessType => accessType.accessType == 'replace')?.accessType ? true : false;
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
   }
@@ -480,6 +480,8 @@ export class SsSetupComponent implements OnInit {
       return;
     } else {
       this.approvalItem = item;
+      // console.log( this.approvalItem.numberOfBasicTrainingDaysAttended);
+      
       if (item.numberOfBasicTrainingDaysAttended >= 4) {
         this.appApi(item);
       } else {
@@ -561,10 +563,10 @@ export class SsSetupComponent implements OnInit {
       // console.log(this.ssDropdown);
     })
 
-    if (this.replaceData.freshReplacementDetails.replacing_which_ss) {
+    if (this.replaceData?.freshReplacementDetails?.replacing_which_ss) {
       this.replaceSSForm.controls['ss'].disable();
     }
-    if (this.replaceData.freshReplacementDetails.comment) {
+    if (this.replaceData?.freshReplacementDetails?.comment) {
       this.replaceSSForm.controls['comment'].disable();
     }
   }
@@ -572,8 +574,8 @@ export class SsSetupComponent implements OnInit {
   replace_ssForm() {
     this.replaceSSForm = this.fb.group({
       fresh: [''],
-      ss: [this.replaceData.freshReplacementDetails.replacing_which_ss ? this.replaceData.freshReplacementDetails.replacing_which_ss : '', Validators.required],
-      comment: [this.replaceData.freshReplacementDetails.comment ? this.replaceData.freshReplacementDetails.comment : '', Validators.required]
+      ss: [this.replaceData?.freshReplacementDetails?.replacing_which_ss ? this.replaceData?.freshReplacementDetails?.replacing_which_ss : '', Validators.required],
+      comment: [this.replaceData?.freshReplacementDetails?.comment ? this.replaceData?.freshReplacementDetails?.comment : '', Validators.required]
     })
   }
 
@@ -588,7 +590,7 @@ export class SsSetupComponent implements OnInit {
   disabledReplaceSave() {
     let flag = true;
 
-    if (this.replaceData.freshReplacementDetails.replacing_which_ss) {
+    if (this.replaceData?.freshReplacementDetails?.replacing_which_ss) {
       if (this.replaceSSForm.value.fresh != true) {
         flag = false;
       }
@@ -606,18 +608,18 @@ export class SsSetupComponent implements OnInit {
   }
 
   saveReplace() {
-    console.log(this.replaceData.freshReplacementDetails.ss_type)
+    console.log(this.replaceData?.freshReplacementDetails?.ss_type)
     console.log(this.replaceSSForm.value.fresh == true);
     if (this.replaceSSForm.value.fresh == true) {
       var replace_req = {
         dataAccessDTO: this.httpService.dataAccessDTO, swasthyaSahayikaMasterId: this.replaceData.ssId,
-        markingType: this.replaceData.freshReplacementDetails.ss_type == 'F' ? 'R' : 'F', replacingSsId: null,
+        markingType: this.replaceData?.freshReplacementDetails?.ss_type == 'F' ? 'R' : 'F', replacingSsId: null,
         comment: null
       }
     } else {
       replace_req = {
         dataAccessDTO: this.httpService.dataAccessDTO, swasthyaSahayikaMasterId: this.replaceData.ssId,
-        markingType: this.replaceData.freshReplacementDetails.ss_type == 'F' ? 'R' : 'F', replacingSsId: this.replaceSSForm.value.ss,
+        markingType: this.replaceData?.freshReplacementDetails?.ss_type == 'F' ? 'R' : 'F', replacingSsId: this.replaceSSForm.value.ss,
         comment: this.replaceSSForm?.value?.comment ? this.replaceSSForm?.value?.comment.trim() : null
       }
     }

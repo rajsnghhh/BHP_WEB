@@ -1,0 +1,32 @@
+.dialog-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .dialog-title {
+    background-color: #499;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    color: #ffffff;
+  }
+  .dialog-title::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: -14px;
+    width: 0;
+    height: 0;
+    border-top: 7px solid #277;
+    border-right: 7px solid #277;
+    border-bottom: 7px solid #0000;
+    border-left: 7px solid #0000;
+  }
+  ::ng-deep .mat-dialog-container {
+    padding: 12px 17px;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }

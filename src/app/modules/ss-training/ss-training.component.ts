@@ -185,8 +185,9 @@ export class SsTrainingComponent implements OnInit {
   changeBranch(branchId) {
     this.upperRoleBranchId = branchId;
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
-
+    this.loader = false;
     this.ssTrainingService.branchWiseSSTrainingEventList(req).subscribe((res) => {
+      this.loader = true;
       this.ssEventList = res.responseObject.branchWiseSsTrainingEventList;
       console.log(this.ssEventList, 'withoutfilterdata');
       if (this.viewSSTrainingEventForm.value.filterTraining) {

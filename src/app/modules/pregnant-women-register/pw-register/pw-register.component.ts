@@ -158,7 +158,9 @@ export class PwRegisterComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: this.sidebarService.branchId
     }
+    this.loader = false;
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch2');
     })

@@ -165,7 +165,9 @@ export class EscortRerefRegisterComponent implements OnInit {
   changeBranch(branchId) {
     console.log(branchId, 'branchId');
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
+    this.loader = false;
     this.escortReferService.getVillagesOfBranch(req).subscribe((res) => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch');
     });
@@ -203,7 +205,9 @@ export class EscortRerefRegisterComponent implements OnInit {
     console.log(villageId, 'villageId');
 
     let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
+    this.loader = false;
     this.escortReferService.getEscortReferRegisterview(viewreq).subscribe((res: any) => {
+      this.loader = true;
       this.escortview = res.responseObject;
       this.escortview?.forEach((x) => {
         x.familyList = x.familyList?.map(({

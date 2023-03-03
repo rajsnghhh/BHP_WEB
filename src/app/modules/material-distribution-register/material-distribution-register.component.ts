@@ -168,7 +168,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
   changeBranch(branchId) {
     console.log(branchId, 'branchId');
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
+    this.loader = false;
     this.materialDistributionService.getVillagesOfBranch(req).subscribe((res) => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch');
     });
@@ -203,7 +205,9 @@ export class MaterialDistributionRegisterComponent implements OnInit {
     console.log(this.villageID, 'changevillage this.villageID');
 
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, village_master_id: villageId };
+    this.loader = false;
     this.materialDistributionService.getMaterialDistributionList(req).subscribe((res: any) => {
+      this.loader = true;
       this.materialDistributionList = res.responseObject;
       console.log(this.materialDistributionList, 'this.materialDistributionList');
     })

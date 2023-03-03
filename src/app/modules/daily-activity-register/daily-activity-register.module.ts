@@ -6,6 +6,7 @@ import { DailyActivityRegisterComponent } from './daily-activity-register.compon
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoaderModule } from '../shared/loader/loader.module';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     Ng2SearchPipeModule,
     NgxPaginationModule,
-    FormsModule
+    FormsModule, LoaderModule
   ]
 })
 export class DailyActivityRegisterModule { }

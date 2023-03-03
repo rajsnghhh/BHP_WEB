@@ -455,8 +455,9 @@ export class PemRegisterCreateComponent implements OnInit, DoCheck {
       dataAccessDTO: this.httpService.dataAccessDTO,
       villageMasterId: this.villageID ? this.villageID : this.villageid
     }
-
+    this.loader = false;
     this.pemService.viewPemList(obj).subscribe((res) => {
+      this.loader = true;
       this.pemDetails = res.responseObject;
       console.log(this.pemDetails);
 

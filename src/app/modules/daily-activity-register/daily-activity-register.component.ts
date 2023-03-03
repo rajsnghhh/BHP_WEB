@@ -54,6 +54,7 @@ export class DailyActivityRegisterComponent implements OnInit {
   roleAccess: any;
   followUpSSName: any;
   followUpSSId: any;
+  loader: boolean = true;
 
   constructor(private fb: UntypedFormBuilder, public validationService: ValidationService, private http: HttpClient, private sidebarService: SidebarService,
     private dailyActivityService: DailyActivityRegisterService, private toaster: ToastrService, private httpService: HttpService,
@@ -68,8 +69,9 @@ export class DailyActivityRegisterComponent implements OnInit {
     console.log(this.roleAccess);
 
     this.locForm();
-
+    this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
+      this.loader = true;
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;
@@ -270,8 +272,9 @@ export class DailyActivityRegisterComponent implements OnInit {
     }
 
     console.log(obj);
-
+    this.loader = false;
     this.dailyActivityService.viewingDAREntryList(obj).subscribe((res) => {
+      this.loader = true;
       this.darList = res.responseObject;
       console.log(this.darList);
       if (this.darList.length == 0) {

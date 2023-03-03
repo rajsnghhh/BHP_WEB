@@ -222,8 +222,9 @@ export class CentralRegisterViewComponent implements OnInit, DoCheck {
       dataAccessDTO: this.http.dataAccessDTO,
       branchId: branchId
     }
-
+    this.loader = false;
     this.centralService.villagesOfBranch(Dto).subscribe((res) => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch2');
     });

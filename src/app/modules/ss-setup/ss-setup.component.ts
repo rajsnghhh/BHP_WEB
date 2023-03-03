@@ -182,7 +182,9 @@ export class SsSetupComponent implements OnInit {
 
   changeRegion(regionId) {
     let obj = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: regionId };
+    this.loader = false;
     this.ssService.listOfBranchesOfARegion(obj).subscribe((res) => {
+      this.loader = true;
       this.branchList = res.responseObject;
       console.log(this.branchList);
     });
@@ -481,7 +483,7 @@ export class SsSetupComponent implements OnInit {
     } else {
       this.approvalItem = item;
       // console.log( this.approvalItem.numberOfBasicTrainingDaysAttended);
-      
+
       if (item.numberOfBasicTrainingDaysAttended >= 4) {
         this.appApi(item);
       } else {

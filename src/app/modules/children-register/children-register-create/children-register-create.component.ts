@@ -210,7 +210,9 @@ export class ChildrenRegisterCreateComponent implements OnInit {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: brnchId
     }
+    this.loader = false;
     this.baselineService.villagesOfBranch(Dto).subscribe((res) => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
     })
     this.locationForm.controls.block.setValue('');

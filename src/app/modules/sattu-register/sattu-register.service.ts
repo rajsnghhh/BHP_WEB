@@ -19,10 +19,14 @@ export class SattuRegisterService {
   }
 
   getListOfFamiliesOfAVillage(obj): any {
-    return this.http.post(`${this.baseURL}/sattuRegister/getListOfFamiliesOfAVillage`, obj)
+    return this.http.post(`${this.baseURL}sattuRegister/getListOfFamiliesOfAVillage`, obj)
   }
 
   getSattuRegisterPrerequisites(obj): any {
-    return this.http.post(`${this.baseURL}/sattuRegister/getSattuRegisterPrerequisites`, obj)
+    return this.http.post(`${this.baseURL}sattuRegister/getSattuRegisterPrerequisites`, obj)
+  }
+
+  getSattuview(obj): any {
+    return this.http.post(`${this.baseURL}sattuRegister/view`, obj)
   }
 }

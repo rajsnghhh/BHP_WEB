@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
@@ -8,7 +9,9 @@ import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
+import { CreateSattuRegisterComponent } from './create-sattu-register/create-sattu-register.component';
 import { SattuRegisterService } from './sattu-register.service';
+import { ViewSattuFamilyComponent } from './view-sattu-family/view-sattu-family.component';
 
 @Component({
   selector: 'app-sattu-register',
@@ -17,8 +20,7 @@ import { SattuRegisterService } from './sattu-register.service';
 })
 export class SattuRegisterComponent {
   selectVillageForm: FormGroup;
-  viewFamilyForm: FormGroup;
-  createSattuForm: FormGroup;
+
   searchFullscreen: boolean;
   createMode: boolean;
   updateMode: boolean;
@@ -36,11 +38,12 @@ export class SattuRegisterComponent {
   viewFamilyListModal: any;
   createSattuModal: any;
   sattuSearch: any;
-  familyList: Array<any> = [];
+  p: any;
+  sattuView: Array<any> = [];
 
   constructor(private sidebarService: SidebarService, private http: HttpClient, private router: Router, private fb: FormBuilder,
     private httpService: HttpService, private sattuService: SattuRegisterService, private modalService: NgbModal,
-    config: NgbModalConfig, public validationService: ValidationService, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,) {
+    config: NgbModalConfig, public validationService: ValidationService, public dialog: MatDialog, private toaster: ToastrService, private confirmationDialogService: ConfirmationDialogService,) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -172,30 +175,32 @@ export class SattuRegisterComponent {
 
   changeVillage(villageId) {
     // this.escortviewData = [];
-    this.selectVillageForm.controls.filterDate.setValue('')
+    // this.selectVillageForm.controls.filterDate.setValue('')
     console.log(villageId, 'villageId');
 
-    // let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
-    // this.sattuService.getEscortReferRegisterview(viewreq).subscribe((res: any) => {
-    //   this.escortview = res.responseObject;
-    //   this.escortview?.forEach((x) => {
-    //     x.familyList = x.familyList?.map(({
-    //       visitDate = x.visitDate,
-    //       ...rest
-    //     }) => ({
-    //       visitDate,
-    //       ...rest
-    //     }));
-    //   })
-    //   console.log(this.escortview, 'escortview');
-    //   this.escortview?.forEach(y => {
-    //     console.log(y);
-    //     y.familyList.forEach(z => {
-    //       this.escortviewData.push(z)
-    //     })
-    //     console.log(this.escortviewData, 'escortviewData');
+    let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
+    this.loader = false;
+    this.sattuService.getSattuview(viewreq).subscribe((res: any) => {
+      this.loader = true;
+      this.sattuView = res.responseObject;
+      //   this.sattuView?.forEach((x) => {
+      //     x.familyList = x.familyList?.map(({
+      //       visitDate = x.visitDate,
+      //       ...rest
+      //     }) => ({
+      //       visitDate,
+      //       ...rest
+      //     }));
+      //   })
+      console.log(this.sattuView, 'sattuView');
+      //   this.escortview?.forEach(y => {
+      //     console.log(y);
+      //     y.familyList.forEach(z => {
+      //       this.escortviewData.push(z)
+      //     })
+      //     console.log(this.escortviewData, 'escortviewData');
 
-    //   })
+    })
 
     //   this.escortviewData.forEach(x => {
     //     if (x.escortOrReferType == 'R') {
@@ -211,53 +216,35 @@ export class SattuRegisterComponent {
 
   }
 
-  viewFamilyList(viewFam) {
+  viewFamilyList() {
     // this.escortSearch = '';
-    this.modalContent = '';
+    // this.viewFamilyListModal = this.modalService.open(viewFam, {
+    //   windowClass: 'viewFam',
+    // });
+    // this.viewFamily_Form();
 
-    this.viewFamilyListModal = this.modalService.open(viewFam, {
-      windowClass: 'viewFam',
+    const dialogRef = this.dialog.open(ViewSattuFamilyComponent, {
+      width: '1100px',
+      height: '570px',
+      data: this.selectVillageForm.value.gram
     });
-    this.viewFamily_Form();
-  }
 
-  viewFamModalDismiss() {
-    this.viewFamilyListModal.close();
-    // this.escortSearch = '';
-    // this.villageName = [];
-    // this.familyList = [];
-  }
+    // dialogRef.afterClosed().subscribe(result => {
+    // });
 
-  viewFamily_Form() {
-    this.viewFamilyForm = this.fb.group({
-      date: ['', Validators.required],
-    })
-  }
-
-  get r() {
-    return this.viewFamilyForm.controls;
-  }
-
-  changeDate() {
-    let famReq = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      visitDate: this.viewFamilyForm.value.date,
-      villageId: this.selectVillageForm.value.gram
-    };
-
-    this.loader = false;
-    this.sattuService.getListOfFamiliesOfAVillage(famReq).subscribe((res: any) => {
-      this.loader = true;
-      if (res.status == true) {
-        this.familyList = res.responseObject;
-        console.log(this.familyList, ' this.familyList');
-      } else {
-        this.familyList = [];
-      }
-
-    })
 
   }
+
+  // viewFamModalDismiss() {
+  //   this.viewFamilyListModal.close();
+  //   // this.escortSearch = '';
+  //   // this.villageName = [];
+  //   // this.familyList = [];
+  // }
+
+
+
+
 
   getSattuRegisterPrerequisites() {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO };
@@ -267,36 +254,29 @@ export class SattuRegisterComponent {
     });
   }
 
-  createSattu(sattu, fami) {
-    this.modalContent = '';
 
-    this.createSattuModal = this.modalService.open(sattu, {
-      windowClass: 'sattu',
-    });
-    this.createSattu_Form();
-  }
 
-  createSattu_Form() {
-    this.createSattuForm = this.fb.group({
-      orientation: ['', Validators.required],
-    })
-  }
+  // createSattu_Form() {
+  //   this.createSattuForm = this.fb.group({
+  //     orientation: ['', Validators.required],
+  //   })
+  // }
 
-  createSattuModalDismiss() {
-    this.createSattuModal.close();
-    // var ID = this.editEscortDetails?.escortReferRegisterId;
+  // createSattuModalDismiss() {
+  //   this.createSattuModal.close();
+  //   // var ID = this.editEscortDetails?.escortReferRegisterId;
 
-    // if (ID) {
-    //   this.editEscortDetails = '';
-    //   ID = 0;
-    //   this.viewBeneficiaryModal.close();
-    // }
-    // else {
-    //   this.viewBeneficiaryModal.close();
-    //   this.viewBeneficiaryDetails = [];
-    //   this.onclickBenFamDetails = [];
-    // }
-  }
+  //   // if (ID) {
+  //   //   this.editEscortDetails = '';
+  //   //   ID = 0;
+  //   //   this.viewBeneficiaryModal.close();
+  //   // }
+  //   // else {
+  //   //   this.viewBeneficiaryModal.close();
+  //   //   this.viewBeneficiaryDetails = [];
+  //   //   this.onclickBenFamDetails = [];
+  //   // }
+  // }
 
 
 }

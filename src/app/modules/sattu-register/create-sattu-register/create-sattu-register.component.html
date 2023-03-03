@@ -1,0 +1,85 @@
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h2 class="dialog-title">Create Sattu Register</h2>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+    </div>
+</h1>
+
+<div mat-dialog-content>
+    <form class="form-signin" [formGroup]="createSattuForm">
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="orientation ">
+                    Received Orientation For Preparing Sattu?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="orientation" id="yes" value="Y"
+                        formControlName="orientation" (change)="orientation($event)" />
+                    <label class="form-check-label" for="orientation">
+                        &nbsp;&nbsp;Yes</label>
+
+                    <div class="form-check-inline">
+                        &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="radio" name="orientation" id="no"
+                            (change)="orientation($event)" value="N" formControlName="orientation" />
+                        <label class="form-check-label" for="orientation">
+                            &nbsp;&nbsp;No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="preparing ">
+                    Family preparing Sattu?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                <div class="form-check-inline">
+                    <input class="form-check-input" type="radio" name="preparing" id="yes" value="Y"
+                        formControlName="preparing" (change)="preparing($event)" />
+                    <label class="form-check-label" for="preparing">
+                        &nbsp;&nbsp;Regularly</label>
+
+                    <div class="form-check-inline">
+                        &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="radio" name="preparing" id="no"
+                            (change)="preparing($event)" value="N" formControlName="preparing" />
+                        <label class="form-check-label" for="preparing">
+                            &nbsp;&nbsp;Irregularly</label>
+                    </div>
+
+                    <div class="form-check-inline">
+                        &nbsp;&nbsp;&nbsp;
+                        <input class="form-check-input" type="radio" name="preparing" id="no"
+                            (change)="preparing($event)" value="N" formControlName="preparing" />
+                        <label class="form-check-label" for="preparing">
+                            &nbsp;&nbsp;Not Preparing</label>
+                    </div>
+                </div>
+
+                <!-- <div class="form-group col-md">
+                    <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <select class="form-select" (change)="changeRegion($event.target.value)"
+                        formControlName="region" id="region"
+                        [ngClass]="{'is-invalid': m.region.invalid
+                         && m.region.touched,  'is-valid':  m.region.valid && (m.region.dirty || m.region.touched) }">
+                        <option value="">-- Select Reason --</option>
+                        <option>Financial Issue</option>
+                        <option>Time Constraints</option>
+                        <option>Not Interested</option>
+                    </select>
+                    <div *ngIf="m.region.errors" class="invalid-feedback">
+                        <div *ngIf="m.region.errors.required">Region selection is required</div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </form>
+
+    <!-- <div class="row">
+        <button type="button" class=" btn btn-primary btn-sm" (click)="saveEscortRefer()"
+            [disabled]="!disableSave()">Save</button>
+    </div> -->
+</div>

@@ -156,7 +156,8 @@
                           <td style="width:20%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
                           <td style="width:20%;">{{item.husbandOrGuardianName}}</td>
                           <td style="width:10%;">{{item.age}}</td>
-                          <td style="width:20%;">{{item.pregnancyStatus}}</td>
+                          <td style="width:20%;">{{item.pregnancyStatus == 'Y' ? "Yes" : item.pregnancyStatus == 'N' ?
+                            'No' : 'NA'}}</td>
                           <td style="width:20%;" *ngIf="createMode || updateMode"><i class="fas fa-edit" title="Edit"
                               (click)="openPwStatus(item)"></i></td>
                         </tr>
@@ -203,8 +204,10 @@
                           <td style="width: 20%;">{{item.firstName}} {{item.middleName}} {{item.lastName}}</td>
                           <td style="width: 20%;">{{item.husbandOrGuardianName}}</td>
                           <td style="width: 10%;">{{item.age}}</td>
-                          <td style="width: 20%;">{{item.pregnancyStatus == 'N' ? "No" : "Yes"}}</td>
-                          <td style="width: 20%;"><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i></td>
+                          <td style="width: 20%;">{{item.pregnancyStatus == 'Y' ? "Yes" : item.pregnancyStatus == 'N' ?
+                            'No' : 'NA'}}</td>
+                          <td style="width: 20%;"><i class="fas fa-list" title="View" (click)="openPwList(i,item)"></i>
+                          </td>
                         </tr>
                       </tbody>
                     </table>

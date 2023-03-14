@@ -61,7 +61,6 @@ export class FamilyInfoCreateComponent implements OnInit {
   showChildDetails = false;
   childSetData: any;
   activeChild: any = [];
-  isDisabled: boolean = false;
 
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
 

@@ -1079,7 +1079,9 @@ class MaterialDistributionRegisterComponent {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: branchId
     };
+    this.loader = false;
     this.materialDistributionService.getVillagesOfBranch(req).subscribe(res => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch');
     });
@@ -1110,7 +1112,9 @@ class MaterialDistributionRegisterComponent {
       dataAccessDTO: this.httpService.dataAccessDTO,
       village_master_id: villageId
     };
+    this.loader = false;
     this.materialDistributionService.getMaterialDistributionList(req).subscribe(res => {
+      this.loader = true;
       this.materialDistributionList = res.responseObject;
       console.log(this.materialDistributionList, 'this.materialDistributionList');
     });

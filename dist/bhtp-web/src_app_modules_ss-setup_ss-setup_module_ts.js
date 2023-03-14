@@ -1275,7 +1275,9 @@ class SsSetupComponent {
       dataAccessDTO: this.httpService.dataAccessDTO,
       regionId: regionId
     };
+    this.loader = false;
     this.ssService.listOfBranchesOfARegion(obj).subscribe(res => {
+      this.loader = true;
       this.branchList = res.responseObject;
       console.log(this.branchList);
     });

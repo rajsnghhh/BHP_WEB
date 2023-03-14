@@ -4398,7 +4398,9 @@ class BaselineViewComponent {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: brnchId
     };
+    this.loader = false;
     this.baselineService.villagesOfBranch(Dto).subscribe(res => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch2');
     });

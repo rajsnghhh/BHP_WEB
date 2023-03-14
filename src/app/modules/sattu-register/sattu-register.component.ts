@@ -9,7 +9,6 @@ import { HttpService } from '../core/http/http.service';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
-import { CreateSattuRegisterComponent } from './create-sattu-register/create-sattu-register.component';
 import { SattuRegisterService } from './sattu-register.service';
 import { ViewSattuFamilyComponent } from './view-sattu-family/view-sattu-family.component';
 
@@ -31,7 +30,6 @@ export class SattuRegisterComponent {
   lowerRoleBranchId: any;
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
-  prequisiteDetails: Array<any> = [];
   villageList: Array<any> = [];
   gpList: Array<any> = [];
   modalContent: any;
@@ -241,19 +239,6 @@ export class SattuRegisterComponent {
   //   // this.villageName = [];
   //   // this.familyList = [];
   // }
-
-
-
-
-
-  getSattuRegisterPrerequisites() {
-    let req = { dataAccessDTO: this.httpService.dataAccessDTO };
-    this.sattuService.getSattuRegisterPrerequisites(req).subscribe((res) => {
-      this.prequisiteDetails = res.responseObject;
-      console.log(this.prequisiteDetails, 'prequisiteDetails');
-    });
-  }
-
 
 
   // createSattu_Form() {

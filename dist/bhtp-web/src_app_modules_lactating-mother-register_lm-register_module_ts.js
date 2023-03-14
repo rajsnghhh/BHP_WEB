@@ -2118,7 +2118,9 @@ class LmViewComponent {
       },
       branchId: this.sidebarService.branchId
     };
+    this.loader = false;
     this.baselineService.villagesOfBranch(Dto).subscribe(res => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
     });
     this.locationForm.controls.block.setValue('');

@@ -1383,7 +1383,9 @@ class EscortRerefRegisterComponent {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: branchId
     };
+    this.loader = false;
     this.escortReferService.getVillagesOfBranch(req).subscribe(res => {
+      this.loader = true;
       this.villagesOfBranch = res.responseObject;
       console.log(this.villagesOfBranch, 'villagesOfBranch');
     });
@@ -1419,7 +1421,9 @@ class EscortRerefRegisterComponent {
       villageId: villageId,
       visitDate: null
     };
+    this.loader = false;
     this.escortReferService.getEscortReferRegisterview(viewreq).subscribe(res => {
+      this.loader = true;
       this.escortview = res.responseObject;
       this.escortview?.forEach(x => {
         x.familyList = x.familyList?.map(({

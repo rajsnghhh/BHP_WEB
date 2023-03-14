@@ -79,8 +79,8 @@ export class ViewSattuFamilyComponent {
 
   createSattu(fami) {
     this.dialog.open(CreateSattuRegisterComponent, {
-      width: '700px',
-      height: '250px',
+      width: '760px',
+      height: '300px',
       data: fami
     });
   }

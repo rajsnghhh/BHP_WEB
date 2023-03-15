@@ -209,6 +209,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/escort-reref-register']);
     }
 
+    if (routeId == 274 || routeId == 275 || routeId == 276 || routeId == 277) {
+      this.router.navigate(['/sattu-register']);
+    }
+
   }
 
   ngAfterViewInit(): void {

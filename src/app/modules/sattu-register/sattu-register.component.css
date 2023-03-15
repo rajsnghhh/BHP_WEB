@@ -1,16 +1,8 @@
 .modal-content {
-  height: 570px;
-  width: 1100px;
-  margin-left: -285px;
+  height: 450px;
+  width: 1000px;
+  margin-left: -245px;
   border: 10px solid white;
-}
-
-.modal-contents {
-  height: 570px;
-  width: 1100px;
-  margin-left: -285px;
-  border: 10px solid white;
-  background: white;
 }
 
 .dialog-title {
@@ -35,7 +27,7 @@
   border-bottom: 7px solid #0000;
   border-left: 7px solid #0000;
 }
-/* 
+
 #table_wrapper .table thead {
   border-bottom: 0 solid transparent;
   background-color: #fff;
@@ -55,7 +47,7 @@
 
 #table_wrapper .table tbody td {
   padding: 4px;
-} */
+}
 
 #header_fixed {
   position: sticky;
@@ -79,93 +71,11 @@
   background: grey;
 }
 
-#tbodyFam {
+#tbodyrecord {
   display: block;
-  height: 331px;
+  height: 260px;
   overflow: scroll;
   overflow-x: hidden;
-}
-
-#tbodybenificiary {
-  display: block;
-  height: 155px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
-fieldset.scheduler-border {
-  border: 1px groove #ddd !important;
-  padding: 0 1.4em 1.4em 1.4em !important;
-  margin: -4px 0 1.5em 0 !important;
-  height: 140px;
-}
-
-legend.scheduler-border {
-  border: 1px groove #ddd !important;
-  background-color: gray;
-  width: 200px;
-  color: #ddd;
-  font-size: 1.2em !important;
-  font-weight: bold !important;
-  font-family: ui-sans-serif;
-}
-
-#tbodyReason {
-  display: block;
-  height: 130px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
-.popover__wrapper {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.popover__wrapper:hover .popover__content {
-  z-index: 10;
-  opacity: 1;
-  visibility: visible;
-  transform: translate(0, -20px);
-  transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
-}
-
-.popover__title {
-  font-size: 15px;
-  font-weight: 400;
-  text-decoration: none;
-  color: #499;
-  text-align: center;
-  margin-bottom: auto;
-}
-
-.popover__content {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-  width: 250px !important;
-  transform: translate(0, 15px) !important;
-  background-color: white;
-  color: #828BB2;
-  box-shadow: 3px 4px 5px 3px rgba(117, 111, 117, 1);
-}
-
-.popover__content li {
-  padding: 0.3rem 1rem;
-}
-
-.popover__content:before {
-  position: absolute;
-  z-index: -1;
-  content: "";
-  left: calc(10% - 10px);
-  top: -10px;
-  border-style: solid;
-  border-width: 0 10px 10px 10px;
-  border-color: transparent transparent #bfbfbf transparent;
-  transition-duration: 0.3s;
-  transition-property: transform;
 }
 
 .search_inner button {
@@ -190,14 +100,14 @@ legend.scheduler-border {
 }
 
 .search_inner input {
-  width: 60%;
-  margin-left: 474px;
+  width: 62%;
+  margin-left: 550px;
   margin-bottom: 4px;
 }
 
 .search_inner_fullscreen input {
-  width: 75%;
-  margin-left: 591px;
+  width: 74%;
+  margin-left: 670px;
   margin-bottom: 5px;
   font-size: 13px;
   height: 40px;
@@ -210,14 +120,14 @@ legend.scheduler-border {
 .serach_field_2 .search_inner button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: -20px;
+  margin-left: 58px;
   margin-top: 4px;
 }
 
 .serach_field_2 .search_inner_fullscreen button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: -186px;
+  margin-left: -30px;
   margin-bottom: 11px;
   margin-top: 10px;
 }
@@ -312,18 +222,4 @@ legend.scheduler-border {
   color: #2daab8;
   margin-left: -1359px;
   margin-top: 21px;
-}
-
-.form-controls {
-  display: block;
-  width: 100%;
-  font-weight: 400;
-  color: #212529;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  -webkit-appearance: none;
-  appearance: none;
-  border-radius: 0.25rem;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

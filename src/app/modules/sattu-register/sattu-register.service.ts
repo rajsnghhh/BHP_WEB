@@ -26,7 +26,15 @@ export class SattuRegisterService {
     return this.http.post(`${this.baseURL}sattuRegister/getSattuRegisterPrerequisites`, obj)
   }
 
+  saveOrUpdate(obj): any {
+    return this.http.post(`${this.baseURL}sattuRegister/saveOrUpdate`, obj)
+  }
+
   getSattuview(obj): any {
     return this.http.post(`${this.baseURL}sattuRegister/view`, obj)
+  }
+
+  getSattuRegisterHistoryOfAFamily(obj): any {
+    return this.http.post(`${this.baseURL}sattuRegister/getSattuRegisterHistoryOfAFamily`, obj)
   }
 }

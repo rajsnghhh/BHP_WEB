@@ -131,6 +131,16 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            ** Total count of orientation received({{orientationLength}}), regularly preparing
+                            sattu({{regularLength}}),
+                            irregularly preparing
+                            sattu({{irregularLength}}) & not preparing sattu({{notPreparingLength}}).</div>
+                        <div class="col-md-1"></div>
+                    </div>
+
                     <div class="white_box_tittle list_header">
 
                         <div class="QA_table">
@@ -142,82 +152,33 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 6%;">Sl.<br>No.</th>
-                                            <th style="width: 20%;">Date</th>
-                                            <!-- <th style="width: 20%;">Date
-                                                <input type="date" class="form-controls" formControlName="filterDate"
-                                                    (change)="filterList($event.target.value)"
-                                                    *ngIf="viewEscortReferForm.value.gram">
-                                            </th> -->
-                                            <th style="width: 8%;">Family<br>No.</th>
+                                            <th style="width: 10%;">Fam. No.</th>
                                             <th style="width: 25%;">Name</th>
                                             <th style="width: 25%;">Guardian Name</th>
-                                            <th style="width: 13%;">Beneficiary</th>
-                                            <th style="width: 10%;">Reason</th>
-                                            <th style="width: 12%;">Done by- <br>Staff/ SS</th>
-                                            <th style="width: 25%;">Place</th>
-                                            <th style="width: 11%;">Type</th>
-                                            <th style="width: 12%;" *ngIf="deleteMode || updateMode">Action</th>
+                                            <th style="width: 15%;">Last Record<br>Date</th>
+                                            <th style="width: 10%;">Received<br>Orientation</th>
+                                            <th style="width: 30%;">Preparing<br>Sattu</th>
+                                            <th style="width: 10%;">Last<br>Records</th>
                                         </tr>
                                     </thead>
 
-                                    <!-- <tbody style="text-align: center;">
-                                        <tr *ngFor="let escort of escortviewData |escortRegisterFilter: {familyNumber :  escortSearch,
-                                                 familyName :escortSearch, visitingPlaceName : escortSearch, escortOrReferType:escortSearch}|
-                                                  paginate: { itemsPerPage: 5, currentPage: p }; index as i">
-                                            <td style="width: 6%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                            <td style="width: 20%;">{{escort.visitDate.split("-").reverse().join("-")}}
+                                    <tbody style="text-align: center;">
+                                        <tr *ngFor="let sattu of sattuView |
+                                        paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                            <td style="width: 10%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                            <td style="width: 8%;">{{sattu.familyNumber}}</td>
+                                            <td style="width: 25%;">{{sattu.familyName}}</td>
+                                            <td style="width: 25%;">{{sattu.husbandOrGuardianName}}</td>
+                                            <td style="width: 15%;">
+                                                {{sattu.visitDate.split("-").reverse().join("-")}}
                                             </td>
-                                            <td style="width: 8%;">{{escort.familyNumber}}</td>
-                                            <td style="width: 25%;">{{escort.familyName}}</td>
-                                            <td style="width: 25%;">{{escort.husbandOrGuardianName}}</td>
+                                            <td style="width: 10%;">{{sattu.sattuOrientationDate? 'Y':'N'}}</td>
+                                            <td style="width: 30%;">{{sattu.sattuPreparingFrequency}}</td>
                                             <td class="btn-link"
-                                                style="width: 13%; color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                                (click)="openDialog(escort)">view</td>
-                                            <td style="width: 10%;">
-                                                <div class="popover__wrapper">
-                                                    <h3 class="popover__title" style="color:#0d6efd;">view</h3>
-                                                    <div class="popover__content" *ngIf="escort?.reasonList?.length>0">
-                                                        <li style="word-wrap: break-word; text-align: left;" *ngFor="let reason of escort.reasonList
-                                                        ; index as i">
-                                                            {{i+1}}. {{reason.reasonName}}
-                                                        </li>
-                                                    </div>
-                                                    <div class="popover__content" *ngIf="escort?.reasonList?.length==0">
-                                                        <li style="word-wrap: break-word; text-align: left;">
-                                                            No Data Found
-                                                        </li>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td style="width: 12%;">
-                                                <div class="popover__wrapper">
-                                                    <h3 class="popover__title" style="color:#0d6efd;">view</h3>
-                                                    <div class="popover__content">
-                                                        <li style="word-wrap: break-word; text-align: left;">
-                                                            <div
-                                                                *ngIf="escort.escorteeRefereeStaffName != null && escort.escortedReferredByStaff=='Y'">
-                                                                * STAFF :
-                                                                {{escort.escortedReferredByStaff=='Y'?
-                                                                escort.escorteeRefereeStaffName:''}}</div>
-                                                            <div
-                                                                *ngIf="escort.escorteeRefereeSsName != null && escort.escortedReferredBySS =='Y'">
-                                                                * SS : {{escort.escortedReferredBySS =='Y' ?
-                                                                escort.escorteeRefereeSsName :''}}</div>
-                                                        </li>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td style="width: 25%;">{{escort.visitingPlaceName}}</td>
-                                            <td style="width: 11%;">{{escort.escortOrReferType}}</td>
-                                            <td style="width: 12%;">
-                                                <i class="fas fa-edit" title="Edit Escort/ Refer Register"
-                                                    (click)="editEscort(Benificiary, escort)" *ngIf="updateMode"></i>
-                                                <i class="fas fa-trash" title="Delete Escort/ Refer Register"
-                                                    (click)="deleteEscort(escort)" *ngIf="deleteMode"></i>
-                                            </td>
+                                                style="width: 10%; color:#0d6efd; text-decoration: none; cursor: pointer;"
+                                                (click)="familyWiseSattuRecord(record, sattu)">view</td>
                                         </tr>
-                                    </tbody> -->
+                                    </tbody>
 
                                 </table>
                                 <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
@@ -234,3 +195,66 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #record>
+
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <div class="col-md">
+                <h3 class="dialog-title">Sattu Record History</h3>
+            </div>
+
+            <div class="col-md">
+                <span class="close" (click)="sattuRecordModalDismiss()"
+                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
+            </div>
+
+        </div>
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <h4>Family No: {{showFamNo}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Family Name:
+                        {{showFamName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guardian Name: {{showGuardianName}}</h4>
+                </div>
+            </div>
+
+
+            <div id="tbodyrecord">
+                <div id="table_wrapper">
+                    <table class="table table-striped" id="table_wrapper">
+                        <thead id="header_fixed">
+                            <tr style="text-align: center;">
+                                <th style="width: 10%;">Sl. No.</th>
+                                <th style="width: 25%;">Last Record Date</th>
+                                <th style="width: 10%;">Received Orientation</th>
+                                <th style="width: 40%;">Preparing Sattu</th>
+                                <th style="width: 15%;">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody style="text-align:center;">
+                            <tr *ngFor="let history of historyRecords; index as i">
+                                <td style="width: 10%;">{{i+1}}</td>
+                                <td style="width: 25%;">{{history.visitDate.split("-").reverse().join("-")}}</td>
+                                <td style="width: 10%;">{{history.sattuOrientationDate?'Y':'N'}}</td>
+                                <td style="width: 40%;">{{history.sattuPreparingFrequency}}</td>
+                                <td style="width: 15%;">
+                                    <i class="fas fa-edit" title="Edit Sattu Record"
+                                        (click)="editSattuRecord(history)"></i>
+                                    <i class="fas fa-trash" title="Delete Sattu Record"
+                                        (click)="deleteSattuRecord(history)"></i>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

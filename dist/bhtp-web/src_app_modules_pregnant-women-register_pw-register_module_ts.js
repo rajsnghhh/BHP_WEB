@@ -628,7 +628,7 @@ function PwRegisterComponent_mat_tab_19_ng_template_2_tr_20_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](item_r36.age);
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](item_r36.pregnancyStatus);
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](item_r36.pregnancyStatus == "Y" ? "Yes" : item_r36.pregnancyStatus == "N" ? "No" : "NA");
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵproperty"]("ngIf", ctx_r35.createMode || ctx_r35.updateMode);
   }
@@ -746,7 +746,7 @@ function PwRegisterComponent_ng_template_22_tr_21_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](item_r46.age);
     _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](item_r46.pregnancyStatus == "N" ? "No" : "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵtextInterpolate"](item_r46.pregnancyStatus == "Y" ? "Yes" : item_r46.pregnancyStatus == "N" ? "No" : "NA");
   }
 }
 function PwRegisterComponent_ng_template_22_Template(rf, ctx) {

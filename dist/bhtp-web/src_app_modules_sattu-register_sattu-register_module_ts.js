@@ -11,117 +11,163 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CreateSattuRegisterComponent": () => (/* binding */ CreateSattuRegisterComponent)
 /* harmony export */ });
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 22560);
-/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/dialog */ 86991);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material/dialog */ 86991);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 22560);
+/* harmony import */ var _core_http_http_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/http/http.service */ 73350);
+/* harmony import */ var _sattu_register_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sattu-register.service */ 18295);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 94666);
 
 
 
 
+
+
+
+
+const _c0 = function (a0, a1) {
+  return {
+    "is-invalid": a0,
+    "is-valid": a1
+  };
+};
 class CreateSattuRegisterComponent {
-  constructor(fb, dialogRef) {
+  constructor(fb, httpService, sattuService, data, dialogRef) {
     this.fb = fb;
+    this.httpService = httpService;
+    this.sattuService = sattuService;
+    this.data = data;
     this.dialogRef = dialogRef;
+    this.prequisiteDetails = [];
     dialogRef.disableClose = true;
   }
   ngOnInit() {
     this.createSattu_Form();
+    console.log(this.data);
+    let req = {
+      dataAccessDTO: this.httpService.dataAccessDTO,
+      familyId: this.data.familyDetailId
+    };
+    this.sattuService.getSattuRegisterPrerequisites(req).subscribe(res => {
+      this.prequisiteDetails = res.responseObject;
+      console.log(this.prequisiteDetails, 'prequisiteDetails');
+    });
   }
   closeDialog() {
     this.dialogRef.close();
   }
   createSattu_Form() {
     this.createSattuForm = this.fb.group({
-      orientation: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_0__.Validators.required],
-      preparing: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_0__.Validators.required]
+      orientation: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      regularly: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      irregularly: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      notPreparing: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required],
+      reason: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__.Validators.required]
     });
   }
+  get s() {
+    return this.createSattuForm.controls;
+  }
   orientation(e) {}
-  preparing(e) {}
+  regularly(e) {}
+  irregularly(e) {}
+  notPreparing(e) {}
 }
 CreateSattuRegisterComponent.ɵfac = function CreateSattuRegisterComponent_Factory(t) {
-  return new (t || CreateSattuRegisterComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_0__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__.MatDialogRef));
+  return new (t || CreateSattuRegisterComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_0__.HttpService), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_sattu_register_service__WEBPACK_IMPORTED_MODULE_1__.SattuRegisterService), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__.MAT_DIALOG_DATA), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__.MatDialogRef));
 };
-CreateSattuRegisterComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+CreateSattuRegisterComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
   type: CreateSattuRegisterComponent,
   selectors: [["app-create-sattu-register"]],
-  decls: 43,
-  vars: 1,
-  consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-3"], ["for", "orientation "], [1, "text-danger"], [1, "form-check-inline"], ["type", "radio", "name", "orientation", "id", "yes", "value", "Y", "formControlName", "orientation", 1, "form-check-input", 3, "change"], ["for", "orientation", 1, "form-check-label"], ["type", "radio", "name", "orientation", "id", "no", "value", "N", "formControlName", "orientation", 1, "form-check-input", 3, "change"], ["for", "preparing "], ["type", "radio", "name", "preparing", "id", "yes", "value", "Y", "formControlName", "preparing", 1, "form-check-input", 3, "change"], ["for", "preparing", 1, "form-check-label"], ["type", "radio", "name", "preparing", "id", "no", "value", "N", "formControlName", "preparing", 1, "form-check-input", 3, "change"]],
+  decls: 54,
+  vars: 5,
+  consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md"], ["for", "orientation"], [1, "text-danger"], [1, "form-check-inline"], ["type", "radio", "name", "orientation", "id", "yes", "value", "Y", "formControlName", "orientation", 1, "form-check-input", 3, "change"], ["for", "orientation", 1, "form-check-label"], ["type", "radio", "name", "orientation", "id", "no", "value", "N", "formControlName", "orientation", 1, "form-check-input", 3, "change"], ["for", "preparing "], ["type", "radio", "name", "regularly", "id", "yes", "value", "Y", "formControlName", "regularly", 1, "form-check-input", 2, "margin-top", "33px", 3, "change"], ["for", "regularly", 1, "form-check-label"], ["type", "radio", "name", "irregularly", "id", "no", "value", "N", "formControlName", "irregularly", 1, "form-check-input", 3, "change"], ["for", "irregularly", 1, "form-check-label"], ["type", "radio", "name", "notPreparing", "id", "no", "value", "N", "formControlName", "notPreparing", 1, "form-check-input", 3, "change"], ["for", "notPreparing", 1, "form-check-label"], ["formControlName", "reason", "id", "reason", 1, "form-select", 3, "ngClass"], ["value", ""], [1, "col-md-4"], ["type", "button", 1, "btn", "btn-primary", "btn-sm"]],
   template: function CreateSattuRegisterComponent_Template(rf, ctx) {
     if (rf & 1) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "h1", 0)(1, "div", 1)(2, "h2", 2);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](3, "Create Sattu Register");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "div")(5, "i", 3);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function CreateSattuRegisterComponent_Template_i_click_5_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "h1", 0)(1, "div", 1)(2, "h2", 2);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Create Sattu Register");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "div")(5, "i", 3);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function CreateSattuRegisterComponent_Template_i_click_5_listener() {
         return ctx.closeDialog();
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](6, "div", 4)(7, "form", 5)(8, "div", 6)(9, "div", 7)(10, "label", 8);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](11, " Received Orientation For Preparing Sattu?\u00A0");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](12, "span", 9);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](13, "*\u00A0");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](14, "div", 10)(15, "input", 11);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_15_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](6, "hr");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](7, "div", 4)(8, "form", 5)(9, "div", 6)(10, "div", 7)(11, "label", 8);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](12, " Received Orientation For Preparing Sattu?\u00A0");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](13, "span", 9);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](14, "*\u00A0");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](15, "div", 10)(16, "input", 11);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_16_listener($event) {
         return ctx.orientation($event);
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](16, "label", 12);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](17, " \u00A0\u00A0Yes");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](18, "div", 10);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](19, " \u00A0\u00A0\u00A0 ");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](20, "input", 13);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_20_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](17, "label", 12);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](18, " \u00A0\u00A0Yes");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](19, "div", 10);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](20, " \u00A0\u00A0\u00A0 ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](21, "input", 13);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_21_listener($event) {
         return ctx.orientation($event);
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](21, "label", 12);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](22, " \u00A0\u00A0No");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()()()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](23, "div", 6)(24, "div", 7)(25, "label", 14);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](26, " Family preparing Sattu?\u00A0");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](27, "span", 9);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](28, "*\u00A0");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](29, "div", 10)(30, "input", 15);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_30_listener($event) {
-        return ctx.preparing($event);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](22, "label", 12);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](23, " \u00A0\u00A0No");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](24, "div", 6)(25, "div", 7)(26, "label", 14);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](27, " Family preparing Sattu?\u00A0");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](28, "span", 9);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](29, "*\u00A0");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](30, "div", 10)(31, "input", 15);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_31_listener($event) {
+        return ctx.regularly($event);
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](31, "label", 16);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](32, " \u00A0\u00A0Regularly");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](33, "div", 10);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](34, " \u00A0\u00A0\u00A0 ");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](35, "input", 17);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_35_listener($event) {
-        return ctx.preparing($event);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](32, "label", 16);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](33, " \u00A0\u00A0Regularly");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](34, "div", 10);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](35, " \u00A0\u00A0\u00A0 ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](36, "input", 17);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_36_listener($event) {
+        return ctx.irregularly($event);
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](36, "label", 16);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](37, " \u00A0\u00A0Irregularly");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](38, "div", 10);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](39, " \u00A0\u00A0\u00A0 ");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](40, "input", 17);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_40_listener($event) {
-        return ctx.preparing($event);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](37, "label", 18);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](38, " \u00A0\u00A0Irregularly");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](39, "div", 10);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](40, " \u00A0\u00A0\u00A0 ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](41, "input", 19);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function CreateSattuRegisterComponent_Template_input_change_41_listener($event) {
+        return ctx.notPreparing($event);
       });
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](41, "label", 16);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](42, " \u00A0\u00A0Not Preparing");
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()()()()()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](42, "label", 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](43, " \u00A0\u00A0Not Preparing");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](44, "div", 10);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](45, " \u00A0\u00A0\u00A0 ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](46, "select", 21)(47, "option", 22);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](48, "-- Select Reason--");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()()()()();
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](49, "hr");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](50, "div", 6)(51, "div", 23)(52, "button", 24);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](53, "Save");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()()();
     }
     if (rf & 2) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](7);
-      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx.createSattuForm);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](8);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("formGroup", ctx.createSattuForm);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](38);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpureFunction2"](2, _c0, ctx.s.reason.invalid && ctx.s.reason.touched, ctx.s.reason.valid && (ctx.s.reason.dirty || ctx.s.reason.touched)));
     }
   },
-  dependencies: [_angular_forms__WEBPACK_IMPORTED_MODULE_0__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_0__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_0__.RadioControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_0__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_0__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_0__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_0__.FormControlName, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__.MatDialogTitle, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_2__.MatDialogContent],
-  styles: [".dialog-header[_ngcontent-%COMP%] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .dialog-title[_ngcontent-%COMP%] {\r\n    background-color: #499;\r\n    display: inline-block;\r\n    padding: 10px;\r\n    position: relative;\r\n    color: #ffffff;\r\n  }\r\n  .dialog-title[_ngcontent-%COMP%]::before {\r\n    content: \"\";\r\n    display: block;\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -14px;\r\n    width: 0;\r\n    height: 0;\r\n    border-top: 7px solid #277;\r\n    border-right: 7px solid #277;\r\n    border-bottom: 7px solid #0000;\r\n    border-left: 7px solid #0000;\r\n  }\r\n    .mat-dialog-container {\r\n    padding: 12px 17px;\r\n  }\r\n  \r\n  .form-group[_ngcontent-%COMP%] {\r\n    margin-bottom: 1.5rem;\r\n  }\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvbW9kdWxlcy9zYXR0dS1yZWdpc3Rlci9jcmVhdGUtc2F0dHUtcmVnaXN0ZXIvY3JlYXRlLXNhdHR1LXJlZ2lzdGVyLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxhQUFhO0lBQ2IsOEJBQThCO0VBQ2hDOztFQUVBO0lBQ0Usc0JBQXNCO0lBQ3RCLHFCQUFxQjtJQUNyQixhQUFhO0lBQ2Isa0JBQWtCO0lBQ2xCLGNBQWM7RUFDaEI7RUFDQTtJQUNFLFdBQVc7SUFDWCxjQUFjO0lBQ2Qsa0JBQWtCO0lBQ2xCLE9BQU87SUFDUCxhQUFhO0lBQ2IsUUFBUTtJQUNSLFNBQVM7SUFDVCwwQkFBMEI7SUFDMUIsNEJBQTRCO0lBQzVCLDhCQUE4QjtJQUM5Qiw0QkFBNEI7RUFDOUI7RUFDQTtJQUNFLGtCQUFrQjtFQUNwQjs7RUFFQTtJQUNFLHFCQUFxQjtFQUN2QiIsInNvdXJjZXNDb250ZW50IjpbIi5kaWFsb2ctaGVhZGVyIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5kaWFsb2ctdGl0bGUge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzQ5OTtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICBjb2xvcjogI2ZmZmZmZjtcclxuICB9XHJcbiAgLmRpYWxvZy10aXRsZTo6YmVmb3JlIHtcclxuICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgIGxlZnQ6IDA7XHJcbiAgICBib3R0b206IC0xNHB4O1xyXG4gICAgd2lkdGg6IDA7XHJcbiAgICBoZWlnaHQ6IDA7XHJcbiAgICBib3JkZXItdG9wOiA3cHggc29saWQgIzI3NztcclxuICAgIGJvcmRlci1yaWdodDogN3B4IHNvbGlkICMyNzc7XHJcbiAgICBib3JkZXItYm90dG9tOiA3cHggc29saWQgIzAwMDA7XHJcbiAgICBib3JkZXItbGVmdDogN3B4IHNvbGlkICMwMDAwO1xyXG4gIH1cclxuICA6Om5nLWRlZXAgLm1hdC1kaWFsb2ctY29udGFpbmVyIHtcclxuICAgIHBhZGRpbmc6IDEycHggMTdweDtcclxuICB9XHJcbiAgXHJcbiAgLmZvcm0tZ3JvdXAge1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMS41cmVtO1xyXG4gIH0iXSwic291cmNlUm9vdCI6IiJ9 */"]
+  dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_5__.NgClass, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.RadioControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_2__.FormControlName, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__.MatDialogTitle, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_4__.MatDialogContent],
+  styles: [".dialog-header[_ngcontent-%COMP%] {\r\n    display: flex;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .dialog-title[_ngcontent-%COMP%] {\r\n    background-color: #499;\r\n    display: inline-block;\r\n    padding: 10px;\r\n    position: relative;\r\n    color: #ffffff;\r\n  }\r\n  .dialog-title[_ngcontent-%COMP%]::before {\r\n    content: \"\";\r\n    display: block;\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -14px;\r\n    width: 0;\r\n    height: 0;\r\n    border-top: 7px solid #277;\r\n    border-right: 7px solid #277;\r\n    border-bottom: 7px solid #0000;\r\n    border-left: 7px solid #0000;\r\n  }\r\n    .mat-dialog-container {\r\n    padding: 12px 17px;\r\n  }\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvbW9kdWxlcy9zYXR0dS1yZWdpc3Rlci9jcmVhdGUtc2F0dHUtcmVnaXN0ZXIvY3JlYXRlLXNhdHR1LXJlZ2lzdGVyLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxhQUFhO0lBQ2IsOEJBQThCO0VBQ2hDOztFQUVBO0lBQ0Usc0JBQXNCO0lBQ3RCLHFCQUFxQjtJQUNyQixhQUFhO0lBQ2Isa0JBQWtCO0lBQ2xCLGNBQWM7RUFDaEI7RUFDQTtJQUNFLFdBQVc7SUFDWCxjQUFjO0lBQ2Qsa0JBQWtCO0lBQ2xCLE9BQU87SUFDUCxhQUFhO0lBQ2IsUUFBUTtJQUNSLFNBQVM7SUFDVCwwQkFBMEI7SUFDMUIsNEJBQTRCO0lBQzVCLDhCQUE4QjtJQUM5Qiw0QkFBNEI7RUFDOUI7RUFDQTtJQUNFLGtCQUFrQjtFQUNwQiIsInNvdXJjZXNDb250ZW50IjpbIi5kaWFsb2ctaGVhZGVyIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgfVxyXG4gIFxyXG4gIC5kaWFsb2ctdGl0bGUge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzQ5OTtcclxuICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIHBhZGRpbmc6IDEwcHg7XHJcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICBjb2xvcjogI2ZmZmZmZjtcclxuICB9XHJcbiAgLmRpYWxvZy10aXRsZTo6YmVmb3JlIHtcclxuICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICBkaXNwbGF5OiBibG9jaztcclxuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgIGxlZnQ6IDA7XHJcbiAgICBib3R0b206IC0xNHB4O1xyXG4gICAgd2lkdGg6IDA7XHJcbiAgICBoZWlnaHQ6IDA7XHJcbiAgICBib3JkZXItdG9wOiA3cHggc29saWQgIzI3NztcclxuICAgIGJvcmRlci1yaWdodDogN3B4IHNvbGlkICMyNzc7XHJcbiAgICBib3JkZXItYm90dG9tOiA3cHggc29saWQgIzAwMDA7XHJcbiAgICBib3JkZXItbGVmdDogN3B4IHNvbGlkICMwMDAwO1xyXG4gIH1cclxuICA6Om5nLWRlZXAgLm1hdC1kaWFsb2ctY29udGFpbmVyIHtcclxuICAgIHBhZGRpbmc6IDEycHggMTdweDtcclxuICB9XHJcbiAgXHJcbiJdLCJzb3VyY2VSb290IjoiIn0= */"]
 });
 
 /***/ }),
@@ -455,7 +501,6 @@ class SattuRegisterComponent {
     this.regionList = [];
     this.branchList = [];
     this.villagesOfBranch = [];
-    this.prequisiteDetails = [];
     this.villageList = [];
     this.gpList = [];
     this.sattuView = [];
@@ -639,22 +684,8 @@ class SattuRegisterComponent {
     // dialogRef.afterClosed().subscribe(result => {
     // });
   }
-  // viewFamModalDismiss() {
-  //   this.viewFamilyListModal.close();
-  //   // this.escortSearch = '';
-  //   // this.villageName = [];
-  //   // this.familyList = [];
-  // }
-  getSattuRegisterPrerequisites() {
-    let req = {
-      dataAccessDTO: this.httpService.dataAccessDTO
-    };
-    this.sattuService.getSattuRegisterPrerequisites(req).subscribe(res => {
-      this.prequisiteDetails = res.responseObject;
-      console.log(this.prequisiteDetails, 'prequisiteDetails');
-    });
-  }
 }
+
 SattuRegisterComponent.ɵfac = function SattuRegisterComponent_Factory(t) {
   return new (t || SattuRegisterComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_shared_sidebar_sidebar_service__WEBPACK_IMPORTED_MODULE_1__.SidebarService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpClient), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_11__.Router), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormBuilder), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_core_http_http_service__WEBPACK_IMPORTED_MODULE_2__.HttpService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_sattu_register_service__WEBPACK_IMPORTED_MODULE_3__.SattuRegisterService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbModal), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__.NgbModalConfig), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_shared_services_validation_service__WEBPACK_IMPORTED_MODULE_4__.ValidationService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_angular_material_dialog__WEBPACK_IMPORTED_MODULE_13__.MatDialog), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_14__.ToastrService), _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdirectiveInject"](_shared_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_5__.ConfirmationDialogService));
 };
@@ -1077,8 +1108,8 @@ class ViewSattuFamilyComponent {
   }
   createSattu(fami) {
     this.dialog.open(_create_sattu_register_create_sattu_register_component__WEBPACK_IMPORTED_MODULE_1__.CreateSattuRegisterComponent, {
-      width: '700px',
-      height: '250px',
+      width: '760px',
+      height: '300px',
       data: fami
     });
   }

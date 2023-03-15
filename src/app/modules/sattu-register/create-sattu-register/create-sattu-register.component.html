@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h2 class="dialog-title">Create Sattu Register</h2>
+        <h3 class="dialog-title">Create Sattu Register</h3>
+        <h4 style="margin-left: -270px;"> Family No : {{famNo}}</h4>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
@@ -12,18 +13,19 @@
         <div class="row">
             <div class="form-group col-md">
                 <label for="orientation">
-                    Received Orientation For Preparing Sattu?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    Received Orientation For Preparing Sattu?&nbsp;<span
+                        class="text-danger">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
 
                 <div class="form-check-inline">
                     <input class="form-check-input" type="radio" name="orientation" id="yes" value="Y"
-                        formControlName="orientation" (change)="orientation($event)" />
+                        formControlName="orientation" />
                     <label class="form-check-label" for="orientation">
                         &nbsp;&nbsp;Yes</label>
 
                     <div class="form-check-inline">
                         &nbsp;&nbsp;&nbsp;
-                        <input class="form-check-input" type="radio" name="orientation" id="no"
-                            (change)="orientation($event)" value="N" formControlName="orientation" />
+                        <input class="form-check-input" type="radio" name="orientation" id="no" value="N"
+                            formControlName="orientation" />
                         <label class="form-check-label" for="orientation">
                             &nbsp;&nbsp;No</label>
                     </div>
@@ -31,68 +33,58 @@
             </div>
         </div>
 
-
         <div class="row">
             <div class="form-group col-md">
                 <label for="preparing ">
-                    Family preparing Sattu?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    Family preparing Sattu?&nbsp;<span
+                        class="text-danger">*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></label>
 
                 <div class="form-check-inline">
-                    <input class="form-check-input" type="radio" name="regularly" id="yes" value="Y"
-                        formControlName="regularly" (change)="regularly($event)" style="margin-top: 33px;">
-                    <label class="form-check-label" for="regularly">
+                    <input class="form-check-input" type="radio" name="preparingSattu" id="" value="Regular"
+                        formControlName="preparingSattu" style="margin-top: 33px;">
+                    <label class="form-check-label" for="preparingSattu">
                         &nbsp;&nbsp;Regularly</label>
 
                     <div class="form-check-inline">
                         &nbsp;&nbsp;&nbsp;
-                        <input class="form-check-input" type="radio" name="irregularly" id="no"
-                            (change)="irregularly($event)" value="N" formControlName="irregularly" />
-                        <label class="form-check-label" for="irregularly">
+                        <input class="form-check-input" type="radio" name="preparingSattu" id="" value="Irregular"
+                            formControlName="preparingSattu" />
+                        <label class="form-check-label" for="preparingSattu">
                             &nbsp;&nbsp;Irregularly</label>
                     </div>
 
                     <div class="form-check-inline">
-                        &nbsp;&nbsp;&nbsp;
-                        <input class="form-check-input" type="radio" name="notPreparing" id="no"
-                            (change)="notPreparing($event)" value="N" formControlName="notPreparing" />
-                        <label class="form-check-label" for="notPreparing">
+                        <input class="form-check-input" type="radio" name="preparingSattu" id="" value="NP"
+                            formControlName="preparingSattu" />
+                        <label class="form-check-label" for="preparingSattu">
                             &nbsp;&nbsp;Not Preparing</label>
                     </div>
 
-                    <div class="form-check-inline">
+                    <div class="form-check-inline" *ngIf="createSattuForm.value.preparingSattu !='NP'">
+                        &nbsp;&nbsp;&nbsp;
+                        <select class="form-select" formControlName="reason" id="reason" [ngClass]="{'is-invalid': s.reason.invalid 
+                        && s.reason.touched,'is-valid': s.reason.valid && 
+                        (s.reason.dirty || s.reason.touched) }" style="visibility: hidden;">
+                            <option value="">-- Select Reason--</option>
+                            <option *ngFor="let reason of prequisiteDetails"
+                                value="{{reason.sattu_non_preparing_reasons_id}}">
+                                {{ reason.reason_name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-check-inline" *ngIf="createSattuForm.value.preparingSattu =='NP'">
                         &nbsp;&nbsp;&nbsp;
                         <select class="form-select" formControlName="reason" id="reason" [ngClass]="{'is-invalid': s.reason.invalid 
                         && s.reason.touched,'is-valid': s.reason.valid && 
                         (s.reason.dirty || s.reason.touched) }">
                             <option value="">-- Select Reason--</option>
-                            <!-- <option *ngFor="let reason of villagesOfBranch" value="{{reason.reasonMasterId}}">
-                                {{ reason.reasonName }}
-                            </option> -->
+                            <option *ngFor="let reason of prequisiteDetails"
+                                value="{{reason.sattu_non_preparing_reasons_id}}">
+                                {{ reason.reason_name }}
+                            </option>
                         </select>
-                        <!-- <div *ngIf="s.reason.errors" class="invalid-feedback">
-                            <div *ngIf="s.reason.errors.required">Reason selection is required</div>
-                        </div> -->
-                        <!-- <input class="form-check-input" type="radio" name="notPreparing" id="no"
-                            (change)="notPreparing($event)" value="N" formControlName="notPreparing" />
-                        <label class="form-check-label" for="notPreparing">
-                            &nbsp;&nbsp;Not Preparing</label> -->
                     </div>
-
-
-                    <!-- <div class="form-group col-md"> 
-                         <div class="form-check-inline">
-                            <select class="form-select" formControlName="reason" id="reason" [ngClass]="{'is-invalid': s.reason.invalid 
-                                    && s.reason.touched,'is-valid': s.reason.valid && 
-                                    (s.reason.dirty || s.reason.touched) }">
-                                <option value="">-- Select Reason--</option>
-                                 <option *ngFor="let reason of villagesOfBranch" value="{{reason.reasonMasterId}}">
-                                        {{ reason.reasonName }}
-                                    </option>
-                                </select>
-                                <div *ngIf="s.reason.errors" class="invalid-feedback">
-                                    <div *ngIf="s.reason.errors.required">Reason selection is required</div>
-                                </div>
-                            </div>-->
 
                 </div>
 
@@ -102,7 +94,9 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-4"> <button type="button" class=" btn btn-primary btn-sm" >Save</button></div>
-       
+        <div class="col-md"> <button type="button" class=" btn btn-primary btn-sm" style="float: right;"
+                (click)="saveSattuRegister()" [disabled]="!sattuSaveDisabled()">Save</button>
+        </div>
     </div>
 </div>
+

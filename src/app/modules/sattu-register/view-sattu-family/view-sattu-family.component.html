@@ -50,7 +50,9 @@
                     </thead>
 
                     <tbody style="text-align:center;">
-                        <tr *ngFor="let fami of familyList; index as i">
+                        <tr
+                            *ngFor="let fami of familyList | sattuRegisterFilter: {familyNumber : sattuSearch,
+                                firstName :sattuSearch, middleName:sattuSearch,lastName:sattuSearch, husbandOrGuardianName : sattuSearch }; index as i">
                             <td style="width: 3%;">{{i+1}}</td>
                             <td style="width: 3%;">{{fami.familyNumber}}</td>
                             <td style="width: 25%;">{{fami.firstName}}{{fami.middleName}} {{fami.lastName}}</td>
@@ -66,4 +68,3 @@
         </div>
     </form>
 </div>
-

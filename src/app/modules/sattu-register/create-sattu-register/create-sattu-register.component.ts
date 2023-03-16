@@ -16,7 +16,7 @@ export class CreateSattuRegisterComponent {
   prequisiteDetails: Array<any> = [];
   childDetailLists: Array<any> = [];
   famNo: any;
-  setNP: any;
+  setFrequency: any;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private sattuService: SattuRegisterService, @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService,
@@ -24,23 +24,20 @@ export class CreateSattuRegisterComponent {
     dialogRef.disableClose = true
   }
 
-
   ngOnInit(): void {
     console.log(this.data);
     this.famNo = this.data?.familyDetails?.familyNumber;
-
-    // if (this.data?.familyDetails?.sattuPreparingFrequency.includes('No')) {
-    //   this.setNP = 'NP'
-    // }
-    // else if (this.data?.familyDetails?.sattuPreparingFrequency.includes('Regular')) {
-    //   this.setNP = 'R'
-    // } else if (this.data?.familyDetails?.sattuPreparingFrequency.includes('Irregular')) {
-    //   this.setNP = 'I'
-    // }
-
-    console.log(this.setNP);
     this.createSattu_Form();
 
+    if (this.data?.familyDetails?.sattuRegisterMasterId) {
+      if (this.data?.familyDetails?.sattuPreparingFrequency == 'Regular') {
+        this.setFrequency = 'R';
+      } else if (this.data?.familyDetails?.sattuPreparingFrequency == 'Irregular') {
+        this.setFrequency = 'I';
+      } else {
+        this.setFrequency = 'NP';
+      }
+    }
 
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, familyId: this.data?.familyDetails?.familyDetailId };
     this.sattuService.getSattuRegisterPrerequisites(req).subscribe((res) => {
@@ -52,20 +49,25 @@ export class CreateSattuRegisterComponent {
 
   closeDialog() {
     this.dialogRef.close();
+  }
 
-    this.data.modalCls = this.modalService.open(this.data.modalRecord, {
-      windowClass: 'record',
-    });
-
-    setTimeout(() => {
-      this.data.modalCls.dismiss();
-    }, 500);
-  
+  preparingSattu(e) {
+    console.log(e);
+    if (e == 'Regular') {
+      this.setFrequency = 'R'
+    } else if (e == 'Irregular') {
+      this.setFrequency = 'I'
+    }
+    else {
+      this.setFrequency = 'NP'
+    }
+    console.log(this.setFrequency);
   }
 
   createSattu_Form() {
     this.createSattuForm = this.fb.group({
-      orientation: ['', Validators.required],
+      orientation: [this.data?.familyDetails?.sattuRegisterMasterId ?
+        this.data?.familyDetails?.sattuOrientationDate ? 'Y' : 'N' : '', Validators.required],
       preparingSattu: [this.data?.familyDetails?.sattuPreparingFrequency ?
         this.data?.familyDetails?.sattuPreparingFrequency.includes('No') ? "NP" :
           this.data?.familyDetails?.sattuPreparingFrequency : '', Validators.required],
@@ -77,6 +79,10 @@ export class CreateSattuRegisterComponent {
     if (this.data?.familyDetails?.sattuOrientationDate != null) {
       this.createSattuForm.controls['orientation'].disable();
       this.createSattuForm.controls.orientation.setValue('Y');
+    }
+
+    if (this.data?.familyDetails?.sattuRegisterMasterId) {
+      this.createSattuForm.controls['orientation'].enable();
     }
     console.log(this.createSattuForm.value.preparingSattu);
 
@@ -111,67 +117,111 @@ export class CreateSattuRegisterComponent {
   saveSattuRegister() {
     console.log(this.data);
 
-    this.childDetailLists.push(this.data?.familyDetails?.below5YearsChildren.concat(this.data?.familyDetails?.otherChildren)
-      .concat(this.data?.familyDetails?.adolescentGilrChildren));
-    console.log(this.childDetailLists);
+    if (!this.data?.familyDetails?.sattuRegisterMasterId) {
+      this.childDetailLists.push(this.data?.familyDetails?.below5YearsChildren.concat(this.data?.familyDetails?.otherChildren)
+        .concat(this.data?.familyDetails?.adolescentGilrChildren));
+      console.log(this.childDetailLists);
 
 
-    var childSetArray: Array<any> = [];
-    this.childDetailLists[0].forEach(x => {
-      childSetArray.push({
-        sattuRegisterChildMapId: 0,
-        childDetailId: x.childDetailId,
-        childName: x.childName,
-        dob: x.dob,
-        age: x.age,
-        sex: x.sex,
-        presentInPem: x.presentInPem,
-        latestMuacRegisterId: x.latestMuacRegisterId,
-        latestMuac: x.latestMuac,
-        latestMuacRegisterTag: x.latestMuacRegisterTag,
-        latestMuacIndicatorName: x.latestMuacIndicatorName,
-        active_flag: 'A'
+      var childSetArray: Array<any> = [];
+      this.childDetailLists[0].forEach(x => {
+        childSetArray.push({
+          sattuRegisterChildMapId: 0,
+          childDetailId: x.childDetailId,
+          childName: x.childName,
+          dob: x.dob,
+          age: x.age,
+          sex: x.sex,
+          presentInPem: x.presentInPem,
+          latestMuacRegisterId: x.latestMuacRegisterId,
+          latestMuac: x.latestMuac,
+          latestMuacRegisterTag: x.latestMuacRegisterTag,
+          latestMuacIndicatorName: x.latestMuacIndicatorName,
+          active_flag: 'A'
+        })
       })
-    })
 
-    console.log(childSetArray);
-    console.log(this.childDetailLists);
+      console.log(childSetArray);
+      console.log(this.childDetailLists);
 
-    let saveReg = {
-      dataAccessDTO: this.httpService.dataAccessDTO,
-      sattuRegisterMasterId: 0,
-      familyId: this.data?.familyDetails?.familyDetailId,
-      sattuOrientationDate: '',
-      visitDate: this.data?.visitDate,
-      sattuPreparingFrequency: this.createSattuForm.value.preparingSattu,
-      sattuNonPreparingReasonId: this.createSattuForm.value.preparingSattu == 'NP' ? this.createSattuForm.value.reason : null,
-      presentInPregnantWoman: this.data?.familyDetails?.presentInPregnantWoman,
-      presentInLactatingMother: this.data?.familyDetails?.presentInLactatingMother,
-      hasChildPresentInPem: this.data?.familyDetails?.hasChildPresentInPem,
-      has2to5yearsOldChildren: this.data?.familyDetails?.has2to5yearsoldChildren,
-      hasAdolescentGirlChildren: this.data?.familyDetails?.hasAdolescentGirlChildren,
-      active_flag: 'A',
-      childDetailList: childSetArray
-    }
 
-    if (this.data?.familyDetails?.sattuOrientationDate != null || this.createSattuForm.value.orientation == 'Y') {
-      saveReg.sattuOrientationDate = this.data?.familyDetails?.sattuOrientationDate ? this.data?.familyDetails?.sattuOrientationDate :
-        this.data?.visitDate;
-    } else if (this.createSattuForm.value.orientation == 'N') {
-      saveReg.sattuOrientationDate = null;
-    }
-
-    console.log(saveReg);
-
-    this.sattuService.saveOrUpdate(saveReg).subscribe((res: any) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess(res.message);
-        this.closeDialog();
-      } else {
-        this.showError(res.message);
+      let saveReg = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        sattuRegisterMasterId: 0,
+        familyId: this.data?.familyDetails?.familyDetailId,
+        sattuOrientationDate: '',
+        visitDate: this.data?.visitDate,
+        sattuPreparingFrequency: this.setFrequency,
+        sattuNonPreparingReasonId: this.setFrequency == 'NP' ? this.createSattuForm.value.reason : null,
+        presentInPregnantWoman: this.data?.familyDetails?.presentInPregnantWoman,
+        presentInLactatingMother: this.data?.familyDetails?.presentInLactatingMother,
+        hasChildPresentInPem: this.data?.familyDetails?.hasChildPresentInPem,
+        has2to5yearsOldChildren: this.data?.familyDetails?.has2to5yearsoldChildren,
+        hasAdolescentGirlChildren: this.data?.familyDetails?.hasAdolescentGirlChildren,
+        active_flag: 'A',
+        childDetailList: childSetArray
       }
-    })
+
+      if (this.data?.familyDetails?.sattuOrientationDate != null || this.createSattuForm.value.orientation == 'Y') {
+        saveReg.sattuOrientationDate = this.data?.familyDetails?.sattuOrientationDate ? this.data?.familyDetails?.sattuOrientationDate :
+          this.data?.visitDate;
+      } else if (this.createSattuForm.value.orientation == 'N') {
+        saveReg.sattuOrientationDate = null;
+      }
+
+      console.log(saveReg);
+
+      this.sattuService.saveOrUpdate(saveReg).subscribe((res: any) => {
+        console.log(res);
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.closeDialog();
+        } else {
+          this.showError(res.message);
+        }
+      })
+    } else {
+      console.log(this.data?.familyDetails);
+
+      let updateReg = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        sattuRegisterMasterId: this.data?.familyDetails?.sattuRegisterMasterId,
+        visitDate: this.data?.familyDetails?.visitDate,
+        familyId: this.data?.familyDetails?.familyDetailId,
+        active_flag: 'A',
+        sattuPreparingFrequency: this.setFrequency,
+        sattuNonPreparingReasonId: this.createSattuForm.value.reason ? this.createSattuForm.value.reason : null,
+        sattuFamilyOrientationId: this.data?.familyDetails.sattuFamilyOrientationId,
+        sattuOrientationDate: ''
+
+      }
+
+      if (this.createSattuForm.value.orientation == 'Y') {
+        updateReg.sattuOrientationDate = this.data?.familyDetails?.sattuOrientationDate ? this.data?.familyDetails?.sattuOrientationDate :
+          this.data?.visitDate;
+      } else {
+        updateReg.sattuOrientationDate = null;
+      }
+      console.log(updateReg, 'updateReg');
+
+      this.sattuService.saveOrUpdate(updateReg).subscribe((res: any) => {
+        console.log(res);
+        if (res.status == true) {
+          this.showSuccess(res.message);
+          this.closeDialog();
+          let historyObj = { dataAccessDTO: this.httpService.dataAccessDTO, familyId: this.data.familyDetails.familyDetailId };
+          this.sattuService.getSattuRegisterHistoryOfAFamily(historyObj).subscribe((res: any) => {
+            console.log(res.responseObject);
+          })
+
+
+        } else {
+          this.showError(res.message);
+        }
+      })
+
+    }
+
   }
 
   showSuccess(message) {

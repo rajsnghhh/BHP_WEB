@@ -9,13 +9,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CreateSattuRegisterComponent } from './create-sattu-register/create-sattu-register.component';
 import { ViewSattuFamilyComponent } from './view-sattu-family/view-sattu-family.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SattuRecordHistoryComponent } from './sattu-record-history/sattu-record-history.component';
+import { sattuRegisterSearchFilterPipe } from '../shared/sidebar/sattu-register-search.pipe';
 
 
 @NgModule({
   declarations: [
     SattuRegisterComponent,
     CreateSattuRegisterComponent,
-    ViewSattuFamilyComponent
+    ViewSattuFamilyComponent,
+    SattuRecordHistoryComponent,
+    sattuRegisterSearchFilterPipe
   ],
   imports: [
     CommonModule,

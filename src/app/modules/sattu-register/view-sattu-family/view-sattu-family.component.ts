@@ -1,13 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
-import { SidebarService } from '../../shared/sidebar/sidebar.service';
 import { CreateSattuRegisterComponent } from '../create-sattu-register/create-sattu-register.component';
 import { SattuRegisterService } from '../sattu-register.service';
 
@@ -25,10 +21,9 @@ export class ViewSattuFamilyComponent {
   searchFullscreen: boolean;
   sattuSearch: any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private sidebarService: SidebarService, private http: HttpClient,
-    private router: Router, private fb: FormBuilder, public validationService: ValidationService,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, public validationService: ValidationService,
     private httpService: HttpService, private sattuService: SattuRegisterService,
-    public dialog: MatDialog, private toaster: ToastrService,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewSattuFamilyComponent>) { dialogRef.disableClose = true; }
 
   ngDoCheck(): void {
@@ -60,8 +55,7 @@ export class ViewSattuFamilyComponent {
     let famReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       visitDate: this.viewFamilyForm.value.date,
-      villageId: 1
-      // villageId: this.data,
+      villageId: this.data
     }
 
     this.loader = false;
@@ -89,9 +83,9 @@ export class ViewSattuFamilyComponent {
 
   createSattu(fami) {
     this.dialog.open(CreateSattuRegisterComponent, {
-      width: '760px',
+      width: '800px',
       height: '260px',
-      data: { familyDetails: fami, visitDate: this.viewFamilyForm.value.date }
+      data: { familyDetails: fami, visitDate: this.viewFamilyForm.value.date, villageId:this.data }
     });
   }
 
@@ -99,7 +93,7 @@ export class ViewSattuFamilyComponent {
     return false;
   }
 
-  //Set PW,PEM,LM,2-5YR,Adol Status
+  //Set PW, PEM, LM, 2-5YR, Adol Status
   setStatusForAll(familys: any) {
     familys.forEach(family => {
       if (family.presentInLactatingMother == "Y" &&

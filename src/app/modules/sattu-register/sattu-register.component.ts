@@ -6,10 +6,9 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
-import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ValidationService } from '../shared/services/validation.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
-import { CreateSattuRegisterComponent } from './create-sattu-register/create-sattu-register.component';
+import { SattuRecordHistoryComponent } from './sattu-record-history/sattu-record-history.component';
 import { SattuRegisterService } from './sattu-register.service';
 import { ViewSattuFamilyComponent } from './view-sattu-family/view-sattu-family.component';
 
@@ -22,8 +21,6 @@ export class SattuRegisterComponent {
   selectVillageForm: FormGroup;
   searchFullscreen: boolean;
   createMode: boolean;
-  updateMode: boolean;
-  deleteMode: boolean;
   loader: boolean = true;
   regionBranchHide: boolean;
   regionList: Array<any> = [];
@@ -42,17 +39,10 @@ export class SattuRegisterComponent {
   regularLength: any;
   irregularLength: any;
   notPreparingLength: any;
-  historyRecords: Array<any> = [];
-  showFamNo: any;
-  showFamName: any;
-  showGuardianName: any;
-  modalRecord: any;
-  modalClose:any;
 
   constructor(private sidebarService: SidebarService, private http: HttpClient, private router: Router, private fb: FormBuilder,
     private httpService: HttpService, private sattuService: SattuRegisterService, private modalService: NgbModal,
-    config: NgbModalConfig, public validationService: ValidationService, public dialog: MatDialog, private toaster: ToastrService,
-    private confirmationDialogService: ConfirmationDialogService,) {
+    config: NgbModalConfig, public validationService: ValidationService, public dialog: MatDialog, private toaster: ToastrService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -62,7 +52,6 @@ export class SattuRegisterComponent {
   }
 
   ngOnInit(): void {
-    this.changeVillage(1);
     this.selectVillage_Form();
     this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
@@ -99,16 +88,6 @@ export class SattuRegisterComponent {
       .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 274 || item.subFunctionMasterId == 275 || item.subFunctionMasterId == 276 || item.subFunctionMasterId == 277)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
-
-    this.updateMode = this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
-      .find(item => item.subFunctionMasterId == 274 || item.subFunctionMasterId == 275 || item.subFunctionMasterId == 276 || item.subFunctionMasterId == 277)?.accessDetailList
-      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
-
-    this.deleteMode = this.sidebarService.subMenuList
-      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
-      .find(item => item.subFunctionMasterId == 274 || item.subFunctionMasterId == 275 || item.subFunctionMasterId == 276 || item.subFunctionMasterId == 277)?.accessDetailList
-      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   selectVillage_Form() {
@@ -144,7 +123,7 @@ export class SattuRegisterComponent {
     this.villagesOfBranch = [];
     if (this.selectVillageForm.value.region == '') {
       this.branchList = [];
-      // this.escortviewData = [];
+      this.sattuView = [];
     }
   }
 
@@ -161,7 +140,7 @@ export class SattuRegisterComponent {
     this.selectVillageForm.controls.gram.setValue('');
     this.gpList = [];
     this.villageList = [];
-    // this.escortviewData = [];
+    this.sattuView = [];
   }
 
   changeBlock(blockId) {
@@ -172,7 +151,7 @@ export class SattuRegisterComponent {
     this.selectVillageForm.controls.gp.setValue('');
     this.selectVillageForm.controls.gram.setValue('');
     this.villageList = [];
-    // this.escortviewData = [];
+    this.sattuView = [];
   }
 
   changeGp(gpId) {
@@ -180,19 +159,19 @@ export class SattuRegisterComponent {
     this.villageList = this.gpList.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
     console.log(this.villageList, 'villageList');
     this.selectVillageForm.controls.gram.setValue('');
-    // this.escortviewData = [];
+    this.sattuView = [];
   }
 
   changeVillage(villageId) {
-    // this.escortviewData = [];
+    this.sattuView = [];
     console.log(villageId, 'villageId');
 
-    let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: 1, visitDate: null };
+    let viewreq = { dataAccessDTO: this.httpService.dataAccessDTO, villageId: villageId, visitDate: null };
     this.loader = false;
     this.sattuService.getSattuview(viewreq).subscribe((res: any) => {
       this.loader = true;
       this.sattuView = res.responseObject;
-      this.sattuView.forEach(x => {
+      this.sattuView?.forEach(x => {
         if (x.sattuPreparingFrequency == 'R') {
           x.sattuPreparingFrequency = 'Regular'
         } else if (x.sattuPreparingFrequency == 'NP') {
@@ -203,17 +182,17 @@ export class SattuRegisterComponent {
       })
       console.log(this.sattuView, 'sattuView');
 
-      this.orientationLength = this.sattuView.filter(x => x.sattuOrientationDate != null).length;
-      console.log(this.orientationLength, 'orientationLength');
+      this.orientationLength = this.sattuView?.filter(x => x.sattuOrientationDate != null).length;
+      // console.log(this.orientationLength, 'orientationLength');
 
-      this.regularLength = this.sattuView.filter(x => x.sattuPreparingFrequency == "Regular").length;
-      console.log(this.regularLength, 'regularLength');
+      this.regularLength = this.sattuView?.filter(x => x.sattuPreparingFrequency == "Regular").length;
+      // console.log(this.regularLength, 'regularLength');
 
-      this.irregularLength = this.sattuView.filter(x => x.sattuPreparingFrequency == "Irregular").length;
-      console.log(this.irregularLength, 'irregularLength');
+      this.irregularLength = this.sattuView?.filter(x => x.sattuPreparingFrequency == "Irregular").length;
+      // console.log(this.irregularLength, 'irregularLength');
 
-      this.notPreparingLength = this.sattuView.filter(x => x.sattuNonPreparingReasonId != null).length;
-      console.log(this.notPreparingLength, 'notPreparingLength');
+      this.notPreparingLength = this.sattuView?.filter(x => x.sattuNonPreparingReasonId != null).length;
+      // console.log(this.notPreparingLength, 'notPreparingLength');
     })
 
   }
@@ -224,55 +203,19 @@ export class SattuRegisterComponent {
       height: '570px',
       data: this.selectVillageForm.value.gram
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.changeVillage(this.selectVillageForm.value.gram)
+    });
   }
 
-  familyWiseSattuRecord(record, sattu) {
-    this.modalRecord = record;
+  familyWiseSattuRecord(sattu) {
     console.log(sattu);
-    this.showFamNo = sattu.familyNumber;
-    this.showFamName = sattu.familyName;
-    this.showGuardianName = sattu.husbandOrGuardianName;
-
-    this.viewSattuRecordModal = this.modalService.open(record, {
-      windowClass: 'record',
+    this.dialog.open(SattuRecordHistoryComponent, {
+      width: '1000px',
+      height: '450px',
+      data: { history: sattu, villageId: this.selectVillageForm.value.gram }
     });
-
-    this.modalClose = this.viewSattuRecordModal;
-
-    let historyObj = { dataAccessDTO: this.httpService.dataAccessDTO, familyId: sattu.familyDetailId };
-    this.sattuService.getSattuRegisterHistoryOfAFamily(historyObj).subscribe((res: any) => {
-      this.historyRecords = res.responseObject;
-      this.historyRecords.forEach(x => {
-        if (x.sattuPreparingFrequency == 'R') {
-          x.sattuPreparingFrequency = 'Regular'
-        } else if (x.sattuPreparingFrequency == 'NP') {
-          x.sattuPreparingFrequency = 'No' + ' ' + '(' + x.sattuNonPreparingReasonName + ')'
-        } else {
-          x.sattuPreparingFrequency = 'Irregular'
-        }
-      })
-      console.log(this.historyRecords, 'historyRecords');
-    })
-  }
-
-  sattuRecordModalDismiss() {
-    this.viewSattuRecordModal.dismiss();
-    console.log(true);
-    
-  }
-
-  editSattuRecord(history) {
-    this.viewSattuRecordModal.dismiss();
-
-    console.log(history);
-    this.dialog.open(CreateSattuRegisterComponent, {
-      width: '760px',
-      height: '260px',
-      data: { familyDetails: history, modalRecord: this.modalRecord , modalCls:this.modalClose}
-      // visitDate: history.visitDate
-    });
-
-
   }
 
 }

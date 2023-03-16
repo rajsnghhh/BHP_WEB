@@ -10,14 +10,13 @@
                             <h2 class="page-title">Sattu Register</h2>
                         </div>
 
-                        <!-- *ngIf="escortviewData.length>0" -->
-                        <div class="form-group col-md">
+                        <div class="form-group col-md" *ngIf="sattuView?.length>0">
                             <div class="serach_field_2">
                                 <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                                     <form active="#">
                                         <div class="search_field">
                                             <input type="text" name="search"
-                                                placeholder="search fam, name, place, type ..."
+                                                placeholder="fam, name, guardian, Preparing ..."
                                                 [(ngModel)]="sattuSearch">
                                         </div>
                                         <button type="submit"> <i class="fa fa-search"></i> </button>
@@ -27,15 +26,15 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
                         *ngIf="!selectVillageForm.value.gram || !createMode">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
-                            title="Create Escort/ Refer Register"></i>
-                    </div> -->
+                            title="Create Sattu Register"></i>
+                    </div>
 
-                    <!-- *ngIf="selectVillageForm.value.gram && createMode" -->
-                    <div class="form-group col-md" style="display: flex; justify-content:flex-end">
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="selectVillageForm.value.gram && createMode">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
                             title="Create Sattu Register" (click)="viewFamilyList()"></i>
@@ -131,7 +130,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" *ngIf="sattuView?.length>0">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
                             ** Total count of orientation received({{orientationLength}}), regularly preparing
@@ -163,8 +162,9 @@
                                     </thead>
 
                                     <tbody style="text-align: center;">
-                                        <tr *ngFor="let sattu of sattuView |
-                                        paginate: { itemsPerPage: 5, currentPage: p }; index as i">
+                                        <tr *ngFor="let sattu of sattuView | sattuRegisterFilter: {familyNumber : sattuSearch,
+                                                familyName :sattuSearch, husbandOrGuardianName : sattuSearch, sattuPreparingFrequency:sattuSearch }|
+                                             paginate: { itemsPerPage: 5, currentPage: p }; index as i">
                                             <td style="width: 10%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
                                             <td style="width: 8%;">{{sattu.familyNumber}}</td>
                                             <td style="width: 25%;">{{sattu.familyName}}</td>
@@ -176,7 +176,7 @@
                                             <td style="width: 30%;">{{sattu.sattuPreparingFrequency}}</td>
                                             <td class="btn-link"
                                                 style="width: 10%; color:#0d6efd; text-decoration: none; cursor: pointer;"
-                                                (click)="familyWiseSattuRecord(record, sattu)">view</td>
+                                                (click)="familyWiseSattuRecord(sattu)">view</td>
                                         </tr>
                                     </tbody>
 
@@ -195,66 +195,3 @@
         </div>
     </div>
 </div>
-
-
-<ng-template #record>
-
-    <div class="modal-content">
-        <div class="modal-header">
-
-            <div class="col-md">
-                <h3 class="dialog-title">Sattu Record History</h3>
-            </div>
-
-            <div class="col-md">
-                <span class="close" (click)="sattuRecordModalDismiss()"
-                    style="cursor: pointer;font-size: 35px;float: right; margin-top: -18px;">&times;</span>
-            </div>
-
-        </div>
-
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-md-1"></div>
-                <div class="col-md-10">
-                    <h4>Family No: {{showFamNo}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Family Name:
-                        {{showFamName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guardian Name: {{showGuardianName}}</h4>
-                </div>
-            </div>
-
-
-            <div id="tbodyrecord">
-                <div id="table_wrapper">
-                    <table class="table table-striped" id="table_wrapper">
-                        <thead id="header_fixed">
-                            <tr style="text-align: center;">
-                                <th style="width: 10%;">Sl. No.</th>
-                                <th style="width: 25%;">Last Record Date</th>
-                                <th style="width: 10%;">Received Orientation</th>
-                                <th style="width: 40%;">Preparing Sattu</th>
-                                <th style="width: 15%;">Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody style="text-align:center;">
-                            <tr *ngFor="let history of historyRecords; index as i">
-                                <td style="width: 10%;">{{i+1}}</td>
-                                <td style="width: 25%;">{{history.visitDate.split("-").reverse().join("-")}}</td>
-                                <td style="width: 10%;">{{history.sattuOrientationDate?'Y':'N'}}</td>
-                                <td style="width: 40%;">{{history.sattuPreparingFrequency}}</td>
-                                <td style="width: 15%;">
-                                    <i class="fas fa-edit" title="Edit Sattu Record"
-                                        (click)="editSattuRecord(history)"></i>
-                                    <i class="fas fa-trash" title="Delete Sattu Record"
-                                        (click)="deleteSattuRecord(history)"></i>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</ng-template>

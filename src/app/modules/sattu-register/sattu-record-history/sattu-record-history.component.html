@@ -1,0 +1,51 @@
+<app-loader [hidden]="loader"></app-loader>
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h3 class="dialog-title">Sattu Record History</h3>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+    </div>
+</h1>
+<hr>
+
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <h4>Family No: {{showFamNo}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Family Name:
+                {{showFamName}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Guardian Name: {{showGuardianName}}</h4>
+        </div>
+    </div>
+
+    <div id="tbodyrecord">
+        <div id="table_wrapper">
+            <table class="table table-striped" id="table_wrapper">
+                <thead id="header_fixed">
+                    <tr style="text-align: center;">
+                        <th style="width: 10%;">Sl. No.</th>
+                        <th style="width: 25%;">Last Record Date</th>
+                        <th style="width: 10%;">Received Orientation</th>
+                        <th style="width: 40%;">Preparing Sattu</th>
+                        <th style="width: 15%;" *ngIf="updateMode || deleteMode">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody style="text-align:center;">
+                    <tr *ngFor="let history of historyRecords; index as i">
+                        <td style="width: 10%;">{{i+1}}</td>
+                        <td style="width: 25%;">{{history.visitDate.split("-").reverse().join("-")}}</td>
+                        <td style="width: 10%;">{{history.sattuOrientationDate?'Y':'N'}}</td>
+                        <td style="width: 40%;">{{history.sattuPreparingFrequency}}</td>
+                        <td style="width: 15%;" *ngIf="updateMode || deleteMode">
+                            <i class="fas fa-edit" title="Edit Sattu Record" (click)="editSattuRecord(history)"
+                                *ngIf="updateMode"></i>
+                            <i class="fas fa-trash" title="Delete Sattu Record" (click)="deleteSattuRecord(history)"
+                                *ngIf="deleteMode"></i>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

@@ -161,3 +161,9 @@
     margin-left: -609px;
     margin-top: 21px;
 }
+
+[type=button], [type=reset], [type=submit], button {
+    -webkit-appearance: media-volume-sliderthumb;
+    background: #FFFFFF;
+}
+

@@ -2481,6 +2481,9 @@ class SidebarComponent {
     if (routeId == 266 || routeId == 267 || routeId == 268 || routeId == 269) {
       this.router.navigate(['/escort-reref-register']);
     }
+    if (routeId == 274 || routeId == 275 || routeId == 276 || routeId == 277) {
+      this.router.navigate(['/sattu-register']);
+    }
   }
   ngAfterViewInit() {
     let a = document.querySelectorAll(".card-header");

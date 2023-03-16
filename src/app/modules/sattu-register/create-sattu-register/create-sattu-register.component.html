@@ -1,7 +1,8 @@
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h3 class="dialog-title">Create Sattu Register</h3>
-        <h4 style="margin-left: -270px;"> Family No : {{famNo}}</h4>
+        <h3 class="dialog-title" *ngIf="!data?.familyDetails?.sattuRegisterMasterId">Create Sattu Register</h3>
+        <h3 class="dialog-title" *ngIf="data?.familyDetails?.sattuRegisterMasterId">Edit Sattu Register</h3>
+        <h3 style="margin-left: -340px; margin-top: 7px;"> Family No : {{famNo}}</h3>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
@@ -41,21 +42,22 @@
 
                 <div class="form-check-inline">
                     <input class="form-check-input" type="radio" name="preparingSattu" id="" value="Regular"
-                        formControlName="preparingSattu" style="margin-top: 33px;">
+                        formControlName="preparingSattu" style="margin-top: 33px;"
+                        (change)="preparingSattu($event.target.value)">
                     <label class="form-check-label" for="preparingSattu">
                         &nbsp;&nbsp;Regularly</label>
 
                     <div class="form-check-inline">
                         &nbsp;&nbsp;&nbsp;
                         <input class="form-check-input" type="radio" name="preparingSattu" id="" value="Irregular"
-                            formControlName="preparingSattu" />
+                            formControlName="preparingSattu" (change)="preparingSattu($event.target.value)">
                         <label class="form-check-label" for="preparingSattu">
                             &nbsp;&nbsp;Irregularly</label>
                     </div>
 
                     <div class="form-check-inline">
                         <input class="form-check-input" type="radio" name="preparingSattu" id="" value="NP"
-                            formControlName="preparingSattu" />
+                            formControlName="preparingSattu" (change)="preparingSattu($event.target.value)">
                         <label class="form-check-label" for="preparingSattu">
                             &nbsp;&nbsp;Not Preparing</label>
                     </div>
@@ -99,4 +101,3 @@
         </div>
     </div>
 </div>
-

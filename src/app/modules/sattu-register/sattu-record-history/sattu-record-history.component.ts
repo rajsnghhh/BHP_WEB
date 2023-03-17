@@ -50,8 +50,9 @@ export class SattuRecordHistoryComponent {
   history() {
     let historyObj = { dataAccessDTO: this.httpService.dataAccessDTO, familyId: this.data.history.familyDetailId };
     console.log(historyObj);
-
+    this.loader = false;
     this.sattuService.getSattuRegisterHistoryOfAFamily(historyObj).subscribe((res: any) => {
+      this.loader = true;
       this.historyRecords = res.responseObject;
       this.historyRecords.forEach(x => {
         if (x.sattuPreparingFrequency == 'R') {
@@ -97,7 +98,9 @@ export class SattuRecordHistoryComponent {
       familyId: history.familyDetailId, active_flag: 'D'
     };
 
+    this.loader = false;
     this.sattuService.saveOrUpdate(deleteObj).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);

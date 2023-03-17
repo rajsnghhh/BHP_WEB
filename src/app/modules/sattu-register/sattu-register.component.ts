@@ -211,10 +211,14 @@ export class SattuRegisterComponent {
 
   familyWiseSattuRecord(sattu) {
     console.log(sattu);
-    this.dialog.open(SattuRecordHistoryComponent, {
+    const dialogRef =  this.dialog.open(SattuRecordHistoryComponent, {
       width: '1000px',
       height: '450px',
       data: { history: sattu, villageId: this.selectVillageForm.value.gram }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.changeVillage(this.selectVillageForm.value.gram)
     });
   }
 

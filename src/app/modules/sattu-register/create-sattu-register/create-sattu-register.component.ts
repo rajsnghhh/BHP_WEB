@@ -17,6 +17,7 @@ export class CreateSattuRegisterComponent {
   childDetailLists: Array<any> = [];
   famNo: any;
   setFrequency: any;
+  loader: boolean = true;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
     private sattuService: SattuRegisterService, @Inject(MAT_DIALOG_DATA) public data: any, private toaster: ToastrService,
@@ -171,7 +172,9 @@ export class CreateSattuRegisterComponent {
 
       console.log(saveReg);
 
+      this.loader = false;
       this.sattuService.saveOrUpdate(saveReg).subscribe((res: any) => {
+        this.loader = true;
         console.log(res);
         if (res.status == true) {
           this.showSuccess(res.message);
@@ -203,8 +206,9 @@ export class CreateSattuRegisterComponent {
         updateReg.sattuOrientationDate = null;
       }
       console.log(updateReg, 'updateReg');
-
+      this.loader = false;
       this.sattuService.saveOrUpdate(updateReg).subscribe((res: any) => {
+        this.loader = true;
         console.log(res);
         if (res.status == true) {
           this.showSuccess(res.message);

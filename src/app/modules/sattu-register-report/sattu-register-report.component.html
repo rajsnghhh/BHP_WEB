@@ -1,0 +1,265 @@
+<app-loader [hidden]="loader"></app-loader>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Sattu Register Report</h2>
+                </div>
+
+                <form [formGroup]="reportForm">
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="project">Project :</label>
+                            <select class="form-select" (change)="changeProject($event.target.value)"
+                                formControlName="project" [ngClass]="{
+                                    'is-invalid': f.project.invalid && f.project.touched,
+                                    'is-valid': f.project.valid && (f.project.dirty || f.project.touched) }">
+                                <option value="">-- Select Project --</option>
+                                <!-- *ngIf="roleType == 'PM' || roleType == 'View' || roleType == 'PD'" -->
+                                <option value="all">All Project</option>
+                                <option *ngFor="let project of projectList" value="{{project.projectMasterId}}">
+                                    {{project.projectCode}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="date">Date :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <input type="date" class="form-control" formControlName="date"
+                                (keydown)="restrictTypeOfDate()" (change)="changeDate($event.target.value)" [ngClass]="{'is-invalid': f.date.invalid
+                                && f.date.touched,'is-valid': f.date.valid && (f.date.dirty || f.date.touched) }">
+                            <div *ngIf="f.date.errors" class="invalid-feedback">
+                                <div *ngIf="f.date.errors.required">Date selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md" *ngIf="selectFilter">
+                            <label>Select :</label> <br>
+                            <label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" value="stateWise" formControlName="stateOrRegion"
+                                    (click)="checkStateOrRegion($event.target.value)"> &nbsp;
+                                <span>State Wise</span>
+                            </label> &nbsp;&nbsp;&nbsp;
+                            <label>
+                                <input type="radio" value="regionWise" formControlName="stateOrRegion"
+                                    (click)="checkStateOrRegion($event.target.value)"> &nbsp;
+                                <span>Region Wise</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="stateWiseFilter">
+                        <div class="form-group col-md">
+                            <label for="state">State :</label>
+                            <select class="form-select" (change)="changeState($event.target.value)"
+                                formControlName="state" [ngClass]="{ 'is-invalid': f.state.invalid && f.state.touched,
+                                'is-valid': f.state.valid && (f.state.dirty || f.state.touched) }">
+                                <option value="">-- Select State -- </option>
+                                <option value="">All State</option>
+                                <option *ngFor="let state of stateList" [value]="state.stateMasterId">
+                                    {{state.stateName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="district">District :</label>
+                            <select class="form-select" (change)="changeDistrict($event.target.value)"
+                                formControlName="district" [ngClass]="{ 'is-invalid': f.district.invalid && f.district.touched,
+                                'is-valid': f.district.valid && (f.district.dirty || f.district.touched)  }">
+                                <option value="">-- Select District --</option>
+                                <option value="">All District</option>
+                                <option *ngFor="let district of stateWiseDistrictList"
+                                    [value]="district.districtMasterId">
+                                    {{district.districtName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="block">Block :</label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" [ngClass]="{ 'is-invalid': f.block.invalid && f.block.touched,
+                                'is-valid': f.block.valid && (f.block.dirty || f.block.touched) }">
+                                <option value="">-- Select Block --</option>
+                                <option value="">All Block</option>
+                                <option *ngFor="let block of blockList" [value]="block.blockMasterId">
+                                    {{block.blockName}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :</label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                [ngClass]="{ 'is-invalid': f.gp.invalid && f.gp.touched,
+                                'is-valid': f.gp.valid && (f.gp.dirty || f.gp.touched)  }">
+                                <option value="">-- Select GP --</option>
+                                <option value="">All GP</option>
+                                <option *ngFor="let gp of gpList" [value]="gp.gpMunicipalId">
+                                    {{gp.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="regionWiseFilter">
+                        <div class="form-group col-md-4">
+                            <label for="region">Region :</label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{'is-invalid': f.region.invalid && f.region.touched,
+                                 'is-valid': f.region.valid && (f.region.dirty || f.region.touched)}">
+                                <option value="">-- Select Region --</option>
+                                <option value="">All Region</option>
+                                <option *ngFor="let region of regionList" [value]="region.regionMasterId">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="add_button" *ngIf="stateWiseFilter || regionWiseFilter || projectWiseFilter">
+                        <button class="btn btn-primary" (click)="generateReport()">
+                            <i class="fa fa-file-text-o"></i>Generate Report
+                        </button>
+                    </div>
+
+                </form>
+
+
+                <div class="white_box_tittle list_header">
+                    <div class="QA_table">
+                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
+                            <table
+                                class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
+                                role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
+
+                                <thead>
+                                    <tr>
+                                        <th rowspan="3">SL<br>NO.</th>
+                                        <th rowspan="3" style="width: 100px;">{{tableHeadName}}<br>Name</th>
+                                        <th rowspan="3" style="width: 100px;">No. of<br>Family Trained</th>
+                                        <th colspan="7">Family Preparing Sattu</th>
+                                        <th colspan="8">Family Not Preparing Sattu</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="4">Regular </th>
+                                        <th colspan="3">Irregular</th>
+                                        <th colspan="1">Count</th>
+                                        <th colspan="2">Financial Issue</th>
+                                        <th colspan="3">Time Constraints</th>
+                                        <th colspan="2">Not Interested</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody *ngIf="projectWiseFilter == true">
+                                    <tr *ngFor="let item of projectWiseSattuList;index as i">
+                                        <td style="font-size: 13px;">{{i+1}}</td>
+                                        <td style="font-size: 12px;word-wrap: break-word;">{{item.projectName ?
+                                            item.projectName :
+                                            ''}}</td>
+                                        <td style="font-size: 13px;">
+                                            {{item.projectStats.noOfFamiliesTrainedForSattuMaking}}</td>
+                                        <td style="font-size: 13px;" colspan="4">
+                                            {{item.projectStats.noOfFamiliesPreparingSattuRegularly}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="3">
+                                            {{item.projectStats.noOfFamiliesPreparingSattuIrregularly}}</td>
+                                        <td style="font-size: 13px;" colspan="1">
+                                            {{item.projectStats.notPreparingSattuDetails.noOfFamilies}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="2">
+                                            {{item.projectStats.notPreparingSattuDetails.notPreparingSattuForFinancialReasons}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="3">
+                                            {{item.projectStats.notPreparingSattuDetails.notPreparingSattuForTimeConstraints}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="2">
+                                            {{item.projectStats.notPreparingSattuDetails.notPreparingSattuForNoInterest}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                                <tbody *ngIf="stateWiseFilter == true">
+                                    <tr *ngFor="let item of stateWiseSattuList;index as i">
+                                        <td style="font-size: 13px;">{{i+1}}</td>
+                                        <td style="font-size: 12px;word-wrap: break-word;">{{item.stateName ?
+                                            item.stateName :
+                                            ''}}</td>
+                                        <td style="font-size: 13px;">
+                                            {{item.stateStats.noOfFamiliesTrainedForSattuMaking}}</td>
+                                        <td style="font-size: 13px;" colspan="4">
+                                            {{item.stateStats.noOfFamiliesPreparingSattuRegularly}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="3">
+                                            {{item.stateStats.noOfFamiliesPreparingSattuIrregularly}}</td>
+                                        <td style="font-size: 13px;" colspan="1">
+                                            {{item.stateStats.notPreparingSattuDetails.noOfFamilies}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="2">
+                                            {{item.stateStats.notPreparingSattuDetails.notPreparingSattuForFinancialReasons}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="3">
+                                            {{item.stateStats.notPreparingSattuDetails.notPreparingSattuForTimeConstraints}}
+                                        </td>
+                                        <td style="font-size: 13px;" colspan="2">
+                                            {{item.stateStats.notPreparingSattuDetails.notPreparingSattuForNoInterest}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+
+                                <!-- <tr *ngIf="projectWiseBeneficiaryList.length > 0">
+                                        <td style="font-size: 13px;"></td>
+                                        <td style="font-size: 12px;word-wrap: break-word;color: #666666;">
+                                            <strong>Total</strong>
+                                        </td>
+                                        <td style="font-size: 13px; color: #666666;">
+                                            <strong>{{totalPemCurrent}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{totalpemCumulative}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{lmCurrent}}</strong></td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{lmCumulative}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{pwCurrent}}</strong></td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{pwCumulative}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{totalFamilyCount}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{below5Current}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{below5Cumulative}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{below2Current}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{below2Cumulative}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;"><strong>{{childPemCurrent}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{childPemCumulative}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{girl14To18Current}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;color: #666666;">
+                                            <strong>{{girl14To18Cumulative}}</strong>
+                                        </td>
+                                    </tr> -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

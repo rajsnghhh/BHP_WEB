@@ -12,7 +12,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SattuRecordHistoryComponent } from './sattu-record-history/sattu-record-history.component';
 import { sattuRegisterSearchFilterPipe } from '../shared/sidebar/sattu-register-search.pipe';
 
-
 @NgModule({
   declarations: [
     SattuRegisterComponent,

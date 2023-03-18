@@ -1,0 +1,35 @@
+table tr th {
+	border: 0.5px solid rgb(255, 255, 255);
+}
+
+.QA_section .QA_table .table thead th
+, .QA_section .QA_table td {
+  padding: 12px 0px;
+}
+
+.add_button{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+table.table thead {
+  position: sticky;
+  top: 60px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: grey;
+}
+

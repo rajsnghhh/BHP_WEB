@@ -245,7 +245,13 @@ function SattuRegisterReportComponent_div_27_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](22, "div", 8)(23, "label", 45);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](24, "GP/ Municipality :");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](25, "select", 46)(26, "option", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](25, "select", 46);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("change", function SattuRegisterReportComponent_div_27_Template_select_change_25_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r22);
+      const ctx_r25 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r25.changeGP($event.target.value));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](26, "option", 11);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](27, "All GP");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](28, SattuRegisterReportComponent_div_27_option_28_Template, 2, 2, "option", 13);
@@ -278,10 +284,10 @@ function SattuRegisterReportComponent_div_28_option_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const region_r26 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("value", region_r26.regionMasterId);
+    const region_r27 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("value", region_r27.regionMasterId);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", region_r26.regionName, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", region_r27.regionName, " ");
   }
 }
 function SattuRegisterReportComponent_div_28_Template(rf, ctx) {
@@ -305,12 +311,12 @@ function SattuRegisterReportComponent_div_28_Template(rf, ctx) {
 }
 function SattuRegisterReportComponent_div_29_Template(rf, ctx) {
   if (rf & 1) {
-    const _r28 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
+    const _r29 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "div", 50)(1, "button", 51);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵlistener"]("click", function SattuRegisterReportComponent_div_29_Template_button_click_1_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r28);
-      const ctx_r27 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r27.generateReport());
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r29);
+      const ctx_r28 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r28.generateReport());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](2, "i", 52);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](3, "Generate Report ");
@@ -348,26 +354,26 @@ function SattuRegisterReportComponent_tr_66_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]()();
   }
   if (rf & 2) {
-    const item_r29 = ctx.$implicit;
-    const i_r30 = ctx.index;
+    const item_r30 = ctx.$implicit;
+    const i_r31 = ctx.index;
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](i_r30 + 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](i_r31 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](item_r29.name);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](item_r30.name);
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.noOfFamiliesTrainedForSattuMaking, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.noOfFamiliesTrainedForSattuMaking, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.noOfFamiliesPreparingSattuRegularly, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.noOfFamiliesPreparingSattuRegularly, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.noOfFamiliesPreparingSattuIrregularly, "");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.noOfFamiliesPreparingSattuIrregularly, "");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.notPreparingSattuDetails.noOfFamilies, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.notPreparingSattuDetails.noOfFamilies, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.notPreparingSattuDetails.notPreparingSattuForFinancialReasons, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.notPreparingSattuDetails.notPreparingSattuForFinancialReasons, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.notPreparingSattuDetails.notPreparingSattuForTimeConstraints, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.notPreparingSattuDetails.notPreparingSattuForTimeConstraints, " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r29.stats.notPreparingSattuDetails.notPreparingSattuForNoInterest, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate1"](" ", item_r30.stats.notPreparingSattuDetails.notPreparingSattuForNoInterest, " ");
   }
 }
 function SattuRegisterReportComponent_tr_67_Template(rf, ctx) {
@@ -586,6 +592,9 @@ class SattuRegisterReportComponent {
       this.reportForm.controls['gp'].enable();
     }
   }
+  changeGP(GPId) {
+    this.showSelectionWiseSattuList = [];
+  }
   restrictTypeOfDate() {
     return false;
   }
@@ -597,6 +606,13 @@ class SattuRegisterReportComponent {
     return x;
   }
   generateReport() {
+    if (!this.reportForm.value.project) {
+      this.showError('Please select a project');
+      return;
+    } else if (!this.reportForm.value.date) {
+      this.showError('Please select a date');
+      return;
+    }
     if (this.projectWiseFilter == true) {
       this.tableHeadName = "Project";
       this.loader = false;
@@ -685,13 +701,13 @@ class SattuRegisterReportComponent {
       ...notPreparingSattuDetails
     }));
     console.log(arr);
-    console.log(this.famTrained = this.totalCount(arr, 'noOfFamiliesTrainedForSattuMaking'));
-    console.log(this.regularFam = this.totalCount(arr, 'noOfFamiliesPreparingSattuRegularly'));
-    console.log(this.irregularFam = this.totalCount(arr, 'noOfFamiliesPreparingSattuIrregularly'));
-    console.log(this.NPTotalCount = this.totalCount(arr, 'noOfFamilies'));
-    console.log(this.financialCount = this.totalCount(arr, 'notPreparingSattuForFinancialReasons'));
-    console.log(this.timeConstraintsCount = this.totalCount(arr, 'notPreparingSattuForTimeConstraints'));
-    console.log(this.notInterestedCount = this.totalCount(arr, 'notPreparingSattuForNoInterest'));
+    this.famTrained = this.totalCount(arr, 'noOfFamiliesTrainedForSattuMaking');
+    this.regularFam = this.totalCount(arr, 'noOfFamiliesPreparingSattuRegularly');
+    this.irregularFam = this.totalCount(arr, 'noOfFamiliesPreparingSattuIrregularly');
+    this.NPTotalCount = this.totalCount(arr, 'noOfFamilies');
+    this.financialCount = this.totalCount(arr, 'notPreparingSattuForFinancialReasons');
+    this.timeConstraintsCount = this.totalCount(arr, 'notPreparingSattuForTimeConstraints');
+    this.notInterestedCount = this.totalCount(arr, 'notPreparingSattuForNoInterest');
   }
   changeDate(e) {
     if (e == '') {
@@ -717,7 +733,7 @@ SattuRegisterReportComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTE
   selectors: [["app-sattu-register-report"]],
   decls: 68,
   vars: 20,
-  consts: [[3, "hidden"], [1, "container"], [1, "row"], [1, "col-md-12"], [1, "white_box", "QA_section", "mb_30"], ["id", "header-fixed", 2, "display", "flex"], [1, "page-title"], [3, "formGroup"], [1, "form-group", "col-md"], ["for", "project"], ["formControlName", "project", 1, "form-select", 3, "ngClass", "change"], ["value", ""], ["value", "all"], [3, "value", 4, "ngFor", "ngForOf"], ["for", "date"], [1, "text-danger"], ["type", "date", "formControlName", "date", 1, "form-control", 3, "max", "ngClass", "change", "keydown"], ["class", "invalid-feedback", 4, "ngIf"], ["class", "form-group col-md", 4, "ngIf"], ["class", "row", 4, "ngIf"], ["class", "add_button", 4, "ngIf"], [1, "white_box_tittle", "list_header"], [1, "QA_table"], ["id", "DataTables_Table_0_wrapper", 1, "dataTables_wrapper", "no-footer"], ["role", "grid", "aria-describedby", "DataTables_Table_0_info", 1, "table", "lms_table_active", "dataTable", "no-footer", "dtr-inline", "collapsed", "table", "table-striped", 2, "table-layout", "fixed"], ["rowspan", "3"], ["rowspan", "3", 2, "width", "100px"], ["colspan", "7"], ["colspan", "8"], ["colspan", "4"], ["colspan", "3"], ["colspan", "1"], ["colspan", "2"], [4, "ngFor", "ngForOf"], [4, "ngIf"], [3, "value"], [1, "invalid-feedback"], ["type", "radio", "value", "stateWise", "formControlName", "stateOrRegion", 3, "click"], ["type", "radio", "value", "regionWise", "formControlName", "stateOrRegion", 3, "click"], ["for", "state"], ["formControlName", "state", 1, "form-select", 3, "ngClass", "change"], ["for", "district"], ["formControlName", "district", 1, "form-select", 3, "ngClass", "change"], ["for", "block"], ["formControlName", "block", 1, "form-select", 3, "ngClass", "change"], ["for", "gp"], ["formControlName", "gp", 1, "form-select", 3, "ngClass"], [1, "form-group", "col-md-4"], ["for", "region"], ["formControlName", "region", "id", "region", 1, "form-select", 3, "ngClass"], [1, "add_button"], [1, "btn", "btn-primary", 3, "click"], [1, "fa", "fa-file-text-o"], [2, "font-size", "13px"], [2, "font-size", "12px", "word-wrap", "break-word"], ["colspan", "4", 2, "font-size", "13px"], ["colspan", "3", 2, "font-size", "13px"], ["colspan", "1", 2, "font-size", "13px"], ["colspan", "2", 2, "font-size", "13px"], [2, "font-size", "12px", "word-wrap", "break-word", "color", "#666666"], [2, "font-size", "13px", "color", "#666666"], ["colspan", "4", 2, "font-size", "13px", "color", "#666666"], ["colspan", "3", 2, "font-size", "13px", "color", "#666666"], ["colspan", "1", 2, "font-size", "13px", "color", "#666666"], ["colspan", "2", 2, "font-size", "13px", "color", "#666666"]],
+  consts: [[3, "hidden"], [1, "container"], [1, "row"], [1, "col-md-12"], [1, "white_box", "QA_section", "mb_30"], ["id", "header-fixed", 2, "display", "flex"], [1, "page-title"], [3, "formGroup"], [1, "form-group", "col-md"], ["for", "project"], ["formControlName", "project", 1, "form-select", 3, "ngClass", "change"], ["value", ""], ["value", "all"], [3, "value", 4, "ngFor", "ngForOf"], ["for", "date"], [1, "text-danger"], ["type", "date", "formControlName", "date", 1, "form-control", 3, "max", "ngClass", "change", "keydown"], ["class", "invalid-feedback", 4, "ngIf"], ["class", "form-group col-md", 4, "ngIf"], ["class", "row", 4, "ngIf"], ["class", "add_button", 4, "ngIf"], [1, "white_box_tittle", "list_header"], [1, "QA_table"], ["id", "DataTables_Table_0_wrapper", 1, "dataTables_wrapper", "no-footer"], ["role", "grid", "aria-describedby", "DataTables_Table_0_info", 1, "table", "lms_table_active", "dataTable", "no-footer", "dtr-inline", "collapsed", "table", "table-striped", 2, "table-layout", "fixed"], ["rowspan", "3"], ["rowspan", "3", 2, "width", "100px"], ["colspan", "7"], ["colspan", "8"], ["colspan", "4"], ["colspan", "3"], ["colspan", "1"], ["colspan", "2"], [4, "ngFor", "ngForOf"], [4, "ngIf"], [3, "value"], [1, "invalid-feedback"], ["type", "radio", "value", "stateWise", "formControlName", "stateOrRegion", 3, "click"], ["type", "radio", "value", "regionWise", "formControlName", "stateOrRegion", 3, "click"], ["for", "state"], ["formControlName", "state", 1, "form-select", 3, "ngClass", "change"], ["for", "district"], ["formControlName", "district", 1, "form-select", 3, "ngClass", "change"], ["for", "block"], ["formControlName", "block", 1, "form-select", 3, "ngClass", "change"], ["for", "gp"], ["formControlName", "gp", 1, "form-select", 3, "ngClass", "change"], [1, "form-group", "col-md-4"], ["for", "region"], ["formControlName", "region", "id", "region", 1, "form-select", 3, "ngClass"], [1, "add_button"], [1, "btn", "btn-primary", 3, "click"], [1, "fa", "fa-file-text-o"], [2, "font-size", "13px"], [2, "font-size", "12px", "word-wrap", "break-word"], ["colspan", "4", 2, "font-size", "13px"], ["colspan", "3", 2, "font-size", "13px"], ["colspan", "1", 2, "font-size", "13px"], ["colspan", "2", 2, "font-size", "13px"], [2, "font-size", "12px", "word-wrap", "break-word", "color", "#666666"], [2, "font-size", "13px", "color", "#666666"], ["colspan", "4", 2, "font-size", "13px", "color", "#666666"], ["colspan", "3", 2, "font-size", "13px", "color", "#666666"], ["colspan", "1", 2, "font-size", "13px", "color", "#666666"], ["colspan", "2", 2, "font-size", "13px", "color", "#666666"]],
   template: function SattuRegisterReportComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](0, "app-loader", 0);

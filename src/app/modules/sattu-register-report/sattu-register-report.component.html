@@ -129,7 +129,6 @@
 
                 </form>
 
-
                 <div class="white_box_tittle list_header">
                     <div class="QA_table">
                         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
@@ -140,14 +139,14 @@
                                 <thead>
                                     <tr>
                                         <th rowspan="3">SL<br>NO.</th>
-                                        <th rowspan="3" style="width: 100px;">{{tableHeadName}}<br>Name</th>
+                                        <th rowspan="3" style="width: 200px;">{{tableHeadName}}<br>Name</th>
                                         <th rowspan="3" style="width: 100px;">No. of<br>Family Trained</th>
-                                        <th colspan="7">Family Preparing Sattu</th>
+                                        <th colspan="6">Family Preparing Sattu</th>
                                         <th colspan="8">Family Not Preparing Sattu</th>
                                     </tr>
 
                                     <tr>
-                                        <th colspan="4">Regular </th>
+                                        <th colspan="3">Regular </th>
                                         <th colspan="3">Irregular</th>
                                         <th colspan="1">Count</th>
                                         <th colspan="2">Financial Issue</th>
@@ -163,7 +162,7 @@
                                         <td style="font-size: 12px;word-wrap: break-word;">{{item.name}}</td>
                                         <td style="font-size: 13px;">
                                             {{item.stats.noOfFamiliesTrainedForSattuMaking}}</td>
-                                        <td style="font-size: 13px;" colspan="4">
+                                        <td style="font-size: 13px;" colspan="3">
                                             {{item.stats.noOfFamiliesPreparingSattuRegularly}}
                                         </td>
                                         <td style="font-size: 13px;" colspan="3">
@@ -189,7 +188,7 @@
                                         </td>
                                         <td style="font-size: 13px; color: #666666;"><strong>{{famTrained}}</strong>
                                         </td>
-                                        <td style="font-size: 13px;color: #666666;" colspan="4">
+                                        <td style="font-size: 13px;color: #666666;" colspan="3">
                                             <strong>{{regularFam}}</strong>
                                         </td>
                                         <td style="font-size: 13px;color: #666666;" colspan="3">

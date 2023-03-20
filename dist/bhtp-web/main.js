@@ -193,7 +193,8 @@ const routes = [{
   canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
 }, {
   path: 'sattu-register-report',
-  loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_sattu-register-report_sattu-register-report_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modules/sattu-register-report/sattu-register-report.module */ 43865)).then(m => m.SattuRegisterReportModule)
+  loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_sattu-register-report_sattu-register-report_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modules/sattu-register-report/sattu-register-report.module */ 43865)).then(m => m.SattuRegisterReportModule),
+  canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
 }, {
   path: '**',
   redirectTo: ''
@@ -2646,11 +2647,11 @@ const environment = {
   // Development 
   // apiUrl: 'http://192.168.149.229:6180/bhp/api/v1/'
   // New Development Server
-  // apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
+  apiUrl: 'http://192.168.149.67:6180/bhp/api/v1/'
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
   // New Test Server
-  apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+  // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
   // Training
   // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
   // Staging

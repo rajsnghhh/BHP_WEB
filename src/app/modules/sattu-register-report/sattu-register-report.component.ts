@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from '../core/http/http.service';
 import { SidebarService } from '../shared/sidebar/sidebar.service';
@@ -29,12 +30,28 @@ export class SattuRegisterReportComponent {
   setCurrentDate: any;
   projectWiseSattuList: Array<any> = [];
   stateWiseSattuList: Array<any> = [];
+  regionWiseSattuList: Array<any> = [];
+  showSelectionWiseSattuList: Array<any> = [];
+  totalCountArray: Array<any> = [];;
+  maxDate: any;
+  famTrained = 0;
+  regularFam = 0;
+  irregularFam = 0;
+  NPTotalCount = 0;
+  financialCount = 0;
+  timeConstraintsCount = 0;
+  notInterestedCount = 0;
 
   constructor(private fb: FormBuilder, private httpService: HttpService,
-    private toaster: ToastrService, private sidebarService: SidebarService,
+    private toaster: ToastrService, private sidebarService: SidebarService, private router: Router,
     private sattuReportService: SattuRegisterReportService) { }
 
   ngOnInit(): void {
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 6)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 282)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/sattu-register-report']) : this.router.navigate(['/error']);
+
     this.setCurrentDate = new Date().toJSON().slice(0, 10);
     this.reportForms();
     let projectreq = { dataAccessDTO: this.httpService.dataAccessDTO };
@@ -43,12 +60,10 @@ export class SattuRegisterReportComponent {
     });
 
     this.reportForm.get('date').patchValue(this.setCurrentDate);
-
+    this.maxDate = moment(new Date()).format("YYYY-MM-DD");
   }
 
   reportForms() {
-    console.log(this.setCurrentDate);
-
     this.reportForm = this.fb.group({
       project: ['', Validators.required],
       date: ['', Validators.required],
@@ -59,7 +74,6 @@ export class SattuRegisterReportComponent {
       gp: [''],
       region: ['']
     });
-
   }
 
   get f() {
@@ -67,6 +81,7 @@ export class SattuRegisterReportComponent {
   }
 
   changeProject(projectId) {
+    this.showSelectionWiseSattuList = [];
     if (projectId != '' && projectId != 'all') {
       this.selectFilter = true;
       this.tableHeadName = "";
@@ -83,10 +98,10 @@ export class SattuRegisterReportComponent {
     this.reportForm.controls.gp.setValue('');
     this.reportForm.controls.region.setValue('');
     this.reportForm.controls.stateOrRegion.setValue('');
-
   }
 
   checkStateOrRegion(value) {
+    this.showSelectionWiseSattuList = [];
     if (value == 'stateWise') {
       this.stateWiseFilter = true;
       this.regionWiseFilter = false;
@@ -116,7 +131,7 @@ export class SattuRegisterReportComponent {
   }
 
   changeState(stateId) {
-
+    this.showSelectionWiseSattuList = [];
     let districtBlockReq = { dataAccessDTO: this.httpService.dataAccessDTO, stateId: stateId };
     this.sattuReportService.getListOfDistrictAndBlock(districtBlockReq).subscribe((res: any) => {
       this.stateWiseDistrictList = res.responseObject?.stateWiseDistrictList;
@@ -139,6 +154,7 @@ export class SattuRegisterReportComponent {
   }
 
   changeDistrict(value) {
+    this.showSelectionWiseSattuList = [];
     this.blockList = this.stateWiseDistrictList.find(item => item.districtMasterId == value)?.blockList;
     this.reportForm.controls.block.setValue('');
     this.reportForm.controls.gp.setValue('');
@@ -156,6 +172,7 @@ export class SattuRegisterReportComponent {
   }
 
   changeBlock(blockId) {
+    this.showSelectionWiseSattuList = [];
     this.gpList = this.blockList.find(gp => gp.blockMasterId == blockId)?.gpDtoList;
     this.reportForm.controls.gp.setValue('');
     if (!this.reportForm.value.block) {
@@ -170,32 +187,42 @@ export class SattuRegisterReportComponent {
     }
   }
 
-  changeDate(date) {
-    console.log(date);
-
-    // this.tableHeadName = "Project";
-    // let projectWiseReportreq = { dataAccessDTO: this.httpService.dataAccessDTO, uptoVisitDate: this.reportForm.value.date };
-
-    // this.sattuReportService.getSattuRegisterInfoProjectWise(projectWiseReportreq).subscribe((res: any) => {
-    //   this.projectWiseReport = res.responseObject;
-    //   console.log(this.projectWiseReport, 'projectWiseReport');
-
-    // })
+  changeGP(GPId) {
+    this.showSelectionWiseSattuList = [];
   }
 
   restrictTypeOfDate() {
     return false;
   }
 
+  totalCount(arr, key) {
+    let x = 0;
+    arr.filter(i => { x += i[key] })
+    return x;
+  }
+
   generateReport() {
+    if (!this.reportForm.value.project) {
+      this.showError('Please select a project');
+      return;
+    } else if (!this.reportForm.value.date) {
+      this.showError('Please select a date');
+      return;
+    }
     if (this.projectWiseFilter == true) {
       this.tableHeadName = "Project";
       this.loader = false;
       let projectwiseReq = { dataAccessDTO: this.httpService.dataAccessDTO, uptoVisitDate: this.reportForm.value.date };
       this.sattuReportService.getSattuRegisterInfoProjectWise(projectwiseReq).subscribe((res: any) => {
         this.loader = true;
+        if (res.responseObject?.length == 0) {
+          this.showError('No Data Found !')
+        }
         this.projectWiseSattuList = res.responseObject;
         console.log(this.projectWiseSattuList, 'projectWiseSattuList');
+        this.showSelectionWiseSattuList = this.projectWiseSattuList;
+        console.log(this.showSelectionWiseSattuList, 'showprojectWiseSelection');
+        this.countFunction(this.projectWiseSattuList);
       });
     }
 
@@ -206,7 +233,7 @@ export class SattuRegisterReportComponent {
       this.tableHeadName = this.reportForm.get('state').value ? this.reportForm.get('district').value
         ? this.reportForm.get('block').value
           ? this.reportForm.get('gp').value
-            ? "Village" : `GP/Muni` : "Block" : "District" : "State"
+            ? "Village" : `GP/Municipality` : "Block" : "District" : "State"
 
       this.loader = false;
       let statewiseReq = {
@@ -219,51 +246,68 @@ export class SattuRegisterReportComponent {
         uptoVisitDate: this.reportForm.value.date
       };
       console.log(statewiseReq);
-      
+
       this.sattuReportService.getSattuRegisterInfoStateWise(statewiseReq).subscribe((res: any) => {
         this.loader = true;
+        if (res.responseObject?.length == 0) {
+          this.showError('No Data Found !')
+        }
         this.stateWiseSattuList = res.responseObject;
         console.log(this.stateWiseSattuList, 'stateWiseSattuList');
+        this.showSelectionWiseSattuList = this.stateWiseSattuList;
+        console.log(this.showSelectionWiseSattuList, 'showstateWiseSelection');
+        this.countFunction(this.stateWiseSattuList);
       });
 
     }
-    // else if (this.regionWiseFilter = true) {
-    //   if ((this.roleType != "PM") && (this.reportForm.get('region').value == "")) {
-    //     this.showError("Please Select Region");
-    //   } else {
-    //     this.tableHeadName = this.reportForm.get('region').value ? "Branch" : "Region"
-    //     let Dto1 = {
-    //       dataAccessDTO: this.httpService.dataAccessDTO,
-    //       projectMasterId: this.locationForm.get('project').value,
-    //       regionMasterId: this.locationForm.get('region').value ? this.locationForm.get('region').value : ""
-    //     }
-    //     console.log(Dto1, 'regionWise')
-    //     this.loader = false;
-    //     this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoRegionWise`, Dto1).subscribe((res: any) => {
-    //       this.projectWiseBeneficiaryList = res.responseObject.projectWiseBeneficiaryList;
-    //       console.log(this.projectWiseBeneficiaryList, ' this.projectWiseBeneficiaryList');
-    //       this.totalPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pemCurrent');
-    //       this.totalpemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pemCumulative');
-    //       this.lmCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'lmCurrent');
-    //       this.lmCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'lmCumulative');
-    //       this.pwCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'pwCurrent');
-    //       this.pwCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'pwCumulative');
-    //       this.totalFamilyCount = this.totalCount(this.projectWiseBeneficiaryList, 'totalFamilyCount');
-    //       this.below5Current = this.totalCount(this.projectWiseBeneficiaryList, 'below5Current');
-    //       this.below5Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below5Cumulative');
-    //       this.below2Current = this.totalCount(this.projectWiseBeneficiaryList, 'below2Current');
-    //       this.below2Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'below2Cumulative');
-    //       this.childPemCurrent = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCurrent');
-    //       this.childPemCumulative = this.totalCount(this.projectWiseBeneficiaryList, 'childPemCumulative');
-    //       this.girl14To18Current = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Current');
-    //       this.girl14To18Cumulative = this.totalCount(this.projectWiseBeneficiaryList, 'girl14To18Cumulative');
 
-    //       this.loader = true;
-    //     }, error => {
-    //       this.loader = true;
-    //     });
-    //   }
+    else if (this.regionWiseFilter = true) {
+      // if ((this.roleType != "PM") && (this.reportForm.get('region').value == "")) {
+      //   this.showError("Please Select Region");
+      // } else {
+      this.tableHeadName = this.reportForm.get('region').value ? "Branch" : "Region"
+
+      let regionwiseReq = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        projectMasterId: this.reportForm.get('project').value,
+        regionMasterId: this.reportForm.get('region').value ? this.reportForm.get('region').value : null,
+        uptoVisitDate: this.reportForm.value.date
+      };
+      this.loader = false;
+      this.sattuReportService.getSattuRegisterInfoRegionWise(regionwiseReq).subscribe((res: any) => {
+        this.loader = true;
+        if (res.responseObject.length == 0) {
+          this.showError('No Data Found !')
+        }
+        this.regionWiseSattuList = res.responseObject;
+        console.log(this.regionWiseSattuList, 'regionWiseSattuList');
+        this.showSelectionWiseSattuList = this.regionWiseSattuList;
+        console.log(this.showSelectionWiseSattuList, 'showregionWiseSelection');
+        this.countFunction(this.regionWiseSattuList);
+      });
+    }
     // }
+  }
+
+  countFunction(arr) {
+    arr = arr.map(({ stats, ...object }) => ({ ...object, ...stats }));
+    arr = arr.map(({ notPreparingSattuDetails, ...object }) => ({ ...object, ...notPreparingSattuDetails }));
+    console.log(arr);
+
+    this.famTrained = this.totalCount(arr, 'noOfFamiliesTrainedForSattuMaking');
+    this.regularFam = this.totalCount(arr, 'noOfFamiliesPreparingSattuRegularly');
+    this.irregularFam = this.totalCount(arr, 'noOfFamiliesPreparingSattuIrregularly');
+    this.NPTotalCount = this.totalCount(arr, 'noOfFamilies');
+    this.financialCount = this.totalCount(arr, 'notPreparingSattuForFinancialReasons');
+    this.timeConstraintsCount = this.totalCount(arr, 'notPreparingSattuForTimeConstraints');
+    this.notInterestedCount = this.totalCount(arr, 'notPreparingSattuForNoInterest');
+  }
+
+  changeDate(e) {
+    if (e == '') {
+      this.showSelectionWiseSattuList = []
+    }
+
   }
 
   showSuccess(message) {

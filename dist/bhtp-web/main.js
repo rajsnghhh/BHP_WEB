@@ -192,6 +192,9 @@ const routes = [{
   loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_ngx-pagination___ivy_ngcc___dist_ngx-pagination_js"), __webpack_require__.e("src_app_modules_sattu-register_sattu-register_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./modules/sattu-register/sattu-register.module */ 9221)).then(m => m.SattuRegisterModule),
   canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
 }, {
+  path: 'sattu-register-report',
+  loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_sattu-register-report_sattu-register-report_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modules/sattu-register-report/sattu-register-report.module */ 43865)).then(m => m.SattuRegisterReportModule)
+}, {
   path: '**',
   redirectTo: ''
 }];
@@ -2483,6 +2486,9 @@ class SidebarComponent {
     }
     if (routeId == 274 || routeId == 275 || routeId == 276 || routeId == 277) {
       this.router.navigate(['/sattu-register']);
+    }
+    if (routeId == 282) {
+      this.router.navigate(['/sattu-register-report']);
     }
   }
   ngAfterViewInit() {

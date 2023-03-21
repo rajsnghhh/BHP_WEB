@@ -203,7 +203,7 @@ export class DailyActivityRecordComponent implements OnInit {
       console.log(this.darListByStaffID, 'darListByStaffID');
       console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
       if (this.darListByStaffID?.length == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       }
 
       if (res.status == false) {
@@ -229,7 +229,7 @@ export class DailyActivityRecordComponent implements OnInit {
       // console.log(response.body.byteLength == 0);
 
       if (response.body.byteLength == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       } else {
         const blob = new Blob([response.body], { type: response.headers.get('content-type') });
         fileName = fileName || response.headers.get('content-type').split(';')[1].split('=')[1];
@@ -260,7 +260,7 @@ export class DailyActivityRecordComponent implements OnInit {
 
 
       if (this.darListByBranchID?.length == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       }
 
       if (res.status == false) {
@@ -284,7 +284,7 @@ export class DailyActivityRecordComponent implements OnInit {
     this.dailyActRecord.recordDownloadExcelByBranchId(obj).subscribe((response: any, fileName: string) => {
       this.loader = true;
       if (response.body.byteLength == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       } else {
         const blob = new Blob([response.body], { type: response.headers.get('content-type') });
         fileName = fileName || response.headers.get('content-type').split(';')[1].split('=')[1];
@@ -313,7 +313,7 @@ export class DailyActivityRecordComponent implements OnInit {
       console.log(this.darListByRegionID);
 
       if (this.darListByRegionID?.length == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       }
 
       if (res.status == false) {
@@ -336,7 +336,7 @@ export class DailyActivityRecordComponent implements OnInit {
     this.dailyActRecord.recordDownloadExcelByRegionId(obj).subscribe((response: any, fileName: string) => {
       this.loader = true;
       if (response.body.byteLength == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       } else {
         const blob = new Blob([response.body], { type: response.headers.get('content-type') });
         fileName = fileName || response.headers.get('content-type').split(';')[1].split('=')[1];

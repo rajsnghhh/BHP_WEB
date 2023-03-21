@@ -52,8 +52,9 @@
           <div class="form-group col-md-4">
             <div class="form-group col-md">
               <label for="firstVisitDate">First Visit Date:</label>
-              <input type="date" class="form-control" formControlName="firstVisitDate" [min]="childDob" [max]="maxFirstVisit"
-                (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy" [ngClass]="{
+              <input type="date" class="form-control" formControlName="firstVisitDate" [min]="childDob"
+                [max]="maxFirstVisit" (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy"
+                [ngClass]="{
                   'is-invalid': f.firstVisitDate.invalid && f.firstVisitDate.touched,
                   'is-valid':
                     f.firstVisitDate.valid && (f.firstVisitDate.dirty || f.firstVisitDate.touched)
@@ -67,8 +68,9 @@
           <div class="form-group col-md-4" *ngIf="enableSecondVisitDate">
             <div class="form-group col-md">
               <label for="secondVisitDate">Second visit Date:</label>
-              <input type="date" class="form-control" formControlName="secondVisitDate" [min]="firstVisit" [max]="maxFirstVisit"
-                placeholder="dd-mm-yyyy" [ngClass]="{
+              <input type="date" class="form-control" formControlName="secondVisitDate" [min]="firstVisit"
+                [max]="maxFirstVisit" (change)="restrictthirdDate($event.target.value)" placeholder="dd-mm-yyyy"
+                [ngClass]="{
                   'is-invalid': f.secondVisitDate.invalid && f.secondVisitDate.touched,
                   'is-valid':
                     f.secondVisitDate.valid && (f.secondVisitDate.dirty || f.secondVisitDate.touched)
@@ -78,6 +80,22 @@
               </div>
             </div>
           </div>
+
+          <div class="form-group col-md-4" *ngIf="enableThirdVisitDate">
+            <div class="form-group col-md">
+              <label for="thirdVisitDate">Third visit Date:</label>
+              <input type="date" class="form-control" formControlName="thirdVisitDate" [min]="secondVisit"
+                [max]="maxFirstVisit" placeholder="dd-mm-yyyy" [ngClass]="{
+                  'is-invalid': f.thirdVisitDate.invalid && f.thirdVisitDate.touched,
+                  'is-valid':
+                    f.thirdVisitDate.valid && (f.thirdVisitDate.dirty || f.thirdVisitDate.touched)
+                }" />
+              <div *ngIf="f.thirdVisitDate.errors" class="invalid-feedback">
+                <div *ngIf="f.thirdVisitDate.errors.required">Third Visit Date selection is required</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </mat-expansion-panel>
 
@@ -88,81 +106,99 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
+
           <div class="form-group col-md">
-            <label>Exclusive Breast Feeding Complete :</label> <br>
+            <label for="firstVisitAfter6Mon">First Visit Date After 6 Months:</label>
+            <input type="date" class="form-control" formControlName="firstVisitAfter6Mon"
+              (keydown)="restrictTypeOfDate()" (change)="restrictSecondVisitAfter6Mon($event.target.value)" [ngClass]="{
+                    'is-invalid': f.firstVisitAfter6Mon.invalid && f.firstVisitAfter6Mon.touched,
+                    'is-valid':
+                      f.firstVisitAfter6Mon.valid && (f.firstVisitAfter6Mon.dirty || f.firstVisitAfter6Mon.touched)
+                  }" [min]="muac6MinDate" [max]="muac6MaxDate">
+            <!-- <div *ngIf="f.muacDate6.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate6.errors.required">MUAC Date selection is required</div>
+            </div> -->
+          </div>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
+            <label>Exclusive Breast Feeding (EBF) Completed:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto6Complete"> &nbsp;
               <span>Yes</span>
             </label> &nbsp;&nbsp;&nbsp;
             <label>
-              <input type="radio" value="N" formControlName="ebfUpto6Complete"> &nbsp;
+              <input type="radio" value="N" formControlName="ebfUpto6Complete">
+              &nbsp;
               <span>No</span>
             </label>
           </div>
 
-          <div class="form-group col-md">
-            <label for="muacDate6">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-            <input type="date" class="form-control" formControlName="muacDate6" (keydown)="restrictTypeOfDate()"
-              [ngClass]="{
-                    'is-invalid': f.muacDate6.invalid && f.muacDate6.touched,
-                    'is-valid':
-                      f.muacDate6.valid && (f.muacDate6.dirty || f.muacDate6.touched)
-                  }" [min]="muac6MinDate" [max]="muac6MaxDate">
-            <div *ngIf="f.muacDate6.errors" class="invalid-feedback">
-              <div *ngIf="f.muacDate6.errors.required">MUAC Date selection is required</div>
-            </div>
-
+          <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
+            <label>Complementary Food Started after 6 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="complementaryFoodAfter6"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="complementaryFoodAfter6"> &nbsp;
+              <span>No</span>
+            </label>
           </div>
 
-          <div class="form-group col-md">
+          <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
             <div class="form-group col-md">
-              <label for="height6month">Height (cm):</label>
-              <input type="text" class="form-control" placeholder="Enter height" formControlName="height6month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
-                      'is-invalid': f.height6month.invalid && f.height6month.touched,
+              <label for="firstVisitheight6month">Height (cm):</label>
+              <input type="text" class="form-control" placeholder="Enter height"
+                formControlName="firstVisitheight6month" (keypress)="validationService.onlyIntegerAndDot($event)"
+                maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
+                      'is-invalid': f.firstVisitheight6month.invalid && f.firstVisitheight6month.touched,
                       'is-valid':
-                        f.height6month.valid &&
-                        (f.height6month.dirty || f.height6month.touched)
+                        f.firstVisitheight6month.valid &&
+                        (f.firstVisitheight6month.dirty || f.firstVisitheight6month.touched)
                     }" />
-              <div *ngIf="f.height6month.errors" class="invalid-feedback">
-                <div *ngIf="f.height6month.errors.notInHeightRange">
+              <div *ngIf="f.firstVisitheight6month.errors" class="invalid-feedback">
+                <div *ngIf="f.firstVisitheight6month.errors.notInHeightRange">
                   Height should be 10 to 180 cm
                 </div>
               </div>
             </div>
           </div>
-          <div class="form-group col-md">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
             <div class="form-group col-md">
-              <label for="weight6month">Weight (kg):</label>
-              <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight6month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
-                      'is-invalid': f.weight6month.invalid && f.weight6month.touched,
+              <label for="firstVisitweight6month">Weight (kg):</label>
+              <input type="text" class="form-control" placeholder="Enter weight"
+                formControlName="firstVisitweight6month" (keypress)="validationService.onlyIntegerAndDot($event)"
+                maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
+                      'is-invalid': f.firstVisitweight6month.invalid && f.firstVisitweight6month.touched,
                       'is-valid':
-                        f.weight6month.valid &&
-                        (f.weight6month.dirty || f.weight6month.touched)
+                        f.firstVisitweight6month.valid &&
+                        (f.firstVisitweight6month.dirty || f.firstVisitweight6month.touched)
                     }" />
-              <div *ngIf="f.weight6month.errors" class="invalid-feedback">
-                <div *ngIf="f.weight6month.errors.notInWeightRange">
+              <div *ngIf="f.firstVisitweight6month.errors" class="invalid-feedback">
+                <div *ngIf="f.firstVisitweight6month.errors.notInWeightRange">
                   Weight should be 0 to 25 kg
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="form-group col-md">
+          <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
             <div class="form-group col-md">
-              <label for="muac6month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac6month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
-                      'is-invalid': f.muac6month.invalid && f.muac6month.touched,
+              <label for="firstVisitmuac6month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="firstVisitmuac6month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)"
+                [ngClass]="{
+                      'is-invalid': f.firstVisitmuac6month.invalid && f.firstVisitmuac6month.touched,
                       'is-valid':
-                        f.muac6month.valid &&
-                        (f.muac6month.dirty || f.muac6month.touched)
+                        f.firstVisitmuac6month.valid &&
+                        (f.firstVisitmuac6month.dirty || f.firstVisitmuac6month.touched)
                     }" />
-              <div *ngIf="f.muac6month.errors" class="invalid-feedback">
-                <div *ngIf="f.muac6month.errors?.required">MUAC is required</div>
-                <div *ngIf="f.muac6month.errors.notInMuacRange">
+              <div *ngIf="f.firstVisitmuac6month.errors" class="invalid-feedback">
+                <div *ngIf="f.firstVisitmuac6month.errors?.required">MUAC is required</div>
+                <div *ngIf="f.firstVisitmuac6month.errors.notInMuacRange">
                   MUAC should be 1 to 30 cm
                 </div>
               </div>
@@ -170,6 +206,97 @@
           </div>
 
         </div>
+        <hr *ngIf="childBirthForm.value.firstVisitAfter6Mon">
+
+        <div class="row">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
+            <label for="secondVisitAfter6Mon">Second Visit Date After 6 Months:</label>
+            <input type="date" class="form-control" formControlName="secondVisitAfter6Mon"
+              (keydown)="restrictTypeOfDate()" [ngClass]="{
+                    'is-invalid': f.secondVisitAfter6Mon.invalid && f.secondVisitAfter6Mon.touched,
+                    'is-valid':
+                      f.secondVisitAfter6Mon.valid && (f.secondVisitAfter6Mon.dirty || f.secondVisitAfter6Mon.touched)
+                  }" [min]="setSecondVisitAfter6Mon" [max]="muac6MaxDate">
+            <!-- <div *ngIf="f.muacDate6.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate6.errors.required">MUAC Date selection is required</div>
+            </div> -->
+          </div>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.secondVisitAfter6Mon">
+            <label>Breast Feeding Continued after 6 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="breastfeedafter6mon"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="breastfeedafter6mon"> &nbsp;
+              <span>No</span>
+            </label>
+          </div>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.secondVisitAfter6Mon">
+            <div class="form-group col-md">
+              <label for="secondVisitheight6month">Height (cm):</label>
+              <input type="text" class="form-control" placeholder="Enter height"
+                formControlName="secondVisitheight6month" (keypress)="validationService.onlyIntegerAndDot($event)"
+                maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
+                      'is-invalid': f.secondVisitheight6month.invalid && f.secondVisitheight6month.touched,
+                      'is-valid':
+                        f.secondVisitheight6month.valid &&
+                        (f.secondVisitheight6month.dirty || f.secondVisitheight6month.touched)
+                    }" />
+              <div *ngIf="f.secondVisitheight6month.errors" class="invalid-feedback">
+                <div *ngIf="f.secondVisitheight6month.errors.notInHeightRange">
+                  Height should be 10 to 180 cm
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.secondVisitAfter6Mon">
+            <div class="form-group col-md">
+              <label for="secondVisitweight6month">Weight (kg):</label>
+              <input type="text" class="form-control" placeholder="Enter weight"
+                formControlName="secondVisitweight6month" (keypress)="validationService.onlyIntegerAndDot($event)"
+                maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
+                      'is-invalid': f. secondVisitweight6month.invalid && f. secondVisitweight6month.touched,
+                      'is-valid':
+                        f. secondVisitweight6month.valid &&
+                        (f. secondVisitweight6month.dirty || f. secondVisitweight6month.touched)
+                    }" />
+              <div *ngIf="f. secondVisitweight6month.errors" class="invalid-feedback">
+                <div *ngIf="f. secondVisitweight6month.errors.notInWeightRange">
+                  Weight should be 0 to 25 kg
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.secondVisitAfter6Mon">
+            <div class="form-group col-md">
+              <label for="secondVisitmuac6month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
+              <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="secondVisitmuac6month"
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)"
+                [ngClass]="{
+                      'is-invalid': f.secondVisitmuac6month.invalid && f.secondVisitmuac6month.touched,
+                      'is-valid':
+                        f.secondVisitmuac6month.valid &&
+                        (f.secondVisitmuac6month.dirty || f.secondVisitmuac6month.touched)
+                    }" />
+              <div *ngIf="f.secondVisitmuac6month.errors" class="invalid-feedback">
+                <div *ngIf="f.secondVisitmuac6month.errors?.required">MUAC is required</div>
+                <div *ngIf="f.secondVisitmuac6month.errors.notInMuacRange">
+                  MUAC should be 1 to 30 cm
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
       </mat-expansion-panel>
 
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after12m'>
@@ -179,8 +306,22 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
-          <div class="form-group col-md-4">
-            <label>Primary Immunization completed :</label> <br>
+
+          <div class="form-group col-md">
+            <label for="visitDateAfter12Mon">Visit Date After 12 Months:</label>
+            <input type="date" class="form-control" formControlName="visitDateAfter12Mon"
+              (keydown)="restrictTypeOfDate()" [ngClass]="{
+                    'is-invalid': f.visitDateAfter12Mon.invalid && f.visitDateAfter12Mon.touched,
+                    'is-valid':
+                      f.visitDateAfter12Mon.valid && (f.visitDateAfter12Mon.dirty || f.visitDateAfter12Mon.touched)
+                  }" [min]="muac12MinDate" [max]="muac12MaxDate">
+            <!-- <div *ngIf="f.visitDateAfter12Mon.errors" class="invalid-feedback">
+              <div *ngIf="f.visitDateAfter12Mon.errors.required">MUAC Date selection is required</div>
+            </div> -->
+          </div>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
+            <label>Primary Immunization completed:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
@@ -191,8 +332,9 @@
               <span>No</span>
             </label>
           </div>
-          <div class="form-group col-md-4">
-            <label>Exclusive Breast Feeding Complete :</label> <br>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
+            <label>Breast Feeding Continued up to 12 Months:</label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto12Complete"> &nbsp;
@@ -203,26 +345,30 @@
               <span>No</span>
             </label>
           </div>
+        </div>
 
-          <div class="form-group col-md-4">
-            <label for="muacDate12">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-            <input type="date" class="form-control" formControlName="muacDate12" (keydown)="restrictTypeOfDate()"
-              [ngClass]="{
-                    'is-invalid': f.muacDate12.invalid && f.muacDate12.touched,
-                    'is-valid':
-                      f.muacDate12.valid && (f.muacDate12.dirty || f.muacDate12.touched)
-                  }" [min]="muac12MinDate" [max]="muac12MaxDate">
-            <div *ngIf="f.muacDate12.errors" class="invalid-feedback">
-              <div *ngIf="f.muacDate12.errors.required">MUAC Date selection is required</div>
-            </div>
+        <div class="row">
 
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
+            <label>Complementary Food Continued up to 12 Months:</label>
+            <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="complementaryFoodAfter12"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="complementaryFoodAfter12"> &nbsp;
+              <span>No</span>
+            </label>
           </div>
 
-          <div class="form-group col-md-4">
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
             <div class="form-group col-md">
               <label for="height12month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height12month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)"  [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)"
+                [ngClass]="{
                           'is-invalid': f.height12month.invalid && f.height12month.touched,
                           'is-valid':
                             f.height12month.valid &&
@@ -235,11 +381,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-md-4">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
             <div class="form-group col-md">
               <label for="weight12month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight12month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)"
+                [ngClass]="{
                           'is-invalid': f.weight12month.invalid && f.weight12month.touched,
                           'is-valid':
                             f.weight12month.valid &&
@@ -252,11 +400,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-md-4">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
             <div class="form-group col-md">
               <label for="muac12month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac12month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)"
+                [ngClass]="{
                           'is-invalid': f.muac12month.invalid && f.muac12month.touched,
                           'is-valid':
                             f.muac12month.valid &&
@@ -282,8 +432,22 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
+
           <div class="form-group col-md">
-            <label>Exclusive Breast Feeding Complete :</label> <br>
+            <label for="visitDateAfter18">Visit Date After 18 Months:</label>
+            <input type="date" class="form-control" formControlName="visitDateAfter18" (keydown)="restrictTypeOfDate()"
+              [ngClass]="{
+                    'is-invalid': f.visitDateAfter18.invalid && f.visitDateAfter18.touched,
+                    'is-valid':
+                      f.visitDateAfter18.valid && (f.visitDateAfter18.dirty || f.visitDateAfter18.touched)
+                  }" [min]="muac18MinDate" [max]="muac18MaxDate">
+            <!-- <div *ngIf="f.muacDate18.errors" class="invalid-feedback">
+              <div *ngIf="f.muacDate18.errors.required">MUAC Date selection is required</div>
+            </div> -->
+          </div>
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter18">
+            <label>Breast Feeding Continued up to 18 Months:</label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto18Complete"> &nbsp;
@@ -295,24 +459,26 @@
             </label>
           </div>
 
-          <div class="form-group col-md">
-            <label for="muacDate18">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-            <input type="date" class="form-control" formControlName="muacDate18" (keydown)="restrictTypeOfDate()"
-              [ngClass]="{
-                    'is-invalid': f.muacDate18.invalid && f.muacDate18.touched,
-                    'is-valid':
-                      f.muacDate18.valid && (f.muacDate18.dirty || f.muacDate18.touched)
-                  }" [min]="muac18MinDate" [max]="muac18MaxDate">
-            <div *ngIf="f.muacDate18.errors" class="invalid-feedback">
-              <div *ngIf="f.muacDate18.errors.required">MUAC Date selection is required</div>
-            </div>
-
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter18">
+            <label>Complementary Food Continued up to 18 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="complementaryFoodAfter18"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="complementaryFoodAfter18"> &nbsp;
+              <span>No</span>
+            </label>
           </div>
-          <div class="form-group col-md">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter18">
             <div class="form-group col-md">
               <label for="height18month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height18month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)"
+                [ngClass]="{
                         'is-invalid': f.height18month.invalid && f.height18month.touched,
                         'is-valid':
                           f.height18month.valid &&
@@ -325,11 +491,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-md">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter18">
             <div class="form-group col-md">
               <label for="weight18month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight18month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)"
+                [ngClass]="{
                         'is-invalid': f.weight18month.invalid && f.weight18month.touched,
                         'is-valid':
                           f.weight18month.valid &&
@@ -342,11 +510,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-md">
+
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter18">
             <div class="form-group col-md">
               <label for="muac18month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac18month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)"
+                [ngClass]="{
                         'is-invalid': f.muac18month.invalid && f.muac18month.touched,
                         'is-valid':
                           f.muac18month.valid &&
@@ -370,8 +540,22 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
+
           <div class="form-group col-md-4">
-            <label>Primary Immunization completed :</label> <br>
+            <label for="visitDateAfter24Mon">Visit Date After 24 Months:</label>
+            <input type="date" class="form-control" formControlName="visitDateAfter24Mon"
+              (keydown)="restrictTypeOfDate()" [ngClass]="{
+                    'is-invalid': f.visitDateAfter24Mon.invalid && f.visitDateAfter24Mon.touched,
+                    'is-valid':
+                      f.visitDateAfter24Mon.valid && (f.visitDateAfter24Mon.dirty || f.visitDateAfter24Mon.touched)
+                  }" [min]="muac24MinDate" [max]="muac24MaxDate">
+            <!-- <div *ngIf="f.visitDateAfter24Mon.errors" class="invalid-feedback">
+              <div *ngIf="f.visitDateAfter24Mon.errors.required">MUAC Date selection is required</div>
+            </div> -->
+          </div>
+
+          <div class="form-group col-md-4" *ngIf="childBirthForm.value.visitDateAfter24Mon">
+            <label>Primary Immunization completed:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="primaryImmunizationUpto24Completed"> &nbsp;
@@ -382,8 +566,9 @@
               <span>No</span>
             </label>
           </div>
-          <div class="form-group col-md-4">
-            <label>Exclusive Breast Feeding Complete :</label> <br>
+
+          <div class="form-group col-md-4" *ngIf="childBirthForm.value.visitDateAfter24Mon">
+            <label>Breast Feeding Continued up to 24 Months:</label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto24Complete"> &nbsp;
@@ -395,24 +580,26 @@
             </label>
           </div>
 
-          <div class="form-group col-md-4">
-            <label for="muacDate24">MUAC Record Date:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-            <input type="date" class="form-control" formControlName="muacDate24" (keydown)="restrictTypeOfDate()"
-              [ngClass]="{
-                    'is-invalid': f.muacDate24.invalid && f.muacDate24.touched,
-                    'is-valid':
-                      f.muacDate24.valid && (f.muacDate24.dirty || f.muacDate24.touched)
-                  }" [min]="muac24MinDate" [max]="muac24MaxDate">
-            <div *ngIf="f.muacDate24.errors" class="invalid-feedback">
-              <div *ngIf="f.muacDate24.errors.required">MUAC Date selection is required</div>
-            </div>
-
+          <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter24Mon">
+            <label>Complementary Food Continued up to 24 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+            <br>
+            <label>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" value="Y" formControlName="complementaryFoodAfter24"> &nbsp;
+              <span>Yes</span>
+            </label> &nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="radio" value="N" formControlName="complementaryFoodAfter24"> &nbsp;
+              <span>No</span>
+            </label>
           </div>
-          <div class="form-group col-md-4">
+
+          <div class="form-group col-md-4" *ngIf="childBirthForm.value.visitDateAfter24Mon">
             <div class="form-group col-md">
               <label for="height24month">Height (cm):</label>
               <input type="text" class="form-control" placeholder="Enter height" formControlName="height24month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="7" (keyup)="heightKeyup($event)"
+                [ngClass]="{
                         'is-invalid': f.height24month.invalid && f.height24month.touched,
                         'is-valid':
                           f.height24month.valid &&
@@ -425,11 +612,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-md-4">
+
+          <div class="form-group col-md-4" *ngIf="childBirthForm.value.visitDateAfter24Mon">
             <div class="form-group col-md">
               <label for="weight24month">Weight (kg):</label>
               <input type="text" class="form-control" placeholder="Enter weight" formControlName="weight24month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="weightKeyup($event)"
+                [ngClass]="{
                         'is-invalid': f.weight24month.invalid && f.weight24month.touched,
                         'is-valid':
                           f.weight24month.valid &&
@@ -442,11 +631,13 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-md-4">
+
+          <div class="form-group col-md-4" *ngIf="childBirthForm.value.visitDateAfter24Mon">
             <div class="form-group col-md">
               <label for="muac24month">MUAC (cm):&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="text" class="form-control" placeholder="Enter MUAC" formControlName="muac24month"
-                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)" [ngClass]="{
+                (keypress)="validationService.onlyIntegerAndDot($event)" maxlength="6" (keyup)="muacKeyup($event)"
+                [ngClass]="{
                         'is-invalid': f.muac24month.invalid && f.muac24month.touched,
                         'is-valid':
                           f.muac24month.valid &&

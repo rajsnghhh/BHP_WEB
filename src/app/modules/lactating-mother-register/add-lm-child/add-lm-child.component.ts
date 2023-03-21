@@ -31,6 +31,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   today: string = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
   childDob: string;
   firstVisit: string;
+  secondVisit: string;
   maxFirstVisit: string;
   muac6MinDate: string;
   muac6MaxDate: string;
@@ -40,7 +41,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   muac18MaxDate: string;
   muac24MinDate: string;
   muac24MaxDate: string;
+  setSecondVisitAfter6Mon: string;
   enableSecondVisitDate: boolean = false;
+  enableThirdVisitDate: boolean = false;
 
 
   constructor(public validationService: ValidationService, private fb: UntypedFormBuilder, private httpService: HttpService,
@@ -97,6 +100,8 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         this.childBirthForm.reset();
       } else {
         this.restrictSecondDate(this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate);
+        this.restrictthirdDate(this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate);
+        this.restrictSecondVisitAfter6Mon(this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate);
         this.childBirthForm.patchValue({
           place: this.data?.childWiselactatingmotherList?.childBasicStatusDto.placeOfDelivery,
           birthWeight: this.data?.childWiselactatingmotherList?.childBasicStatusDto.birthWeight,
@@ -106,19 +111,19 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           ebfUpto12Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto12Complete,
           ebfUpto18Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto18Complete,
           ebfUpto24Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto24Complete,
-          muacDate6: this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate,
-          muacDate12: this.childMuacList.find(month => month.muacForMonth == "12")?.muacRecordDate,
-          muacDate18: this.childMuacList.find(month => month.muacForMonth == "18")?.muacRecordDate,
-          muacDate24: this.childMuacList.find(month => month.muacForMonth == "24")?.muacRecordDate,
-          height6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.height,
+          firstVisitAfter6Mon: this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate,
+          visitDateAfter12Mon: this.childMuacList.find(month => month.muacForMonth == "12")?.muacRecordDate,
+          visitDateAfter18: this.childMuacList.find(month => month.muacForMonth == "18")?.muacRecordDate,
+          visitDateAfter24Mon: this.childMuacList.find(month => month.muacForMonth == "24")?.muacRecordDate,
+          firstVisitheight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.height,
           height12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.height,
           height18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.height,
           height24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.height,
-          weight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
+          firstVisitweight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
           weight12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.weight,
           weight18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
           weight24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
-          muac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
+          firstVisitmuac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
           muac12month: this.childMuacList.find(month => month.muacForMonth == "12")?.muac,
           muac18month: this.childMuacList.find(month => month.muacForMonth == "18")?.muac,
           muac24month: this.childMuacList.find(month => month.muacForMonth == "24")?.muac,
@@ -152,44 +157,44 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after12m = true;
       this.after18m = true;
       this.after24m = true;
-      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
-      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
+      this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
     }
     else if (year >= 1 && year < 2 && month < 6) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = true;
       this.after24m = true;
-      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
-      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
-      this.childBirthForm.get('muacDate12').setValidators(Validators.required);
+      this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
+      this.childBirthForm.get('visitDateAfter12Mon').setValidators(Validators.required);
     }
     else if (year >= 1 && year < 2 && month >= 6 && month <= 12) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = false;
       this.after24m = true;
-      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac18month').setValidators(Validators.compose([Validators.required, this.muacRange]));
-      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
-      this.childBirthForm.get('muacDate12').setValidators(Validators.required);
-      this.childBirthForm.get('muacDate18').setValidators(Validators.required);
+      this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
+      this.childBirthForm.get('visitDateAfter12Mon').setValidators(Validators.required);
+      this.childBirthForm.get('visitDateAfter18').setValidators(Validators.required);
     }
     else if (year >= 2) {
       this.after6m = false;
       this.after12m = false;
       this.after18m = false;
       this.after24m = false;
-      this.childBirthForm.get('muac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac18month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac24month').setValidators(Validators.compose([Validators.required, this.muacRange]));
-      this.childBirthForm.get('muacDate6').setValidators(Validators.required);
-      this.childBirthForm.get('muacDate12').setValidators(Validators.required);
-      this.childBirthForm.get('muacDate18').setValidators(Validators.required);
-      this.childBirthForm.get('muacDate24').setValidators(Validators.required);
+      this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
+      this.childBirthForm.get('visitDateAfter12Mon').setValidators(Validators.required);
+      this.childBirthForm.get('visitDateAfter18').setValidators(Validators.required);
+      this.childBirthForm.get('visitDateAfter24Mon').setValidators(Validators.required);
     }
   }
 
@@ -200,28 +205,38 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       primaryImmunizationUpto12Completed: [null],
       primaryImmunizationUpto24Completed: [null],
       ebfUpto6Complete: [null],
+      breastfeedafter6mon: [null],
+      complementaryFoodAfter6: [null],
+      complementaryFoodAfter12: [null],
+      complementaryFoodAfter18: [null],
+      complementaryFoodAfter24: [null],
       ebfUpto12Complete: [null],
       ebfUpto18Complete: [null],
       ebfUpto24Complete: [null],
-      muacDate6: [''],
-      muacDate12: [''],
-      muacDate18: [''],
-      muacDate24: [''],
-      height6month: ['', this.heightRange],
+      firstVisitAfter6Mon: [''],
+      secondVisitAfter6Mon: [''],
+      visitDateAfter12Mon: [''],
+      visitDateAfter18: [''],
+      visitDateAfter24Mon: [''],
+      firstVisitheight6month: ['', this.heightRange],
+      secondVisitheight6month: ['', this.heightRange],
       height12month: ['', this.heightRange],
       height18month: ['', this.heightRange],
       height24month: ['', this.heightRange],
-      weight6month: ['', this.weightRange],
+      firstVisitweight6month: ['', this.weightRange],
+      secondVisitweight6month: ['', this.weightRange],
       weight12month: ['', this.weightRange],
       weight18month: ['', this.weightRange],
       weight24month: ['', this.weightRange],
-      muac6month: [''],
+      firstVisitmuac6month: [''],
+      secondVisitmuac6month: [''],
       muac12month: [''],
       muac18month: [''],
       muac24month: [''],
       firstVisitDate: [''],
       secondVisitDate: [''],
-      checkChildDeath: [null],
+      thirdVisitDate: [''],
+      checkChildDeath: [''],
       deathOfChildDate: [null],
       comment: [''],
     });
@@ -236,6 +251,16 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     this.childBirthForm.controls.secondVisitDate.setValue(null);
     this.enableSecondVisitDate = true
   }
+
+  restrictthirdDate(date) {
+    this.secondVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
+    this.enableThirdVisitDate = true
+  }
+
+  restrictSecondVisitAfter6Mon(date) {
+    this.setSecondVisitAfter6Mon = moment(date).add(1, 'days').format('YYYY-MM-DD');
+  }
+
 
   /* make child death comment required 
   depending on checkChildDeath field value */
@@ -317,8 +342,8 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
 
   /* Depending on condition form is Save or Edit */
   onSave() {
-    let muacDate = ['muacDate6', 'muacDate12', 'muacDate18', 'muacDate24'];
-    let muac = ['muac6month', 'muac12month', 'muac18month', 'muac24month'];
+    let muacDate = ['firstVisitAfter6Mon', 'visitDateAfter12Mon', 'visitDateAfter18', 'visitDateAfter24Mon'];
+    let muac = ['firstVisitmuac6month', 'muac12month', 'muac18month', 'muac24month'];
     let range = (this.after24m == false) ? 3 : (this.after18m == false) ? 2 : (this.after12m == false) ? 1 : (this.after6m == false) ? 0 : -1;
     if (range >= 0) {
       for (let i = 0; i <= range; i++) {
@@ -356,12 +381,12 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           muacDataList: [{
             muacRegisterId: 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height6month == null ? "0" : Math.trunc(this.childBirthForm.value.height6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight6month == null ? "0" : Math.trunc(this.childBirthForm.value.weight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac6month == null ? "0" : Math.trunc(this.childBirthForm.value.muac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+            height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "6",
-            muacRecordDate: this.childBirthForm.value.muacDate6
+            muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon
           },
           {
             muacRegisterId: 0,
@@ -371,7 +396,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
             muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "12",
-            muacRecordDate: this.childBirthForm.value.muacDate12
+            muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon
           },
           {
             muacRegisterId: 0,
@@ -381,7 +406,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
             muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "18",
-            muacRecordDate: this.childBirthForm.value.muacDate18
+            muacRecordDate: this.childBirthForm.value.visitDateAfter18
           },
           {
             muacRegisterId: 0,
@@ -391,7 +416,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
             muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "24",
-            muacRecordDate: this.childBirthForm.value.muacDate24
+            muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon
           }
           ],
           deadChildRegisterDto: {
@@ -430,12 +455,12 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           muacDataList: [{
             muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
             childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height6month == null ? "0" : Math.trunc(this.childBirthForm.value.height6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight6month == null ? "0" : Math.trunc(this.childBirthForm.value.weight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac6month == null ? "0" : Math.trunc(this.childBirthForm.value.muac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+            height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+            weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+            muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "6",
-            muacRecordDate: this.childBirthForm.value.muacDate6
+            muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon
           },
           {
             muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
@@ -445,7 +470,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
             muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "12",
-            muacRecordDate: this.childBirthForm.value.muacDate12
+            muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon
           },
           {
             muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
@@ -455,7 +480,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
             muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "18",
-            muacRecordDate: this.childBirthForm.value.muacDate18
+            muacRecordDate: this.childBirthForm.value.visitDateAfter18
           },
           {
             muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
@@ -465,7 +490,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
             muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
             active_flag: "A",
             muacForMonth: "24",
-            muacRecordDate: this.childBirthForm.value.muacDate24
+            muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon
           }
           ],
           deadChildRegisterDto: {

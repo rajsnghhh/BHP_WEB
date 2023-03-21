@@ -163,8 +163,7 @@ export class ViewSattuFamilyComponent {
         family.presentInPregnantWoman?.includes("N") &&
         family.hasAdolescentGirlChildren == "Y" &&
         family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasChildPresentInPem?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N")
+        family.hasChildPresentInPem?.includes("N")
       ) {
         family.setStatus = "LM, Adol"
       } else if (family.presentInLactatingMother?.includes("N") &&

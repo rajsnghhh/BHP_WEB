@@ -185,6 +185,7 @@ export class CreateSattuRegisterComponent {
       })
     } else {
       console.log(this.data?.familyDetails);
+      console.log(this.setFrequency);
 
       let updateReg = {
         dataAccessDTO: this.httpService.dataAccessDTO,
@@ -193,7 +194,7 @@ export class CreateSattuRegisterComponent {
         familyId: this.data?.familyDetails?.familyDetailId,
         active_flag: 'A',
         sattuPreparingFrequency: this.setFrequency,
-        sattuNonPreparingReasonId: this.createSattuForm.value.reason ? this.createSattuForm.value.reason : null,
+        sattuNonPreparingReasonId: (this.setFrequency == 'I' || this.setFrequency == 'R') ? null : this.createSattuForm.value.reason,
         sattuFamilyOrientationId: this.data?.familyDetails.sattuFamilyOrientationId,
         sattuOrientationDate: ''
 

@@ -85,7 +85,7 @@ export class ViewSattuFamilyComponent {
     this.dialog.open(CreateSattuRegisterComponent, {
       width: '800px',
       height: '260px',
-      data: { familyDetails: fami, visitDate: this.viewFamilyForm.value.date, villageId:this.data }
+      data: { familyDetails: fami, visitDate: this.viewFamilyForm.value.date, villageId: this.data }
     });
   }
 
@@ -93,164 +93,103 @@ export class ViewSattuFamilyComponent {
     return false;
   }
 
-  //Set PW, PEM, LM, 2-5YR, Adol Status
+  //Set PW, PEM, LM, 2-5YR
   setStatusForAll(familys: any) {
     familys.forEach(family => {
       if (family.presentInLactatingMother == "Y" &&
         family.presentInPregnantWoman == "Y" &&
         family.hasChildPresentInPem == "Y" &&
-        family.has2to5yearsoldChildren == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
+        family.has2to5yearsoldChildren == "Y"
       ) {
-        family.setStatus = "PEM, LM, PW, 2-5 yr, Adol"
+        family.setStatus = "PEM, LM, PW, 2-5 yr"
       } else if (family.presentInLactatingMother == "Y" &&
         family.presentInPregnantWoman?.includes("N") &&
         family.hasChildPresentInPem?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.has2to5yearsoldChildren?.includes("N")
       ) {
         family.setStatus = "LM"
-      } else if (family?.presentInLactatingMother?.includes("N") &&
+      } else if (family.presentInLactatingMother?.includes("N") &&
         family.presentInPregnantWoman == "Y" &&
         family.hasChildPresentInPem?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.has2to5yearsoldChildren?.includes("N")
       ) {
         family.setStatus = "PW"
       } else if (family.presentInLactatingMother?.includes("N") &&
         family.presentInPregnantWoman?.includes("N") &&
         family.hasChildPresentInPem == "Y" &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.has2to5yearsoldChildren?.includes("N")
       ) {
         family.setStatus = "PEM"
       } else if (family.presentInLactatingMother?.includes("N") &&
         family.presentInPregnantWoman?.includes("N") &&
         family.has2to5yearsoldChildren == "Y" &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.hasChildPresentInPem?.includes("N")
       ) {
         family.setStatus = "2-5 yr"
-      } else if (family.presentInLactatingMother?.includes("N") &&
-        family.presentInPregnantWoman?.includes("N") &&
-        family.hasAdolescentGirlChildren == "Y" &&
-        family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasChildPresentInPem?.includes("N")
-      ) {
-        family.setStatus = "Adol"
       } else if (family.presentInLactatingMother == "Y" &&
         family.presentInPregnantWoman == "Y" &&
         family.hasChildPresentInPem?.includes("N") &&
-        family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N")
+        family.has2to5yearsoldChildren?.includes("N")
       ) {
         family.setStatus = "LM, PW"
       } else if (family.presentInLactatingMother == "Y" &&
         family.presentInPregnantWoman?.includes("N") &&
         family.hasChildPresentInPem == "Y" &&
-        family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N")
+        family.has2to5yearsoldChildren?.includes("N")
       ) {
         family.setStatus = "LM, PEM"
       } else if (family.presentInLactatingMother == "Y" &&
         family.presentInPregnantWoman?.includes("N") &&
         family.has2to5yearsoldChildren == "Y" &&
-        family.hasChildPresentInPem?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N")
-      ) {
-        family.setStatus = "LM, 2-5 yr"
-      } else if (family.presentInLactatingMother == "Y" &&
-        family.presentInPregnantWoman?.includes("N") &&
-        family.hasAdolescentGirlChildren == "Y" &&
-        family.has2to5yearsoldChildren?.includes("N") &&
         family.hasChildPresentInPem?.includes("N")
       ) {
-        family.setStatus = "LM, Adol"
+        family.setStatus = "LM, 2-5 yr"
       } else if (family.presentInLactatingMother?.includes("N") &&
         family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.presentInPregnantWoman == "Y" &&
         family.hasChildPresentInPem == "Y"
       ) {
         family.setStatus = "PW, PEM"
       } else if (family.presentInLactatingMother?.includes("N") &&
         family.hasChildPresentInPem?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.presentInPregnantWoman == "Y" &&
         family.has2to5yearsoldChildren == "Y"
       ) {
         family.setStatus = "PW, 2-5 yr"
       } else if (family.presentInLactatingMother?.includes("N") &&
-        family.hasChildPresentInPem?.includes("N") &&
-        family.has2to5yearsoldChildren?.includes("N") &&
-        family.presentInPregnantWoman == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "PW, Adol"
-      } else if (family.presentInLactatingMother?.includes("N") &&
         family.presentInPregnantWoman?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N") &&
         family.hasChildPresentInPem == "Y" &&
         family.has2to5yearsoldChildren == "Y"
       ) {
         family.setStatus = "PEM, 2-5 yr"
-      }
-      else if (family.presentInLactatingMother?.includes("N") &&
-        family.presentInPregnantWoman?.includes("N") &&
-        family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasChildPresentInPem == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "PEM, Adol"
-      }
-      else if (family.presentInLactatingMother?.includes("N") &&
-        family.presentInPregnantWoman?.includes("N") &&
-        family.presentInPregnantWoman?.includes("N") &&
-        family.has2to5yearsoldChildren == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "2-5 yr, Adol"
       } else if (family.presentInLactatingMother?.includes("N") &&
-        family.hasChildPresentInPem == "Y" &&
-        family.presentInPregnantWoman == "Y" &&
-        family.has2to5yearsoldChildren == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "PEM, PW, 2-5 yr, Adol"
-      } else if (family.hasChildPresentInPem?.includes("N") &&
-        family.presentInLactatingMother == "Y" &&
-        family.presentInPregnantWoman == "Y" &&
-        family.has2to5yearsoldChildren == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "LM, PW, 2-5 yr, Adol"
-      } else if (family.presentInPregnantWoman?.includes("N") &&
-        family.presentInLactatingMother == "Y" &&
-        family.hasChildPresentInPem == "Y" &&
-        family.has2to5yearsoldChildren == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "LM, PEM, 2-5 yr, Adol"
-      } else if (family.has2to5yearsoldChildren?.includes("N") &&
-        family.presentInLactatingMother == "Y" &&
-        family.hasChildPresentInPem == "Y" &&
-        family.presentInPregnantWoman == "Y" &&
-        family.hasAdolescentGirlChildren == "Y"
-      ) {
-        family.setStatus = "LM, PEM, PW, Adol"
-      }
-      else if (family.hasAdolescentGirlChildren?.includes("N") &&
-        family.presentInLactatingMother == "Y" &&
         family.hasChildPresentInPem == "Y" &&
         family.presentInPregnantWoman == "Y" &&
         family.has2to5yearsoldChildren == "Y"
       ) {
-        family.setStatus = "LM, PEM, PW, 2-5 yr"
+        family.setStatus = "PEM, PW, 2-5 yr"
+      } else if (family.hasChildPresentInPem?.includes("N") &&
+        family.presentInLactatingMother == "Y" &&
+        family.presentInPregnantWoman == "Y" &&
+        family.has2to5yearsoldChildren == "Y"
+      ) {
+        family.setStatus = "LM,PW,2-5 yr"
+      } else if (family.presentInPregnantWoman?.includes("N") &&
+        family.presentInLactatingMother == "Y" &&
+        family.hasChildPresentInPem == "Y" &&
+        family.has2to5yearsoldChildren == "Y"
+      ) {
+        family.setStatus = "LM, PEM, 2-5 yr"
+      } else if (family.has2to5yearsoldChildren?.includes("N") &&
+        family.presentInLactatingMother == "Y" &&
+        family.hasChildPresentInPem == "Y" &&
+        family.presentInPregnantWoman == "Y"
+      ) {
+        family.setStatus = "LM, PEM, PW"
       } else if (family.presentInLactatingMother?.includes("N") &&
         family.presentInPregnantWoman?.includes("N") &&
         family.hasChildPresentInPem?.includes("N") &&
-        family.has2to5yearsoldChildren?.includes("N") &&
-        family.hasAdolescentGirlChildren?.includes("N")
+        family.has2to5yearsoldChildren?.includes("N")
       ) {
         family.setStatus = "--"
       } else {

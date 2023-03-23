@@ -1790,7 +1790,7 @@ class DailyActivityRecordComponent {
       console.log(this.darListByStaffID, 'darListByStaffID');
       console.log(this.dateWiseStaffDarDetails, 'this.dateWiseStaffDarDetails');
       if (this.darListByStaffID?.length == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       }
       if (res.status == false) {
         this.showError(res.message);
@@ -1810,7 +1810,7 @@ class DailyActivityRecordComponent {
       this.loader = true;
       // console.log(response.body.byteLength == 0);
       if (response.body.byteLength == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       } else {
         const blob = new Blob([response.body], {
           type: response.headers.get('content-type')
@@ -1839,7 +1839,7 @@ class DailyActivityRecordComponent {
       console.log(this.darListByBranchID, 'darListByBranchID');
       console.log(this.viewDARByRegionBranch, 'viewDARByBranch');
       if (this.darListByBranchID?.length == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       }
       if (res.status == false) {
         this.showError(res.message);
@@ -1858,7 +1858,7 @@ class DailyActivityRecordComponent {
     this.dailyActRecord.recordDownloadExcelByBranchId(obj).subscribe((response, fileName) => {
       this.loader = true;
       if (response.body.byteLength == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       } else {
         const blob = new Blob([response.body], {
           type: response.headers.get('content-type')
@@ -1887,7 +1887,7 @@ class DailyActivityRecordComponent {
       console.log(this.viewDARByRegionBranch, 'viewDARByRegion');
       console.log(this.darListByRegionID);
       if (this.darListByRegionID?.length == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       }
       if (res.status == false) {
         this.showError(res.message);
@@ -1906,7 +1906,7 @@ class DailyActivityRecordComponent {
     this.dailyActRecord.recordDownloadExcelByRegionId(obj).subscribe((response, fileName) => {
       this.loader = true;
       if (response.body.byteLength == 0) {
-        this.showError('Sorry, no data was found !');
+        this.showError('Sorry, no data is found !');
       } else {
         const blob = new Blob([response.body], {
           type: response.headers.get('content-type')

@@ -258,6 +258,7 @@ class CreateSattuRegisterComponent {
       });
     } else {
       console.log(this.data?.familyDetails);
+      console.log(this.setFrequency);
       let updateReg = {
         dataAccessDTO: this.httpService.dataAccessDTO,
         sattuRegisterMasterId: this.data?.familyDetails?.sattuRegisterMasterId,
@@ -265,7 +266,7 @@ class CreateSattuRegisterComponent {
         familyId: this.data?.familyDetails?.familyDetailId,
         active_flag: 'A',
         sattuPreparingFrequency: this.setFrequency,
-        sattuNonPreparingReasonId: this.createSattuForm.value.reason ? this.createSattuForm.value.reason : null,
+        sattuNonPreparingReasonId: this.setFrequency == 'I' || this.setFrequency == 'R' ? null : this.createSattuForm.value.reason,
         sattuFamilyOrientationId: this.data?.familyDetails.sattuFamilyOrientationId,
         sattuOrientationDate: ''
       };
@@ -1767,7 +1768,7 @@ class ViewSattuFamilyComponent {
         family.setStatus = "LM, PEM";
       } else if (family.presentInLactatingMother == "Y" && family.presentInPregnantWoman?.includes("N") && family.has2to5yearsoldChildren == "Y" && family.hasChildPresentInPem?.includes("N") && family.hasAdolescentGirlChildren?.includes("N")) {
         family.setStatus = "LM, 2-5 yr";
-      } else if (family.presentInLactatingMother == "Y" && family.presentInPregnantWoman?.includes("N") && family.hasAdolescentGirlChildren == "Y" && family.has2to5yearsoldChildren?.includes("N") && family.hasChildPresentInPem?.includes("N") && family.hasAdolescentGirlChildren?.includes("N")) {
+      } else if (family.presentInLactatingMother == "Y" && family.presentInPregnantWoman?.includes("N") && family.hasAdolescentGirlChildren == "Y" && family.has2to5yearsoldChildren?.includes("N") && family.hasChildPresentInPem?.includes("N")) {
         family.setStatus = "LM, Adol";
       } else if (family.presentInLactatingMother?.includes("N") && family.has2to5yearsoldChildren?.includes("N") && family.hasAdolescentGirlChildren?.includes("N") && family.presentInPregnantWoman == "Y" && family.hasChildPresentInPem == "Y") {
         family.setStatus = "PW, PEM";

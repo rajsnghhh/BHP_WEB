@@ -44,7 +44,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Within 6 month
+            Within 6 months
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -334,7 +334,7 @@
           </div>
 
           <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
-            <label>Breast Feeding Continued up to 12 Months:</label> <br>
+            <label>Breast Feeding Continued up to 12 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto12Complete"> &nbsp;
@@ -350,7 +350,7 @@
         <div class="row">
 
           <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
-            <label>Complementary Food Continued up to 12 Months:</label>
+            <label>Complementary Food Continued up to 12 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label>
             <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
@@ -447,7 +447,7 @@
           </div>
 
           <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter18">
-            <label>Breast Feeding Continued up to 18 Months:</label> <br>
+            <label>Breast Feeding Continued up to 18 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto18Complete"> &nbsp;
@@ -568,7 +568,7 @@
           </div>
 
           <div class="form-group col-md-4" *ngIf="childBirthForm.value.visitDateAfter24Mon">
-            <label>Breast Feeding Continued up to 24 Months:</label> <br>
+            <label>Breast Feeding Continued up to 24 Months:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="ebfUpto24Complete"> &nbsp;

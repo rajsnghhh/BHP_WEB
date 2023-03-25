@@ -268,7 +268,7 @@ export class LmViewComponent implements OnInit, DoCheck {
 
       if (res.responseObject.length == 0 && saveForm) {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
-          width: '1000px',
+          width: '1100px',
           height: '550px',
           data: {
             editMode: false,
@@ -285,7 +285,7 @@ export class LmViewComponent implements OnInit, DoCheck {
         });
       } else {
         const dialogRef = this.dialog.open(AddLmChildComponent, {
-          width: '1000px',
+          width: '1100px',
           height: '550px',
           data: {
             editMode: true,

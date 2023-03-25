@@ -25,6 +25,7 @@
 }
 ::ng-deep .mat-dialog-container {
   padding: 12px 17px;
+  overflow: hidden;
 }
 
 .form-group {

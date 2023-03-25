@@ -113,7 +113,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           firstVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate,
           secondVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate,
           thirdVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.thirdVisitDate,
-          firstVisitAfter6Mon: this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDateAfter6Months,
+          firstVisitAfter6Mon: this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate,
           ebfUpto6Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto6Complete,
           complementaryFoodAfter6: this.data?.childWiselactatingmotherList?.childBasicStatusDto.complementaryFoodStartedAfter6Months,
           firstVisitheight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.height) == 0 ? null :
@@ -121,7 +121,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           firstVisitweight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null :
             this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
           firstVisitmuac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
-          secondVisitAfter6Mon: this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDateAfter6Months,
+          secondVisitAfter6Mon: this.childMuacList.find(month => month.muacForMonth == "6A")?.muacRecordDate,
           breastfeedafter6mon: this.data?.childWiselactatingmotherList?.childBasicStatusDto.breastFeedingContinuedAfter6Months,
           secondVisitheight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6A")?.height) == 0 ? null :
             this.childMuacList.find(month => month.muacForMonth == "6A")?.height,
@@ -260,6 +260,27 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       deathOfChildDate: [null],
       comment: [''],
     });
+
+    // var x = this.childBirthForm.value;
+    // if (!x.firstVisitDate) {
+    //   this.childBirthForm.controls['secondVisitDate'].disable();
+    // } else if (!x.secondVisitDate) {
+    //   this.childBirthForm.controls['thirdVisitDate'].disable();
+    // } else
+    // if (!x.firstVisitAfter6Mon) {
+    //   this.childBirthForm.controls['ebfUpto6Complete'].disable();
+    //   this.childBirthForm.controls['complementaryFoodAfter6'].disable();
+    //   this.childBirthForm.controls['firstVisitheight6month'].disable();
+    //   this.childBirthForm.controls['firstVisitweight6month'].disable();
+    //   this.childBirthForm.controls['firstVisitmuac6month'].disable();
+    //   this.childBirthForm.controls['secondVisitAfter6Mon'].disable();
+    // } 
+    //  if (!x.secondVisitAfter6Mon) {
+    //   this.childBirthForm.controls['breastfeedafter6mon'].disable();
+    //   this.childBirthForm.controls['secondVisitheight6month'].disable();
+    //   this.childBirthForm.controls['secondVisitweight6month'].disable();
+    //   this.childBirthForm.controls['secondVisitmuac6month'].disable();
+    // }
   }
 
   get f() {
@@ -270,16 +291,41 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   restrictSecondDate(date) {
     this.firstVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
     this.childBirthForm.controls.secondVisitDate.setValue(null);
+    this.childBirthForm.controls.thirdVisitDate.setValue(null);
     this.enableSecondVisitDate = true
   }
 
   restrictthirdDate(date) {
     this.secondVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
+    this.childBirthForm.controls.thirdVisitDate.setValue(null);
     this.enableThirdVisitDate = true
   }
 
   restrictSecondVisitAfter6Mon(date) {
     this.setSecondVisitAfter6Mon = moment(date).add(1, 'days').format('YYYY-MM-DD');
+    // if (!date) {
+    //   this.childBirthForm.controls['ebfUpto6Complete'].disable();
+    //   this.childBirthForm.controls['complementaryFoodAfter6'].disable();
+    //   this.childBirthForm.controls['firstVisitheight6month'].disable();
+    //   this.childBirthForm.controls['firstVisitweight6month'].disable();
+    //   this.childBirthForm.controls['firstVisitmuac6month'].disable();
+    //   this.childBirthForm.controls['secondVisitAfter6Mon'].disable();
+    //   var x = this.childBirthForm.controls;
+    //   x.ebfUpto6Complete.setValue('');
+    //   x.complementaryFoodAfter6.setValue('');
+    //   x.firstVisitheight6month.setValue('');
+    //   x.firstVisitweight6month.setValue('');
+    //   x.firstVisitmuac6month.setValue('');
+    //   x.secondVisitAfter6Mon.setValue('');
+    // } else {
+    //   this.childBirthForm.controls['ebfUpto6Complete'].enable();
+    //   this.childBirthForm.controls['complementaryFoodAfter6'].enable();
+    //   this.childBirthForm.controls['firstVisitheight6month'].enable();
+    //   this.childBirthForm.controls['firstVisitweight6month'].enable();
+    //   this.childBirthForm.controls['firstVisitmuac6month'].enable();
+    //   this.childBirthForm.controls['secondVisitAfter6Mon'].enable();
+    // }
+
   }
 
 
@@ -361,11 +407,21 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     this.muac24MaxDate = this.today;
   }
 
+  formDisabledSave() {
+    var x = this.childBirthForm.value;
+    let flag = true;
+    if ((!x.place) && (!x.birthWeight) && (!x.firstVisitDate) && (!x.firstVisitAfter6Mon)
+      && (!x.visitDateAfter12Mon) && (!x.visitDateAfter18) && (!x.visitDateAfter24Mon)) {
+      flag = false;
+    }
+    return flag;
+
+  }
   /* Depending on condition form is Save or Edit */
   onSave() {
-    let muacDate = ['firstVisitAfter6Mon', 'visitDateAfter12Mon', 'visitDateAfter18', 'visitDateAfter24Mon'];
-    let muac = ['firstVisitmuac6month', 'muac12month', 'muac18month', 'muac24month'];
-    let range = (this.after24m == false) ? 3 : (this.after18m == false) ? 2 : (this.after12m == false) ? 1 : (this.after6m == false) ? 0 : -1;
+    // let muacDate = ['firstVisitAfter6Mon', 'visitDateAfter12Mon', 'visitDateAfter18', 'visitDateAfter24Mon'];
+    // let muac = ['firstVisitmuac6month', 'muac12month', 'muac18month', 'muac24month'];
+    // let range = (this.after24m == false) ? 3 : (this.after18m == false) ? 2 : (this.after12m == false) ? 1 : (this.after6m == false) ? 0 : -1;
     // if (range >= 0) {
     //   for (let i = 0; i <= range; i++) {
     //     if (!this.childBirthForm.get(muacDate[i]).value) {
@@ -469,16 +525,16 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           }
         }
         console.log(Dto, 'reqAdd')
-        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
-          console.log(res, 'responseAdd');
-          if (res.status) {
-            this.showSuccess(res.message);
-            this.dialogRef.close();
-          }
-          else {
-            this.showError(res.message);
-          }
-        });
+        // this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
+        //   console.log(res, 'responseAdd');
+        //   if (res.status) {
+        //     this.showSuccess(res.message);
+        //     this.dialogRef.close();
+        //   }
+        //   else {
+        //     this.showError(res.message);
+        //   }
+        // });
       } else {
         let Dto = {
           dataAccessDTO: this.httpService.dataAccessDTO,
@@ -565,17 +621,17 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           }
         }
         console.log(Dto, 'reqEdit')
-        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
-          console.log(res, 'responseedit');
+        // this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
+        //   console.log(res, 'responseedit');
 
-          if (res.status) {
-            this.showSuccess(res.message);
-            this.dialogRef.close();
-          }
-          else {
-            this.showError(res.message);
-          }
-        });
+        //   if (res.status) {
+        //     this.showSuccess(res.message);
+        //     this.dialogRef.close();
+        //   }
+        //   else {
+        //     this.showError(res.message);
+        //   }
+        // });
       }
     }
     else {

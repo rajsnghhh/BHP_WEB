@@ -310,7 +310,7 @@
           <div class="form-group col-md">
             <label for="visitDateAfter12Mon">Visit Date After 12 Months:</label>
             <input type="date" class="form-control" formControlName="visitDateAfter12Mon"
-              (keydown)="restrictTypeOfDate()" [ngClass]="{
+              (keydown)="restrictTypeOfDate()" (change)="after12Mon($event.target.value)" [ngClass]="{
                     'is-invalid': f.visitDateAfter12Mon.invalid && f.visitDateAfter12Mon.touched,
                     'is-valid':
                       f.visitDateAfter12Mon.valid && (f.visitDateAfter12Mon.dirty || f.visitDateAfter12Mon.touched)
@@ -321,7 +321,7 @@
           </div>
 
           <div class="form-group col-md" *ngIf="childBirthForm.value.visitDateAfter12Mon">
-            <label>Primary Immunization completed:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
+            <label>Primary Immunization Completed:&nbsp;<span class="text-danger">*&nbsp;</span></label> <br>
             <label>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="radio" value="Y" formControlName="primaryImmunizationUpto12Completed"> &nbsp;
@@ -435,8 +435,8 @@
 
           <div class="form-group col-md">
             <label for="visitDateAfter18">Visit Date After 18 Months:</label>
-            <input type="date" class="form-control" formControlName="visitDateAfter18" (keydown)="restrictTypeOfDate()"
-              [ngClass]="{
+            <input type="date" class="form-control" formControlName="visitDateAfter18"
+              (change)="after18Mon($event.target.value)" (keydown)="restrictTypeOfDate()" [ngClass]="{
                     'is-invalid': f.visitDateAfter18.invalid && f.visitDateAfter18.touched,
                     'is-valid':
                       f.visitDateAfter18.valid && (f.visitDateAfter18.dirty || f.visitDateAfter18.touched)
@@ -543,8 +543,8 @@
 
           <div class="form-group col-md-4">
             <label for="visitDateAfter24Mon">Visit Date After 24 Months:</label>
-            <input type="date" class="form-control" formControlName="visitDateAfter24Mon"
-              (keydown)="restrictTypeOfDate()" [ngClass]="{
+            <input type="date" class="form-control" (change)="after24Mon($event.target.value)"
+              formControlName="visitDateAfter24Mon" (keydown)="restrictTypeOfDate()" [ngClass]="{
                     'is-invalid': f.visitDateAfter24Mon.invalid && f.visitDateAfter24Mon.touched,
                     'is-valid':
                       f.visitDateAfter24Mon.valid && (f.visitDateAfter24Mon.dirty || f.visitDateAfter24Mon.touched)
@@ -689,7 +689,7 @@
 
     <br> <br>
     <div class="addEditBtn" *ngIf="!viewMode">
-      <button type="submit" class="btn btn-success" (click)="onSave()" [disabled]="!formDisabledSave">Save</button>
+      <button type="submit" class="btn btn-success" (click)="onSave()" [disabled]="!formDisabledSave()">Save</button>
     </div>
   </form>
 </div>

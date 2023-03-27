@@ -55,6 +55,7 @@ export class LmViewComponent implements OnInit, DoCheck {
 
 
   ngOnInit(): void {
+    this.getLactatingMotherList(1);
     this.activatedRoute.queryParams.subscribe(params => {
       this.setStatus = params['status'];
       this.familyID = params['familyID'];

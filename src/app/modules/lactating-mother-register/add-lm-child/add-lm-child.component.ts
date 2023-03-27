@@ -45,16 +45,15 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   enableSecondVisitDate: boolean = false;
   enableThirdVisitDate: boolean = false;
 
-
   constructor(public validationService: ValidationService, private fb: UntypedFormBuilder, private httpService: HttpService,
     private toaster: ToastrService, private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<AddLmChildComponent>) {
     dialogRef.disableClose = true;
   }
 
+
   ngOnInit(): void {
     this.childDob = this.data?.childWiselactatingmotherList?.dob;
-
     let after6date = moment(moment(this.childDob).add(6, 'M').format('YYYY-MM-DD')).add(-1, 'days').format('YYYY-MM-DD');
     if (after6date > this.today) {
       this.maxFirstVisit = this.today;
@@ -178,6 +177,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after18m = true;
       this.after24m = true;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
     }
     else if (year >= 1 && year < 2 && month < 6) {
@@ -186,6 +186,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after18m = true;
       this.after24m = true;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
       this.childBirthForm.get('visitDateAfter12Mon').setValidators(Validators.required);
@@ -196,6 +197,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after18m = false;
       this.after24m = true;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac18month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('firstVisitAfter6Mon').setValidators(Validators.required);
@@ -208,6 +210,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       this.after18m = false;
       this.after24m = false;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac18month').setValidators(Validators.compose([Validators.required, this.muacRange]));
       this.childBirthForm.get('muac24month').setValidators(Validators.compose([Validators.required, this.muacRange]));
@@ -219,6 +222,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   }
 
   createForm() {
+
     this.childBirthForm = this.fb.group({
       place: [null],
       birthWeight: ['', this.birthWeightRange],
@@ -253,34 +257,17 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       muac12month: [''],
       muac18month: [''],
       muac24month: [''],
-      firstVisitDate: [''],
-      secondVisitDate: [''],
+      firstVisitDate: [this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate ?
+        this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate : ''],
+      secondVisitDate: [this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate ?
+        this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate : ''],
       thirdVisitDate: [''],
       checkChildDeath: [''],
       deathOfChildDate: [null],
       comment: [''],
+
     });
 
-    // var x = this.childBirthForm.value;
-    // if (!x.firstVisitDate) {
-    //   this.childBirthForm.controls['secondVisitDate'].disable();
-    // } else if (!x.secondVisitDate) {
-    //   this.childBirthForm.controls['thirdVisitDate'].disable();
-    // } else
-    // if (!x.firstVisitAfter6Mon) {
-    //   this.childBirthForm.controls['ebfUpto6Complete'].disable();
-    //   this.childBirthForm.controls['complementaryFoodAfter6'].disable();
-    //   this.childBirthForm.controls['firstVisitheight6month'].disable();
-    //   this.childBirthForm.controls['firstVisitweight6month'].disable();
-    //   this.childBirthForm.controls['firstVisitmuac6month'].disable();
-    //   this.childBirthForm.controls['secondVisitAfter6Mon'].disable();
-    // } 
-    //  if (!x.secondVisitAfter6Mon) {
-    //   this.childBirthForm.controls['breastfeedafter6mon'].disable();
-    //   this.childBirthForm.controls['secondVisitheight6month'].disable();
-    //   this.childBirthForm.controls['secondVisitweight6month'].disable();
-    //   this.childBirthForm.controls['secondVisitmuac6month'].disable();
-    // }
   }
 
   get f() {
@@ -290,44 +277,89 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
   /* Restrict the second date depending on First visit date */
   restrictSecondDate(date) {
     this.firstVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
-    this.childBirthForm.controls.secondVisitDate.setValue(null);
-    this.childBirthForm.controls.thirdVisitDate.setValue(null);
-    this.enableSecondVisitDate = true
+    // this.childBirthForm.controls.secondVisitDate.setValue(null);
+    // this.childBirthForm.controls.thirdVisitDate.setValue(null);
+
+    if (this.childBirthForm.value.firstVisitDate) {
+      this.enableSecondVisitDate = true;
+    }
+    else {
+      this.enableSecondVisitDate = false;
+      this.enableThirdVisitDate = false;
+      this.childBirthForm.controls.secondVisitDate.setValue(null);
+      this.childBirthForm.controls.thirdVisitDate.setValue(null);
+    }
+
   }
 
   restrictthirdDate(date) {
     this.secondVisit = moment(date).add(1, 'days').format('YYYY-MM-DD');
-    this.childBirthForm.controls.thirdVisitDate.setValue(null);
-    this.enableThirdVisitDate = true
+    // this.childBirthForm.controls.thirdVisitDate.setValue(null);
+
+    console.log(this.childBirthForm.value.secondVisitDate)
+    console.log(this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate);
+
+    if (this.childBirthForm.value.secondVisitDate) {
+      this.enableThirdVisitDate = true;
+    }
+    else {
+      this.enableThirdVisitDate = false;
+      this.childBirthForm.controls.thirdVisitDate.setValue(null);
+    }
+
   }
 
   restrictSecondVisitAfter6Mon(date) {
     this.setSecondVisitAfter6Mon = moment(date).add(1, 'days').format('YYYY-MM-DD');
-    // if (!date) {
-    //   this.childBirthForm.controls['ebfUpto6Complete'].disable();
-    //   this.childBirthForm.controls['complementaryFoodAfter6'].disable();
-    //   this.childBirthForm.controls['firstVisitheight6month'].disable();
-    //   this.childBirthForm.controls['firstVisitweight6month'].disable();
-    //   this.childBirthForm.controls['firstVisitmuac6month'].disable();
-    //   this.childBirthForm.controls['secondVisitAfter6Mon'].disable();
-    //   var x = this.childBirthForm.controls;
-    //   x.ebfUpto6Complete.setValue('');
-    //   x.complementaryFoodAfter6.setValue('');
-    //   x.firstVisitheight6month.setValue('');
-    //   x.firstVisitweight6month.setValue('');
-    //   x.firstVisitmuac6month.setValue('');
-    //   x.secondVisitAfter6Mon.setValue('');
-    // } else {
-    //   this.childBirthForm.controls['ebfUpto6Complete'].enable();
-    //   this.childBirthForm.controls['complementaryFoodAfter6'].enable();
-    //   this.childBirthForm.controls['firstVisitheight6month'].enable();
-    //   this.childBirthForm.controls['firstVisitweight6month'].enable();
-    //   this.childBirthForm.controls['firstVisitmuac6month'].enable();
-    //   this.childBirthForm.controls['secondVisitAfter6Mon'].enable();
-    // }
-
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.ebfUpto6Complete.setValue(null);
+      x.complementaryFoodAfter6.setValue(null);
+      x.firstVisitheight6month.setValue('');
+      x.firstVisitweight6month.setValue('');
+      x.firstVisitmuac6month.setValue('');
+      x.secondVisitAfter6Mon.setValue('');
+      x.breastfeedafter6mon.setValue(null);
+      x.secondVisitheight6month.setValue('');
+      x.secondVisitweight6month.setValue('');
+      x.secondVisitmuac6month.setValue('');
+    }
   }
 
+  after12Mon(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.primaryImmunizationUpto12Completed.setValue(null);
+      x.ebfUpto12Complete.setValue(null);
+      x.complementaryFoodAfter12.setValue('');
+      x.height12month.setValue('');
+      x.weight12month.setValue('');
+      x.muac12month.setValue('');
+    }
+  }
+
+  after18Mon(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.ebfUpto18Complete.setValue(null);
+      x.complementaryFoodAfter18.setValue(null);
+      x.height18month.setValue('');
+      x.weight18month.setValue('');
+      x.muac18month.setValue('');
+    }
+  }
+
+  after24Mon(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.primaryImmunizationUpto24Completed.setValue(null);
+      x.ebfUpto24Complete.setValue(null);
+      x.complementaryFoodAfter24.setValue('');
+      x.height24month.setValue('');
+      x.weight24month.setValue('');
+      x.muac24month.setValue('');
+    }
+  }
 
   /* make child death comment required 
   depending on checkChildDeath field value */
@@ -414,6 +446,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       && (!x.visitDateAfter12Mon) && (!x.visitDateAfter18) && (!x.visitDateAfter24Mon)) {
       flag = false;
     }
+
     return flag;
 
   }
@@ -436,207 +469,306 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     //     }
     //   }
     // }
-    if (this.childBirthForm.valid) {
-      console.log(this.childBirthForm)
-      if (this.data.editMode == false) {
+    var val = this.childBirthForm.value;
 
-        let Dto = {
-          dataAccessDTO: this.httpService.dataAccessDTO,
-          childBasicStatusDto: {
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            placeOfDelivery: this.childBirthForm.value.place,
-            birthWeight: this.childBirthForm.value.birthWeight,
-            firstVisitDate: this.childBirthForm.value.firstVisitDate,
-            secondVisitDate: this.childBirthForm.value.secondVisitDate,
-            ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
-            primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
-            ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
-            ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
-            primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
-            ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
-
-            thirdVisitDate: this.childBirthForm.value.thirdVisitDate ? this.childBirthForm.value.thirdVisitDate : null,
-            firstVisitDateAfter6Months: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null,
-            secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
-            complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
-            breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
-            complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12,
-            complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18,
-            complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24
-          },
-
-          muacDataList: [{
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "6",
-            muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null
-          },
-          {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.secondVisitheight6month == null ? "0" :
-              Math.trunc(this.childBirthForm.value.secondVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.secondVisitweight6month == null ? "0" :
-              Math.trunc(this.childBirthForm.value.secondVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.secondVisitmuac6month == null ? "0" :
-              Math.trunc(this.childBirthForm.value.secondVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: 'A',
-            muacForMonth: '6A',
-            muacRecordDate: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
-          },
-          {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "12",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon ? this.childBirthForm.value.visitDateAfter12Mon : null
-          },
-          {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "18",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter18 ? this.childBirthForm.value.visitDateAfter18 : null
-          },
-          {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "24",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon ? this.childBirthForm.value.visitDateAfter24Mon : null
-          }
-          ],
-          deadChildRegisterDto: {
-            deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-            comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
-          }
-        }
-        console.log(Dto, 'reqAdd')
-        // this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
-        //   console.log(res, 'responseAdd');
-        //   if (res.status) {
-        //     this.showSuccess(res.message);
-        //     this.dialogRef.close();
-        //   }
-        //   else {
-        //     this.showError(res.message);
-        //   }
-        // });
-      } else {
-        let Dto = {
-          dataAccessDTO: this.httpService.dataAccessDTO,
-          childBasicStatusDto: {
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            placeOfDelivery: this.childBirthForm.value.place,
-            birthWeight: this.childBirthForm.value.birthWeight,
-            firstVisitDate: this.childBirthForm.value.firstVisitDate,
-            secondVisitDate: this.childBirthForm.value.secondVisitDate,
-            ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
-            primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
-            ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
-            ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
-            primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
-            ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
-
-            thirdVisitDate: this.childBirthForm.value.thirdVisitDate ? this.childBirthForm.value.thirdVisitDate : null,
-            firstVisitDateAfter6Months: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null,
-            secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
-            complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
-            breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
-            complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12,
-            complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18,
-            complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24
-          },
-
-          muacDataList: [{
-            muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "6",
-            muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null
-          },
-          {
-            muacRegisterId: this.muacRegisterId6A ? this.muacRegisterId6A : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.secondVisitheight6month == null ? "0" :
-              Math.trunc(this.childBirthForm.value.secondVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.secondVisitweight6month == null ? "0" :
-              Math.trunc(this.childBirthForm.value.secondVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.secondVisitmuac6month == null ? "0" :
-              Math.trunc(this.childBirthForm.value.secondVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: 'A',
-            muacForMonth: '6A',
-            muacRecordDate: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
-          },
-          {
-            muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "12",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon ? this.childBirthForm.value.visitDateAfter12Mon : null
-          },
-          {
-            muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "18",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter18 ? this.childBirthForm.value.visitDateAfter18 : null
-          },
-          {
-            muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "24",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon ? this.childBirthForm.value.visitDateAfter24Mon : null
-          }
-          ],
-          deadChildRegisterDto: {
-            deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-            comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
-          }
-        }
-        console.log(Dto, 'reqEdit')
-        // this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
-        //   console.log(res, 'responseedit');
-
-        //   if (res.status) {
-        //     this.showSuccess(res.message);
-        //     this.dialogRef.close();
-        //   }
-        //   else {
-        //     this.showError(res.message);
-        //   }
-        // });
+    if (val.secondVisitDate) {
+      if (val.secondVisitDate < val.firstVisitDate || val.secondVisitDate == val.firstVisitDate) {
+        this.showError('Second visit date should be after first visit date');
+        return;
       }
     }
-    else {
-      this.showError('Form is invalid');
+
+    if (val.thirdVisitDate) {
+      if (val.thirdVisitDate < val.secondVisitDate || val.thirdVisitDate == val.secondVisitDate) {
+        this.showError('Third visit date should be after second visit date');
+        return;
+      }
     }
+
+    if (val.secondVisitAfter6Mon) {
+      if (val.secondVisitAfter6Mon < val.firstVisitAfter6Mon || val.secondVisitAfter6Mon == val.firstVisitAfter6Mon) {
+        this.showError('Second Visit Date After 6Mon should be after First Visit Date After 6Mon');
+        return;
+      }
+    }
+
+    if (val.firstVisitAfter6Mon) {
+      if (!val.ebfUpto6Complete) {
+        this.showError('Please select EBF after 6 Months');
+        return;
+      } else if (!val.complementaryFoodAfter6) {
+        this.showError('Please select Complementary Food Started after 6 Months');
+        return;
+      }
+      else if (!val.firstVisitmuac6month) {
+        this.showError('Please enter MUAC value of first visit date after 6 Months');
+        return;
+      }
+    }
+
+    if (val.secondVisitAfter6Mon) {
+      if (!val.breastfeedafter6mon) {
+        this.showError('Please select Breast Feeding Continued after 6 Months');
+        return;
+      } else if (!val.secondVisitmuac6month) {
+        this.showError('Please enter MUAC value of second visit date after 6 Months');
+        return;
+      }
+    }
+
+    if (val.visitDateAfter12Mon) {
+      if (!val.primaryImmunizationUpto12Completed) {
+        this.showError('Please select Primary Immunization Completed after 12 months');
+        return;
+      } else if (!val.ebfUpto12Complete) {
+        this.showError('Please select Breast Feeding Continued up to 12 Months');
+        return;
+      } else if (!val.complementaryFoodAfter12) {
+        this.showError('Please select Complementary Food Continued up to 12 Months');
+        return;
+      } else if (!val.muac12month) {
+        this.showError('Please enter MUAC value after 12 Months');
+        return;
+      }
+    }
+
+    if (val.visitDateAfter18) {
+      if (!val.ebfUpto18Complete) {
+        this.showError('Please select Breast Feeding Continued up to 18 Months');
+        return;
+      } else if (!val.complementaryFoodAfter18) {
+        this.showError('Please select Complementary Food Continued up to 18 Months');
+        return;
+      }
+      else if (!val.muac18month) {
+        this.showError('Please enter MUAC value after 18 Months');
+        return;
+      }
+    }
+
+    if (val.visitDateAfter24Mon) {
+      if (!val.primaryImmunizationUpto24Completed) {
+        this.showError('Please select Primary Immunization Completed after 24 months');
+        return;
+      } else if (!val.ebfUpto24Complete) {
+        this.showError('Please select Breast Feeding Continued up to 24 Months');
+        return;
+      } else if (!val.complementaryFoodAfter24) {
+        this.showError('Please select Complementary Food Continued up to 24 Months');
+        return;
+      } else if (!val.muac24month) {
+        this.showError('Please enter MUAC value after 24 Months');
+        return;
+      }
+    }
+
+    if (this.f.firstVisitmuac6month.errors.notInMuacRange) {
+      this.showError('MUAC should be 1 to 30 cm');
+      return;
+    }
+
+
+    // if (this.childBirthForm.valid) {
+    console.log(this.childBirthForm)
+    if (this.data.editMode == false) {
+
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        childBasicStatusDto: {
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          placeOfDelivery: this.childBirthForm.value.place,
+          birthWeight: this.childBirthForm.value.birthWeight,
+          firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
+          secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
+          ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
+          primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
+          ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
+          ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
+          primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
+          ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
+
+          thirdVisitDate: this.childBirthForm.value.thirdVisitDate ? this.childBirthForm.value.thirdVisitDate : null,
+          firstVisitDateAfter6Months: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null,
+          secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
+          complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
+          breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
+          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12,
+          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18,
+          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24
+        },
+
+        muacDataList: [{
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "6",
+          muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null
+        },
+        {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.secondVisitheight6month == null ? "0" :
+            Math.trunc(this.childBirthForm.value.secondVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.secondVisitweight6month == null ? "0" :
+            Math.trunc(this.childBirthForm.value.secondVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.secondVisitmuac6month == null ? "0" :
+            Math.trunc(this.childBirthForm.value.secondVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: 'A',
+          muacForMonth: '6A',
+          muacRecordDate: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
+        },
+        {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "12",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon ? this.childBirthForm.value.visitDateAfter12Mon : null
+        },
+        {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "18",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter18 ? this.childBirthForm.value.visitDateAfter18 : null
+        },
+        {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "24",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon ? this.childBirthForm.value.visitDateAfter24Mon : null
+        }
+        ],
+        deadChildRegisterDto: {
+          deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
+          comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
+        }
+      }
+      console.log(Dto, 'reqAdd')
+      this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
+        console.log(res, 'responseAdd');
+        if (res.status) {
+          this.showSuccess(res.message);
+          this.dialogRef.close();
+        }
+        else {
+          this.showError(res.message);
+        }
+      });
+    } else {
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        childBasicStatusDto: {
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          placeOfDelivery: this.childBirthForm.value.place,
+          birthWeight: this.childBirthForm.value.birthWeight,
+          firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
+          secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
+          ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
+          primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
+          ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
+          ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
+          primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
+          ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
+
+          thirdVisitDate: this.childBirthForm.value.thirdVisitDate ? this.childBirthForm.value.thirdVisitDate : null,
+          firstVisitDateAfter6Months: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null,
+          secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
+          complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
+          breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
+          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12,
+          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18,
+          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24
+        },
+
+        muacDataList: [{
+          muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "6",
+          muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null
+        },
+        {
+          muacRegisterId: this.muacRegisterId6A ? this.muacRegisterId6A : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.secondVisitheight6month == null ? "0" :
+            Math.trunc(this.childBirthForm.value.secondVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.secondVisitweight6month == null ? "0" :
+            Math.trunc(this.childBirthForm.value.secondVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.secondVisitmuac6month == null ? "0" :
+            Math.trunc(this.childBirthForm.value.secondVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: 'A',
+          muacForMonth: '6A',
+          muacRecordDate: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
+        },
+        {
+          muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "12",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon ? this.childBirthForm.value.visitDateAfter12Mon : null
+        },
+        {
+          muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "18",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter18 ? this.childBirthForm.value.visitDateAfter18 : null
+        },
+        {
+          muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "24",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon ? this.childBirthForm.value.visitDateAfter24Mon : null
+        }
+        ],
+        deadChildRegisterDto: {
+          deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
+          comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
+        }
+      }
+      console.log(Dto, 'reqEdit')
+      this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe((res: any) => {
+        console.log(res, 'responseedit');
+
+        if (res.status) {
+          this.showSuccess(res.message);
+          this.dialogRef.close();
+        }
+        else {
+          this.showError(res.message);
+        }
+      });
+    }
+    // }
+    // else {
+    //   this.showError('Form is invalid');
+    // }
   }
 
   /* Close the dialog pop-up */

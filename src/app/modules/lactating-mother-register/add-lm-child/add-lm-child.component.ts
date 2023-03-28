@@ -665,6 +665,16 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       }
     }
 
+    if (this.childDeath == 'Y') {
+      if (!val.deathOfChildDate) {
+        this.showError('Please enter date of death');
+        return;
+      } else if (!val.comment) {
+        this.showError('Please enter a comment for child death');
+        return;
+      }
+    }
+
     // if (this.childBirthForm.valid) {
     console.log(this.childBirthForm)
     if (this.data.editMode == false) {

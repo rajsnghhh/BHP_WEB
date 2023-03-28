@@ -370,10 +370,14 @@ function AddLmChildComponent_div_62_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Second Visit Date After 6 Months:");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "input", 53);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keydown", function AddLmChildComponent_div_62_Template_input_keydown_3_listener() {
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function AddLmChildComponent_div_62_Template_input_change_3_listener($event) {
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r60);
       const ctx_r59 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r59.restrictTypeOfDate());
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r59.clearSecondDateRecords($event.target.value));
+    })("keydown", function AddLmChildComponent_div_62_Template_input_keydown_3_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r60);
+      const ctx_r61 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r61.restrictTypeOfDate());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
   }
@@ -421,26 +425,26 @@ function AddLmChildComponent_div_64_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r61 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r62 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r61.f.secondVisitheight6month.errors.notInHeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r62.f.secondVisitheight6month.errors.notInHeightRange);
   }
 }
 function AddLmChildComponent_div_64_Template(rf, ctx) {
   if (rf & 1) {
-    const _r64 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r65 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 56);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Height (cm):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 57);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_64_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r64);
-      const ctx_r63 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r63.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r65);
+      const ctx_r64 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r64.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_64_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r64);
-      const ctx_r65 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r65.heightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r65);
+      const ctx_r66 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r66.heightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_64_div_5_Template, 2, 1, "div", 13);
@@ -468,26 +472,26 @@ function AddLmChildComponent_div_65_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r66 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r67 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r66.f.secondVisitweight6month.errors.notInWeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r67.f.secondVisitweight6month.errors.notInWeightRange);
   }
 }
 function AddLmChildComponent_div_65_Template(rf, ctx) {
   if (rf & 1) {
-    const _r69 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r70 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 58);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Weight (kg):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 59);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_65_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r69);
-      const ctx_r68 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r68.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r70);
+      const ctx_r69 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r69.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_65_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r69);
-      const ctx_r70 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r70.weightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r70);
+      const ctx_r71 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r71.weightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_65_div_5_Template, 2, 1, "div", 13);
@@ -523,16 +527,16 @@ function AddLmChildComponent_div_66_div_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r71 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r72 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r71.f.secondVisitmuac6month.errors == null ? null : ctx_r71.f.secondVisitmuac6month.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r72.f.secondVisitmuac6month.errors == null ? null : ctx_r72.f.secondVisitmuac6month.errors.required);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r71.f.secondVisitmuac6month.errors.notInMuacRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r72.f.secondVisitmuac6month.errors.notInMuacRange);
   }
 }
 function AddLmChildComponent_div_66_Template(rf, ctx) {
   if (rf & 1) {
-    const _r75 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r76 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 60);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "MUAC (cm):\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "span", 41);
@@ -540,13 +544,13 @@ function AddLmChildComponent_div_66_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "input", 61);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_66_Template_input_keypress_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r75);
-      const ctx_r74 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r74.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r76);
+      const ctx_r75 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r75.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_66_Template_input_keyup_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r75);
-      const ctx_r76 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r76.muacKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r76);
+      const ctx_r77 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r77.muacKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](7, AddLmChildComponent_div_66_div_7_Template, 3, 2, "div", 13);
@@ -563,7 +567,7 @@ function AddLmChildComponent_div_66_Template(rf, ctx) {
 function AddLmChildComponent_div_76_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Primary Immunization completed:\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Primary Immunization Completed:\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "span", 41);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](4, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
@@ -587,44 +591,48 @@ function AddLmChildComponent_div_76_Template(rf, ctx) {
 function AddLmChildComponent_div_77_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Breast Feeding Continued up to 12 Months:");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](3, "br");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](5, " \u00A0\u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](6, "input", 64);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](8, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Breast Feeding Continued up to 12 Months:\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](4, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](10, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](12, "input", 65);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, "No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](5, "br");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0\u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](8, "input", 64);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](10, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](11, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](12, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](13, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](14, "input", 65);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](16, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](17, "No");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
   }
 }
 function AddLmChildComponent_div_79_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Complementary Food Continued up to 12 Months:");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](3, "br");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](5, " \u00A0\u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](6, "input", 66);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](8, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Complementary Food Continued up to 12 Months:\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](4, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](10, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](12, "input", 67);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, "No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](5, "br");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0\u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](8, "input", 66);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](10, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](11, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](12, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](13, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](14, "input", 67);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](16, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](17, "No");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
   }
 }
@@ -642,26 +650,26 @@ function AddLmChildComponent_div_80_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r77 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r78 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r77.f.height12month.errors.notInHeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r78.f.height12month.errors.notInHeightRange);
   }
 }
 function AddLmChildComponent_div_80_Template(rf, ctx) {
   if (rf & 1) {
-    const _r80 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r81 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 68);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Height (cm):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 69);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_80_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r80);
-      const ctx_r79 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r79.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r81);
+      const ctx_r80 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r80.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_80_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r80);
-      const ctx_r81 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r81.heightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r81);
+      const ctx_r82 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r82.heightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_80_div_5_Template, 2, 1, "div", 13);
@@ -689,26 +697,26 @@ function AddLmChildComponent_div_81_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r82 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r83 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r82.f.weight12month.errors.notInWeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r83.f.weight12month.errors.notInWeightRange);
   }
 }
 function AddLmChildComponent_div_81_Template(rf, ctx) {
   if (rf & 1) {
-    const _r85 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r86 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 70);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Weight (kg):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 71);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_81_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r85);
-      const ctx_r84 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r84.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r86);
+      const ctx_r85 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r85.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_81_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r85);
-      const ctx_r86 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r86.weightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r86);
+      const ctx_r87 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r87.weightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_81_div_5_Template, 2, 1, "div", 13);
@@ -744,16 +752,16 @@ function AddLmChildComponent_div_82_div_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r87 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r88 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r87.f.muac12month.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r88.f.muac12month.errors.required);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r87.f.muac12month.errors.notInMuacRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r88.f.muac12month.errors.notInMuacRange);
   }
 }
 function AddLmChildComponent_div_82_Template(rf, ctx) {
   if (rf & 1) {
-    const _r91 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r92 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 72);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "MUAC (cm):\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "span", 41);
@@ -761,13 +769,13 @@ function AddLmChildComponent_div_82_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "input", 73);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_82_Template_input_keypress_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r91);
-      const ctx_r90 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r90.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r92);
+      const ctx_r91 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r91.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_82_Template_input_keyup_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r91);
-      const ctx_r92 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r92.muacKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r92);
+      const ctx_r93 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r93.muacKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](7, AddLmChildComponent_div_82_div_7_Template, 3, 2, "div", 13);
@@ -784,22 +792,24 @@ function AddLmChildComponent_div_82_Template(rf, ctx) {
 function AddLmChildComponent_div_92_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Breast Feeding Continued up to 18 Months:");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](3, "br");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](5, " \u00A0\u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](6, "input", 74);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](8, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Breast Feeding Continued up to 18 Months:\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](4, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](10, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](12, "input", 75);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, "No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](5, "br");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0\u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](8, "input", 74);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](10, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](11, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](12, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](13, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](14, "input", 75);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](16, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](17, "No");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
   }
 }
@@ -841,26 +851,26 @@ function AddLmChildComponent_div_94_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r93 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r94 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r93.f.height18month.errors.notInHeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r94.f.height18month.errors.notInHeightRange);
   }
 }
 function AddLmChildComponent_div_94_Template(rf, ctx) {
   if (rf & 1) {
-    const _r96 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r97 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 78);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Height (cm):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 79);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_94_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r96);
-      const ctx_r95 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r95.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r97);
+      const ctx_r96 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r96.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_94_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r96);
-      const ctx_r97 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r97.heightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r97);
+      const ctx_r98 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r98.heightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_94_div_5_Template, 2, 1, "div", 13);
@@ -888,26 +898,26 @@ function AddLmChildComponent_div_95_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r98 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r99 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r98.f.weight18month.errors.notInWeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r99.f.weight18month.errors.notInWeightRange);
   }
 }
 function AddLmChildComponent_div_95_Template(rf, ctx) {
   if (rf & 1) {
-    const _r101 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r102 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 80);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Weight (kg):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 81);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_95_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r101);
-      const ctx_r100 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r100.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r102);
+      const ctx_r101 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r101.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_95_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r101);
-      const ctx_r102 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r102.weightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r102);
+      const ctx_r103 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r103.weightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_95_div_5_Template, 2, 1, "div", 13);
@@ -943,16 +953,16 @@ function AddLmChildComponent_div_96_div_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r103 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r104 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r103.f.muac18month.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r104.f.muac18month.errors.required);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r103.f.muac18month.errors.notInMuacRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r104.f.muac18month.errors.notInMuacRange);
   }
 }
 function AddLmChildComponent_div_96_Template(rf, ctx) {
   if (rf & 1) {
-    const _r107 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r108 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 10)(2, "label", 82);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "MUAC (cm):\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "span", 41);
@@ -960,13 +970,13 @@ function AddLmChildComponent_div_96_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "input", 83);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_96_Template_input_keypress_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r107);
-      const ctx_r106 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r106.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r108);
+      const ctx_r107 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r107.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_96_Template_input_keyup_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r107);
-      const ctx_r108 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r108.muacKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r108);
+      const ctx_r109 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r109.muacKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](7, AddLmChildComponent_div_96_div_7_Template, 3, 2, "div", 13);
@@ -1007,22 +1017,24 @@ function AddLmChildComponent_div_106_Template(rf, ctx) {
 function AddLmChildComponent_div_107_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 7)(1, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Breast Feeding Continued up to 24 Months:");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](3, "br");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](5, " \u00A0\u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](6, "input", 86);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](8, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Breast Feeding Continued up to 24 Months:\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](3, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](4, "*\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](10, " \u00A0\u00A0\u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](11, "label");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](12, "input", 87);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](13, " \u00A0 ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](14, "span");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, "No");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](5, "br");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](7, " \u00A0\u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](8, "input", 86);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](9, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](10, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](11, "Yes");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](12, " \u00A0\u00A0\u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](13, "label");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](14, "input", 87);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](15, " \u00A0 ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](16, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](17, "No");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
   }
 }
@@ -1064,26 +1076,26 @@ function AddLmChildComponent_div_109_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r109 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r110 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r109.f.height24month.errors.notInHeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r110.f.height24month.errors.notInHeightRange);
   }
 }
 function AddLmChildComponent_div_109_Template(rf, ctx) {
   if (rf & 1) {
-    const _r112 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r113 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 7)(1, "div", 10)(2, "label", 90);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Height (cm):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 91);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_109_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r112);
-      const ctx_r111 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r111.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r113);
+      const ctx_r112 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r112.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_109_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r112);
-      const ctx_r113 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r113.heightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r113);
+      const ctx_r114 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r114.heightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_109_div_5_Template, 2, 1, "div", 13);
@@ -1111,26 +1123,26 @@ function AddLmChildComponent_div_110_div_5_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r114 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r115 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r114.f.weight24month.errors.notInWeightRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r115.f.weight24month.errors.notInWeightRange);
   }
 }
 function AddLmChildComponent_div_110_Template(rf, ctx) {
   if (rf & 1) {
-    const _r117 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r118 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 7)(1, "div", 10)(2, "label", 92);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Weight (kg):");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "input", 93);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_110_Template_input_keypress_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r117);
-      const ctx_r116 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r116.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r118);
+      const ctx_r117 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r117.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_110_Template_input_keyup_4_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r117);
-      const ctx_r118 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r118.weightKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r118);
+      const ctx_r119 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r119.weightKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](5, AddLmChildComponent_div_110_div_5_Template, 2, 1, "div", 13);
@@ -1166,16 +1178,16 @@ function AddLmChildComponent_div_111_div_7_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
-    const ctx_r119 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    const ctx_r120 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r119.f.muac24month.errors.required);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r120.f.muac24month.errors.required);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r119.f.muac24month.errors.notInMuacRange);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", ctx_r120.f.muac24month.errors.notInMuacRange);
   }
 }
 function AddLmChildComponent_div_111_Template(rf, ctx) {
   if (rf & 1) {
-    const _r123 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r124 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 7)(1, "div", 10)(2, "label", 94);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "MUAC (cm):\u00A0");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "span", 41);
@@ -1183,13 +1195,13 @@ function AddLmChildComponent_div_111_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](6, "input", 95);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keypress", function AddLmChildComponent_div_111_Template_input_keypress_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r123);
-      const ctx_r122 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r122.validationService.onlyIntegerAndDot($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r124);
+      const ctx_r123 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r123.validationService.onlyIntegerAndDot($event));
     })("keyup", function AddLmChildComponent_div_111_Template_input_keyup_6_listener($event) {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r123);
-      const ctx_r124 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r124.muacKeyup($event));
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r124);
+      const ctx_r125 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r125.muacKeyup($event));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](7, AddLmChildComponent_div_111_div_7_Template, 3, 2, "div", 13);
@@ -1225,15 +1237,20 @@ function AddLmChildComponent_div_128_Template(rf, ctx) {
 }
 function AddLmChildComponent_div_131_Template(rf, ctx) {
   if (rf & 1) {
-    const _r126 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    const _r127 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 100)(1, "button", 101);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("click", function AddLmChildComponent_div_131_Template_button_click_1_listener() {
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r126);
-      const ctx_r125 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
-      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r125.onSave());
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r127);
+      const ctx_r126 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r126.onSave());
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](2, "Save");
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+  }
+  if (rf & 2) {
+    const ctx_r34 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("disabled", !ctx_r34.formDisabledSave());
   }
 }
 class AddLmChildComponent {
@@ -1280,13 +1297,16 @@ class AddLmChildComponent {
   /* get the childWiselactatingmotherMUACList &
     set the value in form */
   lmMuacList() {
+    console.log(this.data.childWiselactatingmotherList);
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       childId: this.data?.childWiselactatingmotherList?.childDetailId
     };
     this.http.post(`${this.httpService.baseURL}lactatingmotherregister/childWiselactatingmotherMUACList`, Dto).subscribe(res => {
+      console.log(res);
       this.childMuacList = res?.responseObject;
       this.muacRegisterId6month = this.childMuacList.find(month => month.muacForMonth == "6")?.muacRegisterId;
+      this.muacRegisterId6A = this.childMuacList.find(month => month.muacForMonth == "6A")?.muacRegisterId;
       this.muacRegisterId12month = this.childMuacList.find(month => month.muacForMonth == "12")?.muacRegisterId;
       this.muacRegisterId18month = this.childMuacList.find(month => month.muacForMonth == "18")?.muacRegisterId;
       this.muacRegisterId24month = this.childMuacList.find(month => month.muacForMonth == "24")?.muacRegisterId;
@@ -1299,30 +1319,40 @@ class AddLmChildComponent {
         this.childBirthForm.patchValue({
           place: this.data?.childWiselactatingmotherList?.childBasicStatusDto.placeOfDelivery,
           birthWeight: this.data?.childWiselactatingmotherList?.childBasicStatusDto.birthWeight,
-          primaryImmunizationUpto12Completed: this.data?.childWiselactatingmotherList?.childBasicStatusDto?.primaryImmunizationUpto12Completed,
-          primaryImmunizationUpto24Completed: this.data?.childWiselactatingmotherList?.childBasicStatusDto?.primaryImmunizationUpto24Completed,
-          ebfUpto6Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto6Complete,
-          ebfUpto12Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto12Complete,
-          ebfUpto18Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto18Complete,
-          ebfUpto24Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto24Complete,
-          firstVisitAfter6Mon: this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate,
-          visitDateAfter12Mon: this.childMuacList.find(month => month.muacForMonth == "12")?.muacRecordDate,
-          visitDateAfter18: this.childMuacList.find(month => month.muacForMonth == "18")?.muacRecordDate,
-          visitDateAfter24Mon: this.childMuacList.find(month => month.muacForMonth == "24")?.muacRecordDate,
-          firstVisitheight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.height,
-          height12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.height,
-          height18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.height,
-          height24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.height,
-          firstVisitweight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
-          weight12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.weight,
-          weight18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
-          weight24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
-          firstVisitmuac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
-          muac12month: this.childMuacList.find(month => month.muacForMonth == "12")?.muac,
-          muac18month: this.childMuacList.find(month => month.muacForMonth == "18")?.muac,
-          muac24month: this.childMuacList.find(month => month.muacForMonth == "24")?.muac,
           firstVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate,
-          secondVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate
+          secondVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate,
+          thirdVisitDate: this.data?.childWiselactatingmotherList?.childBasicStatusDto.thirdVisitDate,
+          firstVisitAfter6Mon: this.childMuacList.find(month => month.muacForMonth == "6")?.muacRecordDate,
+          ebfUpto6Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto6Complete,
+          complementaryFoodAfter6: this.data?.childWiselactatingmotherList?.childBasicStatusDto.complementaryFoodStartedAfter6Months,
+          firstVisitheight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.height,
+          firstVisitweight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6")?.weight,
+          firstVisitmuac6month: this.childMuacList.find(month => month.muacForMonth == "6")?.muac,
+          secondVisitAfter6Mon: this.childMuacList.find(month => month.muacForMonth == "6A")?.muacRecordDate,
+          breastfeedafter6mon: this.data?.childWiselactatingmotherList?.childBasicStatusDto.breastFeedingContinuedAfter6Months,
+          secondVisitheight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6A")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6A")?.height,
+          secondVisitweight6month: parseInt(this.childMuacList.find(month => month.muacForMonth == "6A")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "6A")?.weight,
+          secondVisitmuac6month: this.childMuacList.find(month => month.muacForMonth == "6A")?.muac,
+          visitDateAfter12Mon: this.childMuacList.find(month => month.muacForMonth == "12")?.muacRecordDate,
+          primaryImmunizationUpto12Completed: this.data?.childWiselactatingmotherList?.childBasicStatusDto?.primaryImmunizationUpto12Completed,
+          ebfUpto12Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto12Complete,
+          complementaryFoodAfter12: this.data?.childWiselactatingmotherList?.childBasicStatusDto.complementaryFoodContinuedAfter12Months,
+          height12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.height,
+          weight12month: parseInt(this.childMuacList.find(month => month.muacForMonth == "12")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "12")?.weight,
+          muac12month: this.childMuacList.find(month => month.muacForMonth == "12")?.muac,
+          visitDateAfter18: this.childMuacList.find(month => month.muacForMonth == "18")?.muacRecordDate,
+          ebfUpto18Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto18Complete,
+          complementaryFoodAfter18: this.data?.childWiselactatingmotherList?.childBasicStatusDto.complementaryFoodContinuedUpto18Months,
+          height18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.height,
+          weight18month: parseInt(this.childMuacList.find(month => month.muacForMonth == "18")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "18")?.weight,
+          muac18month: this.childMuacList.find(month => month.muacForMonth == "18")?.muac,
+          visitDateAfter24Mon: this.childMuacList.find(month => month.muacForMonth == "24")?.muacRecordDate,
+          primaryImmunizationUpto24Completed: this.data?.childWiselactatingmotherList?.childBasicStatusDto?.primaryImmunizationUpto24Completed,
+          ebfUpto24Complete: this.data?.childWiselactatingmotherList?.childBasicStatusDto.ebfUpto24Complete,
+          complementaryFoodAfter24: this.data?.childWiselactatingmotherList?.childBasicStatusDto.complementaryFoodContinuedUpto24Months,
+          height24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.height) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.height,
+          weight24month: parseInt(this.childMuacList.find(month => month.muacForMonth == "24")?.weight) == 0 ? null : this.childMuacList.find(month => month.muacForMonth == "24")?.weight,
+          muac24month: this.childMuacList.find(month => month.muacForMonth == "24")?.muac
         });
       }
     });
@@ -1347,6 +1377,7 @@ class AddLmChildComponent {
       this.after18m = true;
       this.after24m = true;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('firstVisitAfter6Mon').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required);
     } else if (year >= 1 && year < 2 && month < 6) {
       this.after6m = false;
@@ -1354,6 +1385,7 @@ class AddLmChildComponent {
       this.after18m = true;
       this.after24m = true;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('firstVisitAfter6Mon').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required);
       this.childBirthForm.get('visitDateAfter12Mon').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required);
@@ -1363,6 +1395,7 @@ class AddLmChildComponent {
       this.after18m = false;
       this.after24m = true;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('muac18month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('firstVisitAfter6Mon').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required);
@@ -1374,6 +1407,7 @@ class AddLmChildComponent {
       this.after18m = false;
       this.after24m = false;
       this.childBirthForm.get('firstVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
+      this.childBirthForm.get('secondVisitmuac6month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('muac12month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('muac18month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
       this.childBirthForm.get('muac24month').setValidators(_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.compose([_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required, this.muacRange]));
@@ -1418,8 +1452,8 @@ class AddLmChildComponent {
       muac12month: [''],
       muac18month: [''],
       muac24month: [''],
-      firstVisitDate: [''],
-      secondVisitDate: [''],
+      firstVisitDate: [this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate ? this.data?.childWiselactatingmotherList?.childBasicStatusDto.firstVisitDate : ''],
+      secondVisitDate: [this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate ? this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate : ''],
       thirdVisitDate: [''],
       checkChildDeath: [''],
       deathOfChildDate: [null],
@@ -1432,15 +1466,86 @@ class AddLmChildComponent {
   /* Restrict the second date depending on First visit date */
   restrictSecondDate(date) {
     this.firstVisit = moment__WEBPACK_IMPORTED_MODULE_0__(date).add(1, 'days').format('YYYY-MM-DD');
-    this.childBirthForm.controls.secondVisitDate.setValue(null);
-    this.enableSecondVisitDate = true;
+    // this.childBirthForm.controls.secondVisitDate.setValue(null);
+    // this.childBirthForm.controls.thirdVisitDate.setValue(null);
+    if (this.childBirthForm.value.firstVisitDate) {
+      this.enableSecondVisitDate = true;
+    } else {
+      this.enableSecondVisitDate = false;
+      this.enableThirdVisitDate = false;
+      this.childBirthForm.controls.secondVisitDate.setValue(null);
+      this.childBirthForm.controls.thirdVisitDate.setValue(null);
+    }
   }
   restrictthirdDate(date) {
     this.secondVisit = moment__WEBPACK_IMPORTED_MODULE_0__(date).add(1, 'days').format('YYYY-MM-DD');
-    this.enableThirdVisitDate = true;
+    // this.childBirthForm.controls.thirdVisitDate.setValue(null);
+    console.log(this.childBirthForm.value.secondVisitDate);
+    console.log(this.data?.childWiselactatingmotherList?.childBasicStatusDto.secondVisitDate);
+    if (this.childBirthForm.value.secondVisitDate) {
+      this.enableThirdVisitDate = true;
+    } else {
+      this.enableThirdVisitDate = false;
+      this.childBirthForm.controls.thirdVisitDate.setValue(null);
+    }
   }
   restrictSecondVisitAfter6Mon(date) {
     this.setSecondVisitAfter6Mon = moment__WEBPACK_IMPORTED_MODULE_0__(date).add(1, 'days').format('YYYY-MM-DD');
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.ebfUpto6Complete.setValue(null);
+      x.complementaryFoodAfter6.setValue(null);
+      x.firstVisitheight6month.setValue('');
+      x.firstVisitweight6month.setValue('');
+      x.firstVisitmuac6month.setValue('');
+      x.secondVisitAfter6Mon.setValue('');
+      x.breastfeedafter6mon.setValue(null);
+      x.secondVisitheight6month.setValue('');
+      x.secondVisitweight6month.setValue('');
+      x.secondVisitmuac6month.setValue('');
+    }
+  }
+  clearSecondDateRecords(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.secondVisitAfter6Mon.setValue('');
+      x.breastfeedafter6mon.setValue(null);
+      x.secondVisitheight6month.setValue('');
+      x.secondVisitweight6month.setValue('');
+      x.secondVisitmuac6month.setValue('');
+    }
+  }
+  after12Mon(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.primaryImmunizationUpto12Completed.setValue(null);
+      x.ebfUpto12Complete.setValue(null);
+      x.complementaryFoodAfter12.setValue('');
+      x.height12month.setValue('');
+      x.weight12month.setValue('');
+      x.muac12month.setValue('');
+    }
+  }
+  after18Mon(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.ebfUpto18Complete.setValue(null);
+      x.complementaryFoodAfter18.setValue(null);
+      x.height18month.setValue('');
+      x.weight18month.setValue('');
+      x.muac18month.setValue('');
+    }
+  }
+  after24Mon(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.primaryImmunizationUpto24Completed.setValue(null);
+      x.ebfUpto24Complete.setValue(null);
+      x.complementaryFoodAfter24.setValue('');
+      x.height24month.setValue('');
+      x.weight24month.setValue('');
+      x.muac24month.setValue('');
+    }
   }
   /* make child death comment required
   depending on checkChildDeath field value */
@@ -1523,167 +1628,373 @@ class AddLmChildComponent {
     this.muac24MinDate = moment__WEBPACK_IMPORTED_MODULE_0__(this.childDob).add(24, 'M').format('YYYY-MM-DD');
     this.muac24MaxDate = this.today;
   }
+  formDisabledSave() {
+    var x = this.childBirthForm.value;
+    let flag = true;
+    if (!x.place && !x.birthWeight && !x.firstVisitDate && !x.firstVisitAfter6Mon && !x.visitDateAfter12Mon && !x.visitDateAfter18 && !x.visitDateAfter24Mon) {
+      flag = false;
+    }
+    return flag;
+  }
   /* Depending on condition form is Save or Edit */
   onSave() {
-    let muacDate = ['firstVisitAfter6Mon', 'visitDateAfter12Mon', 'visitDateAfter18', 'visitDateAfter24Mon'];
-    let muac = ['firstVisitmuac6month', 'muac12month', 'muac18month', 'muac24month'];
-    let range = this.after24m == false ? 3 : this.after18m == false ? 2 : this.after12m == false ? 1 : this.after6m == false ? 0 : -1;
-    if (range >= 0) {
-      for (let i = 0; i <= range; i++) {
-        if (!this.childBirthForm.get(muacDate[i]).value) {
-          let x = muacDate[i].length == 9 ? -1 : -2;
-          this.showError(`Enter record date for after ${muacDate[i].slice(x)} months`);
-          return;
-        }
-        if (!this.childBirthForm.get(muac[i]).value) {
-          let x = muac[i].length == 10 ? 5 : 6;
-          this.showError(`Enter muac value for after ${muac[i].slice(4, x)} months`);
-          return;
-        }
+    // let muacDate = ['firstVisitAfter6Mon', 'visitDateAfter12Mon', 'visitDateAfter18', 'visitDateAfter24Mon'];
+    // let muac = ['firstVisitmuac6month', 'muac12month', 'muac18month', 'muac24month'];
+    // let range = (this.after24m == false) ? 3 : (this.after18m == false) ? 2 : (this.after12m == false) ? 1 : (this.after6m == false) ? 0 : -1;
+    // if (range >= 0) {
+    //   for (let i = 0; i <= range; i++) {
+    //     if (!this.childBirthForm.get(muacDate[i]).value) {
+    //       let x = muacDate[i].length == 9 ? -1 : -2
+    //       this.showError(`Enter record date for after ${muacDate[i].slice(x)} months`);
+    //       return;
+    //     }
+    //     if (!this.childBirthForm.get(muac[i]).value) {
+    //       let x = muac[i].length == 10 ? 5 : 6
+    //       this.showError(`Enter muac value for after ${muac[i].slice(4, x)} months`);
+    //       return;
+    //     }
+    //   }
+    // }
+    var val = this.childBirthForm.value;
+    if (val.birthWeight) {
+      if (this.f.birthWeight.errors?.notInBirthWeightRange) {
+        this.showError('Birth Weight range between 0 to 9 kg');
+        return;
       }
     }
-    if (this.childBirthForm.valid) {
-      console.log(this.childBirthForm);
-      if (this.data.editMode == false) {
-        let Dto = {
-          dataAccessDTO: this.httpService.dataAccessDTO,
-          childBasicStatusDto: {
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            placeOfDelivery: this.childBirthForm.value.place,
-            birthWeight: this.childBirthForm.value.birthWeight,
-            firstVisitDate: this.childBirthForm.value.firstVisitDate,
-            secondVisitDate: this.childBirthForm.value.secondVisitDate,
-            ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
-            primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
-            ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
-            ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
-            primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
-            ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete
-          },
-          muacDataList: [{
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "6",
-            muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon
-          }, {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "12",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon
-          }, {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "18",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter18
-          }, {
-            muacRegisterId: 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "24",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon
-          }],
-          deadChildRegisterDto: {
-            deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-            comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
-          }
-        };
-        console.log(Dto, 'reqAdd');
-        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe(res => {
-          console.log(res, 'responseAdd');
-          if (res.status) {
-            this.showSuccess(res.message);
-            this.dialogRef.close();
-          } else {
-            this.showError(res.message);
-          }
-        });
-      } else {
-        let Dto = {
-          dataAccessDTO: this.httpService.dataAccessDTO,
-          childBasicStatusDto: {
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            placeOfDelivery: this.childBirthForm.value.place,
-            birthWeight: this.childBirthForm.value.birthWeight,
-            firstVisitDate: this.childBirthForm.value.firstVisitDate,
-            secondVisitDate: this.childBirthForm.value.secondVisitDate,
-            ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
-            primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
-            ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
-            ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
-            primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
-            ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete
-          },
-          muacDataList: [{
-            muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "6",
-            muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon
-          }, {
-            muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "12",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon
-          }, {
-            muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "18",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter18
-          }, {
-            muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
-            childId: this.data.childWiselactatingmotherList.childDetailId,
-            height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
-            muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
-            active_flag: "A",
-            muacForMonth: "24",
-            muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon
-          }],
-          deadChildRegisterDto: {
-            deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
-            comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
-          }
-        };
-        console.log(Dto, 'reqEdit');
-        this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe(res => {
-          console.log(res, 'responseedit');
-          if (res.status) {
-            this.showSuccess(res.message);
-            this.dialogRef.close();
-          } else {
-            this.showError(res.message);
-          }
-        });
+    if (val.secondVisitDate) {
+      if (val.secondVisitDate < val.firstVisitDate || val.secondVisitDate == val.firstVisitDate) {
+        this.showError('Second visit date should be after first visit date');
+        return;
       }
+    }
+    if (val.thirdVisitDate) {
+      if (val.thirdVisitDate < val.secondVisitDate || val.thirdVisitDate == val.secondVisitDate) {
+        this.showError('Third visit date should be after second visit date');
+        return;
+      }
+    }
+    if (val.secondVisitAfter6Mon) {
+      if (val.secondVisitAfter6Mon < val.firstVisitAfter6Mon || val.secondVisitAfter6Mon == val.firstVisitAfter6Mon) {
+        this.showError('Second Visit Date After 6Mon should be after First Visit Date After 6Mon');
+        return;
+      }
+    }
+    if (val.firstVisitAfter6Mon) {
+      if (!val.ebfUpto6Complete) {
+        this.showError('Please select EBF after 6 Months');
+        return;
+      } else if (!val.complementaryFoodAfter6) {
+        this.showError('Please select Complementary Food Started after 6 Months');
+        return;
+      } else if (!val.firstVisitmuac6month) {
+        this.showError('Please enter MUAC value of first visit date after 6 Months');
+        return;
+      } else if (this.f.firstVisitmuac6month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
+      }
+    }
+    if (val.secondVisitAfter6Mon) {
+      if (!val.breastfeedafter6mon) {
+        this.showError('Please select Breast Feeding Continued after 6 Months');
+        return;
+      } else if (!val.secondVisitmuac6month) {
+        this.showError('Please enter MUAC value of second visit date after 6 Months');
+        return;
+      } else if (this.f.secondVisitmuac6month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
+      }
+    }
+    if (val.visitDateAfter12Mon) {
+      if (!val.primaryImmunizationUpto12Completed) {
+        this.showError('Please select Primary Immunization Completed after 12 months');
+        return;
+      } else if (!val.ebfUpto12Complete) {
+        this.showError('Please select Breast Feeding Continued up to 12 Months');
+        return;
+      } else if (!val.complementaryFoodAfter12) {
+        this.showError('Please select Complementary Food Continued up to 12 Months');
+        return;
+      } else if (!val.muac12month) {
+        this.showError('Please enter MUAC value after 12 Months');
+        return;
+      } else if (this.f.muac12month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
+      }
+    }
+    if (val.visitDateAfter18) {
+      if (!val.ebfUpto18Complete) {
+        this.showError('Please select Breast Feeding Continued up to 18 Months');
+        return;
+      } else if (!val.complementaryFoodAfter18) {
+        this.showError('Please select Complementary Food Continued up to 18 Months');
+        return;
+      } else if (!val.muac18month) {
+        this.showError('Please enter MUAC value after 18 Months');
+        return;
+      } else if (this.f.muac18month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
+      }
+    }
+    if (val.visitDateAfter24Mon) {
+      if (!val.primaryImmunizationUpto24Completed) {
+        this.showError('Please select Primary Immunization Completed after 24 months');
+        return;
+      } else if (!val.ebfUpto24Complete) {
+        this.showError('Please select Breast Feeding Continued up to 24 Months');
+        return;
+      } else if (!val.complementaryFoodAfter24) {
+        this.showError('Please select Complementary Food Continued up to 24 Months');
+        return;
+      } else if (!val.muac24month) {
+        this.showError('Please enter MUAC value after 24 Months');
+        return;
+      } else if (this.f.muac24month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
+      }
+    }
+    if (val.firstVisitheight6month) {
+      if (this.f.firstVisitheight6month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+    if (val.firstVisitweight6month) {
+      if (this.f.firstVisitweight6month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+    if (val.secondVisitheight6month) {
+      if (this.f.secondVisitheight6month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+    if (val.secondVisitweight6month) {
+      if (this.f.secondVisitweight6month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+    if (val.height12month) {
+      if (this.f.height12month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+    if (val.weight12month) {
+      if (this.f.weight12month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+    if (val.height18month) {
+      if (this.f.height18month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+    if (val.weight18month) {
+      if (this.f.weight18month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+    if (val.height24month) {
+      if (this.f.height24month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+    if (val.weight24month) {
+      if (this.f.weight24month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+    // if (this.childBirthForm.valid) {
+    console.log(this.childBirthForm);
+    if (this.data.editMode == false) {
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        childBasicStatusDto: {
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          placeOfDelivery: this.childBirthForm.value.place,
+          birthWeight: this.childBirthForm.value.birthWeight,
+          firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
+          secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
+          ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
+          primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
+          ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
+          ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
+          primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
+          ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
+          thirdVisitDate: this.childBirthForm.value.thirdVisitDate ? this.childBirthForm.value.thirdVisitDate : null,
+          firstVisitDateAfter6Months: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null,
+          secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
+          complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
+          breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
+          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12 ? this.childBirthForm.value.complementaryFoodAfter12 : null,
+          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18 ? this.childBirthForm.value.complementaryFoodAfter18 : null,
+          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24 ? this.childBirthForm.value.complementaryFoodAfter24 : null
+        },
+        muacDataList: [{
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "6",
+          muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null
+        }, {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.secondVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.secondVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.secondVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.secondVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.secondVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.secondVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: 'A',
+          muacForMonth: '6A',
+          muacRecordDate: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null
+        }, {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "12",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon ? this.childBirthForm.value.visitDateAfter12Mon : null
+        }, {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "18",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter18 ? this.childBirthForm.value.visitDateAfter18 : null
+        }, {
+          muacRegisterId: 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "24",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon ? this.childBirthForm.value.visitDateAfter24Mon : null
+        }],
+        deadChildRegisterDto: {
+          deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
+          comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
+        }
+      };
+      console.log(Dto, 'reqAdd');
+      this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe(res => {
+        console.log(res, 'responseAdd');
+        if (res.status) {
+          this.showSuccess(res.message);
+          this.dialogRef.close();
+        } else {
+          this.showError(res.message);
+        }
+      });
     } else {
-      this.showError('Form is invalid');
+      let Dto = {
+        dataAccessDTO: this.httpService.dataAccessDTO,
+        childBasicStatusDto: {
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          placeOfDelivery: this.childBirthForm.value.place,
+          birthWeight: this.childBirthForm.value.birthWeight,
+          firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
+          secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
+          ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
+          primaryImmunizationUpto12Completed: this.childBirthForm.value.primaryImmunizationUpto12Completed,
+          ebfUpto12Complete: this.childBirthForm.value.ebfUpto12Complete,
+          ebfUpto18Complete: this.childBirthForm.value.ebfUpto18Complete,
+          primaryImmunizationUpto24Completed: this.childBirthForm.value.primaryImmunizationUpto24Completed,
+          ebfUpto24Complete: this.childBirthForm.value.ebfUpto24Complete,
+          thirdVisitDate: this.childBirthForm.value.thirdVisitDate ? this.childBirthForm.value.thirdVisitDate : null,
+          firstVisitDateAfter6Months: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null,
+          secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
+          complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
+          breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
+          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12 ? this.childBirthForm.value.complementaryFoodAfter12 : null,
+          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18 ? this.childBirthForm.value.complementaryFoodAfter18 : null,
+          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24 ? this.childBirthForm.value.complementaryFoodAfter24 : null
+        },
+        muacDataList: [{
+          muacRegisterId: this.muacRegisterId6month ? this.muacRegisterId6month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.firstVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.firstVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.firstVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.firstVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "6",
+          muacRecordDate: this.childBirthForm.value.firstVisitAfter6Mon ? this.childBirthForm.value.firstVisitAfter6Mon : null
+        }, {
+          muacRegisterId: this.muacRegisterId6A ? this.muacRegisterId6A : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.secondVisitheight6month == null ? "0" : Math.trunc(this.childBirthForm.value.secondVisitheight6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.secondVisitweight6month == null ? "0" : Math.trunc(this.childBirthForm.value.secondVisitweight6month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.secondVisitmuac6month == null ? "0" : Math.trunc(this.childBirthForm.value.secondVisitmuac6month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: 'A',
+          muacForMonth: '6A',
+          muacRecordDate: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null
+        }, {
+          muacRegisterId: this.muacRegisterId12month ? this.muacRegisterId12month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height12month == null ? "0" : Math.trunc(this.childBirthForm.value.height12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight12month == null ? "0" : Math.trunc(this.childBirthForm.value.weight12month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac12month == null ? "0" : Math.trunc(this.childBirthForm.value.muac12month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "12",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter12Mon ? this.childBirthForm.value.visitDateAfter12Mon : null
+        }, {
+          muacRegisterId: this.muacRegisterId18month ? this.muacRegisterId18month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height18month == null ? "0" : Math.trunc(this.childBirthForm.value.height18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight18month == null ? "0" : Math.trunc(this.childBirthForm.value.weight18month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac18month == null ? "0" : Math.trunc(this.childBirthForm.value.muac18month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "18",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter18 ? this.childBirthForm.value.visitDateAfter18 : null
+        }, {
+          muacRegisterId: this.muacRegisterId24month ? this.muacRegisterId24month : 0,
+          childId: this.data.childWiselactatingmotherList.childDetailId,
+          height: this.childBirthForm.value.height24month == null ? "0" : Math.trunc(this.childBirthForm.value.height24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          weight: this.childBirthForm.value.weight24month == null ? "0" : Math.trunc(this.childBirthForm.value.weight24month * Math.pow(10, 3)) / Math.pow(10, 3),
+          muac: this.childBirthForm.value.muac24month == null ? "0" : Math.trunc(this.childBirthForm.value.muac24month * Math.pow(10, 1)) / Math.pow(10, 1),
+          active_flag: "A",
+          muacForMonth: "24",
+          muacRecordDate: this.childBirthForm.value.visitDateAfter24Mon ? this.childBirthForm.value.visitDateAfter24Mon : null
+        }],
+        deadChildRegisterDto: {
+          deathOfChildDate: this.childBirthForm.value.deathOfChildDate,
+          comment: this.childBirthForm.value.comment ? this.childBirthForm.value.comment : null
+        }
+      };
+      console.log(Dto, 'reqEdit');
+      this.http.post(`${this.httpService.baseURL}lactatingmotherregister/saveOrUpdateLactatingMotherData`, Dto).subscribe(res => {
+        console.log(res, 'responseedit');
+        if (res.status) {
+          this.showSuccess(res.message);
+          this.dialogRef.close();
+        } else {
+          this.showError(res.message);
+        }
+      });
     }
+    // }
+    // else {
+    //   this.showError('Form is invalid');
+    // }
   }
   /* Close the dialog pop-up */
   closeDialog() {
@@ -1728,7 +2039,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
   selectors: [["app-add-lm-child"]],
   decls: 132,
   vars: 74,
-  consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["type", "radio", "value", "Home", "formControlName", "place"], ["type", "radio", "value", "Institution", "formControlName", "place"], [1, "form-group", "col-md"], ["for", "birthWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "birthWeight", "maxlength", "5", 1, "form-control", 3, "ngClass", "keypress"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "firstVisitDate"], ["type", "date", "formControlName", "firstVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass", "change"], ["class", "form-group col-md-4", 4, "ngIf"], [3, "disabled", "opened", "closed"], ["for", "firstVisitAfter6Mon"], ["type", "date", "formControlName", "firstVisitAfter6Mon", 1, "form-control", 3, "ngClass", "min", "max", "keydown", "change"], ["class", "form-group col-md", 4, "ngIf"], [4, "ngIf"], ["for", "visitDateAfter12Mon"], ["type", "date", "formControlName", "visitDateAfter12Mon", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "visitDateAfter18"], ["type", "date", "formControlName", "visitDateAfter18", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["for", "visitDateAfter24Mon"], ["type", "date", "formControlName", "visitDateAfter24Mon", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], [3, "opened", "closed"], [1, "form-group", "col-md-3"], ["for", "checkChildDeath"], ["formControlName", "checkChildDeath", "id", "checkChildDeath", 1, "form-select", 3, "change"], ["value", ""], ["value", "Y"], ["value", "N"], ["class", "addEditBtn", 4, "ngIf"], [1, "invalid-feedback"], ["for", "secondVisitDate"], ["type", "date", "formControlName", "secondVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass", "change"], ["for", "thirdVisitDate"], ["type", "date", "formControlName", "thirdVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass"], [1, "text-danger"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto6Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto6Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter6"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter6"], ["for", "firstVisitheight6month"], ["type", "text", "placeholder", "Enter height", "formControlName", "firstVisitheight6month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "firstVisitweight6month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "firstVisitweight6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "firstVisitmuac6month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "firstVisitmuac6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "secondVisitAfter6Mon"], ["type", "date", "formControlName", "secondVisitAfter6Mon", 1, "form-control", 3, "ngClass", "min", "max", "keydown"], ["type", "radio", "value", "Y", "formControlName", "breastfeedafter6mon"], ["type", "radio", "value", "N", "formControlName", "breastfeedafter6mon"], ["for", "secondVisitheight6month"], ["type", "text", "placeholder", "Enter height", "formControlName", "secondVisitheight6month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "secondVisitweight6month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "secondVisitweight6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "secondVisitmuac6month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "secondVisitmuac6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto12Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto12Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter12"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter12"], ["for", "height12month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height12month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight12month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac12month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto18Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto18Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter18"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter18"], ["for", "height18month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height18month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight18month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac18month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto24Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto24Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter24"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter24"], ["for", "height24month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height24month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight24month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac24month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "deathOfChildDate"], ["type", "date", "formControlName", "deathOfChildDate", 1, "form-control"], ["for", "comment"], ["type", "text", "formControlName", "comment", 1, "form-control"], [1, "addEditBtn"], ["type", "submit", 1, "btn", "btn-success", 3, "click"]],
+  consts: [["mat-dialog-title", ""], [1, "dialog-header"], [1, "dialog-title"], [1, "fas", "fa-times", 3, "click"], ["mat-dialog-content", ""], [1, "form-signin", 3, "formGroup"], [1, "row"], [1, "form-group", "col-md-4"], ["type", "radio", "value", "Home", "formControlName", "place"], ["type", "radio", "value", "Institution", "formControlName", "place"], [1, "form-group", "col-md"], ["for", "birthWeight"], ["type", "text", "placeholder", "Enter weight", "formControlName", "birthWeight", "maxlength", "5", 1, "form-control", 3, "ngClass", "keypress"], ["class", "invalid-feedback", 4, "ngIf"], ["for", "firstVisitDate"], ["type", "date", "formControlName", "firstVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass", "change"], ["class", "form-group col-md-4", 4, "ngIf"], [3, "disabled", "opened", "closed"], ["for", "firstVisitAfter6Mon"], ["type", "date", "formControlName", "firstVisitAfter6Mon", 1, "form-control", 3, "ngClass", "min", "max", "keydown", "change"], ["class", "form-group col-md", 4, "ngIf"], [4, "ngIf"], ["for", "visitDateAfter12Mon"], ["type", "date", "formControlName", "visitDateAfter12Mon", 1, "form-control", 3, "ngClass", "min", "max", "keydown", "change"], ["for", "visitDateAfter18"], ["type", "date", "formControlName", "visitDateAfter18", 1, "form-control", 3, "ngClass", "min", "max", "change", "keydown"], ["for", "visitDateAfter24Mon"], ["type", "date", "formControlName", "visitDateAfter24Mon", 1, "form-control", 3, "ngClass", "min", "max", "change", "keydown"], [3, "opened", "closed"], [1, "form-group", "col-md-3"], ["for", "checkChildDeath"], ["formControlName", "checkChildDeath", "id", "checkChildDeath", 1, "form-select", 3, "change"], ["value", ""], ["value", "Y"], ["value", "N"], ["class", "addEditBtn", 4, "ngIf"], [1, "invalid-feedback"], ["for", "secondVisitDate"], ["type", "date", "formControlName", "secondVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass", "change"], ["for", "thirdVisitDate"], ["type", "date", "formControlName", "thirdVisitDate", "placeholder", "dd-mm-yyyy", 1, "form-control", 3, "min", "max", "ngClass"], [1, "text-danger"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto6Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto6Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter6"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter6"], ["for", "firstVisitheight6month"], ["type", "text", "placeholder", "Enter height", "formControlName", "firstVisitheight6month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "firstVisitweight6month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "firstVisitweight6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "firstVisitmuac6month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "firstVisitmuac6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "secondVisitAfter6Mon"], ["type", "date", "formControlName", "secondVisitAfter6Mon", 1, "form-control", 3, "ngClass", "min", "max", "change", "keydown"], ["type", "radio", "value", "Y", "formControlName", "breastfeedafter6mon"], ["type", "radio", "value", "N", "formControlName", "breastfeedafter6mon"], ["for", "secondVisitheight6month"], ["type", "text", "placeholder", "Enter height", "formControlName", "secondVisitheight6month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "secondVisitweight6month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "secondVisitweight6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "secondVisitmuac6month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "secondVisitmuac6month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto12Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto12Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto12Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter12"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter12"], ["for", "height12month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height12month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight12month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac12month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac12month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto18Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto18Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter18"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter18"], ["for", "height18month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height18month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight18month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac18month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac18month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["type", "radio", "value", "Y", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "N", "formControlName", "primaryImmunizationUpto24Completed"], ["type", "radio", "value", "Y", "formControlName", "ebfUpto24Complete"], ["type", "radio", "value", "N", "formControlName", "ebfUpto24Complete"], ["type", "radio", "value", "Y", "formControlName", "complementaryFoodAfter24"], ["type", "radio", "value", "N", "formControlName", "complementaryFoodAfter24"], ["for", "height24month"], ["type", "text", "placeholder", "Enter height", "formControlName", "height24month", "maxlength", "7", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "weight24month"], ["type", "text", "placeholder", "Enter weight", "formControlName", "weight24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "muac24month"], ["type", "text", "placeholder", "Enter MUAC", "formControlName", "muac24month", "maxlength", "6", 1, "form-control", 3, "ngClass", "keypress", "keyup"], ["for", "deathOfChildDate"], ["type", "date", "formControlName", "deathOfChildDate", 1, "form-control"], ["for", "comment"], ["type", "text", "formControlName", "comment", 1, "form-control"], [1, "addEditBtn"], ["type", "submit", 1, "btn", "btn-success", 3, "disabled", "click"]],
   template: function AddLmChildComponent_Template(rf, ctx) {
     if (rf & 1) {
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "h1", 0)(1, "div", 1)(2, "h2", 2);
@@ -1769,7 +2080,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](31, "br");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](32, "mat-accordion")(33, "mat-expansion-panel")(34, "mat-expansion-panel-header")(35, "mat-panel-title");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, " Within 6 month ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, " Within 6 months ");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](37, "div", 6)(38, "div", 7)(39, "div", 10)(40, "label", 14);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](41, "First Visit Date:");
@@ -1832,13 +2143,15 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](75, "input", 23);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keydown", function AddLmChildComponent_Template_input_keydown_75_listener() {
         return ctx.restrictTypeOfDate();
+      })("change", function AddLmChildComponent_Template_input_change_75_listener($event) {
+        return ctx.after12Mon($event.target.value);
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](76, AddLmChildComponent_div_76_Template, 18, 0, "div", 20);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](77, AddLmChildComponent_div_77_Template, 16, 0, "div", 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](77, AddLmChildComponent_div_77_Template, 18, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](78, "div", 6);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](79, AddLmChildComponent_div_79_Template, 16, 0, "div", 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](79, AddLmChildComponent_div_79_Template, 18, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](80, AddLmChildComponent_div_80_Template, 6, 5, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](81, AddLmChildComponent_div_81_Template, 6, 5, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](82, AddLmChildComponent_div_82_Template, 8, 5, "div", 20);
@@ -1856,11 +2169,13 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](90, "Visit Date After 18 Months:");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](91, "input", 25);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keydown", function AddLmChildComponent_Template_input_keydown_91_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function AddLmChildComponent_Template_input_change_91_listener($event) {
+        return ctx.after18Mon($event.target.value);
+      })("keydown", function AddLmChildComponent_Template_input_keydown_91_listener() {
         return ctx.restrictTypeOfDate();
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](92, AddLmChildComponent_div_92_Template, 16, 0, "div", 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](92, AddLmChildComponent_div_92_Template, 18, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](93, AddLmChildComponent_div_93_Template, 18, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](94, AddLmChildComponent_div_94_Template, 6, 5, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](95, AddLmChildComponent_div_95_Template, 6, 5, "div", 20);
@@ -1879,12 +2194,14 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](104, "Visit Date After 24 Months:");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](105, "input", 27);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("keydown", function AddLmChildComponent_Template_input_keydown_105_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("change", function AddLmChildComponent_Template_input_change_105_listener($event) {
+        return ctx.after24Mon($event.target.value);
+      })("keydown", function AddLmChildComponent_Template_input_keydown_105_listener() {
         return ctx.restrictTypeOfDate();
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](106, AddLmChildComponent_div_106_Template, 18, 0, "div", 16);
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](107, AddLmChildComponent_div_107_Template, 16, 0, "div", 16);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](107, AddLmChildComponent_div_107_Template, 18, 0, "div", 16);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](108, AddLmChildComponent_div_108_Template, 18, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](109, AddLmChildComponent_div_109_Template, 6, 5, "div", 16);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](110, AddLmChildComponent_div_110_Template, 6, 5, "div", 16);
@@ -1920,7 +2237,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](128, AddLmChildComponent_div_128_Template, 7, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](129, "br")(130, "br");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](131, AddLmChildComponent_div_131_Template, 3, 0, "div", 35);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](131, AddLmChildComponent_div_131_Template, 3, 1, "div", 35);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
     }
     if (rf & 2) {
@@ -2019,7 +2336,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
     }
   },
   dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.RadioControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.MaxLengthValidator, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControlName, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__.MatDialogTitle, _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__.MatDialogContent, _angular_material_expansion__WEBPACK_IMPORTED_MODULE_9__.MatAccordion, _angular_material_expansion__WEBPACK_IMPORTED_MODULE_9__.MatExpansionPanel, _angular_material_expansion__WEBPACK_IMPORTED_MODULE_9__.MatExpansionPanelHeader, _angular_material_expansion__WEBPACK_IMPORTED_MODULE_9__.MatExpansionPanelTitle],
-  styles: [".dialog-header[_ngcontent-%COMP%] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.dialog-title[_ngcontent-%COMP%] {\r\n  background-color: #499;\r\n  display: inline-block;\r\n  padding: 10px;\r\n  position: relative;\r\n  color: #ffffff;\r\n}\r\n.dialog-title[_ngcontent-%COMP%]::before {\r\n  content: \"\";\r\n  display: block;\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: -14px;\r\n  width: 0;\r\n  height: 0;\r\n  border-top: 7px solid #277;\r\n  border-right: 7px solid #277;\r\n  border-bottom: 7px solid #0000;\r\n  border-left: 7px solid #0000;\r\n}\r\n  .mat-dialog-container {\r\n  padding: 12px 17px;\r\n}\r\n\r\n.form-group[_ngcontent-%COMP%] {\r\n  margin-bottom: 1.5rem;\r\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvbW9kdWxlcy9sYWN0YXRpbmctbW90aGVyLXJlZ2lzdGVyL2FkZC1sbS1jaGlsZC9hZGQtbG0tY2hpbGQuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7QUFDaEM7O0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIscUJBQXFCO0VBQ3JCLGFBQWE7RUFDYixrQkFBa0I7RUFDbEIsY0FBYztBQUNoQjtBQUNBO0VBQ0UsV0FBVztFQUNYLGNBQWM7RUFDZCxrQkFBa0I7RUFDbEIsT0FBTztFQUNQLGFBQWE7RUFDYixRQUFRO0VBQ1IsU0FBUztFQUNULDBCQUEwQjtFQUMxQiw0QkFBNEI7RUFDNUIsOEJBQThCO0VBQzlCLDRCQUE0QjtBQUM5QjtBQUNBO0VBQ0Usa0JBQWtCO0FBQ3BCOztBQUVBO0VBQ0UscUJBQXFCO0FBQ3ZCIiwic291cmNlc0NvbnRlbnQiOlsiLmRpYWxvZy1oZWFkZXIge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG59XHJcblxyXG4uZGlhbG9nLXRpdGxlIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDk5O1xyXG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICBwYWRkaW5nOiAxMHB4O1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBjb2xvcjogI2ZmZmZmZjtcclxufVxyXG4uZGlhbG9nLXRpdGxlOjpiZWZvcmUge1xyXG4gIGNvbnRlbnQ6IFwiXCI7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIGxlZnQ6IDA7XHJcbiAgYm90dG9tOiAtMTRweDtcclxuICB3aWR0aDogMDtcclxuICBoZWlnaHQ6IDA7XHJcbiAgYm9yZGVyLXRvcDogN3B4IHNvbGlkICMyNzc7XHJcbiAgYm9yZGVyLXJpZ2h0OiA3cHggc29saWQgIzI3NztcclxuICBib3JkZXItYm90dG9tOiA3cHggc29saWQgIzAwMDA7XHJcbiAgYm9yZGVyLWxlZnQ6IDdweCBzb2xpZCAjMDAwMDtcclxufVxyXG46Om5nLWRlZXAgLm1hdC1kaWFsb2ctY29udGFpbmVyIHtcclxuICBwYWRkaW5nOiAxMnB4IDE3cHg7XHJcbn1cclxuXHJcbi5mb3JtLWdyb3VwIHtcclxuICBtYXJnaW4tYm90dG9tOiAxLjVyZW07XHJcbn0iXSwic291cmNlUm9vdCI6IiJ9 */"]
+  styles: [".dialog-header[_ngcontent-%COMP%] {\r\n  display: flex;\r\n  justify-content: space-between;\r\n}\r\n\r\n.dialog-title[_ngcontent-%COMP%] {\r\n  background-color: #499;\r\n  display: inline-block;\r\n  padding: 10px;\r\n  position: relative;\r\n  color: #ffffff;\r\n}\r\n.dialog-title[_ngcontent-%COMP%]::before {\r\n  content: \"\";\r\n  display: block;\r\n  position: absolute;\r\n  left: 0;\r\n  bottom: -14px;\r\n  width: 0;\r\n  height: 0;\r\n  border-top: 7px solid #277;\r\n  border-right: 7px solid #277;\r\n  border-bottom: 7px solid #0000;\r\n  border-left: 7px solid #0000;\r\n}\r\n  .mat-dialog-container {\r\n  padding: 12px 17px;\r\n  overflow: hidden;\r\n}\r\n\r\n.form-group[_ngcontent-%COMP%] {\r\n  margin-bottom: 1.5rem;\r\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvbW9kdWxlcy9sYWN0YXRpbmctbW90aGVyLXJlZ2lzdGVyL2FkZC1sbS1jaGlsZC9hZGQtbG0tY2hpbGQuY29tcG9uZW50LmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7QUFDaEM7O0FBRUE7RUFDRSxzQkFBc0I7RUFDdEIscUJBQXFCO0VBQ3JCLGFBQWE7RUFDYixrQkFBa0I7RUFDbEIsY0FBYztBQUNoQjtBQUNBO0VBQ0UsV0FBVztFQUNYLGNBQWM7RUFDZCxrQkFBa0I7RUFDbEIsT0FBTztFQUNQLGFBQWE7RUFDYixRQUFRO0VBQ1IsU0FBUztFQUNULDBCQUEwQjtFQUMxQiw0QkFBNEI7RUFDNUIsOEJBQThCO0VBQzlCLDRCQUE0QjtBQUM5QjtBQUNBO0VBQ0Usa0JBQWtCO0VBQ2xCLGdCQUFnQjtBQUNsQjs7QUFFQTtFQUNFLHFCQUFxQjtBQUN2QiIsInNvdXJjZXNDb250ZW50IjpbIi5kaWFsb2ctaGVhZGVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxufVxyXG5cclxuLmRpYWxvZy10aXRsZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzQ5OTtcclxuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XHJcbiAgcGFkZGluZzogMTBweDtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgY29sb3I6ICNmZmZmZmY7XHJcbn1cclxuLmRpYWxvZy10aXRsZTo6YmVmb3JlIHtcclxuICBjb250ZW50OiBcIlwiO1xyXG4gIGRpc3BsYXk6IGJsb2NrO1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBsZWZ0OiAwO1xyXG4gIGJvdHRvbTogLTE0cHg7XHJcbiAgd2lkdGg6IDA7XHJcbiAgaGVpZ2h0OiAwO1xyXG4gIGJvcmRlci10b3A6IDdweCBzb2xpZCAjMjc3O1xyXG4gIGJvcmRlci1yaWdodDogN3B4IHNvbGlkICMyNzc7XHJcbiAgYm9yZGVyLWJvdHRvbTogN3B4IHNvbGlkICMwMDAwO1xyXG4gIGJvcmRlci1sZWZ0OiA3cHggc29saWQgIzAwMDA7XHJcbn1cclxuOjpuZy1kZWVwIC5tYXQtZGlhbG9nLWNvbnRhaW5lciB7XHJcbiAgcGFkZGluZzogMTJweCAxN3B4O1xyXG4gIG92ZXJmbG93OiBoaWRkZW47XHJcbn1cclxuXHJcbi5mb3JtLWdyb3VwIHtcclxuICBtYXJnaW4tYm90dG9tOiAxLjVyZW07XHJcbn1cclxuXHJcbiJdLCJzb3VyY2VSb290IjoiIn0= */"]
 });
 
 /***/ }),
@@ -2709,6 +3026,7 @@ class LmViewComponent {
     };
     this.loader = false;
     this.httpService.getLactatingMotherRegister(req).subscribe(res => {
+      console.log(res);
       this.lactatingmotherregister = res.responseObject?.childrenBetween0And6Months.concat(res.responseObject?.childrenBetween6And12Months, res.responseObject?.childrenBetween12And18Months, res.responseObject?.childrenBetween18And24Months, res.responseObject?.childrenBeyond24Months);
       this.loader = true;
       if (this.setStatus == 'viewCentralLM') {
@@ -2750,7 +3068,7 @@ class LmViewComponent {
       }
       if (res.responseObject.length == 0 && saveForm) {
         const dialogRef = this.dialog.open(_add_lm_child_add_lm_child_component__WEBPACK_IMPORTED_MODULE_0__.AddLmChildComponent, {
-          width: '1000px',
+          width: '1100px',
           height: '550px',
           data: {
             editMode: false,
@@ -2766,7 +3084,7 @@ class LmViewComponent {
         });
       } else {
         const dialogRef = this.dialog.open(_add_lm_child_add_lm_child_component__WEBPACK_IMPORTED_MODULE_0__.AddLmChildComponent, {
-          width: '1000px',
+          width: '1100px',
           height: '550px',
           data: {
             editMode: true,
@@ -2874,7 +3192,7 @@ LmViewComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_7__[
     }
   },
   dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_11__.NgClass, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_11__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgNoValidate"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgSelectOption, _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ɵNgSelectMultipleOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_8__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.SelectControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgControlStatusGroup, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormGroupDirective, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormControlName, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgModel, _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NgForm, _shared_loader_loader_component__WEBPACK_IMPORTED_MODULE_5__.LoaderComponent, ng2_search_filter__WEBPACK_IMPORTED_MODULE_6__.Ng2SearchPipe],
-  styles: [".QA_table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\r\n  padding: 0px;\r\n}\r\n.QA_table[_ngcontent-%COMP%]   .table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\r\n  padding: 17px 10px;\r\n}\r\n\r\n.search_inner[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n  padding-right: 1px;\r\n  margin-left: 330px;\r\n  height: 63%;\r\n}\r\n\r\n.search_inner_fullscreen[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n  padding-right: 1px;\r\n  margin-left: 625px;\r\n  position: absolute;\r\n  left: 0;\r\n  top: 0;\r\n  height: 60%;\r\n  background: transparent;\r\n  font-size: 12px;\r\n  padding-left: 19px;\r\n  font-size: 18px;\r\n  color: #2daab8;\r\n  border: 0;\r\n}\r\n\r\n.search_inner[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n  width: 70%;\r\n  margin-left: 474px;\r\n}\r\n\r\n.search_inner_fullscreen[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n  width: 74%;\r\n  margin-left: 630px;\r\n  font-size: 13px;\r\n  height: 40px;\r\n  border-radius: 5px;\r\n  padding-left: 55px;\r\n  border: 1px solid #2daab8;\r\n  padding-right: 15px;\r\n}\r\n\r\n.serach_field_2[_ngcontent-%COMP%]   .search_inner[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   i[_ngcontent-%COMP%] {\r\n  font-size: 18px;\r\n  color: #2daab8;\r\n  margin-left: 140px;\r\n}\r\n\r\n@media only screen and (min-width: 992px) and (max-width: 1200px) {\r\n  .search_inner[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n    padding-right: 1px;\r\n    margin-left: 145px;\r\n    height: 63%;\r\n  }\r\n  \r\n  .search_inner_fullscreen[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n    padding-right: 1px;\r\n    margin-left: 410px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    height: 60%;\r\n    background: transparent;\r\n    font-size: 12px;\r\n    padding-left: 19px;\r\n    font-size: 18px;\r\n    color: #2daab8;\r\n    border: 0;\r\n  }\r\n  \r\n  .search_inner[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n    width: 70%;\r\n    margin-left: 290px;\r\n  }\r\n  \r\n  .search_inner_fullscreen[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n    width: 74%;\r\n    margin-left: 415px;\r\n    font-size: 13px;\r\n    height: 40px;\r\n    border-radius: 5px;\r\n    padding-left: 55px;\r\n    border: 1px solid #2daab8;\r\n    padding-right: 15px;\r\n  }\r\n  \r\n}\r\n\r\n.form-group[_ngcontent-%COMP%] {\r\n  margin-bottom: 1.5rem;\r\n}\r\n\r\n.fa-eye[_ngcontent-%COMP%]:hover {\r\n  color: #70caf7 !important;\r\n  cursor: pointer;\r\n  font-size: 1.8em;\r\n}\r\n.QA_section[_ngcontent-%COMP%]   .QA_table[_ngcontent-%COMP%]   tbody[_ngcontent-%COMP%]   .danger[_ngcontent-%COMP%] {\r\n  color: #cd0202;\r\n}\r\n.QA_section[_ngcontent-%COMP%]   .QA_table[_ngcontent-%COMP%]   tbody[_ngcontent-%COMP%]   .success[_ngcontent-%COMP%] {\r\n  color: #24d524;\r\n}\r\n.QA_section[_ngcontent-%COMP%]   .QA_table[_ngcontent-%COMP%]   tbody[_ngcontent-%COMP%]   .warning[_ngcontent-%COMP%] {\r\n  color: #f7cd00;\r\n}\r\n\r\n\r\n\r\n\r\ntable.table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\r\n  position: sticky;\r\n  top: 60px;\r\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvbW9kdWxlcy9sYWN0YXRpbmctbW90aGVyLXJlZ2lzdGVyL2xtLXZpZXcvbG0tdmlldy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBWTtBQUNkO0FBQ0E7RUFDRSxrQkFBa0I7QUFDcEI7O0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLFdBQVc7QUFDYjs7QUFFQTtFQUNFLGtCQUFrQjtFQUNsQixrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLE9BQU87RUFDUCxNQUFNO0VBQ04sV0FBVztFQUNYLHVCQUF1QjtFQUN2QixlQUFlO0VBQ2Ysa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixjQUFjO0VBQ2QsU0FBUztBQUNYOztBQUVBO0VBQ0UsVUFBVTtFQUNWLGtCQUFrQjtBQUNwQjs7QUFFQTtFQUNFLFVBQVU7RUFDVixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLFlBQVk7RUFDWixrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLHlCQUF5QjtFQUN6QixtQkFBbUI7QUFDckI7O0FBRUE7RUFDRSxlQUFlO0VBQ2YsY0FBYztFQUNkLGtCQUFrQjtBQUNwQjs7QUFFQTtFQUNFO0lBQ0Usa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixXQUFXO0VBQ2I7O0VBRUE7SUFDRSxrQkFBa0I7SUFDbEIsa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixPQUFPO0lBQ1AsTUFBTTtJQUNOLFdBQVc7SUFDWCx1QkFBdUI7SUFDdkIsZUFBZTtJQUNmLGtCQUFrQjtJQUNsQixlQUFlO0lBQ2YsY0FBYztJQUNkLFNBQVM7RUFDWDs7RUFFQTtJQUNFLFVBQVU7SUFDVixrQkFBa0I7RUFDcEI7O0VBRUE7SUFDRSxVQUFVO0lBQ1Ysa0JBQWtCO0lBQ2xCLGVBQWU7SUFDZixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQix5QkFBeUI7SUFDekIsbUJBQW1CO0VBQ3JCOztBQUVGOztBQUVBO0VBQ0UscUJBQXFCO0FBQ3ZCOztBQUVBO0VBQ0UseUJBQXlCO0VBQ3pCLGVBQWU7RUFDZixnQkFBZ0I7QUFDbEI7QUFDQTtFQUNFLGNBQWM7QUFDaEI7QUFDQTtFQUNFLGNBQWM7QUFDaEI7QUFDQTtFQUNFLGNBQWM7QUFDaEI7OztBQUdBOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztHQTBCRzs7QUFFSDtFQUNFLGdCQUFnQjtFQUNoQixTQUFTO0FBQ1giLCJzb3VyY2VzQ29udGVudCI6WyIuUUFfdGFibGUgdGQge1xyXG4gIHBhZGRpbmc6IDBweDtcclxufVxyXG4uUUFfdGFibGUgLnRhYmxlIHRoZWFkIHRoIHtcclxuICBwYWRkaW5nOiAxN3B4IDEwcHg7XHJcbn1cclxuXHJcbi5zZWFyY2hfaW5uZXIgYnV0dG9uIHtcclxuICBwYWRkaW5nLXJpZ2h0OiAxcHg7XHJcbiAgbWFyZ2luLWxlZnQ6IDMzMHB4O1xyXG4gIGhlaWdodDogNjMlO1xyXG59XHJcblxyXG4uc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gYnV0dG9uIHtcclxuICBwYWRkaW5nLXJpZ2h0OiAxcHg7XHJcbiAgbWFyZ2luLWxlZnQ6IDYyNXB4O1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBsZWZ0OiAwO1xyXG4gIHRvcDogMDtcclxuICBoZWlnaHQ6IDYwJTtcclxuICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICBmb250LXNpemU6IDEycHg7XHJcbiAgcGFkZGluZy1sZWZ0OiAxOXB4O1xyXG4gIGZvbnQtc2l6ZTogMThweDtcclxuICBjb2xvcjogIzJkYWFiODtcclxuICBib3JkZXI6IDA7XHJcbn1cclxuXHJcbi5zZWFyY2hfaW5uZXIgaW5wdXQge1xyXG4gIHdpZHRoOiA3MCU7XHJcbiAgbWFyZ2luLWxlZnQ6IDQ3NHB4O1xyXG59XHJcblxyXG4uc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gaW5wdXQge1xyXG4gIHdpZHRoOiA3NCU7XHJcbiAgbWFyZ2luLWxlZnQ6IDYzMHB4O1xyXG4gIGZvbnQtc2l6ZTogMTNweDtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xyXG4gIHBhZGRpbmctbGVmdDogNTVweDtcclxuICBib3JkZXI6IDFweCBzb2xpZCAjMmRhYWI4O1xyXG4gIHBhZGRpbmctcmlnaHQ6IDE1cHg7XHJcbn1cclxuXHJcbi5zZXJhY2hfZmllbGRfMiAuc2VhcmNoX2lubmVyIGJ1dHRvbiBpIHtcclxuICBmb250LXNpemU6IDE4cHg7XHJcbiAgY29sb3I6ICMyZGFhYjg7XHJcbiAgbWFyZ2luLWxlZnQ6IDE0MHB4O1xyXG59XHJcblxyXG5AbWVkaWEgb25seSBzY3JlZW4gYW5kIChtaW4td2lkdGg6IDk5MnB4KSBhbmQgKG1heC13aWR0aDogMTIwMHB4KSB7XHJcbiAgLnNlYXJjaF9pbm5lciBidXR0b24ge1xyXG4gICAgcGFkZGluZy1yaWdodDogMXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDE0NXB4O1xyXG4gICAgaGVpZ2h0OiA2MyU7XHJcbiAgfVxyXG4gIFxyXG4gIC5zZWFyY2hfaW5uZXJfZnVsbHNjcmVlbiBidXR0b24ge1xyXG4gICAgcGFkZGluZy1yaWdodDogMXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDQxMHB4O1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgbGVmdDogMDtcclxuICAgIHRvcDogMDtcclxuICAgIGhlaWdodDogNjAlO1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICBmb250LXNpemU6IDEycHg7XHJcbiAgICBwYWRkaW5nLWxlZnQ6IDE5cHg7XHJcbiAgICBmb250LXNpemU6IDE4cHg7XHJcbiAgICBjb2xvcjogIzJkYWFiODtcclxuICAgIGJvcmRlcjogMDtcclxuICB9XHJcbiAgXHJcbiAgLnNlYXJjaF9pbm5lciBpbnB1dCB7XHJcbiAgICB3aWR0aDogNzAlO1xyXG4gICAgbWFyZ2luLWxlZnQ6IDI5MHB4O1xyXG4gIH1cclxuICBcclxuICAuc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gaW5wdXQge1xyXG4gICAgd2lkdGg6IDc0JTtcclxuICAgIG1hcmdpbi1sZWZ0OiA0MTVweDtcclxuICAgIGZvbnQtc2l6ZTogMTNweDtcclxuICAgIGhlaWdodDogNDBweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuICAgIHBhZGRpbmctbGVmdDogNTVweDtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICMyZGFhYjg7XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAxNXB4O1xyXG4gIH1cclxuICBcclxufVxyXG5cclxuLmZvcm0tZ3JvdXAge1xyXG4gIG1hcmdpbi1ib3R0b206IDEuNXJlbTtcclxufVxyXG5cclxuLmZhLWV5ZTpob3ZlciB7XHJcbiAgY29sb3I6ICM3MGNhZjcgIWltcG9ydGFudDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgZm9udC1zaXplOiAxLjhlbTtcclxufVxyXG4uUUFfc2VjdGlvbiAuUUFfdGFibGUgdGJvZHkgLmRhbmdlciB7XHJcbiAgY29sb3I6ICNjZDAyMDI7XHJcbn1cclxuLlFBX3NlY3Rpb24gLlFBX3RhYmxlIHRib2R5IC5zdWNjZXNzIHtcclxuICBjb2xvcjogIzI0ZDUyNDtcclxufVxyXG4uUUFfc2VjdGlvbiAuUUFfdGFibGUgdGJvZHkgLndhcm5pbmcge1xyXG4gIGNvbG9yOiAjZjdjZDAwO1xyXG59XHJcblxyXG5cclxuLyogdGFibGUudGFibGUgdGhlYWQgdHI6YWZ0ZXIge1xyXG4gIGNvbnRlbnQ6ICcnO1xyXG4gIG92ZXJmbG93LXk6IHNjcm9sbDtcclxuICB2aXNpYmlsaXR5OiBoaWRkZW47XHJcbn1cclxudGFibGUudGFibGUgdGhlYWQgdGgge1xyXG4gIGZsZXg6IDEgYXV0bztcclxuICBkaXNwbGF5OiBibG9jaztcclxuICBjb2xvcjogI2ZmZmZmZjtcclxufVxyXG50YWJsZS50YWJsZSB0Ym9keSB7XHJcbiAgZGlzcGxheTogYmxvY2s7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgb3ZlcmZsb3cteTogYXV0bztcclxuICBoZWlnaHQ6IGF1dG87XHJcbiAgbWF4LWhlaWdodDogNTAwcHg7XHJcbn1cclxudGFibGUudGFibGUgdGhlYWQgdHIsXHJcbnRhYmxlLnRhYmxlIHRib2R5IHRyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG59XHJcbnRhYmxlLnRhYmxlIHRoZWFkIHRyIHRoLFxyXG50YWJsZS50YWJsZSB0Ym9keSB0ciB0ZCB7XHJcbiAgICB3aWR0aDogNTAlO1xyXG4gICAgcGFkZGluZzogNXB4O1xyXG4gICAgdGV4dC1hbGlnbjpjZW50ZXI7XHJcbn0gKi9cclxuXHJcbnRhYmxlLnRhYmxlIHRoZWFkIHtcclxuICBwb3NpdGlvbjogc3RpY2t5O1xyXG4gIHRvcDogNjBweDtcclxufVxyXG4iXSwic291cmNlUm9vdCI6IiJ9 */"]
+  styles: [".QA_table[_ngcontent-%COMP%]   td[_ngcontent-%COMP%] {\r\n  padding: 0px;\r\n}\r\n\r\n.QA_table[_ngcontent-%COMP%]   .table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%]   th[_ngcontent-%COMP%] {\r\n  padding: 17px 10px;\r\n}\r\n\r\n.search_inner[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n  padding-right: 1px;\r\n  margin-left: 330px;\r\n  height: 63%;\r\n}\r\n\r\n.search_inner_fullscreen[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n  padding-right: 1px;\r\n  margin-left: 625px;\r\n  position: absolute;\r\n  left: 0;\r\n  top: 0;\r\n  height: 60%;\r\n  background: transparent;\r\n  font-size: 12px;\r\n  padding-left: 19px;\r\n  font-size: 18px;\r\n  color: #2daab8;\r\n  border: 0;\r\n}\r\n\r\n.search_inner[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n  width: 70%;\r\n  margin-left: 474px;\r\n}\r\n\r\n.search_inner_fullscreen[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n  width: 74%;\r\n  margin-left: 630px;\r\n  font-size: 13px;\r\n  height: 40px;\r\n  border-radius: 5px;\r\n  padding-left: 55px;\r\n  border: 1px solid #2daab8;\r\n  padding-right: 15px;\r\n}\r\n\r\n.serach_field_2[_ngcontent-%COMP%]   .search_inner[_ngcontent-%COMP%]   button[_ngcontent-%COMP%]   i[_ngcontent-%COMP%] {\r\n  font-size: 18px;\r\n  color: #2daab8;\r\n  margin-left: 140px;\r\n}\r\n\r\n@media only screen and (min-width: 992px) and (max-width: 1200px) {\r\n  .search_inner[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n    padding-right: 1px;\r\n    margin-left: 145px;\r\n    height: 63%;\r\n  }\r\n\r\n  .search_inner_fullscreen[_ngcontent-%COMP%]   button[_ngcontent-%COMP%] {\r\n    padding-right: 1px;\r\n    margin-left: 410px;\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    height: 60%;\r\n    background: transparent;\r\n    font-size: 12px;\r\n    padding-left: 19px;\r\n    font-size: 18px;\r\n    color: #2daab8;\r\n    border: 0;\r\n  }\r\n\r\n  .search_inner[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n    width: 70%;\r\n    margin-left: 290px;\r\n  }\r\n\r\n  .search_inner_fullscreen[_ngcontent-%COMP%]   input[_ngcontent-%COMP%] {\r\n    width: 74%;\r\n    margin-left: 415px;\r\n    font-size: 13px;\r\n    height: 40px;\r\n    border-radius: 5px;\r\n    padding-left: 55px;\r\n    border: 1px solid #2daab8;\r\n    padding-right: 15px;\r\n  }\r\n\r\n}\r\n\r\n.form-group[_ngcontent-%COMP%] {\r\n  margin-bottom: 1.5rem;\r\n}\r\n\r\n.fa-eye[_ngcontent-%COMP%]:hover {\r\n  color: #70caf7 !important;\r\n  cursor: pointer;\r\n  font-size: 1.8em;\r\n}\r\n\r\n.QA_section[_ngcontent-%COMP%]   .QA_table[_ngcontent-%COMP%]   tbody[_ngcontent-%COMP%]   .danger[_ngcontent-%COMP%] {\r\n  color: #cd0202;\r\n}\r\n\r\n.QA_section[_ngcontent-%COMP%]   .QA_table[_ngcontent-%COMP%]   tbody[_ngcontent-%COMP%]   .success[_ngcontent-%COMP%] {\r\n  color: #24d524;\r\n}\r\n\r\n.QA_section[_ngcontent-%COMP%]   .QA_table[_ngcontent-%COMP%]   tbody[_ngcontent-%COMP%]   .warning[_ngcontent-%COMP%] {\r\n  color: #f7cd00;\r\n}\r\n\r\ntable.table[_ngcontent-%COMP%]   thead[_ngcontent-%COMP%] {\r\n  position: sticky;\r\n  top: 60px;\r\n}\n/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8uL3NyYy9hcHAvbW9kdWxlcy9sYWN0YXRpbmctbW90aGVyLXJlZ2lzdGVyL2xtLXZpZXcvbG0tdmlldy5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsWUFBWTtBQUNkOztBQUVBO0VBQ0Usa0JBQWtCO0FBQ3BCOztBQUVBO0VBQ0Usa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixXQUFXO0FBQ2I7O0FBRUE7RUFDRSxrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixPQUFPO0VBQ1AsTUFBTTtFQUNOLFdBQVc7RUFDWCx1QkFBdUI7RUFDdkIsZUFBZTtFQUNmLGtCQUFrQjtFQUNsQixlQUFlO0VBQ2YsY0FBYztFQUNkLFNBQVM7QUFDWDs7QUFFQTtFQUNFLFVBQVU7RUFDVixrQkFBa0I7QUFDcEI7O0FBRUE7RUFDRSxVQUFVO0VBQ1Ysa0JBQWtCO0VBQ2xCLGVBQWU7RUFDZixZQUFZO0VBQ1osa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQix5QkFBeUI7RUFDekIsbUJBQW1CO0FBQ3JCOztBQUVBO0VBQ0UsZUFBZTtFQUNmLGNBQWM7RUFDZCxrQkFBa0I7QUFDcEI7O0FBRUE7RUFDRTtJQUNFLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsV0FBVztFQUNiOztFQUVBO0lBQ0Usa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsT0FBTztJQUNQLE1BQU07SUFDTixXQUFXO0lBQ1gsdUJBQXVCO0lBQ3ZCLGVBQWU7SUFDZixrQkFBa0I7SUFDbEIsZUFBZTtJQUNmLGNBQWM7SUFDZCxTQUFTO0VBQ1g7O0VBRUE7SUFDRSxVQUFVO0lBQ1Ysa0JBQWtCO0VBQ3BCOztFQUVBO0lBQ0UsVUFBVTtJQUNWLGtCQUFrQjtJQUNsQixlQUFlO0lBQ2YsWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIseUJBQXlCO0lBQ3pCLG1CQUFtQjtFQUNyQjs7QUFFRjs7QUFFQTtFQUNFLHFCQUFxQjtBQUN2Qjs7QUFFQTtFQUNFLHlCQUF5QjtFQUN6QixlQUFlO0VBQ2YsZ0JBQWdCO0FBQ2xCOztBQUVBO0VBQ0UsY0FBYztBQUNoQjs7QUFFQTtFQUNFLGNBQWM7QUFDaEI7O0FBRUE7RUFDRSxjQUFjO0FBQ2hCOztBQUVBO0VBQ0UsZ0JBQWdCO0VBQ2hCLFNBQVM7QUFDWCIsInNvdXJjZXNDb250ZW50IjpbIi5RQV90YWJsZSB0ZCB7XHJcbiAgcGFkZGluZzogMHB4O1xyXG59XHJcblxyXG4uUUFfdGFibGUgLnRhYmxlIHRoZWFkIHRoIHtcclxuICBwYWRkaW5nOiAxN3B4IDEwcHg7XHJcbn1cclxuXHJcbi5zZWFyY2hfaW5uZXIgYnV0dG9uIHtcclxuICBwYWRkaW5nLXJpZ2h0OiAxcHg7XHJcbiAgbWFyZ2luLWxlZnQ6IDMzMHB4O1xyXG4gIGhlaWdodDogNjMlO1xyXG59XHJcblxyXG4uc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gYnV0dG9uIHtcclxuICBwYWRkaW5nLXJpZ2h0OiAxcHg7XHJcbiAgbWFyZ2luLWxlZnQ6IDYyNXB4O1xyXG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICBsZWZ0OiAwO1xyXG4gIHRvcDogMDtcclxuICBoZWlnaHQ6IDYwJTtcclxuICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICBmb250LXNpemU6IDEycHg7XHJcbiAgcGFkZGluZy1sZWZ0OiAxOXB4O1xyXG4gIGZvbnQtc2l6ZTogMThweDtcclxuICBjb2xvcjogIzJkYWFiODtcclxuICBib3JkZXI6IDA7XHJcbn1cclxuXHJcbi5zZWFyY2hfaW5uZXIgaW5wdXQge1xyXG4gIHdpZHRoOiA3MCU7XHJcbiAgbWFyZ2luLWxlZnQ6IDQ3NHB4O1xyXG59XHJcblxyXG4uc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gaW5wdXQge1xyXG4gIHdpZHRoOiA3NCU7XHJcbiAgbWFyZ2luLWxlZnQ6IDYzMHB4O1xyXG4gIGZvbnQtc2l6ZTogMTNweDtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgYm9yZGVyLXJhZGl1czogNXB4O1xyXG4gIHBhZGRpbmctbGVmdDogNTVweDtcclxuICBib3JkZXI6IDFweCBzb2xpZCAjMmRhYWI4O1xyXG4gIHBhZGRpbmctcmlnaHQ6IDE1cHg7XHJcbn1cclxuXHJcbi5zZXJhY2hfZmllbGRfMiAuc2VhcmNoX2lubmVyIGJ1dHRvbiBpIHtcclxuICBmb250LXNpemU6IDE4cHg7XHJcbiAgY29sb3I6ICMyZGFhYjg7XHJcbiAgbWFyZ2luLWxlZnQ6IDE0MHB4O1xyXG59XHJcblxyXG5AbWVkaWEgb25seSBzY3JlZW4gYW5kIChtaW4td2lkdGg6IDk5MnB4KSBhbmQgKG1heC13aWR0aDogMTIwMHB4KSB7XHJcbiAgLnNlYXJjaF9pbm5lciBidXR0b24ge1xyXG4gICAgcGFkZGluZy1yaWdodDogMXB4O1xyXG4gICAgbWFyZ2luLWxlZnQ6IDE0NXB4O1xyXG4gICAgaGVpZ2h0OiA2MyU7XHJcbiAgfVxyXG5cclxuICAuc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gYnV0dG9uIHtcclxuICAgIHBhZGRpbmctcmlnaHQ6IDFweDtcclxuICAgIG1hcmdpbi1sZWZ0OiA0MTBweDtcclxuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgIGxlZnQ6IDA7XHJcbiAgICB0b3A6IDA7XHJcbiAgICBoZWlnaHQ6IDYwJTtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgZm9udC1zaXplOiAxMnB4O1xyXG4gICAgcGFkZGluZy1sZWZ0OiAxOXB4O1xyXG4gICAgZm9udC1zaXplOiAxOHB4O1xyXG4gICAgY29sb3I6ICMyZGFhYjg7XHJcbiAgICBib3JkZXI6IDA7XHJcbiAgfVxyXG5cclxuICAuc2VhcmNoX2lubmVyIGlucHV0IHtcclxuICAgIHdpZHRoOiA3MCU7XHJcbiAgICBtYXJnaW4tbGVmdDogMjkwcHg7XHJcbiAgfVxyXG5cclxuICAuc2VhcmNoX2lubmVyX2Z1bGxzY3JlZW4gaW5wdXQge1xyXG4gICAgd2lkdGg6IDc0JTtcclxuICAgIG1hcmdpbi1sZWZ0OiA0MTVweDtcclxuICAgIGZvbnQtc2l6ZTogMTNweDtcclxuICAgIGhlaWdodDogNDBweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuICAgIHBhZGRpbmctbGVmdDogNTVweDtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICMyZGFhYjg7XHJcbiAgICBwYWRkaW5nLXJpZ2h0OiAxNXB4O1xyXG4gIH1cclxuXHJcbn1cclxuXHJcbi5mb3JtLWdyb3VwIHtcclxuICBtYXJnaW4tYm90dG9tOiAxLjVyZW07XHJcbn1cclxuXHJcbi5mYS1leWU6aG92ZXIge1xyXG4gIGNvbG9yOiAjNzBjYWY3ICFpbXBvcnRhbnQ7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIGZvbnQtc2l6ZTogMS44ZW07XHJcbn1cclxuXHJcbi5RQV9zZWN0aW9uIC5RQV90YWJsZSB0Ym9keSAuZGFuZ2VyIHtcclxuICBjb2xvcjogI2NkMDIwMjtcclxufVxyXG5cclxuLlFBX3NlY3Rpb24gLlFBX3RhYmxlIHRib2R5IC5zdWNjZXNzIHtcclxuICBjb2xvcjogIzI0ZDUyNDtcclxufVxyXG5cclxuLlFBX3NlY3Rpb24gLlFBX3RhYmxlIHRib2R5IC53YXJuaW5nIHtcclxuICBjb2xvcjogI2Y3Y2QwMDtcclxufVxyXG5cclxudGFibGUudGFibGUgdGhlYWQge1xyXG4gIHBvc2l0aW9uOiBzdGlja3k7XHJcbiAgdG9wOiA2MHB4O1xyXG59Il0sInNvdXJjZVJvb3QiOiIifQ== */"]
 });
 
 /***/ })

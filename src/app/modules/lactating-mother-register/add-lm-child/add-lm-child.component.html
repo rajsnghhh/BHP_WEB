@@ -44,7 +44,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Within 6 months
+            Within 6 Months
           </mat-panel-title>
         </mat-expansion-panel-header>
 
@@ -102,7 +102,7 @@
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after6m'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            After 6 months
+            After 6 Months
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
@@ -302,7 +302,7 @@
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after12m'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            After 12 months
+            After 12 Months
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
@@ -428,7 +428,7 @@
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after18m'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            After 18 months
+            After 18 Months
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
@@ -536,7 +536,7 @@
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]='after24m'>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            After 24 months
+            After 24 Months
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="row">
@@ -672,7 +672,7 @@
           </div>
           <div class="form-group col-md" *ngIf="childDeath == 'Y'">
             <div class="form-group col-md-4">
-              <label for="deathOfChildDate">Date of Death:</label>
+              <label for="deathOfChildDate">Date of Death:&nbsp;<span class="text-danger">*&nbsp;</span></label>
               <input type="date" class="form-control" formControlName="deathOfChildDate" />
             </div>
           </div>

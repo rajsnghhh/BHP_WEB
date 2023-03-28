@@ -326,6 +326,17 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     }
   }
 
+  clearSecondDateRecords(date) {
+    if (!date) {
+      var x = this.childBirthForm.controls;
+      x.secondVisitAfter6Mon.setValue('');
+      x.breastfeedafter6mon.setValue(null);
+      x.secondVisitheight6month.setValue('');
+      x.secondVisitweight6month.setValue('');
+      x.secondVisitmuac6month.setValue('');
+    }
+  }
+
   after12Mon(date) {
     if (!date) {
       var x = this.childBirthForm.controls;
@@ -471,6 +482,13 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
     // }
     var val = this.childBirthForm.value;
 
+    if (val.birthWeight) {
+      if (this.f.birthWeight.errors?.notInBirthWeightRange) {
+        this.showError('Birth Weight range between 0 to 9 kg');
+        return;
+      }
+    }
+
     if (val.secondVisitDate) {
       if (val.secondVisitDate < val.firstVisitDate || val.secondVisitDate == val.firstVisitDate) {
         this.showError('Second visit date should be after first visit date');
@@ -503,6 +521,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       else if (!val.firstVisitmuac6month) {
         this.showError('Please enter MUAC value of first visit date after 6 Months');
         return;
+      } else if (this.f.firstVisitmuac6month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
       }
     }
 
@@ -512,6 +533,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         return;
       } else if (!val.secondVisitmuac6month) {
         this.showError('Please enter MUAC value of second visit date after 6 Months');
+        return;
+      } else if (this.f.secondVisitmuac6month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
         return;
       }
     }
@@ -529,6 +553,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       } else if (!val.muac12month) {
         this.showError('Please enter MUAC value after 12 Months');
         return;
+      } else if (this.f.muac12month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
       }
     }
 
@@ -542,6 +569,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       }
       else if (!val.muac18month) {
         this.showError('Please enter MUAC value after 18 Months');
+        return;
+      } else if (this.f.muac18month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
         return;
       }
     }
@@ -559,14 +589,81 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
       } else if (!val.muac24month) {
         this.showError('Please enter MUAC value after 24 Months');
         return;
+      } else if (this.f.muac24month.errors?.notInMuacRange) {
+        this.showError('MUAC should be 1 to 30 cm');
+        return;
       }
     }
 
-    if (this.f.firstVisitmuac6month.errors.notInMuacRange) {
-      this.showError('MUAC should be 1 to 30 cm');
-      return;
+    if (val.firstVisitheight6month) {
+      if (this.f.firstVisitheight6month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
     }
 
+    if (val.firstVisitweight6month) {
+      if (this.f.firstVisitweight6month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+
+    if (val.secondVisitheight6month) {
+      if (this.f.secondVisitheight6month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+
+    if (val.secondVisitweight6month) {
+      if (this.f.secondVisitweight6month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+
+    if (val.height12month) {
+      if (this.f.height12month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+
+    if (val.weight12month) {
+      if (this.f.weight12month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+
+    if (val.height18month) {
+      if (this.f.height18month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+
+    if (val.weight18month) {
+      if (this.f.weight18month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
+
+    if (val.height24month) {
+      if (this.f.height24month.errors?.notInHeightRange) {
+        this.showError('Height range between 10 to 180 cm');
+        return;
+      }
+    }
+
+    if (val.weight24month) {
+      if (this.f.weight24month.errors?.notInWeightRange) {
+        this.showError('Weight range between 0 to 25');
+        return;
+      }
+    }
 
     // if (this.childBirthForm.valid) {
     console.log(this.childBirthForm)
@@ -592,9 +689,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
           complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
           breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
-          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12,
-          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18,
-          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24
+          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12 ? this.childBirthForm.value.complementaryFoodAfter12 : null,
+          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18 ? this.childBirthForm.value.complementaryFoodAfter18 : null,
+          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24 ? this.childBirthForm.value.complementaryFoodAfter24 : null
         },
 
         muacDataList: [{
@@ -688,9 +785,9 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
           secondVisitDateAfter6Months: this.childBirthForm.value.secondVisitAfter6Mon ? this.childBirthForm.value.secondVisitAfter6Mon : null,
           complementaryFoodStartedAfter6Months: this.childBirthForm.value.complementaryFoodAfter6,
           breastFeedingContinuedAfter6Months: this.childBirthForm.value.breastfeedafter6mon,
-          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12,
-          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18,
-          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24
+          complementaryFoodContinuedAfter12Months: this.childBirthForm.value.complementaryFoodAfter12 ? this.childBirthForm.value.complementaryFoodAfter12 : null,
+          complementaryFoodContinuedUpto18Months: this.childBirthForm.value.complementaryFoodAfter18 ? this.childBirthForm.value.complementaryFoodAfter18 : null,
+          complementaryFoodContinuedUpto24Months: this.childBirthForm.value.complementaryFoodAfter24 ? this.childBirthForm.value.complementaryFoodAfter24 : null
         },
 
         muacDataList: [{

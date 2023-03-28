@@ -212,8 +212,8 @@
 
           <div class="form-group col-md" *ngIf="childBirthForm.value.firstVisitAfter6Mon">
             <label for="secondVisitAfter6Mon">Second Visit Date After 6 Months:</label>
-            <input type="date" class="form-control" formControlName="secondVisitAfter6Mon"
-              (keydown)="restrictTypeOfDate()" [ngClass]="{
+            <input type="date" class="form-control" (change)="clearSecondDateRecords($event.target.value)"
+              formControlName="secondVisitAfter6Mon" (keydown)="restrictTypeOfDate()" [ngClass]="{
                     'is-invalid': f.secondVisitAfter6Mon.invalid && f.secondVisitAfter6Mon.touched,
                     'is-valid':
                       f.secondVisitAfter6Mon.valid && (f.secondVisitAfter6Mon.dirty || f.secondVisitAfter6Mon.touched)

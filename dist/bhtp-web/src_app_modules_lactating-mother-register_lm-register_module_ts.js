@@ -1218,9 +1218,11 @@ function AddLmChildComponent_div_111_Template(rf, ctx) {
 function AddLmChildComponent_div_127_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "div", 10)(1, "div", 7)(2, "label", 96);
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Date of Death:");
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](4, "input", 97);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](3, "Date of Death:\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "span", 41);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](5, "*\u00A0");
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](6, "input", 97);
     _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
   }
 }
@@ -1818,6 +1820,15 @@ class AddLmChildComponent {
         return;
       }
     }
+    if (this.childDeath == 'Y') {
+      if (!val.deathOfChildDate) {
+        this.showError('Please enter date of death');
+        return;
+      } else if (!val.comment) {
+        this.showError('Please enter a comment for child death');
+        return;
+      }
+    }
     // if (this.childBirthForm.valid) {
     console.log(this.childBirthForm);
     if (this.data.editMode == false) {
@@ -1826,7 +1837,7 @@ class AddLmChildComponent {
         childBasicStatusDto: {
           childId: this.data.childWiselactatingmotherList.childDetailId,
           placeOfDelivery: this.childBirthForm.value.place,
-          birthWeight: this.childBirthForm.value.birthWeight,
+          birthWeight: this.childBirthForm.value.birthWeight ? this.childBirthForm.value.birthWeight : null,
           firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
           secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
           ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
@@ -1911,7 +1922,7 @@ class AddLmChildComponent {
         childBasicStatusDto: {
           childId: this.data.childWiselactatingmotherList.childDetailId,
           placeOfDelivery: this.childBirthForm.value.place,
-          birthWeight: this.childBirthForm.value.birthWeight,
+          birthWeight: this.childBirthForm.value.birthWeight ? this.childBirthForm.value.birthWeight : null,
           firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
           secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
           ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
@@ -2080,7 +2091,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](31, "br");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](32, "mat-accordion")(33, "mat-expansion-panel")(34, "mat-expansion-panel-header")(35, "mat-panel-title");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, " Within 6 months ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](36, " Within 6 Months ");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](37, "div", 6)(38, "div", 7)(39, "div", 10)(40, "label", 14);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](41, "First Visit Date:");
@@ -2102,7 +2113,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
         return ctx.panelOpenState = false;
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](47, "mat-expansion-panel-header")(48, "mat-panel-title");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](49, " After 6 months ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](49, " After 6 Months ");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](50, "div", 6)(51, "div", 10)(52, "label", 18);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](53, "First Visit Date After 6 Months:");
@@ -2135,7 +2146,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
         return ctx.panelOpenState = false;
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](68, "mat-expansion-panel-header")(69, "mat-panel-title");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](70, " After 12 months ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](70, " After 12 Months ");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](71, "div", 6)(72, "div", 10)(73, "label", 22);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](74, "Visit Date After 12 Months:");
@@ -2163,7 +2174,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
         return ctx.panelOpenState = false;
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](84, "mat-expansion-panel-header")(85, "mat-panel-title");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](86, " After 18 months ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](86, " After 18 Months ");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](87, "div", 6)(88, "div", 10)(89, "label", 24);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](90, "Visit Date After 18 Months:");
@@ -2188,7 +2199,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
         return ctx.panelOpenState = false;
       });
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](98, "mat-expansion-panel-header")(99, "mat-panel-title");
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](100, " After 24 months ");
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](100, " After 24 Months ");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](101, "div", 6)(102, "div", 7)(103, "label", 26);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](104, "Visit Date After 24 Months:");
@@ -2232,7 +2243,7 @@ AddLmChildComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](125, "option", 34);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](126, "No");
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()()();
-      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](127, AddLmChildComponent_div_127_Template, 5, 0, "div", 20);
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](127, AddLmChildComponent_div_127_Template, 7, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](128, AddLmChildComponent_div_128_Template, 7, 0, "div", 20);
       _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]()();

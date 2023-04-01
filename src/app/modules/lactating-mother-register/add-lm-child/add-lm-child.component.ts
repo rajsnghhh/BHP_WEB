@@ -684,7 +684,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         childBasicStatusDto: {
           childId: this.data.childWiselactatingmotherList.childDetailId,
           placeOfDelivery: this.childBirthForm.value.place,
-          birthWeight: this.childBirthForm.value.birthWeight,
+          birthWeight: this.childBirthForm.value.birthWeight ? this.childBirthForm.value.birthWeight : null,
           firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
           secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
           ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,
@@ -780,7 +780,7 @@ export class AddLmChildComponent implements OnInit, AfterContentInit {
         childBasicStatusDto: {
           childId: this.data.childWiselactatingmotherList.childDetailId,
           placeOfDelivery: this.childBirthForm.value.place,
-          birthWeight: this.childBirthForm.value.birthWeight,
+          birthWeight: this.childBirthForm.value.birthWeight ? this.childBirthForm.value.birthWeight : null,
           firstVisitDate: this.childBirthForm.value.firstVisitDate ? this.childBirthForm.value.firstVisitDate : null,
           secondVisitDate: this.childBirthForm.value.secondVisitDate ? this.childBirthForm.value.secondVisitDate : null,
           ebfUpto6Complete: this.childBirthForm.value.ebfUpto6Complete,

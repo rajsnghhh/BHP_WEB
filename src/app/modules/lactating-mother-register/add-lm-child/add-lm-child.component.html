@@ -52,9 +52,9 @@
           <div class="form-group col-md-4">
             <div class="form-group col-md">
               <label for="firstVisitDate">First Visit Date:</label>
-              <input type="date" class="form-control" formControlName="firstVisitDate" [min]="childDob"
-                [max]="maxFirstVisit" (change)="restrictSecondDate($event.target.value)" placeholder="dd-mm-yyyy"
-                [ngClass]="{
+              <input type="date" (keydown)="restrictTypeOfDate()" class="form-control" formControlName="firstVisitDate"
+                [min]="childDob" [max]="maxFirstVisit" (change)="restrictSecondDate($event.target.value)"
+                placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.firstVisitDate.invalid && f.firstVisitDate.touched,
                   'is-valid':
                     f.firstVisitDate.valid && (f.firstVisitDate.dirty || f.firstVisitDate.touched)
@@ -68,9 +68,9 @@
           <div class="form-group col-md-4" *ngIf="enableSecondVisitDate">
             <div class="form-group col-md">
               <label for="secondVisitDate">Second visit Date:</label>
-              <input type="date" class="form-control" formControlName="secondVisitDate" [min]="firstVisit"
-                [max]="maxFirstVisit" (change)="restrictthirdDate($event.target.value)" placeholder="dd-mm-yyyy"
-                [ngClass]="{
+              <input type="date" class="form-control" (keydown)="restrictTypeOfDate()" formControlName="secondVisitDate"
+                [min]="firstVisit" [max]="maxFirstVisit" (change)="restrictthirdDate($event.target.value)"
+                placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.secondVisitDate.invalid && f.secondVisitDate.touched,
                   'is-valid':
                     f.secondVisitDate.valid && (f.secondVisitDate.dirty || f.secondVisitDate.touched)
@@ -84,8 +84,8 @@
           <div class="form-group col-md-4" *ngIf="enableThirdVisitDate">
             <div class="form-group col-md">
               <label for="thirdVisitDate">Third visit Date:</label>
-              <input type="date" class="form-control" formControlName="thirdVisitDate" [min]="secondVisit"
-                [max]="maxFirstVisit" placeholder="dd-mm-yyyy" [ngClass]="{
+              <input type="date" class="form-control" (keydown)="restrictTypeOfDate()" formControlName="thirdVisitDate"
+                [min]="secondVisit" [max]="maxFirstVisit" placeholder="dd-mm-yyyy" [ngClass]="{
                   'is-invalid': f.thirdVisitDate.invalid && f.thirdVisitDate.touched,
                   'is-valid':
                     f.thirdVisitDate.valid && (f.thirdVisitDate.dirty || f.thirdVisitDate.touched)
@@ -673,7 +673,8 @@
           <div class="form-group col-md" *ngIf="childDeath == 'Y'">
             <div class="form-group col-md-4">
               <label for="deathOfChildDate">Date of Death:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-              <input type="date" class="form-control" formControlName="deathOfChildDate" />
+              <input type="date" class="form-control" formControlName="deathOfChildDate"
+                (keydown)="restrictTypeOfDate()" />
             </div>
           </div>
         </div>

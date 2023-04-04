@@ -76,6 +76,10 @@
                                         title="Edit Muac" *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>
                                     <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode"
                                         (click)="deleteMuac(item, i)"></i>
+                                    <i class="fa fa-unlock fa-lg" title="Want to lock MUAC ?"
+                                        (click)="muacCampLockOrUnlock(item)" *ngIf="item.isLocked=='U'"></i>
+                                    <i class="fa fa-lock fa-lg activate" title="Want to unlock MUAC ?"
+                                        (click)="muacCampLockOrUnlock(item)" *ngIf="item.isLocked=='L'"></i>
                                 </td>
                             </tr>
                         </tbody>

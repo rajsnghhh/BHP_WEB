@@ -680,6 +680,41 @@ export class MuacRegisterCreateComponent implements OnInit {
 
   }
 
+  muacCampLockOrUnlock(item) {
+    console.log(item);
+    let lockUnlockObj = {
+      dataAccessDTO: this.httpService.dataAccessDTO, muacCampId: item.muacCampId, lockFlag: item.isLocked == 'U' ? 'L' : 'U'
+    }
+
+    this.muacService.muacCampLockOrUnlock(lockUnlockObj).subscribe((res: any) => {
+      if (res.status === true) {
+        this.loader = false;
+        this.changeBranch(this.branchId);
+        setTimeout(() => {
+          this.muacLockSuccess(res.message);
+          this.loader = true;
+        }, 500);
+
+      }
+      else {
+        this.muacLockError(res.message);
+      }
+
+    })
+  }
+
+  muacLockSuccess(message) {
+    this.toaster.success(message, 'MUAC Lock/ Unlock', {
+      timeOut: 1500,
+    });
+  }
+
+  muacLockError(message) {
+    this.toaster.error(message, 'MUAC Lock/ Unlock', {
+      timeOut: 1500,
+    });
+  }
+
 }
 
 

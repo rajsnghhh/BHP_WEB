@@ -2653,11 +2653,11 @@ const environment = {
   // New Test Server
   // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
   // Training
-  // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
+  apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
   // New Staging Server
-  apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
+  // apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
   // Production
   // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
   // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'

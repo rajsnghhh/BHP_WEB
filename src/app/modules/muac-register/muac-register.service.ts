@@ -31,4 +31,8 @@ export class MuacRegisterService {
     return this.http.post(`${this.baseURL}muaccamp/viewChildrenListOfMuacCamp`, obj)
   }
 
+  muacCampLockOrUnlock(obj): any {
+    return this.http.post(`${this.baseURL}muaccamp/lockOrUnlock`, obj)
+  }
+
 }

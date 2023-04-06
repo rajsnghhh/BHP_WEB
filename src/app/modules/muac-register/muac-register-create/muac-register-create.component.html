@@ -57,7 +57,7 @@
 
                         <thead>
                             <tr>
-                                <th>SL No</th>
+                                <th>Sl. No.</th>
                                 <th>Camp Number</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
@@ -77,9 +77,11 @@
                                     <i class="fas fa-trash" title="Delete Muac" *ngIf="deleteMode"
                                         (click)="deleteMuac(item, i)"></i>
                                     <i class="fa fa-unlock fa-lg" title="Want to lock MUAC ?"
-                                        (click)="muacCampLockOrUnlock(item)" *ngIf="item.isLocked=='U'"></i>
+                                        (click)="muacCampLockOrUnlock(item)"
+                                        *ngIf="item.isLocked=='U'&&camplockMode"></i>
                                     <i class="fa fa-lock fa-lg activate" title="Want to unlock MUAC ?"
-                                        (click)="muacCampLockOrUnlock(item)" *ngIf="item.isLocked=='L'"></i>
+                                        (click)="muacCampLockOrUnlock(item)"
+                                        *ngIf="item.isLocked=='L'&&camplockMode"></i>
                                 </td>
                             </tr>
                         </tbody>

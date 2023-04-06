@@ -442,6 +442,103 @@
                                         </td>
                                     </tr>
 
+                                    <tr *ngIf="viewDARByRegionBranch.length > 0">
+                                        <td style="font-size: 13px;width: 13%;"><strong>Total</strong></td>
+                                        <td style="font-size: 12px;width: 12%;">
+                                            <strong>Cum.</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 9%;">
+                                            <strong>{{totalFamilyVisitedSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <strong>{{pwCounsellingFamilySum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <strong>{{lmCounsellingFamilySum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <strong>{{pemCounsellingFamilySum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 10%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 11%;">
+                                            <strong>{{generalFamilyCounselling2to5Sum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 12%;">
+                                            <strong>{{generalFamilyCounsellingAdolescentSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 9%;">
+                                            <strong>{{generalFamilyOtherSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            <strong>{{targetFamiliesVisitedWithSSSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            <strong>{{generalFamiliesVisitedWithSSSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 11%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 8%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            <strong>{{escortingFamilyToHealthCareCenterSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 13%;">
+                                            <strong>{{materialDistributedToFamiliesSum}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 13%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 14%;"> <strong>-</strong></td>
+                                    </tr>
+
+
+
+                                    <tr *ngIf="viewDARByRegionBranch.length > 0">
+                                        <td style="font-size: 13px;width: 13%;"></td>
+                                        <td style="font-size: 12px;width: 12%;">
+                                            <strong>Unique</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 9%;">
+                                            <strong>{{totalFamilyVisitedUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <strong>{{pwCounsellingFamilyUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <strong>{{lmCounsellingFamilyUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;"><strong>{{lmChildrenCounsellingUnique}}</strong></td>
+                                        <td style="font-size: 13px;width: 8%;">
+                                            <strong>{{pemCounsellingFamilyUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;"><strong>{{redChildrenCounsellingUnique}}</strong></td>
+                                        <td style="font-size: 13px;width: 10%;"><strong>{{yellowChildrenCounsellingUnique}}</strong></td>
+                                        <td style="font-size: 13px;width: 11%;">
+                                            <strong>{{generalFamilyCounselling2to5Unique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 12%;">
+                                            <strong>{{generalFamilyCounsellingAdolescentUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 9%;">
+                                            <strong>{{generalFamilyOtherUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            <strong>{{targetFamiliesVisitedWithSSUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            <strong>{{generalFamiliesVisitedWithSSUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 11%;"><strong>{{ssFollowUpAnsweredVisitedUnique}}</strong></td>
+                                        <td style="font-size: 13px;width: 8%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 10%;">
+                                            <strong>{{escortingFamilyToHealthCareCenterUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 13%;">
+                                            <strong>{{materialDistributedToFamiliesUnique}}</strong>
+                                        </td>
+                                        <td style="font-size: 13px;width: 13%;"><strong>-</strong></td>
+                                        <td style="font-size: 13px;width: 14%;"> <strong>-</strong></td>
+                                    </tr>
+
+
                                 </tbody>
 
                             </table>
@@ -727,7 +824,7 @@
                                 class="table lms_table_active dataTable no-footer dtr-inline collapsed table table-striped"
                                 role="grid" aria-describedby="DataTables_Table_0_info" style="table-layout: fixed;">
 
-                                <thead >
+                                <thead>
                                     <tr>
                                         <th style="width: 8%;">Sl. No.</th>
                                         <th style="width: 25%;">SS Name</th>

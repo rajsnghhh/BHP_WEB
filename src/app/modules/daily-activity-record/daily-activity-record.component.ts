@@ -37,6 +37,33 @@ export class DailyActivityRecordComponent implements OnInit {
   loader: boolean = false;
   ssDetails: Array<any> = [];
   ssDateOrUniqueShow: any;
+  totalFamilyVisitedSum = 0;
+  pwCounsellingFamilySum = 0;
+  lmCounsellingFamilySum = 0;
+  pemCounsellingFamilySum = 0;
+  generalFamilyCounselling2to5Sum = 0;
+  generalFamilyCounsellingAdolescentSum = 0;
+  generalFamilyOtherSum = 0;
+  targetFamiliesVisitedWithSSSum = 0;
+  generalFamiliesVisitedWithSSSum = 0;
+  escortingFamilyToHealthCareCenterSum = 0;
+  materialDistributedToFamiliesSum = 0;
+
+  totalFamilyVisitedUnique = 0;
+  pwCounsellingFamilyUnique = 0;
+  lmCounsellingFamilyUnique = 0;
+  lmChildrenCounsellingUnique = 0;
+  pemCounsellingFamilyUnique = 0;
+  redChildrenCounsellingUnique = 0;
+  yellowChildrenCounsellingUnique = 0;
+  generalFamilyCounselling2to5Unique = 0;
+  generalFamilyCounsellingAdolescentUnique = 0;
+  generalFamilyOtherUnique = 0;
+  targetFamiliesVisitedWithSSUnique = 0;
+  generalFamiliesVisitedWithSSUnique = 0;
+  ssFollowUpAnsweredVisitedUnique = 0;
+  escortingFamilyToHealthCareCenterUnique = 0;
+  materialDistributedToFamiliesUnique = 0;
 
   constructor(private fb: UntypedFormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private httpService: HttpService, private dailyActRecord: DailyActivityRecordService,
@@ -257,6 +284,7 @@ export class DailyActivityRecordComponent implements OnInit {
       this.viewDARByRegionBranch = res.responseObject
       console.log(this.darListByBranchID, 'darListByBranchID');
       console.log(this.viewDARByRegionBranch, 'viewDARByBranch');
+      this.countFunction(this.viewDARByRegionBranch);
 
 
       if (this.darListByBranchID?.length == 0) {
@@ -420,6 +448,46 @@ export class DailyActivityRecordComponent implements OnInit {
 
   restrictTypeOfDate() {
     return false;
+  }
+
+  totalCount(arr, key) {
+    let x = 0;
+    arr.filter(i => { x += i[key] })
+    return x;
+  }
+
+  countFunction(arr) {
+    //cumulative
+    this.totalFamilyVisitedSum = this.totalCount(arr, 'totalFamilyVisitedSum');
+    this.pwCounsellingFamilySum = this.totalCount(arr, 'pwCounsellingFamilySum');
+    this.lmCounsellingFamilySum = this.totalCount(arr, 'lmCounsellingFamilySum');
+    this.pemCounsellingFamilySum = this.totalCount(arr, 'pemCounsellingFamilySum');
+    this.generalFamilyCounselling2to5Sum = this.totalCount(arr, 'generalFamilyCounselling2to5Sum');
+    this.generalFamilyCounsellingAdolescentSum = this.totalCount(arr, 'generalFamilyCounsellingAdolescentSum');
+    this.generalFamilyOtherSum = this.totalCount(arr, 'generalFamilyOtherSum');
+    this.targetFamiliesVisitedWithSSSum = this.totalCount(arr, 'targetFamiliesVisitedWithSSSum');
+    this.generalFamiliesVisitedWithSSSum = this.totalCount(arr, 'generalFamiliesVisitedWithSSSum');
+    this.escortingFamilyToHealthCareCenterSum = this.totalCount(arr, 'escortingFamilyToHealthCareCenterSum');
+    this.materialDistributedToFamiliesSum = this.totalCount(arr, 'materialDistributedToFamiliesSum');
+
+    //unique
+    this.totalFamilyVisitedUnique = this.totalCount(arr, 'totalFamilyVisitedUnique');
+    this.pwCounsellingFamilyUnique = this.totalCount(arr, 'pwCounsellingFamilyUnique');
+    this.lmCounsellingFamilyUnique = this.totalCount(arr, 'lmCounsellingFamilyUnique');
+    this.lmChildrenCounsellingUnique = this.totalCount(arr, 'lmChildrenCounsellingUnique');
+    this.pemCounsellingFamilyUnique = this.totalCount(arr, 'pemCounsellingFamilyUnique');
+    this.redChildrenCounsellingUnique = this.totalCount(arr, 'redChildrenCounsellingUnique');
+    this.yellowChildrenCounsellingUnique = this.totalCount(arr, 'yellowChildrenCounsellingUnique');
+    this.generalFamilyCounselling2to5Unique = this.totalCount(arr, 'generalFamilyCounselling2to5Unique');
+    this.generalFamilyCounsellingAdolescentUnique = this.totalCount(arr, 'generalFamilyCounsellingAdolescentUnique');
+    this.generalFamilyOtherUnique = this.totalCount(arr, 'generalFamilyOtherUnique');
+    this.targetFamiliesVisitedWithSSUnique = this.totalCount(arr, 'targetFamiliesVisitedWithSSUnique');
+    this.generalFamiliesVisitedWithSSUnique = this.totalCount(arr, 'generalFamiliesVisitedWithSSUnique');
+    this.ssFollowUpAnsweredVisitedUnique = this.totalCount(arr, 'ssFollowUpAnsweredVisitedUnique');
+    this.escortingFamilyToHealthCareCenterUnique = this.totalCount(arr, 'escortingFamilyToHealthCareCenterUnique');
+    this.materialDistributedToFamiliesUnique = this.totalCount(arr, 'materialDistributedToFamiliesUnique');
+
+
   }
 
 }

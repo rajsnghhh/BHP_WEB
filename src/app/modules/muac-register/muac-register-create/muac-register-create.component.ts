@@ -49,6 +49,7 @@ export class MuacRegisterCreateComponent implements OnInit {
   updateMode: boolean;
   deleteMode: boolean;
   createMode: boolean;
+  camplockMode: boolean;
   regionBranchHide: boolean;
   branchId: any;
   hcoBranchId: any;
@@ -132,6 +133,11 @@ export class MuacRegisterCreateComponent implements OnInit {
       .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 97 || item.subFunctionMasterId == 98 || item.subFunctionMasterId == 99 || item.subFunctionMasterId == 100)?.accessDetailList
       .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.camplockMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionShortName == 'Registers')?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 97 || item.subFunctionMasterId == 98 || item.subFunctionMasterId == 99 || item.subFunctionMasterId == 100)?.accessDetailList
+      .find(accessType => accessType.accessType == 'camp lock')?.accessType ? true : false;
 
   }
 

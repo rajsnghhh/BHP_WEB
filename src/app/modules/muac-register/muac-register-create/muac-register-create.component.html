@@ -69,8 +69,8 @@
                             <tr *ngFor="let item of muacCampList; index as i">
                                 <td>{{i+1}}</td>
                                 <td>{{item.campNumber}}</td>
-                                <td>{{item.startDate}}</td>
-                                <td>{{item.endDate}}</td>
+                                <td>{{item.startDate.split("-").reverse().join("-")}}</td>
+                                <td>{{item.endDate.split("-").reverse().join("-")}}</td>
                                 <td> <i class="fa fa-eye fa-lg" title="View Child Data Entry"
                                         (click)="ViewChildDataEntry(viewChild, item)"></i><i class="fas fa-edit"
                                         title="Edit Muac" *ngIf="updateMode" (click)="editModal(editMuac, item)"></i>

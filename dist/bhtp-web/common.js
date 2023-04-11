@@ -131,6 +131,9 @@ class MuacRegisterService {
   viewChildrenListOfMuacCamp(obj) {
     return this.http.post(`${this.baseURL}muaccamp/viewChildrenListOfMuacCamp`, obj);
   }
+  muacCampLockOrUnlock(obj) {
+    return this.http.post(`${this.baseURL}muaccamp/lockOrUnlock`, obj);
+  }
 }
 MuacRegisterService.ɵfac = function MuacRegisterService_Factory(t) {
   return new (t || MuacRegisterService)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpClient));

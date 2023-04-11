@@ -39,7 +39,7 @@
                                 <i class="fas fa-edit" title="Edit MUAC" (click)="onEdit(i)" *ngIf="updateMode" ></i> 
                             </div>
                             <div *ngIf="item.muacRegisterTag == 'PEM' ? false: true" style="display: inline-block;">
-                                <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(i)" *ngIf="deleteMode"></i>
+                                <i class="fas fa-trash" title="Delete MUAC" (click)="onDelete(item,i)" *ngIf="deleteMode"></i>
                             </div>
                         </td>
                     </tr>

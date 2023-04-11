@@ -1589,9 +1589,11 @@ function ViewMuaclistComponent_div_7_tr_20_td_13_div_2_i_1_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "i", 21);
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("click", function ViewMuaclistComponent_div_7_tr_20_td_13_div_2_i_1_Template_i_click_0_listener() {
       _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵrestoreView"](_r17);
-      const i_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](3).index;
+      const ctx_r16 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](3);
+      const item_r5 = ctx_r16.$implicit;
+      const i_r6 = ctx_r16.index;
       const ctx_r15 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
-      return _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵresetView"](ctx_r15.onDelete(i_r6));
+      return _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵresetView"](ctx_r15.onDelete(item_r5, i_r6));
     });
     _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
   }
@@ -1760,12 +1762,13 @@ class ViewMuaclistComponent {
       this.viewMuacChildList();
     });
   }
-  onDelete(index) {
+  onDelete(item, index) {
+    console.log(item);
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       muacDataDto: {
         muacRegisterId: this.childMuac[index].muacRegisterId,
-        muacCampId: 'null',
+        muacCampId: item.muacCampDto.muacCampId,
         childId: this.data.childId,
         height: this.childMuac[index].height,
         weight: this.childMuac[index].weight,
@@ -1773,6 +1776,7 @@ class ViewMuaclistComponent {
         active_flag: "D"
       }
     };
+    console.log(Dto);
     this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
       this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe(res => {
         if (res.status) {

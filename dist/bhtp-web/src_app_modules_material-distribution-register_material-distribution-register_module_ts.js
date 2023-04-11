@@ -350,8 +350,9 @@ function MaterialDistributionRegisterComponent_tr_69_Template(rf, ctx) {
   if (rf & 2) {
     const mat_r36 = ctx.$implicit;
     const i_r37 = ctx.index;
+    const ctx_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate"](i_r37 + 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate"]((ctx_r8.p - 1) * 5 + i_r37 + 1 ? (ctx_r8.p - 1) * 5 + i_r37 + 1 : i_r37 + 1);
     _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtextInterpolate"](mat_r36.family_number);
     _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵadvance"](2);
@@ -1548,7 +1549,7 @@ MaterialDistributionRegisterComponent.ɵcmp = /*@__PURE__*/_angular_core__WEBPAC
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelement"](49, "i", 28);
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]()()()()();
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](50, "div", 29)(51, "div", 30)(52, "div", 31)(53, "table", 32)(54, "thead", 33)(55, "tr")(56, "th", 34);
-      _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](57, "SL No");
+      _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](57, "Sl. No.");
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementEnd"]();
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵelementStart"](58, "th", 35);
       _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵtext"](59, "Family No.");

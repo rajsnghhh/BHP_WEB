@@ -56,7 +56,7 @@ export class ViewMuaclistComponent implements OnInit {
 
   onEdit(index) {
     console.log(this.childMuac[index]);
-   
+
     const dialogRef = this.dialog.open(AddChildMuacComponent, {
       width: '500px',
       height: '550px',
@@ -78,12 +78,13 @@ export class ViewMuaclistComponent implements OnInit {
       this.viewMuacChildList();
     });
   }
-  onDelete(index) {
+  onDelete(item, index) {
+    console.log(item)
     let Dto = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       muacDataDto: {
         muacRegisterId: this.childMuac[index].muacRegisterId,
-        muacCampId: 'null',
+        muacCampId: item.muacCampDto.muacCampId,
         childId: this.data.childId,
         height: this.childMuac[index].height,
         weight: this.childMuac[index].weight,
@@ -91,7 +92,7 @@ export class ViewMuaclistComponent implements OnInit {
         active_flag: "D"
       }
     }
-
+    console.log(Dto)
     this.confirmationDialogService.confirm('', 'Do you want to delete ?').then(() => {
       this.http.post(`${this.httpService.baseURL}acr/muac/saveOrUpdate`, Dto).subscribe((res: any) => {
         if (res.status) {

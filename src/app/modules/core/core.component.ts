@@ -100,18 +100,19 @@ export class CoreComponent implements OnInit, AfterViewInit {
   }
 
   getChartData() {
+    /* report/getBeneficiaryInfoProject */
     this.loader = false;
-    this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe((res: any) => {
+    this.http.post(`${this.httpService.baseURL}dashboardStat/getDashboardStat`, this.Dto).subscribe((res: any) => {
 
-      let totalFamilyCount = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.totalFamilyCount, 0);
-      let totalPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pemCumulative, 0);
-      let totalLmCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.lmCumulative, 0);
-      let totalPwCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pwCumulative, 0);
+      let totalFamilyCount = res.responseObject.reduce((sum, current) => sum + current.totalFamilyCount, 0);
+      let totalPemCumulative = res.responseObject.reduce((sum, current) => sum + current.pemCumulative, 0);
+      let totalLmCumulative = res.responseObject.reduce((sum, current) => sum + current.lmCumulative, 0);
+      let totalPwCumulative = res.responseObject.reduce((sum, current) => sum + current.pwCumulative, 0);
 
-      let totalBelow5Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below5Cumulative, 0);
-      let totalBelow2Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below2Cumulative, 0);
-      let totalChildPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.childPemCumulative, 0);
-      let totalGirl14To18Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.girl14To18Cumulative, 0);
+      let totalBelow5Cumulative = res.responseObject.reduce((sum, current) => sum + current.below5Cumulative, 0);
+      let totalBelow2Cumulative = res.responseObject.reduce((sum, current) => sum + current.below2Cumulative, 0);
+      let totalChildPemCumulative = res.responseObject.reduce((sum, current) => sum + current.childPemCumulative, 0);
+      let totalGirl14To18Cumulative = res.responseObject.reduce((sum, current) => sum + current.girl14To18Cumulative, 0);
 
       let otherFamilyCount = totalFamilyCount - (totalPemCumulative + totalLmCumulative + totalPwCumulative);
 

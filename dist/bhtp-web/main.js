@@ -1209,16 +1209,17 @@ class CoreComponent {
   }
 
   getChartData() {
+    /* report/getBeneficiaryInfoProject */
     this.loader = false;
-    this.http.post(`${this.httpService.baseURL}report/getBeneficiaryInfoProject`, this.Dto).subscribe(res => {
-      let totalFamilyCount = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.totalFamilyCount, 0);
-      let totalPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pemCumulative, 0);
-      let totalLmCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.lmCumulative, 0);
-      let totalPwCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.pwCumulative, 0);
-      let totalBelow5Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below5Cumulative, 0);
-      let totalBelow2Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.below2Cumulative, 0);
-      let totalChildPemCumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.childPemCumulative, 0);
-      let totalGirl14To18Cumulative = res.responseObject.projectWiseBeneficiaryList.reduce((sum, current) => sum + current.girl14To18Cumulative, 0);
+    this.http.post(`${this.httpService.baseURL}dashboardStat/getDashboardStat`, this.Dto).subscribe(res => {
+      let totalFamilyCount = res.responseObject.reduce((sum, current) => sum + current.totalFamilyCount, 0);
+      let totalPemCumulative = res.responseObject.reduce((sum, current) => sum + current.pemCumulative, 0);
+      let totalLmCumulative = res.responseObject.reduce((sum, current) => sum + current.lmCumulative, 0);
+      let totalPwCumulative = res.responseObject.reduce((sum, current) => sum + current.pwCumulative, 0);
+      let totalBelow5Cumulative = res.responseObject.reduce((sum, current) => sum + current.below5Cumulative, 0);
+      let totalBelow2Cumulative = res.responseObject.reduce((sum, current) => sum + current.below2Cumulative, 0);
+      let totalChildPemCumulative = res.responseObject.reduce((sum, current) => sum + current.childPemCumulative, 0);
+      let totalGirl14To18Cumulative = res.responseObject.reduce((sum, current) => sum + current.girl14To18Cumulative, 0);
       let otherFamilyCount = totalFamilyCount - (totalPemCumulative + totalLmCumulative + totalPwCumulative);
       this.percentageFamilyCount = (otherFamilyCount / totalFamilyCount * 100).toFixed(2);
       this.percentagePemCumulative = (totalPemCumulative / totalFamilyCount * 100).toFixed(2);
@@ -2651,13 +2652,13 @@ const environment = {
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
   // New Test Server
-  apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+  // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
   // Training
   // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
   // New Staging Server
-  // apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
+  apiUrl: 'http://192.168.149.102:6182/bhp/api/v1/staging/'
   // Production
   // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
   // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'

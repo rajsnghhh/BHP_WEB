@@ -217,6 +217,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       this.router.navigate(['/sattu-register-report']);
     }
 
+    if (routeId == 286 || routeId == 287 || routeId == 288 || routeId == 289) {
+      this.router.navigate(['/event-register']);
+    }
+
   }
 
   ngAfterViewInit(): void {

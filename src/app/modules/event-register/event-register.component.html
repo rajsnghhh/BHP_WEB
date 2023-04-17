@@ -1,0 +1,78 @@
+<app-loader [hidden]="loader"></app-loader>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="white_box QA_section mb_30">
+                <div id="header-fixed" style="display: flex;">
+                    <h2 class="page-title">Event Register</h2>
+
+                    <!-- <div class="box_right d-flex lms_block col-md-6">
+                        <div class="serach_field_2">
+                            <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
+                                <form active="#">
+                                    <div class="search_field">
+                                        <input type="text" name="search" placeholder="search by staff or ss name ..."
+                                            [(ngModel)]="registerSearch">
+                                    </div>
+                                    <button type="submit"> <i class="fa fa-search"></i> </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="!eventRegisterForm.value.branch && !lowerRankbranchId ">
+                        <!-- *ngIf=" !eventRegisterForm.value.branch || !createMode" -->
+                        <i class="fas fa-plus-circle"
+                            style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
+                            title="Create Event Register"></i>
+                    </div>
+
+                    <div class="form-group col-md" style="display: flex; justify-content:flex-end"
+                        *ngIf="eventRegisterForm.value.branch || lowerRankbranchId">
+                        <!-- *ngIf="(eventRegisterForm.value.branch && createMode) || (lowerRankbranchId && createMode)" -->
+                        <i class="fas fa-plus-circle"
+                            style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
+                            title="Create Event Register" (click)="createEventRegister()"></i>
+                    </div>
+                </div>
+
+                <form class="form-signin" [formGroup]="eventRegisterForm">
+                    <div class="row" *ngIf="regionBranchHide">
+                        <div class="form-group col-md">
+                            <label for="region">Region :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeRegion($event.target.value)"
+                                formControlName="region" id="region" [ngClass]="{'is-invalid': l.region.invalid && l.region.touched,
+                              'is-valid': l.region.valid && (l.region.dirty || l.region.touched) }">
+                                <option value="">-- Select Region --</option>
+                                <option *ngFor="let region of regionList" value="{{region.regionMasterId}}">
+                                    {{region.regionName}}
+                                </option>
+                            </select>
+                            <div *ngIf="l.region.errors" class="invalid-feedback">
+                                <div *ngIf="l.region.errors.required">Region selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="branch">Branch :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="branch" id="branch"
+                                (change)="changeBranch($event.target.value)"
+                                [ngClass]="{'is-invalid': l.branch.invalid
+                             && l.branch.touched,  'is-valid': l.branch.valid && (l.branch.dirty || l.branch.touched) }">
+                                <option value="">-- Select Branch --</option>
+                                <option *ngFor="let branch of branchList" value="{{branch.branchId}}">
+                                    {{ branch.branchName }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.branch.errors" class="invalid-feedback">
+                                <div *ngIf="l.branch.errors.required">Branch selection is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

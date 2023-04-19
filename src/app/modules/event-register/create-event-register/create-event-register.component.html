@@ -1,8 +1,114 @@
 <app-loader [hidden]="loader"></app-loader>
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h3 class="dialog-title">List Of Families</h3>
+        <h3 class="dialog-title">Create Event Register</h3>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
 <hr>
+
+
+<div mat-dialog-content>
+    <form class="form-signin" [formGroup]="createEventRegisterForm">
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="eventTypes">Event Types:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" (change)="changeEventTypes($event.target.value)"
+                    formControlName="eventTypes" id="eventTypes" [ngClass]="{'is-invalid': l.eventTypes.invalid && l.eventTypes.touched,
+                  'is-valid': l.eventTypes.valid && (l.eventTypes.dirty || l.eventTypes.touched) }">
+                    <option value="">-- Select Event Types --</option>
+                    <option *ngFor="let event of eventTypeLists" value="{{event.is_special}}">
+                        {{event.eventName}}
+                    </option>
+                </select>
+                <div *ngIf="l.eventTypes.errors" class="invalid-feedback">
+                    <div *ngIf="l.eventTypes.errors.required">Please select a Event</div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="event_is_special == 'N'">
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="schoolName">School Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <input type="text" class="form-control" placeholder="Enter School Name" formControlName="schoolName"
+                        maxlength="100" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                        style="text-transform: capitalize" [ngClass]="{'is-invalid': l.schoolName.invalid && l.schoolName.touched,
+                    'is-valid':l.schoolName.valid &&(l.schoolName.dirty || l.schoolName.touched)}" />
+                    <div *ngIf="l.schoolName.errors" class="invalid-feedback">
+                        <div *ngIf="l.schoolName.errors.required">
+                            Please Enter School Name
+                        </div>
+                        <div *ngIf="l.schoolName.errors.minlength">
+                            Minimum length should be 3
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">School Place</legend>
+                        <div class="row">
+                            <div class="form-group col-md">
+                                <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" (change)="changeBlock($event.target.value)"
+                                    formControlName="block" id="block" [ngClass]="{'is-invalid':l.block.invalid 
+                                && l.block.touched,'is-valid':l.block.valid &&  (l.block.dirty ||l.block.touched) }">
+                                    <option value="">-- Select Block --</option>
+                                    <option *ngFor="let block of villagesOfBranch" value="{{block.blockMasterId}}">
+                                        {{ block.blockName }}
+                                    </option>
+                                </select>
+                                <div *ngIf="l.block.errors" class="invalid-feedback">
+                                    <div *ngIf="l.block.errors.required">Block selection is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" (change)="changeGp($event.target.value)"
+                                    formControlName="gp" id="gp" [ngClass]="{'is-invalid':l.gp.invalid && l.gp.touched,
+                              'is-valid':l.gp.valid && (l.gp.dirty || l.gp.touched) }">
+                                    <option value="">-- Select GP/ Municipality --</option>
+                                    <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                        {{ gp.name }}
+                                    </option>
+                                </select>
+                                <div *ngIf="l.gp.errors" class="invalid-feedback">
+                                    <div *ngIf="l.gp.errors.required">
+                                        GP selection is required
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md">
+                                <label for="gram">Village/ Gram Sansad/ Locality
+                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" (change)="changeVillage($event.target.value)"
+                                    formControlName="gram" id="gram" [ngClass]="{'is-invalid':l.gram.invalid && l.gram.touched,
+                              'is-valid':l.gram.valid && (l.gram.dirty ||l.gram.touched) }">
+                                    <option value="">-- Select Village --</option>
+                                    <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
+                                        {{ vill.villageName }}
+                                    </option>
+                                </select>
+                                <div *ngIf="l.gram.errors" class="invalid-feedback">
+                                    <div *ngIf="l.gram.errors.required">
+                                        Village selection is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+
+            <!-- <div class="row">
+                
+            </div> -->
+        </div>
+
+    </form>
+</div>

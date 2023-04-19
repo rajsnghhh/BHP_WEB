@@ -13,4 +13,13 @@ export class EventRegisterService {
   getBranchesOfRegion(obj): any {
     return this.http.post(`${this.baseURL}branch/getListOfBranchesOfARegion`, obj)
   }
+
+  getEventMasterTypeList(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/getEventMasterTypeList`, obj)
+  }
+
+  getVillagesOfBranch(obj): any {
+    return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
+  }
+
 }

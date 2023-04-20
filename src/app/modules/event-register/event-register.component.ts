@@ -23,6 +23,7 @@ export class EventRegisterComponent {
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
   lowerRankbranchId: any;
+  branchOpenDate: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
@@ -39,6 +40,8 @@ export class EventRegisterComponent {
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
       this.loader = true;
       this.lowerRankbranchId = res.branchId;
+      this.branchOpenDate = !this.lowerRankbranchId ? null : res.branchLIST[0]?.branchOpenDate;
+      console.log(this.branchOpenDate, 'branchOpenDate')
       if (res.regionBranchHide) {
         this.regionList = res.region;
         this.regionBranchHide = res.regionBranchHide;
@@ -102,6 +105,10 @@ export class EventRegisterComponent {
 
   changeBranch(branchId) {
     console.log(branchId, 'branchId');
+    if (!this.lowerRankbranchId) {
+      this.branchOpenDate = this.branchList.find(x => x.branchId == branchId)?.branchOpenDate;
+      console.log(this.branchOpenDate, 'branchOpenDate');
+    }
     // let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
     // this.loader = false;
     // this.eventService.getVillagesOfBranch(req).subscribe((res) => {
@@ -122,7 +129,7 @@ export class EventRegisterComponent {
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
       height: '570px',
-      data: this.eventRegisterForm.value.branch || this.lowerRankbranchId
+      data: { branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate }
     });
 
     dialogRef.afterClosed().subscribe(result => {

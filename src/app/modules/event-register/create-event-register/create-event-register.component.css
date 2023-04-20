@@ -29,7 +29,7 @@ fieldset.scheduler-border {
     border: 1px groove #ddd !important;
     padding: 0 1.4em 1.4em 1.4em !important;
     margin: -12px 0 1.5em 0 !important;
-    height: 85px;
+    height: 120px;
   }
   
   legend.scheduler-border {
@@ -40,4 +40,42 @@ fieldset.scheduler-border {
     font-size: 1.2em !important;
     font-weight: bold !important;
     font-family: ui-sans-serif;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  #tbodyStaff {
+    display: block;
+    height: 85px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  #table_wrapper .table thead {
+    border-bottom: 0 solid transparent;
+    background-color: #fff;
+    padding: 17px 30px;
+    line-height: 16px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #FFFFFF;
+    white-space: nowrap;
+    text-transform: capitalize;
+    font-family: "Rajdhani", sans-serif;
+    border: 0;
+    background: #499;
+    text-align: center;
+    overflow-y: auto;
+  }
+  
+  #table_wrapper .table tbody td {
+    padding: 2px;
+  }
+
+  #header_fixed {
+    position: sticky;
+    top: 0;
+    z-index: 999;
   }

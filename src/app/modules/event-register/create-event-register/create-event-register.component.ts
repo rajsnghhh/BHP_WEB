@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EventRegisterService } from '../event-register.service';
 import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-create-event-register',
@@ -18,6 +19,9 @@ export class CreateEventRegisterComponent {
   villagesOfBranch: Array<any> = [];
   villageList: Array<any> = [];
   gpList: Array<any> = [];
+  minToDate: any;
+  maxToDate: any;
+  hcoUserList: Array<any> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CreateEventRegisterComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
@@ -26,21 +30,13 @@ export class CreateEventRegisterComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.data, 'branchId');
+    console.log(this.data);
     this.createEventForm();
 
     let eventListReq = { dataAccessDTO: this.httpService.dataAccessDTO };
     this.eventService.getEventMasterTypeList(eventListReq).subscribe(res => {
       this.eventTypeLists = res.responseObject;
       console.log(this.eventTypeLists, 'eventTypeLists');
-    });
-
-    let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data };
-    this.loader = false;
-    this.eventService.getVillagesOfBranch(villageReg).subscribe((res) => {
-      this.loader = true;
-      this.villagesOfBranch = res.responseObject;
-      console.log(this.villagesOfBranch, 'villagesOfBranch');
     });
   }
 
@@ -50,7 +46,10 @@ export class CreateEventRegisterComponent {
       schoolName: ['', Validators.required],
       block: ['', Validators.required],
       gp: ['', Validators.required],
-      gram: ['', Validators.required]
+      gram: ['', Validators.required],
+      schoolType: ['', Validators.required],
+      eventDate: ['', Validators.required]
+
     });
   }
 
@@ -61,6 +60,26 @@ export class CreateEventRegisterComponent {
   changeEventTypes(is_special) {
     this.event_is_special = is_special;
     console.log(this.event_is_special, 'this.event_is_special');
+    if (this.event_is_special == 'N') {
+      let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
+      this.loader = false;
+      this.eventService.getVillagesOfBranch(villageReg).subscribe((res) => {
+        this.loader = true;
+        this.villagesOfBranch = res.responseObject;
+        console.log(this.villagesOfBranch, 'villagesOfBranch');
+      });
+
+      this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
+      this.maxToDate = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
+
+      let hcoUserReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
+      this.loader = false;
+      this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res) => {
+        this.loader = true;
+        this.hcoUserList = res.responseObject.fullStaffList;
+        console.log(this.hcoUserList, 'hcoUserList');
+      });
+    }
   }
 
   closeDialog() {
@@ -74,7 +93,7 @@ export class CreateEventRegisterComponent {
 
     this.createEventRegisterForm.controls.gp.setValue('');
     this.createEventRegisterForm.controls.gram.setValue('');
-    // this.villageList = [];
+    this.villageList = [];
     // this.escortviewData = [];
   }
 
@@ -82,7 +101,12 @@ export class CreateEventRegisterComponent {
     console.log(gpId, 'GpId');
     this.villageList = this.gpList.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
     console.log(this.villageList, 'villageList');
-    // this.createEventRegisterForm.controls.gram.setValue('');
+    this.createEventRegisterForm.controls.gram.setValue('');
     // this.escortviewData = [];
   }
+
+  restrictTypeOfDate() {
+    return false;
+  }
+
 }

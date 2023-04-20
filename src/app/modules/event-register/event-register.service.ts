@@ -22,4 +22,7 @@ export class EventRegisterService {
     return this.http.post(`${this.baseURL}village/getVillagesOfABranch`, obj)
   }
 
+  getAllStaffOfABrancsRegion(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/getAllStaffOfABrancsRegion`, obj)
+  }
 }

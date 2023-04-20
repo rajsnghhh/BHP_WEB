@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label for="eventTypes">Event Types:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <label for="eventTypes">Event Types :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                 <select class="form-select" (change)="changeEventTypes($event.target.value)"
                     formControlName="eventTypes" id="eventTypes" [ngClass]="{'is-invalid': l.eventTypes.invalid && l.eventTypes.touched,
                   'is-valid': l.eventTypes.valid && (l.eventTypes.dirty || l.eventTypes.touched) }">
@@ -29,32 +29,57 @@
         </div>
 
         <div *ngIf="event_is_special == 'N'">
+
             <div class="row">
-                <div class="form-group col-md">
-                    <label for="schoolName">School Name:&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                    <input type="text" class="form-control" placeholder="Enter School Name" formControlName="schoolName"
-                        maxlength="100" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                        style="text-transform: capitalize" [ngClass]="{'is-invalid': l.schoolName.invalid && l.schoolName.touched,
-                    'is-valid':l.schoolName.valid &&(l.schoolName.dirty || l.schoolName.touched)}" />
-                    <div *ngIf="l.schoolName.errors" class="invalid-feedback">
-                        <div *ngIf="l.schoolName.errors.required">
-                            Please Enter School Name
+                <div class="form-group col-md-4">
+                    <div class="row">
+                        <!-- <div class="form-group col-md-4"> -->
+                        <label for="schoolName">School Name :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <input type="text" class="form-control" placeholder="Enter School Name"
+                            formControlName="schoolName" maxlength="100" minlength="3"
+                            (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                            style="text-transform: capitalize" [ngClass]="{'is-invalid': l.schoolName.invalid && l.schoolName.touched,
+                        'is-valid':l.schoolName.valid &&(l.schoolName.dirty || l.schoolName.touched)}" />
+                        <div *ngIf="l.schoolName.errors" class="invalid-feedback">
+                            <div *ngIf="l.schoolName.errors.required">
+                                Please Enter School Name
+                            </div>
+                            <div *ngIf="l.schoolName.errors.minlength">
+                                Minimum length should be 3
+                            </div>
                         </div>
-                        <div *ngIf="l.schoolName.errors.minlength">
-                            Minimum length should be 3
+                        <!-- </div> -->
+                    </div>
+
+                    <div class="row">
+                        <!-- <div class="form-group col-md-4"> -->
+                        <label for="schoolType">School Type :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                        <select class="form-select" formControlName="schoolType" id="schoolType" [ngClass]="{'is-invalid':
+                         l.schoolType.invalid && l.schoolType.touched, 'is-valid':
+                         l.schoolType.valid && (l.schoolType.dirty || l.schoolType.touched) }">
+                            <option value="">-- Select Schoool Type --</option>
+                            <option value="govt">Government</option>
+                            <option value="private">Private</option>
+                        </select>
+                        <div *ngIf="l.schoolType.errors" class="invalid-feedback">
+                            <div *ngIf="l.schoolType.errors.required">Please select school type</div>
                         </div>
+                        <!-- </div> -->
                     </div>
                 </div>
 
-                <div class="form-group col-md">
+                <div class="form-group col-md-8">
+                    <!-- <div class="form-group col-md-8"> -->
                     <fieldset class="scheduler-border">
-                        <legend class="scheduler-border">School Place</legend>
+                        <legend class="scheduler-border">School Place :&nbsp;<span class="text-danger">*&nbsp;</span>
+                        </legend>
                         <div class="row">
                             <div class="form-group col-md">
                                 <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                                 <select class="form-select" (change)="changeBlock($event.target.value)"
-                                    formControlName="block" id="block" [ngClass]="{'is-invalid':l.block.invalid 
-                                && l.block.touched,'is-valid':l.block.valid &&  (l.block.dirty ||l.block.touched) }">
+                                    formControlName="block" id="block" [ngClass]="{'is-invalid':l.block.invalid
+                                     && l.block.touched,'is-valid':l.block.valid &&
+                                      (l.block.dirty ||l.block.touched) }">
                                     <option value="">-- Select Block --</option>
                                     <option *ngFor="let block of villagesOfBranch" value="{{block.blockMasterId}}">
                                         {{ block.blockName }}
@@ -69,8 +94,8 @@
                                 <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                                 <select class="form-select" (change)="changeGp($event.target.value)"
                                     formControlName="gp" id="gp" [ngClass]="{'is-invalid':l.gp.invalid && l.gp.touched,
-                              'is-valid':l.gp.valid && (l.gp.dirty || l.gp.touched) }">
-                                    <option value="">-- Select GP/ Municipality --</option>
+                                           'is-valid':l.gp.valid && (l.gp.dirty || l.gp.touched) }">
+                                    <option value="">-- Select GP --</option>
                                     <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
                                         {{ gp.name }}
                                     </option>
@@ -83,11 +108,10 @@
                             </div>
 
                             <div class="form-group col-md">
-                                <label for="gram">Village/ Gram Sansad/ Locality
-                                    :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                                <select class="form-select" (change)="changeVillage($event.target.value)"
-                                    formControlName="gram" id="gram" [ngClass]="{'is-invalid':l.gram.invalid && l.gram.touched,
-                              'is-valid':l.gram.valid && (l.gram.dirty ||l.gram.touched) }">
+                                <label for="gram">Vill/ Gram Sansad/ Locality :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></label>
+                                <select class="form-select" formControlName="gram" id="gram" [ngClass]="{'is-invalid':l.gram.invalid && 
+                                l.gram.touched,'is-valid':l.gram.valid && (l.gram.dirty ||l.gram.touched) }">
                                     <option value="">-- Select Village --</option>
                                     <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
                                         {{ vill.villageName }}
@@ -102,12 +126,67 @@
                         </div>
 
                     </fieldset>
+                    <!-- </div> -->
                 </div>
             </div>
 
-            <!-- <div class="row">
-                
-            </div> -->
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="eventDate">Date of Event :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <input type="date" class="form-control" formControlName="eventDate" (keydown)="restrictTypeOfDate()"
+                        [ngClass]="{'is-invalid': l.eventDate.invalid 
+                    && l.eventDate.touched, 'is-valid':l.eventDate.valid &&(l.eventDate.dirty || l.eventDate.touched)}"
+                        [min]="minToDate" [max]="maxToDate" />
+                    <div *ngIf="l.eventDate.errors" class="invalid-feedback">
+                        <div *ngIf="l.eventDate.errors.required">
+                            Please select event date
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">Staff/ Role/ Branch</legend>
+                    <div id="tbodyStaff">
+                        <div id="table_wrapper">
+                            <table class="table table-striped" id="table_wrapper">
+                                <!-- <thead id="header_fixed">
+                                    <tr style="text-align: center;">
+                                        <th style="width: 4%;">Sl. No.</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th style="width: 5%;">Select</th>
+                                    </tr>
+                                </thead> -->
+
+                                <tbody style="text-align:center;">
+                                    <tr *ngFor="let user of hcoUserList; index as i">
+                                        <td style="width: 4%;">{{i+1}}</td>
+                                        <td style="width: 25%;">{{user.user_firstname}}{{user.user_middlename}}
+                                            {{user.user_lastname}} ({{user.role_shortname}}) - {{user.branch_name?user.branch_name:'NA'}}
+                                        </td>
+                                        <td style="width: 5%;">selecxt</td>
+                                        <!-- <td style="width: 5%;"> <input *ngIf="ben.is_checked== true"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleBeneficiary($event,ben)">
+                                            <input *ngIf="ben.is_checked== false" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleBeneficiary($event,ben)">
+                                        </td> -->
+                                    </tr>
+                                    <tr *ngIf="hcoUserList.length == 0">
+                                        <td colspan="6">No list is available.</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+
+
         </div>
 
     </form>

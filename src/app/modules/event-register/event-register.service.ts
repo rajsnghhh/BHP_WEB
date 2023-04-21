@@ -25,4 +25,8 @@ export class EventRegisterService {
   getAllStaffOfABrancsRegion(obj): any {
     return this.http.post(`${this.baseURL}eventRegister/getAllStaffOfABrancsRegion`, obj)
   }
+
+  getEventPreRequisite(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/getEventPreRequisite`, obj)
+  }
 }

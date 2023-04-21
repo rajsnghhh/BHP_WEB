@@ -79,3 +79,25 @@ fieldset.scheduler-border {
     top: 0;
     z-index: 999;
   }
+
+  .fa-plus-circle {
+    color: #3e7758 !important;
+    font-size: 20px;
+    /* margin-left: -429px; */
+  }
+  
+  .fa-minus-circle {
+    color: red !important;
+    font-size: 20px;
+  }
+
+  #tbodyFaciliator {
+    display: block;
+    height: 130px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  ::ng-deep .mat-dialog-container {
+      overflow: hidden;
+  }

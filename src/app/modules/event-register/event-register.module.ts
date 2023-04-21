@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EventRegisterRoutingModule } from './event-register-routing.module';
 import { EventRegisterComponent } from './event-register.component';
 import { LoaderModule } from '../shared/loader/loader.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 
 
@@ -17,7 +17,8 @@ import { CreateEventRegisterComponent } from './create-event-register/create-eve
     CommonModule,
     EventRegisterRoutingModule,
     LoaderModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class EventRegisterModule { }

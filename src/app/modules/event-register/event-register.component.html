@@ -72,7 +72,110 @@
                         </div>
                     </div>
                 </form>
+
+                <div class="row">
+                    <mat-tab-group animationDuration="500ms" (selectedTabChange)="tabChanged($event)">
+
+                        <mat-tab>
+                            <ng-template mat-tab-label style="margin-left: 5px;">
+                                School Events
+                            </ng-template>
+                            <ng-template matTabContent>
+
+                                <div id="table_wrapper">
+                                    <table class="table table-striped" id="table_wrapper">
+                                        <thead id="header_fixed">
+                                            <tr style="text-align: center;">
+                                                <th style="width: 4%;">Sl. No.</th>
+                                                <th style="width: 25%;">School Name</th>
+                                                <th style="width: 30%;">School Place</th>
+                                                <th style="width: 15%;">Date of Event</th>
+                                                <th style="width: 12%;">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="tbodyy" style="text-align:center;">
+                                            <tr *ngFor="let school of SchoolEventsOfBranch|
+                                            paginate: { itemsPerPage: 5, currentPage: p };index as i;">
+                                                <td style="width: 4%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
+                                                <td style="width: 25%;">{{school.schoolName}}</td>
+                                                <td style="width: 30%;">{{school.villageName}}</td>
+                                                <td style="width: 15%;">
+                                                    {{school.eventDate.split("-").reverse().join("-")}}</td>
+                                                <td style="width: 12%;">
+                                                    <i class="fa fa-eye fa-lg" title="View Other Details"></i>
+                                                    <i class="fas fa-edit" title="Edit Event"
+                                                        (click)="editSchoolEvent(school)"></i>
+                                                    <i class="fas fa-trash" title="Delete Event"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <pagination-controls class="d-flex justify-content-end p-1 current ngx-pagination1"
+                                        (pageChange)="p = $event" (pageBoundsCorrection)="p = $event">
+                                    </pagination-controls>
+                                </div>
+
+                            </ng-template>
+                        </mat-tab>
+
+                        <mat-tab>
+                            <ng-template mat-tab-label style="margin-left: 5px;">
+                                Special Events
+                            </ng-template>
+                            <ng-template matTabContent>
+
+                                <div id="table_wrapper">
+                                    <table class="table table-striped" id="table_wrapper">
+                                        <thead id="header_fixed">
+                                            <tr style="text-align: center;">
+                                                <th style="width: 2%;">Sl. No.</th>
+                                                <th style="width: 25%;">From Date</th>
+                                                <th style="width: 25%;">To Date</th>
+                                                <th style="width: 31%;">Event Name</th>
+                                                <th style="width: 7%;">Place</th>
+                                                <th style="width: 7%;">Participants</th>
+                                                <th style="width: 7%;">Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <!-- <tbody id="tbodyy" style="text-align:center;">
+                                            <tr *ngFor="let adol of fami.adolescentGilrChildren;index as ide;">
+                                                <td style="width: 2%;">{{ide+1}}</td>
+                                                <td style="width: 25%;">
+                                                    {{adol.childName}}</td>
+                                                <td style="width: 31%;">{{adol.age}}
+                                                </td>
+            
+                                                <td style="width: 7%;" *ngIf="fami.radioCheck != 'NA'">
+                                                    <input *ngIf="adol.isChecked==true" class="form-check-input" type="checkbox"
+                                                        value="" id="flexCheckDefault"
+                                                        (change)="selectAdolescent($event, adol, fami)" checked>
+                                                    <input *ngIf="adol.isChecked!=true" class="form-check-input" type="checkbox"
+                                                        value="" id="flexCheckDefault"
+                                                        (change)="selectAdolescent($event, adol, fami)">
+                                                </td>
+            
+                                                <td style="width: 7%;" *ngIf="fami.radioCheck == 'NA'">
+                                                    <input *ngIf="adol.isChecked==true" class="form-check-input" type="checkbox"
+                                                        value="" id="flexCheckDefault"
+                                                        (change)="selectAdolescent($event, adol, fami)" checked disabled>
+                                                    <input *ngIf="adol.isChecked!=true" class="form-check-input" type="checkbox"
+                                                        value="" id="flexCheckDefault"
+                                                        (change)="selectAdolescent($event, adol, fami)" disabled>
+                                                </td>
+                                            </tr>
+            
+                                        </tbody> -->
+                                    </table>
+                                </div>
+
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
             </div>
         </div>
     </div>
+
 </div>

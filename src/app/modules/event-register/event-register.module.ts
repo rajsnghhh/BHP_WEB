@@ -6,6 +6,8 @@ import { EventRegisterComponent } from './event-register.component';
 import { LoaderModule } from '../shared/loader/loader.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { CreateEventRegisterComponent } from './create-event-register/create-eve
     EventRegisterRoutingModule,
     LoaderModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatTabsModule, NgxPaginationModule
   ]
 })
 export class EventRegisterModule { }

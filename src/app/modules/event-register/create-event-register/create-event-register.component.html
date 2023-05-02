@@ -1,14 +1,15 @@
 <app-loader [hidden]="loader"></app-loader>
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h3 class="dialog-title">Create Event Register</h3>
+        <h3 class="dialog-title" *ngIf="!specificSchoolEventDetails">Create Event Register</h3>
+        <h3 class="dialog-title" *ngIf="specificSchoolEventDetails">Edit Event Register</h3>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
 <hr>
 
 
-<div mat-dialog-content  style="overflow-y: auto; height: 400px; overflow-x: hidden;" >
+<div mat-dialog-content style="overflow-y: auto; height: 400px; overflow-x: hidden;">
     <form class="form-signin" [formGroup]="createEventRegisterForm">
 
         <div class="row">
@@ -53,8 +54,8 @@
                  l.schoolType.invalid && l.schoolType.touched, 'is-valid':
                  l.schoolType.valid && (l.schoolType.dirty || l.schoolType.touched) }">
                         <option value="">-- Select School Type --</option>
-                        <option value="govt">Government</option>
-                        <option value="private">Private</option>
+                        <option value="G">Government</option>
+                        <option value="P">Private</option>
                     </select>
                     <div *ngIf="l.schoolType.errors" class="invalid-feedback">
                         <div *ngIf="l.schoolType.errors.required">Please select school type</div>
@@ -157,17 +158,11 @@
             <div class="row">
                 <div class="form-group col-md">
                     <fieldset class="scheduler-border">
-                        <legend class="scheduler-border">Staff/ Role/ Branch</legend>
+                        <legend class="scheduler-border">Staff/ Role/ Branch :&nbsp;<span
+                                class="text-danger">*&nbsp;</span></legend>
                         <div id="tbodyStaff">
                             <div id="table_wrapper">
                                 <table class="table table-striped" id="table_wrapper">
-                                    <!-- <thead id="header_fixed">
-                                    <tr style="text-align: center;">
-                                        <th style="width: 4%;">Sl. No.</th>
-                                        <th style="width: 25%;">Name</th>
-                                        <th style="width: 5%;">Select</th>
-                                    </tr>
-                                </thead> -->
 
                                     <tbody style="text-align:center;">
                                         <tr *ngFor="let user of hcoUserList; index as i">
@@ -176,19 +171,18 @@
                                                 {{user.user_lastname}} ({{user.role_shortname}}) -
                                                 {{user.branch_name?user.branch_name:'NA'}}
                                             </td>
-                                            <td style="width: 5%;">select</td>
-                                            <!-- <td style="width: 5%;"> <input *ngIf="ben.is_checked== true"
-                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                                checked (change)="selectMultipleBeneficiary($event,ben)">
-                                            <input *ngIf="ben.is_checked== false" class="form-check-input"
-                                                type="checkbox" value="" id="flexCheckDefault"
-                                                (change)="selectMultipleBeneficiary($event,ben)">
-                                        </td> -->
+                                            <td style="width: 5%;"> <input *ngIf="user.is_checked== true"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" checked
+                                                    (change)="selectMultipleStaff($event,user)">
+                                                <input *ngIf="user.is_checked== false" class="form-check-input"
+                                                    type="checkbox" value="" id="flexCheckDefault"
+                                                    (change)="selectMultipleStaff($event,user)">
+                                            </td>
                                         </tr>
                                         <tr *ngIf="hcoUserList.length == 0">
                                             <td colspan="6">No list is available.</td>
                                         </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -203,55 +197,48 @@
                     <div class="card" style="background: whitesmoke; border: none;
                                         border-radius: 14px; height: 200px;">
                         <div class="card-body" style="height: 40vh;">
-                            <h4 class="card-title">Facilitator :</h4>
+                            <h4 class="card-title">Facilitator :&nbsp;<span class="text-danger">*&nbsp;</span></h4>
                             <i class="fas fa-plus-circle" id="circle" (click)="addMoreFacilitator()" style="cursor: pointer; float: right;
                                             margin-top:-45px;" title="Add More Facilitator"></i>
 
                             <div id="table_wrapper">
                                 <table class="table" id="table_wrapper">
-                                    <!-- <thead id="header_fixed">
-                                       <tr style="text-align: center;">
-                                            <th style="width: 10rem;">Name</th>
-                                             <th style="width: 10rem;">Designation</th>
-                                            <th style="width: 3rem;">Remove</th>
-                                        </tr>
-                                    </thead> -->
 
                                     <tbody id="tbodyFaciliator" style="text-align:center;">
                                         <tr *ngFor="let items of facilitatorDetails.facilitatorInfo; index as i">
-                                            <td> <input type="text" class="form-control" maxlength="20"
+                                            <td> <input type="text" class="form-control"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                                                    style="text-transform:capitalize;"
                                                     (keypress)="validationService.titleCase($event)"
                                                     placeholder="Facilitator Name" [ngModelOptions]="{standalone: true}"
-                                                    [(ngModel)]="facilitatorDetails.facilitatorInfo[i].Name"
+                                                    [(ngModel)]="facilitatorDetails.facilitatorInfo[i].name"
                                                     style="width: 16rem;">
                                             </td>
 
-                                            <td> <select class="form-select" formControlName="designation"
-                                                    id="designation"
-                                                    [ngClass]="{'is-invalid':l.designation.invalid && l.designation.touched,
-                                                           'is-valid':l.designation.valid && (l.designation.dirty || l.designation.touched) }">
+                                            <td> <select class="form-select"
+                                                    [(ngModel)]="facilitatorDetails.facilitatorInfo[i].designationId"
+                                                    [ngModelOptions]="{standalone: true}">
                                                     <option value="">-- Designation --</option>
                                                     <option *ngFor="let desig of designationList"
                                                         value="{{desig.eventDesignationMasterId}}">
                                                         {{ desig.designation}}
                                                     </option>
                                                 </select>
-                                                <div *ngIf="l.designation.errors" class="invalid-feedback">
-                                                    <div *ngIf="l.designation.errors.required">
-                                                        Designation selection is required
-                                                    </div>
-                                                </div>
 
                                             </td>
 
                                             <td><button type="button" class="btn btn-remove"
-                                                    (click)="removeFacilitator(i)" style="width: 2rem;">
+                                                    (click)="removeFacilitator(i)" style="width: 2rem;"
+                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag != 'D'">
                                                     <i class="fas fa-minus-circle" style="color: red !important;
-                                                        font-size: 20px; "></i>
+                                                        font-size: 20px;"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag == 'D'">
+                                                    <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                                    font-size: 20px;"></i>
                                                 </button>
                                             </td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -275,31 +262,23 @@
 
                                     <tbody id="tbodyFaciliator" style="text-align:center;">
                                         <tr *ngFor="let items of stakeHolderDetails.stakeHolderInfo; index as i">
-                                            <td> <input type="text" class="form-control" maxlength="20"
+                                            <td> <input type="text" class="form-control"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                                                    style="text-transform:capitalize;"
                                                     (keypress)="validationService.titleCase($event)"
                                                     placeholder="Stakeholder Name" [ngModelOptions]="{standalone: true}"
-                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].Name"
+                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].name"
                                                     style="width: 16rem;">
                                             </td>
 
-                                            <td> <select class="form-select" formControlName="designation"
-                                                    id="designation"
-                                                    [ngClass]="{'is-invalid':l.designation.invalid && l.designation.touched,
-                                                           'is-valid':l.designation.valid && (l.designation.dirty || l.designation.touched) }">
+                                            <td> <select class="form-select"
+                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].designationId"
+                                                    [ngModelOptions]="{standalone: true}">
                                                     <option value="">-- Designation --</option>
                                                     <option *ngFor="let desig of designationList"
                                                         value="{{desig.eventDesignationMasterId}}">
                                                         {{ desig.designation}}
                                                     </option>
                                                 </select>
-                                                <div *ngIf="l.designation.errors" class="invalid-feedback">
-                                                    <div *ngIf="l.designation.errors.required">
-                                                        Designation selection is required
-                                                    </div>
-                                                </div>
-
                                             </td>
 
                                             <td><button type="button" class="btn btn-remove"
@@ -325,7 +304,8 @@
                     <div class="card" style="background: whitesmoke; border: none;
                                         border-radius: 14px; height: 200px;">
                         <div class="card-body" style="height: 40vh;">
-                            <h4 class="card-title">Details of Attendee :</h4>
+                            <h4 class="card-title">Details of Attendee :&nbsp;<span class="text-danger">*&nbsp;</span>
+                            </h4>
                             <i class="fas fa-plus-circle" id="circle" (click)="addMoreAttendeeDetails()" style="cursor: pointer; float: right;
                                             margin-top:-45px;" title="Add More Attendee Details"></i>
 
@@ -334,48 +314,38 @@
 
                                     <tbody id="tbodyFaciliator" style="text-align:center;">
                                         <tr *ngFor="let items of attendeeDetails.attendeeInfo; index as i">
-                                            <td> <input type="text" class="form-control" maxlength="20"
+                                            <td> <input type="text" class="form-control"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                                                    style="text-transform:capitalize;"
-                                                    (keypress)="validationService.titleCase($event)"
-                                                    placeholder="Stakeholder Name" [ngModelOptions]="{standalone: true}"
-                                                    [(ngModel)]="attendeeDetails.attendeeInfo[i].Name"
-                                                    style="width: 16rem;">
+                                                    (keypress)="validationService.titleCase($event)" placeholder="Name"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="attendeeDetails.attendeeInfo[i].name"
+                                                    style="width: 485px;">
                                             </td>
 
-                                            <td> <select class="form-select" formControlName="designation"
-                                                    id="designation"
-                                                    [ngClass]="{'is-invalid':l.designation.invalid && l.designation.touched,
-                                                           'is-valid':l.designation.valid && (l.designation.dirty || l.designation.touched) }">
-                                                    <option value="">-- Designation --</option>
-                                                    <option *ngFor="let desig of designationList"
-                                                        value="{{desig.eventDesignationMasterId}}">
-                                                        {{ desig.designation}}
+                                            <td>
+                                                <select class="form-select" style="width: 12rem;"
+                                                    [(ngModel)]="attendeeDetails.attendeeInfo[i].className"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <option value="">-- Class --</option>
+                                                    <option *ngFor="let class of classList" value="{{class}}">
+                                                        {{class}}
                                                     </option>
                                                 </select>
-                                                <div *ngIf="l.designation.errors" class="invalid-feedback">
-                                                    <div *ngIf="l.designation.errors.required">
-                                                        Designation selection is required
-                                                    </div>
-                                                </div>
-
                                             </td>
 
-                                            <td> <select class="form-select" formControlName="designation"
-                                                    id="designation"
-                                                    [ngClass]="{'is-invalid':l.designation.invalid && l.designation.touched,
-                                                       'is-valid':l.designation.valid && (l.designation.dirty || l.designation.touched) }">
-                                                    <option value="">-- Designation --</option>
-                                                    <option *ngFor="let desig of designationList"
-                                                        value="{{desig.eventDesignationMasterId}}">
-                                                        {{ desig.designation}}
+                                            <td> <select class="form-select" style="width: 12rem;"
+                                                    [(ngModel)]="attendeeDetails.attendeeInfo[i].sex"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <option value="">-- Sex --</option>
+                                                    <option value="M" *ngIf="createEventRegisterForm.value.eventType==1||
+                                                        specificSchoolEventDetails?.eventTypeMasterId==1">
+                                                        Male</option>
+                                                    <option value="F">Female
+                                                    </option>
+                                                    <option value="O" *ngIf="createEventRegisterForm.value.eventType==1||
+                                                        specificSchoolEventDetails?.eventTypeMasterId==1">Others
                                                     </option>
                                                 </select>
-                                                <div *ngIf="l.designation.errors" class="invalid-feedback">
-                                                    <div *ngIf="l.designation.errors.required">
-                                                        Designation selection is required
-                                                    </div>
-                                                </div>
 
                                             </td>
 
@@ -403,6 +373,7 @@
 
 <div class="modal-footer">
     <div class="row">
-        <button type="button" class="btn btn-primary btn-sm">Save</button>
+        <button type="button" class="btn btn-primary btn-sm" [disabled]="!disableSave()"
+            (click)="submitForm()">Save</button>
     </div>
 </div>

@@ -196,6 +196,9 @@ const routes = [{
   loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_sattu-register-report_sattu-register-report_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modules/sattu-register-report/sattu-register-report.module */ 43865)).then(m => m.SattuRegisterReportModule),
   canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
 }, {
+  path: 'event-register',
+  loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_event-register_event-register_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modules/event-register/event-register.module */ 53093)).then(m => m.EventRegisterModule)
+}, {
   path: '**',
   redirectTo: ''
 }];
@@ -2492,6 +2495,9 @@ class SidebarComponent {
     if (routeId == 282) {
       this.router.navigate(['/sattu-register-report']);
     }
+    if (routeId == 286 || routeId == 287 || routeId == 288 || routeId == 289) {
+      this.router.navigate(['/event-register']);
+    }
   }
   ngAfterViewInit() {
     let a = document.querySelectorAll(".card-header");
@@ -2654,7 +2660,7 @@ const environment = {
   // New Test Server
   // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
   // Training
-  // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
+  apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
   // New Staging Server
@@ -2663,7 +2669,7 @@ const environment = {
   // apiUrl: 'http://192.168.149.221:6183/bhp/api/v1/prod/'
   // apiUrl: 'http://122.186.245.217:6183/bhp/api/v1/prod/'
   // New Production Server
-  apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
+  // apiUrl: 'https://bhp.bandhan-konnagar.org:6183/bhp/api/v1/prod/'
   // Soumen Machine
   // apiUrl: 'http://192.168.153.58:6180/bhp/api/v1/'
   // Chayan Machine

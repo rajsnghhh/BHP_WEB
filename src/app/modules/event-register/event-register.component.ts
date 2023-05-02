@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpService } from '../core/http/http.service';
 import { EventRegisterService } from './event-register.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 
 @Component({
@@ -24,6 +26,10 @@ export class EventRegisterComponent {
   villagesOfBranch: Array<any> = [];
   lowerRankbranchId: any;
   branchOpenDate: any;
+  index: number = 0;
+  SchoolEventsOfBranch: Array<any> = [];
+  specificSchoolEventDetails: Array<any> = [];
+  p: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
@@ -90,17 +96,12 @@ export class EventRegisterComponent {
       });
     }
 
-    // this.viewEscortReferForm.controls.branch.setValue('');
-    // this.viewEscortReferForm.controls.block.setValue('');
-    // this.viewEscortReferForm.controls.gp.setValue('');
-    // this.viewEscortReferForm.controls.gram.setValue('');
-    // this.gpList = [];
-    // this.villageList = [];
-    // this.villagesOfBranch = [];
-    // if (this.viewEscortReferForm.value.region == '') {
-    //   this.branchList = [];
-    //   this.escortviewData = [];
-    // }
+    this.eventRegisterForm.controls.branch.setValue('');
+    this.SchoolEventsOfBranch = [];
+    if (this.eventRegisterForm.value.region == '') {
+      this.branchList = [];
+      this.SchoolEventsOfBranch = [];
+    }
   }
 
   changeBranch(branchId) {
@@ -109,33 +110,51 @@ export class EventRegisterComponent {
       this.branchOpenDate = this.branchList.find(x => x.branchId == branchId)?.branchOpenDate;
       console.log(this.branchOpenDate, 'branchOpenDate');
     }
-    // let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
-    // this.loader = false;
-    // this.eventService.getVillagesOfBranch(req).subscribe((res) => {
-    //   this.loader = true;
-    //   this.villagesOfBranch = res.responseObject;
-    //   console.log(this.villagesOfBranch, 'villagesOfBranch');
-    // });
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
+    this.loader = false;
+    this.eventService.viewAllEventsOfABranch(req).subscribe((res) => {
+      this.loader = true;
+      this.SchoolEventsOfBranch = res.responseObject.schoolEvents;
+      console.log(this.SchoolEventsOfBranch, 'SchoolEventsOfBranch');
+    });
 
-    // this.viewEscortReferForm.controls.block.setValue('');
-    // this.viewEscortReferForm.controls.gp.setValue('');
-    // this.viewEscortReferForm.controls.gram.setValue('');
-    // this.gpList = [];
-    // this.villageList = [];
-    // this.escortviewData = [];
+    this.SchoolEventsOfBranch = [];
   }
 
-  createEventRegister() {
+  createEventRegister(specificSchoolEventDetails) {
+    // console.log(specificSchoolEventDetails);
+
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
       height: '570px',
-      data: { branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate }
+      data: {
+        branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
+        specificSchoolEventDetails: specificSchoolEventDetails
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       this.changeBranch(this.eventRegisterForm.value.branch || this.lowerRankbranchId);
     });
   }
+
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent) {
+    this.index = tabChangeEvent.index;
+  }
+
+  editSchoolEvent(school) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
+    this.loader = false;
+    this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSchoolEventDetails = res.responseObject;
+      // console.log(this.specificSchoolEventDetails, 'specificSchoolEventDetails');
+      this.createEventRegister(this.specificSchoolEventDetails);
+    });
+
+  }
+
 
 }
 

@@ -29,4 +29,17 @@ export class EventRegisterService {
   getEventPreRequisite(obj): any {
     return this.http.post(`${this.baseURL}eventRegister/getEventPreRequisite`, obj)
   }
+
+  schoolEventSaveOrUpdate(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/schoolEventSaveOrUpdate`, obj)
+  }
+
+  viewAllEventsOfABranch(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/viewAllEventsOfABranch`, obj)
+  }
+
+  viewSpecificSchoolEventRegister(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/viewSpecificSchoolEventRegister`, obj)
+  }
+
 }

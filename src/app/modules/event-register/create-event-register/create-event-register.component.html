@@ -1,9 +1,7 @@
 <app-loader [hidden]="loader"></app-loader>
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h3 class="dialog-title" *ngIf="!specificSchoolEventDetails">Create Event Register</h3>
-        <h3 class="dialog-title" *ngIf="specificSchoolEventDetails?.modalType=='edit'">Edit Event Register</h3>
-        <h3 class="dialog-title" *ngIf="specificSchoolEventDetails?.modalType=='view'">View Event Register</h3>
+        <h3 class="dialog-title">{{dialogTitle}}</h3>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
@@ -30,6 +28,7 @@
             </div>
         </div>
 
+        <!-- School Events -->
         <div *ngIf="event_is_special == 'N'">
 
             <div class="row">
@@ -397,6 +396,203 @@
 
 
         </div>
+
+        <!-- Special Events -->
+        <div *ngIf="event_is_special == 'Y'">
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="eventDateFrom">From Date of Event :&nbsp;<span
+                            class="text-danger">*&nbsp;</span></label>
+                    <input type="date" class="form-control" formControlName="eventDateFrom"
+                        (keydown)="restrictTypeOfDate()" (change)="setEventDateTo($event.target.value)"
+                        [ngClass]="{'is-invalid': l.eventDateFrom.invalid 
+                    && l.eventDateFrom.touched, 'is-valid':l.eventDateFrom.valid &&(l.eventDateFrom.dirty || l.eventDateFrom.touched)}" [min]="minToDate" [max]="maxToDate" />
+                    <div *ngIf="l.eventDateFrom.errors" class="invalid-feedback">
+                        <div *ngIf="l.eventDateFrom.errors.required">
+                            Please select from event date
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md">
+                    <label for="eventDateTo">To Date of Event:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                    <input type="date" class="form-control" formControlName="eventDateTo"
+                        (keydown)="restrictTypeOfDate()"
+                        [ngClass]="{'is-invalid': l.eventDateTo.invalid 
+                    && l.eventDateTo.touched, 'is-valid':l.eventDateTo.valid &&(l.eventDateTo.dirty || l.eventDateTo.touched)}" [min]="toDateMin">
+                    <div *ngIf="l.eventDateTo.errors" class="invalid-feedback">
+                        <div *ngIf="l.eventDateTo.errors.required">
+                            Please select to event date
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md">
+                    <fieldset class="scheduler-border">
+                        <legend class="scheduler-border">Staff/ Role/ Branch :&nbsp;<span
+                                class="text-danger">*&nbsp;</span></legend>
+                        <div id="tbodyStaff">
+                            <div id="table_wrapper">
+                                <table class="table table-striped" id="table_wrapper">
+
+                                    <tbody style="text-align:center;">
+                                        <tr *ngFor="let user of hcoUserList; index as i">
+                                            <td style="width: 4%;">{{i+1}}</td>
+                                            <td style="width: 25%;">{{user.user_firstname}}{{user.user_middlename}}
+                                                {{user.user_lastname}} ({{user.role_shortname}}) -
+                                                {{user.branch_name?user.branch_name:'NA'}}
+                                            </td>
+                                            <td style="width: 5%;"> <input
+                                                    *ngIf="user.is_checked== true && specificSchoolEventDetails?.modalType!='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" checked
+                                                    (change)="selectMultipleStaff($event,user)">
+                                                <input
+                                                    *ngIf="user.is_checked== false  && specificSchoolEventDetails?.modalType!='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" (change)="selectMultipleStaff($event,user)">
+                                                <input
+                                                    *ngIf="user.is_checked== true  && specificSchoolEventDetails?.modalType=='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" checked
+                                                    (change)="selectMultipleStaff($event,user)" disabled>
+                                                <input
+                                                    *ngIf="user.is_checked== false  && specificSchoolEventDetails?.modalType=='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" (change)="selectMultipleStaff($event,user)"
+                                                    disabled>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="hcoUserList.length == 0">
+                                            <td colspan="6">No list is available.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+
+                    <div class="card" style="background: whitesmoke; border: none;
+                                        border-radius: 14px; height: 200px;">
+                        <div class="card-body" style="height: 40vh;">
+                            <h4 class="card-title">Facilitator :&nbsp;<span class="text-danger">*&nbsp;</span></h4>
+                            <i class="fas fa-plus-circle" id="circle" (click)="addMoreFacilitator()" style="cursor: pointer; float: right;
+                                            margin-top:-45px;" title="Add More Facilitator"
+                                *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
+
+                            <div id="table_wrapper">
+                                <table class="table" id="table_wrapper">
+
+                                    <tbody id="tbodyFaciliator" style="text-align:center;">
+                                        <tr *ngFor="let items of facilitatorDetails.facilitatorInfo; index as i">
+                                            <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
+                                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                                    (keypress)="validationService.titleCase($event)"
+                                                    placeholder="Facilitator Name" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="facilitatorDetails.facilitatorInfo[i].name"
+                                                    style="width: 16rem;">
+                                            </td>
+
+                                            <td> <select class="form-select" [disabled]="isReadOnly"
+                                                    [(ngModel)]="facilitatorDetails.facilitatorInfo[i].designationId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <option value="">-- Designation --</option>
+                                                    <option *ngFor="let desig of designationList"
+                                                        value="{{desig.eventDesignationMasterId}}">
+                                                        {{ desig.designation}}
+                                                    </option>
+                                                </select>
+
+                                            </td>
+
+                                            <td><button type="button" class="btn btn-remove"
+                                                    (click)="removeFacilitator(i)" style="width: 2rem;"
+                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag != 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                    <i class="fas fa-minus-circle" style="color: red !important;
+                                                        font-size: 20px;"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                    <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                                    font-size: 20px;"></i>
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+              <div class="form-group col-md-6">
+
+                    <div class="card" style="background: whitesmoke; border: none;
+                                        border-radius: 14px; height: 200px;">
+                        <div class="card-body" style="height: 40vh;">
+                            <h4 class="card-title">Stakeholder :</h4>
+                            <i class="fas fa-plus-circle" id="circle" (click)="addMoreStakeHolder()" style="cursor: pointer; float: right;
+                                            margin-top:-45px;" title="Add More Stakeholder"
+                                *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
+
+                            <div id="table_wrapper">
+                                <table class="table" id="table_wrapper">
+
+                                    <tbody id="tbodyFaciliator" style="text-align:center;">
+                                        <tr *ngFor="let items of stakeHolderDetails.stakeHolderInfo; index as i">
+                                            <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
+                                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                                    (keypress)="validationService.titleCase($event)"
+                                                    placeholder="Stakeholder Name" [ngModelOptions]="{standalone: true}"
+                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].name"
+                                                    style="width: 16rem;">
+                                            </td>
+
+                                            <td> <select class="form-select" [disabled]="isReadOnly"
+                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].designationId"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <option value="">-- Designation --</option>
+                                                    <option *ngFor="let desig of designationList"
+                                                        value="{{desig.eventDesignationMasterId}}">
+                                                        {{ desig.designation}}
+                                                    </option>
+                                                </select>
+                                            </td>
+
+                                            <td><button type="button" class="btn btn-remove"
+                                                    (click)="removeStackHolder(i)" style="width: 2rem;"
+                                                    *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'A' && specificSchoolEventDetails?.modalType!='view'">
+                                                    <i class="fas fa-minus-circle" style="color: red !important;
+                                                        font-size: 20px; "></i>
+                                                </button>
+                                                <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                    *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                    <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                                font-size: 20px;"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div> 
+
+            </div>
+
+        </div>
+
 
     </form>
 </div>

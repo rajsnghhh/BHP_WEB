@@ -22,6 +22,8 @@ export class CreateEventRegisterComponent {
   gpList: Array<any> = [];
   minToDate: any;
   maxToDate: any;
+  toDateMin: any;
+  toDateMax: any;
   hcoUserList: Array<any> = [];
   issuesList: Array<any> = [];
   designationList: Array<any> = [];
@@ -42,6 +44,7 @@ export class CreateEventRegisterComponent {
   classList: Array<any> = [];
   specificSchoolEventDetails: any;
   isReadOnly: boolean;
+  dialogTitle: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CreateEventRegisterComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
@@ -53,6 +56,13 @@ export class CreateEventRegisterComponent {
     // console.log(this.data);
     this.specificSchoolEventDetails = this.data.specificSchoolEventDetails;
     console.log(this.specificSchoolEventDetails);
+    if (this.specificSchoolEventDetails?.modalType == 'edit') {
+      this.dialogTitle = 'Edit Event Register';
+    } else if (this.specificSchoolEventDetails?.modalType == 'view') {
+      this.dialogTitle = 'View Event Register';
+    } else {
+      this.dialogTitle = 'Create Event Register';
+    }
 
     this.createEventForm();
 
@@ -72,7 +82,10 @@ export class CreateEventRegisterComponent {
       gp: ['', Validators.required],
       gram: ['', Validators.required],
       eventDate: [this.specificSchoolEventDetails?.eventDate ? this.specificSchoolEventDetails?.eventDate : '', Validators.required],
-      issueType: [this.specificSchoolEventDetails?.issueId ? this.specificSchoolEventDetails?.issueId : '', Validators.required]
+      issueType: [this.specificSchoolEventDetails?.issueId ? this.specificSchoolEventDetails?.issueId : '', Validators.required],
+
+      eventDateFrom: ['', Validators.required],
+      eventDateTo: ['', Validators.required]
     });
 
 
@@ -115,6 +128,13 @@ export class CreateEventRegisterComponent {
 
     }, 500);
 
+    if (this.createEventRegisterForm.value.eventDateFrom) {
+      this.createEventRegisterForm.controls['eventDateTo'].enable();
+    } else {
+      this.createEventRegisterForm.controls['eventDateTo'].disable();
+    }
+
+
   }
 
   get l() {
@@ -122,12 +142,84 @@ export class CreateEventRegisterComponent {
   }
 
   changeEventTypes(eventTypeMasterId) {
-    // console.log(true, eventTypeMasterId);
     if (!this.specificSchoolEventDetails?.eventTypeMasterId) {
       this.createEventRegisterForm.controls.issueType.setValue('');
     }
+
     this.event_is_special = this.eventTypeLists.find(x => x.eventTypeMasterId == eventTypeMasterId)?.is_special;
-    // console.log(this.event_is_special, 'this.event_is_special');
+    console.log(this.event_is_special, 'this.event_is_special');
+
+    console.log(this.data.branchOpenDate);
+    this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
+    this.maxToDate = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
+
+    let hcoUserReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
+    this.loader = false;
+    this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res) => {
+      this.loader = true;
+      this.hcoUserList = res.responseObject.fullStaffList;
+      this.hcoUserList = this.hcoUserList?.map(({
+        is_checked = false,
+        ...rest
+      }) => ({
+        is_checked,
+        ...rest
+      }));
+
+
+      this.specificSchoolEventDetails?.staffList?.forEach(e => {
+        this.hcoUserList.find(v => v.user_id == e.staffId).is_checked = true;
+        this.hcoUserList.find(v => v.user_id == e.staffId).staffEventMapId = e.staffEventMapId;
+        this.staffListID.push({
+          staffEventMapId: e.staffEventMapId, staffId: e.staffId,
+          active_flag: 'A'
+        })
+      })
+    });
+
+
+    if (this.specificSchoolEventDetails?.facilitatorList?.length > 0) {
+      this.specificSchoolEventDetails?.facilitatorList.forEach(x => {
+        this.facilitatorDetails.facilitatorInfo.push({
+          facilitatorStakeholderMapId: x.facilitatorStakeholderMapId,
+          name: x.name,
+          designationId: x.designationId,
+          active_flag: 'A'
+        })
+        console.log(this.facilitatorDetails.facilitatorInfo);
+
+      });
+    } else {
+      this.facilitatorDetails.facilitatorInfo=[]
+      this.facilitatorDetails.facilitatorInfo.push({
+        facilitatorStakeholderMapId: 0,
+        name: '',
+        designationId: '',
+        active_flag: 'A'
+      });
+    }
+
+    if (this.specificSchoolEventDetails?.stakeHolderList?.length > 0) {
+      this.specificSchoolEventDetails?.stakeHolderList.forEach(x => {
+        this.stakeHolderDetails.stakeHolderInfo.push({
+          facilitatorStakeholderMapId: x.facilitatorStakeholderMapId,
+          name: x.name,
+          designationId: x.designationId,
+          active_flag: 'A'
+        })
+        console.log(this.stakeHolderDetails.stakeHolderInfo);
+
+      })
+    } else {
+      this.stakeHolderDetails.stakeHolderInfo=[]
+      this.stakeHolderDetails.stakeHolderInfo.push({
+        facilitatorStakeholderMapId: 0,
+        name: '',
+        designationId: '',
+        active_flag: 'A'
+      });
+    }
+
     if (this.event_is_special == 'N') {
       let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
       this.loader = false;
@@ -137,32 +229,6 @@ export class CreateEventRegisterComponent {
         // console.log(this.villagesOfBranch, 'villagesOfBranch');
       });
 
-      this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
-      this.maxToDate = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
-
-      let hcoUserReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
-      this.loader = false;
-      this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res) => {
-        this.loader = true;
-        this.hcoUserList = res.responseObject.fullStaffList;
-        this.hcoUserList = this.hcoUserList?.map(({
-          is_checked = false,
-          ...rest
-        }) => ({
-          is_checked,
-          ...rest
-        }));
-
-
-        this.specificSchoolEventDetails?.staffList?.forEach(e => {
-          this.hcoUserList.find(v => v.user_id == e.staffId).is_checked = true;
-          this.hcoUserList.find(v => v.user_id == e.staffId).staffEventMapId = e.staffEventMapId;
-          this.staffListID.push({
-            staffEventMapId: e.staffEventMapId, staffId: e.staffId,
-            active_flag: 'A'
-          })
-        })
-      });
 
 
       let getEventPreRequisiteReg = { dataAccessDTO: this.httpService.dataAccessDTO, event_type_master_id: null };
@@ -176,53 +242,17 @@ export class CreateEventRegisterComponent {
         // console.log(this.designationList, 'designationList')
       });
 
-      this.facilitatorDetails.facilitatorInfo = [];
-      this.stakeHolderDetails.stakeHolderInfo = [];
+      // this.facilitatorDetails.facilitatorInfo = [];
+      // this.stakeHolderDetails.stakeHolderInfo = [];
       this.attendeeDetails.attendeeInfo = [];
 
       // console.log(this.specificSchoolEventDetails?.facilitatorList);
 
 
-      if (this.specificSchoolEventDetails?.facilitatorList?.length > 0) {
-        this.specificSchoolEventDetails?.facilitatorList.forEach(x => {
-          this.facilitatorDetails.facilitatorInfo.push({
-            facilitatorStakeholderMapId: x.facilitatorStakeholderMapId,
-            name: x.name,
-            designationId: x.designationId,
-            active_flag: 'A'
-          })
-          console.log(this.facilitatorDetails.facilitatorInfo);
-
-        });
-      } else {
-        this.facilitatorDetails.facilitatorInfo.push({
-          facilitatorStakeholderMapId: 0,
-          name: '',
-          designationId: '',
-          active_flag: 'A'
-        });
-      }
+     
 
 
-      if (this.specificSchoolEventDetails?.stakeHolderList?.length > 0) {
-        this.specificSchoolEventDetails?.stakeHolderList.forEach(x => {
-          this.stakeHolderDetails.stakeHolderInfo.push({
-            facilitatorStakeholderMapId: x.facilitatorStakeholderMapId,
-            name: x.name,
-            designationId: x.designationId,
-            active_flag: 'A'
-          })
-          console.log(this.stakeHolderDetails.stakeHolderInfo);
-
-        })
-      } else {
-        this.stakeHolderDetails.stakeHolderInfo.push({
-          facilitatorStakeholderMapId: 0,
-          name: '',
-          designationId: '',
-          active_flag: 'A'
-        });
-      }
+ 
 
       if (this.specificSchoolEventDetails?.attendeeList) {
         this.specificSchoolEventDetails?.attendeeList.forEach(x => {
@@ -254,6 +284,10 @@ export class CreateEventRegisterComponent {
       }
 
       // console.log(this.classList);
+    }
+
+    if (this.event_is_special == 'Y') {
+
     }
   }
 
@@ -546,5 +580,18 @@ export class CreateEventRegisterComponent {
     this.toaster.error(message, 'Event Register', {
       timeOut: 3000,
     });
+  }
+
+  //Special events functionalities
+  setEventDateTo(value) {
+    if (value) {
+      this.toDateMin = moment(value).add(0, 'days').format('YYYY-MM-DD');
+      this.createEventRegisterForm.controls['eventDateTo'].enable();
+      this.createEventRegisterForm.controls.eventDateTo.setValue('')
+    } else {
+      this.createEventRegisterForm.controls['eventDateTo'].disable();
+      this.createEventRegisterForm.controls.eventDateTo.setValue('')
+    }
+
   }
 }

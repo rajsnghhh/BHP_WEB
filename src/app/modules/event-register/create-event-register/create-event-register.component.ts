@@ -41,6 +41,7 @@ export class CreateEventRegisterComponent {
 
   classList: Array<any> = [];
   specificSchoolEventDetails: any;
+  isReadOnly: boolean;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CreateEventRegisterComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
@@ -75,9 +76,8 @@ export class CreateEventRegisterComponent {
     });
 
 
-
     setTimeout(() => {
-      if (this.specificSchoolEventDetails?.eventTypeMasterId) {
+      if (this.specificSchoolEventDetails?.eventTypeMasterId && this.specificSchoolEventDetails?.modalType == 'edit') {
         // console.log(true);
 
         this.changeEventTypes(this.specificSchoolEventDetails?.eventTypeMasterId);
@@ -95,6 +95,24 @@ export class CreateEventRegisterComponent {
         this.createEventRegisterForm.controls['eventDate'].disable();
         return this.createEventRegisterForm.markAllAsTouched();
       }
+
+      else if (this.specificSchoolEventDetails?.eventTypeMasterId && this.specificSchoolEventDetails?.modalType == 'view') {
+        this.changeEventTypes(this.specificSchoolEventDetails?.eventTypeMasterId);
+        setTimeout(() => {
+          this.changeBlock(this.specificSchoolEventDetails?.blockId);
+          if (this.specificSchoolEventDetails?.gpId) {
+            this.createEventRegisterForm.controls.gp.setValue(this.specificSchoolEventDetails?.gpId)
+          }
+          this.changeGp(this.specificSchoolEventDetails?.gpId)
+          if (this.specificSchoolEventDetails?.schoolPlaceVillageId) {
+            this.createEventRegisterForm.controls.gram.setValue(this.specificSchoolEventDetails?.schoolPlaceVillageId)
+          }
+        }, 100);
+        this.createEventRegisterForm.disable();
+        this.isReadOnly = true;
+      }
+
+
     }, 500);
 
   }
@@ -105,6 +123,9 @@ export class CreateEventRegisterComponent {
 
   changeEventTypes(eventTypeMasterId) {
     // console.log(true, eventTypeMasterId);
+    if (!this.specificSchoolEventDetails?.eventTypeMasterId) {
+      this.createEventRegisterForm.controls.issueType.setValue('');
+    }
     this.event_is_special = this.eventTypeLists.find(x => x.eventTypeMasterId == eventTypeMasterId)?.is_special;
     // console.log(this.event_is_special, 'this.event_is_special');
     if (this.event_is_special == 'N') {
@@ -136,6 +157,10 @@ export class CreateEventRegisterComponent {
         this.specificSchoolEventDetails?.staffList?.forEach(e => {
           this.hcoUserList.find(v => v.user_id == e.staffId).is_checked = true;
           this.hcoUserList.find(v => v.user_id == e.staffId).staffEventMapId = e.staffEventMapId;
+          this.staffListID.push({
+            staffEventMapId: e.staffEventMapId, staffId: e.staffId,
+            active_flag: 'A'
+          })
         })
       });
 
@@ -155,13 +180,21 @@ export class CreateEventRegisterComponent {
       this.stakeHolderDetails.stakeHolderInfo = [];
       this.attendeeDetails.attendeeInfo = [];
 
-      // console.log(this.schoolDetails?.facilitatorList);
-      // console.log(this.facilitatorDetails.facilitatorInfo);
+      // console.log(this.specificSchoolEventDetails?.facilitatorList);
 
-      if (this.specificSchoolEventDetails?.facilitatorList) {
-        this.facilitatorDetails.facilitatorInfo = this.specificSchoolEventDetails?.facilitatorList
-      }
-      else {
+
+      if (this.specificSchoolEventDetails?.facilitatorList?.length > 0) {
+        this.specificSchoolEventDetails?.facilitatorList.forEach(x => {
+          this.facilitatorDetails.facilitatorInfo.push({
+            facilitatorStakeholderMapId: x.facilitatorStakeholderMapId,
+            name: x.name,
+            designationId: x.designationId,
+            active_flag: 'A'
+          })
+          console.log(this.facilitatorDetails.facilitatorInfo);
+
+        });
+      } else {
         this.facilitatorDetails.facilitatorInfo.push({
           facilitatorStakeholderMapId: 0,
           name: '',
@@ -170,8 +203,18 @@ export class CreateEventRegisterComponent {
         });
       }
 
+
       if (this.specificSchoolEventDetails?.stakeHolderList?.length > 0) {
-        this.stakeHolderDetails.stakeHolderInfo = this.specificSchoolEventDetails?.stakeHolderList
+        this.specificSchoolEventDetails?.stakeHolderList.forEach(x => {
+          this.stakeHolderDetails.stakeHolderInfo.push({
+            facilitatorStakeholderMapId: x.facilitatorStakeholderMapId,
+            name: x.name,
+            designationId: x.designationId,
+            active_flag: 'A'
+          })
+          console.log(this.stakeHolderDetails.stakeHolderInfo);
+
+        })
       } else {
         this.stakeHolderDetails.stakeHolderInfo.push({
           facilitatorStakeholderMapId: 0,
@@ -182,7 +225,16 @@ export class CreateEventRegisterComponent {
       }
 
       if (this.specificSchoolEventDetails?.attendeeList) {
-        this.attendeeDetails.attendeeInfo = this.specificSchoolEventDetails?.attendeeList;
+        this.specificSchoolEventDetails?.attendeeList.forEach(x => {
+          this.attendeeDetails.attendeeInfo.push({
+            eventSchoolAttendeeMapId: x.eventSchoolAttendeeMapId,
+            name: x.name,
+            className: x.className,
+            sex: x.sex,
+            active_flag: 'A'
+          })
+          console.log(this.stakeHolderDetails.stakeHolderInfo);
+        })
       } else {
         this.attendeeDetails.attendeeInfo.push({
           eventSchoolAttendeeMapId: 0,
@@ -217,7 +269,6 @@ export class CreateEventRegisterComponent {
     this.createEventRegisterForm.controls.gp.setValue('');
     this.createEventRegisterForm.controls.gram.setValue('');
     this.villageList = [];
-    // this.escortviewData = [];
   }
 
   changeGp(gpId) {
@@ -225,7 +276,6 @@ export class CreateEventRegisterComponent {
     this.villageList = this.gpList.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
     // console.log(this.villageList, 'villageList');
     this.createEventRegisterForm.controls.gram.setValue('');
-    // this.escortviewData = [];
   }
 
   restrictTypeOfDate() {
@@ -269,6 +319,8 @@ export class CreateEventRegisterComponent {
   }
 
   removeFacilitator(i) {
+    console.log(this.facilitatorDetails.facilitatorInfo);
+
     var faci = this.facilitatorDetails.facilitatorInfo;
     if (this.specificSchoolEventDetails?.eventTypeMasterId) {
       if (faci.length != 0) {
@@ -276,19 +328,16 @@ export class CreateEventRegisterComponent {
           faci[i].active_flag = "D";
         } else {
           faci.splice(i, 1);
+          console.log(this.facilitatorDetails.facilitatorInfo);
         }
       } else {
         faci.splice(i, 1);
+        console.log(this.facilitatorDetails.facilitatorInfo);
       }
     } else {
       faci.splice(i, 1);
+      console.log(this.facilitatorDetails.facilitatorInfo);
     }
-
-    // if (this.specificSchoolEventDetails?.eventTypeMasterId) {
-    //   this.facilitatorDetails.facilitatorInfo[i].active_flag = "D"
-    // } else {
-    //   this.facilitatorDetails.facilitatorInfo.splice(i, 1);
-    // }
 
   }
 
@@ -299,10 +348,29 @@ export class CreateEventRegisterComponent {
       designationId: '',
       active_flag: 'A'
     });
+    console.log(this.stakeHolderDetails.stakeHolderInfo);
+
   }
 
   removeStackHolder(i) {
-    this.stakeHolderDetails.stakeHolderInfo.splice(i, 1);
+    var faci = this.stakeHolderDetails.stakeHolderInfo;
+    if (this.specificSchoolEventDetails?.eventTypeMasterId) {
+      if (faci.length != 0) {
+        if (faci[i].facilitatorStakeholderMapId != 0) {
+          faci[i].active_flag = "D";
+          console.log(this.stakeHolderDetails.stakeHolderInfo);
+        } else {
+          faci.splice(i, 1);
+          console.log(this.stakeHolderDetails.stakeHolderInfo);
+        }
+      } else {
+        faci.splice(i, 1);
+        console.log(this.stakeHolderDetails.stakeHolderInfo);
+      }
+    } else {
+      faci.splice(i, 1);
+      console.log(this.stakeHolderDetails.stakeHolderInfo);
+    }
   }
 
   addMoreAttendeeDetails() {
@@ -313,10 +381,28 @@ export class CreateEventRegisterComponent {
       sex: '',
       active_flag: 'A'
     });
+    console.log(this.attendeeDetails.attendeeInfo);
   }
 
   removeAttendeeDetails(i) {
-    this.attendeeDetails.attendeeInfo.splice(i, 1);
+    var faci = this.attendeeDetails.attendeeInfo;
+    if (this.specificSchoolEventDetails?.eventTypeMasterId) {
+      if (faci.length != 0) {
+        if (faci[i].eventSchoolAttendeeMapId != 0) {
+          faci[i].active_flag = "D";
+          console.log(this.attendeeDetails.attendeeInfo);
+        } else {
+          faci.splice(i, 1);
+          console.log(this.attendeeDetails.attendeeInfo);
+        }
+      } else {
+        faci.splice(i, 1);
+        console.log(this.attendeeDetails.attendeeInfo);
+      }
+    } else {
+      faci.splice(i, 1);
+      console.log(this.attendeeDetails.attendeeInfo);
+    }
   }
 
   disableSave() {
@@ -359,9 +445,21 @@ export class CreateEventRegisterComponent {
         }
       })
 
-      if (this.facilitatorDetails.facilitatorInfo.filter(x => x.name).length == 0) {
+      if (this.facilitatorDetails.facilitatorInfo.filter(x => x.active_flag == 'A' && x.name).length == 0) {
         flag = false
       }
+
+      this.stakeHolderDetails.stakeHolderInfo.forEach(y => {
+        if (y.name) {
+          if (!y.designationId) {
+            flag = false;
+          }
+        } else if (y.designationId) {
+          if (!y.name) {
+            flag = false;
+          }
+        }
+      })
 
       this.attendeeDetails.attendeeInfo.forEach(y => {
         if (y.name) {
@@ -385,15 +483,11 @@ export class CreateEventRegisterComponent {
         }
       })
 
-      if (this.attendeeDetails.attendeeInfo.filter(x => x.name).length == 0) {
+      if (this.attendeeDetails.attendeeInfo.filter(x => x.active_flag == 'A' && x.name).length == 0) {
         flag = false;
       }
-
-      // console.log(this.facilitatorDetails.facilitatorInfo);
-      // console.log(this.facilitatorDetails.facilitatorInfo.filter(x => x.name).length);
     }
     return flag;
-
   }
 
   submitForm() {
@@ -414,24 +508,22 @@ export class CreateEventRegisterComponent {
 
     let schoolEventReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      eventRegisterSchoolId: 0,
-      eventTypeMasterId: this.createEventRegisterForm.value.eventType,
+      eventRegisterSchoolId: this.specificSchoolEventDetails?.eventRegisterSchoolId ? this.specificSchoolEventDetails?.eventRegisterSchoolId : 0,
+      eventTypeMasterId: this.specificSchoolEventDetails?.eventTypeMasterId ? this.specificSchoolEventDetails?.eventTypeMasterId : this.createEventRegisterForm.value.eventType,
       schoolPlaceBranchId: this.data.branchID,
       schoolPlaceVillageId: this.createEventRegisterForm.value.gram,
       schoolName: this.validationService.camelize(this.createEventRegisterForm.value.schoolName.trim()),
       schoolType: this.createEventRegisterForm.value.schoolType,
-      eventDate: this.createEventRegisterForm.value.eventDate,
+      eventDate: this.specificSchoolEventDetails?.eventDate ? this.specificSchoolEventDetails?.eventDate : this.createEventRegisterForm.value.eventDate,
       issueId: this.createEventRegisterForm.value.issueType,
       active_flag: 'A',
       staffList: this.staffListID,
-      facilitatorList: this.facilitatorDetails.facilitatorInfo,
-      stakeHolderList: this.stakeHolderDetails.stakeHolderInfo.filter(x => x.name).length == 0 ? [] : this.stakeHolderDetails.stakeHolderInfo,
-      attendeeList: this.attendeeDetails.attendeeInfo,
+      facilitatorList: this.facilitatorDetails.facilitatorInfo.filter(x => x.name),
+      stakeHolderList: this.stakeHolderDetails.stakeHolderInfo.filter(x => x.name).length == 0 ? [] : this.stakeHolderDetails.stakeHolderInfo.filter(x => x.name),
+      attendeeList: this.attendeeDetails.attendeeInfo.filter(x => x.name),
     }
 
-
     console.log(schoolEventReq, 'schoolEventReq');
-
 
     this.eventService.schoolEventSaveOrUpdate(schoolEventReq).subscribe((res: any) => {
       console.log(res);

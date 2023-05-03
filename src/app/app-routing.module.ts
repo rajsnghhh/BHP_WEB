@@ -49,7 +49,7 @@ const routes: Routes = [
   { path: 'escort-reref-register', loadChildren: () => import('./modules/escort-reref-register/escort-reref-register.module').then(m => m.EscortRerefRegisterModule), canActivate: [AuthGuard] },
   { path: 'sattu-register', loadChildren: () => import('./modules/sattu-register/sattu-register.module').then(m => m.SattuRegisterModule), canActivate: [AuthGuard] },
   { path: 'sattu-register-report', loadChildren: () => import('./modules/sattu-register-report/sattu-register-report.module').then(m => m.SattuRegisterReportModule), canActivate: [AuthGuard] },
-  { path: 'event-register', loadChildren: () => import('./modules/event-register/event-register.module').then(m => m.EventRegisterModule) },
+  { path: 'event-register', loadChildren: () => import('./modules/event-register/event-register.module').then(m => m.EventRegisterModule), canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 

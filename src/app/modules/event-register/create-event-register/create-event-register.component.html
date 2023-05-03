@@ -2,7 +2,8 @@
 <h1 mat-dialog-title>
     <div class="dialog-header">
         <h3 class="dialog-title" *ngIf="!specificSchoolEventDetails">Create Event Register</h3>
-        <h3 class="dialog-title" *ngIf="specificSchoolEventDetails">Edit Event Register</h3>
+        <h3 class="dialog-title" *ngIf="specificSchoolEventDetails?.modalType=='edit'">Edit Event Register</h3>
+        <h3 class="dialog-title" *ngIf="specificSchoolEventDetails?.modalType=='view'">View Event Register</h3>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
@@ -66,7 +67,7 @@
 
             <div class="row">
                 <div class="form-group col-md">
-                    <fieldset class="scheduler-border">
+                    <fieldset class="scheduler-borders">
                         <legend class="scheduler-border">School Place :&nbsp;<span class="text-danger">*&nbsp;</span>
                         </legend>
                         <div class="row">
@@ -171,13 +172,25 @@
                                                 {{user.user_lastname}} ({{user.role_shortname}}) -
                                                 {{user.branch_name?user.branch_name:'NA'}}
                                             </td>
-                                            <td style="width: 5%;"> <input *ngIf="user.is_checked== true"
+                                            <td style="width: 5%;"> <input
+                                                    *ngIf="user.is_checked== true && specificSchoolEventDetails?.modalType!='view'"
                                                     class="form-check-input" type="checkbox" value=""
                                                     id="flexCheckDefault" checked
                                                     (change)="selectMultipleStaff($event,user)">
-                                                <input *ngIf="user.is_checked== false" class="form-check-input"
-                                                    type="checkbox" value="" id="flexCheckDefault"
-                                                    (change)="selectMultipleStaff($event,user)">
+                                                <input
+                                                    *ngIf="user.is_checked== false  && specificSchoolEventDetails?.modalType!='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" (change)="selectMultipleStaff($event,user)">
+                                                <input
+                                                    *ngIf="user.is_checked== true  && specificSchoolEventDetails?.modalType=='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" checked
+                                                    (change)="selectMultipleStaff($event,user)" disabled>
+                                                <input
+                                                    *ngIf="user.is_checked== false  && specificSchoolEventDetails?.modalType=='view'"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" (change)="selectMultipleStaff($event,user)"
+                                                    disabled>
                                             </td>
                                         </tr>
                                         <tr *ngIf="hcoUserList.length == 0">
@@ -199,14 +212,15 @@
                         <div class="card-body" style="height: 40vh;">
                             <h4 class="card-title">Facilitator :&nbsp;<span class="text-danger">*&nbsp;</span></h4>
                             <i class="fas fa-plus-circle" id="circle" (click)="addMoreFacilitator()" style="cursor: pointer; float: right;
-                                            margin-top:-45px;" title="Add More Facilitator"></i>
+                                            margin-top:-45px;" title="Add More Facilitator"
+                                *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
 
                             <div id="table_wrapper">
                                 <table class="table" id="table_wrapper">
 
                                     <tbody id="tbodyFaciliator" style="text-align:center;">
                                         <tr *ngFor="let items of facilitatorDetails.facilitatorInfo; index as i">
-                                            <td> <input type="text" class="form-control"
+                                            <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                                     (keypress)="validationService.titleCase($event)"
                                                     placeholder="Facilitator Name" [ngModelOptions]="{standalone: true}"
@@ -214,7 +228,7 @@
                                                     style="width: 16rem;">
                                             </td>
 
-                                            <td> <select class="form-select"
+                                            <td> <select class="form-select" [disabled]="isReadOnly"
                                                     [(ngModel)]="facilitatorDetails.facilitatorInfo[i].designationId"
                                                     [ngModelOptions]="{standalone: true}">
                                                     <option value="">-- Designation --</option>
@@ -228,12 +242,12 @@
 
                                             <td><button type="button" class="btn btn-remove"
                                                     (click)="removeFacilitator(i)" style="width: 2rem;"
-                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag != 'D'">
+                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag != 'D' && specificSchoolEventDetails?.modalType!='view'">
                                                     <i class="fas fa-minus-circle" style="color: red !important;
                                                         font-size: 20px;"></i>
                                                 </button>
                                                 <button type="button" class="btn btn-remove" style="width: 2rem;"
-                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag == 'D'">
+                                                    *ngIf="facilitatorDetails.facilitatorInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
                                                     <i class="fas fa-minus-circle" style="color: #f57676 !important;
                                                     font-size: 20px;"></i>
                                                 </button>
@@ -255,14 +269,15 @@
                         <div class="card-body" style="height: 40vh;">
                             <h4 class="card-title">Stakeholder :</h4>
                             <i class="fas fa-plus-circle" id="circle" (click)="addMoreStakeHolder()" style="cursor: pointer; float: right;
-                                            margin-top:-45px;" title="Add More Stakeholder"></i>
+                                            margin-top:-45px;" title="Add More Stakeholder"
+                                *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
 
                             <div id="table_wrapper">
                                 <table class="table" id="table_wrapper">
 
                                     <tbody id="tbodyFaciliator" style="text-align:center;">
                                         <tr *ngFor="let items of stakeHolderDetails.stakeHolderInfo; index as i">
-                                            <td> <input type="text" class="form-control"
+                                            <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                                     (keypress)="validationService.titleCase($event)"
                                                     placeholder="Stakeholder Name" [ngModelOptions]="{standalone: true}"
@@ -270,7 +285,7 @@
                                                     style="width: 16rem;">
                                             </td>
 
-                                            <td> <select class="form-select"
+                                            <td> <select class="form-select" [disabled]="isReadOnly"
                                                     [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].designationId"
                                                     [ngModelOptions]="{standalone: true}">
                                                     <option value="">-- Designation --</option>
@@ -282,9 +297,15 @@
                                             </td>
 
                                             <td><button type="button" class="btn btn-remove"
-                                                    (click)="removeStackHolder(i)" style="width: 2rem;">
+                                                    (click)="removeStackHolder(i)" style="width: 2rem;"
+                                                    *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'A' && specificSchoolEventDetails?.modalType!='view'">
                                                     <i class="fas fa-minus-circle" style="color: red !important;
                                                         font-size: 20px; "></i>
+                                                </button>
+                                                <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                    *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                    <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                                font-size: 20px;"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -307,14 +328,15 @@
                             <h4 class="card-title">Details of Attendee :&nbsp;<span class="text-danger">*&nbsp;</span>
                             </h4>
                             <i class="fas fa-plus-circle" id="circle" (click)="addMoreAttendeeDetails()" style="cursor: pointer; float: right;
-                                            margin-top:-45px;" title="Add More Attendee Details"></i>
+                                            margin-top:-45px;" title="Add More Attendee Details"
+                                *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
 
                             <div id="table_wrapper">
                                 <table class="table" id="table_wrapper">
 
                                     <tbody id="tbodyFaciliator" style="text-align:center;">
                                         <tr *ngFor="let items of attendeeDetails.attendeeInfo; index as i">
-                                            <td> <input type="text" class="form-control"
+                                            <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                                                     (keypress)="validationService.titleCase($event)" placeholder="Name"
                                                     [ngModelOptions]="{standalone: true}"
@@ -324,6 +346,7 @@
 
                                             <td>
                                                 <select class="form-select" style="width: 12rem;"
+                                                    [disabled]="isReadOnly"
                                                     [(ngModel)]="attendeeDetails.attendeeInfo[i].className"
                                                     [ngModelOptions]="{standalone: true}">
                                                     <option value="">-- Class --</option>
@@ -334,6 +357,7 @@
                                             </td>
 
                                             <td> <select class="form-select" style="width: 12rem;"
+                                                    [disabled]="isReadOnly"
                                                     [(ngModel)]="attendeeDetails.attendeeInfo[i].sex"
                                                     [ngModelOptions]="{standalone: true}">
                                                     <option value="">-- Sex --</option>
@@ -350,9 +374,15 @@
                                             </td>
 
                                             <td><button type="button" class="btn btn-remove"
-                                                    (click)="removeAttendeeDetails(i)" style="width: 2rem;">
+                                                    (click)="removeAttendeeDetails(i)" style="width: 2rem;"
+                                                    *ngIf="attendeeDetails.attendeeInfo[i].active_flag == 'A' && specificSchoolEventDetails?.modalType!='view'">
                                                     <i class="fas fa-minus-circle" style="color: red !important;
                                                         font-size: 20px; "></i>
+                                                </button>
+                                                <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                    *ngIf="attendeeDetails.attendeeInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                    <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                            font-size: 20px;"></i>
                                                 </button>
                                             </td>
                                         </tr>
@@ -373,7 +403,7 @@
 
 <div class="modal-footer">
     <div class="row">
-        <button type="button" class="btn btn-primary btn-sm" [disabled]="!disableSave()"
-            (click)="submitForm()">Save</button>
+        <button type="button" class="btn btn-primary btn-sm" [disabled]="!disableSave()" (click)="submitForm()"
+            *ngIf="specificSchoolEventDetails?.modalType!='view'">Save</button>
     </div>
 </div>

@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
+import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-event-register',
@@ -28,12 +29,12 @@ export class EventRegisterComponent {
   branchOpenDate: any;
   index: number = 0;
   SchoolEventsOfBranch: Array<any> = [];
-  specificSchoolEventDetails: Array<any> = [];
+  specificSchoolEventDetails: any;
   p: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
-    private eventService: EventRegisterService, public dialog: MatDialog) {
+    private eventService: EventRegisterService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService) {
   }
 
   ngDoCheck(): void {
@@ -122,7 +123,7 @@ export class EventRegisterComponent {
   }
 
   createEventRegister(specificSchoolEventDetails) {
-    // console.log(specificSchoolEventDetails);
+    console.log(specificSchoolEventDetails);
 
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
@@ -149,12 +150,54 @@ export class EventRegisterComponent {
     this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
       this.loader = true;
       this.specificSchoolEventDetails = res.responseObject;
-      // console.log(this.specificSchoolEventDetails, 'specificSchoolEventDetails');
+      this.specificSchoolEventDetails.modalType = "edit";
       this.createEventRegister(this.specificSchoolEventDetails);
     });
 
   }
 
+  deleteSchoolEvent(school) {
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+      .then(() => this.delete(school)
+      )
+      .catch(() => '');
+  }
+
+  delete(school) {
+    let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId, active_flag: 'D' }
+    this.eventService.schoolEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.changeBranch(this.eventRegisterForm.value.branch || this.lowerRankbranchId);
+      } else {
+        this.showError(res.message);
+      }
+    })
+  }
+
+  viewSchoolEvent(school) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
+    this.loader = false;
+    this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSchoolEventDetails = res.responseObject;
+      this.specificSchoolEventDetails.modalType = "view";
+      this.createEventRegister(this.specificSchoolEventDetails);
+    });
+  }
+
+  showSuccess(message) {
+    this.toaster.success(message, 'Event Delete', {
+      timeOut: 3000,
+    });
+  }
+
+  showError(message) {
+    this.toaster.error(message, 'Event Delete', {
+      timeOut: 3000,
+    });
+  }
 
 }
 

@@ -103,10 +103,12 @@
                                                 <td style="width: 15%;">
                                                     {{school.eventDate.split("-").reverse().join("-")}}</td>
                                                 <td style="width: 12%;">
-                                                    <i class="fa fa-eye fa-lg" title="View Other Details"></i>
+                                                    <i class="fa fa-eye fa-lg" title="View Details"
+                                                        (click)="viewSchoolEvent(school)"></i>
                                                     <i class="fas fa-edit" title="Edit Event"
                                                         (click)="editSchoolEvent(school)"></i>
-                                                    <i class="fas fa-trash" title="Delete Event"></i>
+                                                    <i class="fas fa-trash" title="Delete Event"
+                                                        (click)="deleteSchoolEvent(school)"></i>
                                                 </td>
                                             </tr>
                                         </tbody>

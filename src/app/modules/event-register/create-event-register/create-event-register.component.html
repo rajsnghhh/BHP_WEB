@@ -478,11 +478,11 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-
                     <div class="card" style="background: whitesmoke; border: none;
-                                        border-radius: 14px; height: 200px;">
+                                        border-radius: 14px; height: 240px;">
                         <div class="card-body" style="height: 40vh;">
-                            <h4 class="card-title">Facilitator :&nbsp;<span class="text-danger">*&nbsp;</span></h4>
+                            <h4 class="card-title">Facilitator :&nbsp;<span class="text-danger">*&nbsp;</span>
+                            </h4>
                             <i class="fas fa-plus-circle" id="circle" (click)="addMoreFacilitator()" style="cursor: pointer; float: right;
                                             margin-top:-45px;" title="Add More Facilitator"
                                 *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
@@ -490,7 +490,7 @@
                             <div id="table_wrapper">
                                 <table class="table" id="table_wrapper">
 
-                                    <tbody id="tbodyFaciliator" style="text-align:center;">
+                                    <tbody id="tbodyFaciliator" style="text-align:center;  height: 170px;">
                                         <tr *ngFor="let items of facilitatorDetails.facilitatorInfo; index as i">
                                             <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
                                                     (keypress)="validationService.onlyAlphabetsAndSpace($event)"
@@ -534,65 +534,259 @@
                     </div>
                 </div>
 
-              <div class="form-group col-md-6">
-
-                    <div class="card" style="background: whitesmoke; border: none;
-                                        border-radius: 14px; height: 200px;">
-                        <div class="card-body" style="height: 40vh;">
-                            <h4 class="card-title">Stakeholder :</h4>
-                            <i class="fas fa-plus-circle" id="circle" (click)="addMoreStakeHolder()" style="cursor: pointer; float: right;
+                <div class="form-group col-md-6">
+                    <div class="row">
+                        <div class="card" style="background: whitesmoke; border: none;
+                                        border-radius: 14px; height: 150px;">
+                            <div class="card-body" style="height: 40vh;">
+                                <h4 class="card-title">Stakeholder :</h4>
+                                <i class="fas fa-plus-circle" id="circle" (click)="addMoreStakeHolder()" style="cursor: pointer; float: right;
                                             margin-top:-45px;" title="Add More Stakeholder"
-                                *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
+                                    *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
 
-                            <div id="table_wrapper">
-                                <table class="table" id="table_wrapper">
+                                <div id="table_wrapper">
+                                    <table class="table" id="table_wrapper">
 
-                                    <tbody id="tbodyFaciliator" style="text-align:center;">
-                                        <tr *ngFor="let items of stakeHolderDetails.stakeHolderInfo; index as i">
-                                            <td> <input type="text" class="form-control" [attr.readonly]="isReadOnly"
-                                                    (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                                                    (keypress)="validationService.titleCase($event)"
-                                                    placeholder="Stakeholder Name" [ngModelOptions]="{standalone: true}"
-                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].name"
-                                                    style="width: 16rem;">
-                                            </td>
+                                        <tbody id="tbodyFaciliator" style="text-align:center;height: 83px;">
+                                            <tr *ngFor="let items of stakeHolderDetails.stakeHolderInfo; index as i">
+                                                <td> <input type="text" class="form-control"
+                                                        [attr.readonly]="isReadOnly"
+                                                        (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                                        (keypress)="validationService.titleCase($event)"
+                                                        placeholder="Stakeholder Name"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].name"
+                                                        style="width: 16rem;">
+                                                </td>
 
-                                            <td> <select class="form-select" [disabled]="isReadOnly"
-                                                    [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].designationId"
-                                                    [ngModelOptions]="{standalone: true}">
-                                                    <option value="">-- Designation --</option>
-                                                    <option *ngFor="let desig of designationList"
-                                                        value="{{desig.eventDesignationMasterId}}">
-                                                        {{ desig.designation}}
-                                                    </option>
-                                                </select>
-                                            </td>
+                                                <td> <select class="form-select" [disabled]="isReadOnly"
+                                                        [(ngModel)]="stakeHolderDetails.stakeHolderInfo[i].designationId"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="">-- Designation --</option>
+                                                        <option *ngFor="let desig of designationList"
+                                                            value="{{desig.eventDesignationMasterId}}">
+                                                            {{ desig.designation}}
+                                                        </option>
+                                                    </select>
+                                                </td>
 
-                                            <td><button type="button" class="btn btn-remove"
-                                                    (click)="removeStackHolder(i)" style="width: 2rem;"
-                                                    *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'A' && specificSchoolEventDetails?.modalType!='view'">
-                                                    <i class="fas fa-minus-circle" style="color: red !important;
+                                                <td><button type="button" class="btn btn-remove"
+                                                        (click)="removeStackHolder(i)" style="width: 2rem;"
+                                                        *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'A' && specificSchoolEventDetails?.modalType!='view'">
+                                                        <i class="fas fa-minus-circle" style="color: red !important;
                                                         font-size: 20px; "></i>
-                                                </button>
-                                                <button type="button" class="btn btn-remove" style="width: 2rem;"
-                                                    *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
-                                                    <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                                    </button>
+                                                    <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                        *ngIf="stakeHolderDetails.stakeHolderInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                        <i class="fas fa-minus-circle" style="color: #f57676 !important;
                                                 font-size: 20px;"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><br>
+
+                    <div class="row">
+                        <div class="card" style="background: whitesmoke; border: none;
+                        border-radius: 14px; height: 150px;margin-top: -15px;">
+                            <div class="card-body" style="height: 40vh;">
+                                <h4 class="card-title">Special Guest :</h4>
+                                <i class="fas fa-plus-circle" id="circle" (click)="addMoreSpecialGuests()" style="cursor: pointer; float: right;
+                            margin-top:-45px;" title="Add More Special Guests"
+                                    *ngIf="specificSchoolEventDetails?.modalType!='view'"></i>
+
+                                <div id="table_wrapper">
+                                    <table class="table" id="table_wrapper">
+
+                                        <tbody id="tbodyFaciliator" style="text-align:center;height: 83px;">
+                                            <tr *ngFor="let items of specialGuestDetails.guestsInfo; index as i">
+                                                <td> <input type="text" class="form-control"
+                                                        [attr.readonly]="isReadOnly"
+                                                        (keypress)="validationService.onlyAlphabetsAndSpace($event)"
+                                                        (keypress)="validationService.titleCase($event)"
+                                                        placeholder="Guest Name" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="specialGuestDetails.guestsInfo[i].name"
+                                                        style="width: 16rem;">
+                                                </td>
+
+                                                <td> <select class="form-select" [disabled]="isReadOnly"
+                                                        [(ngModel)]="specialGuestDetails.guestsInfo[i].designationId"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="">-- Designation --</option>
+                                                        <option *ngFor="let desig of designationList"
+                                                            value="{{desig.eventDesignationMasterId}}">
+                                                            {{ desig.designation}}
+                                                        </option>
+                                                    </select>
+
+                                                </td>
+
+                                                <td><button type="button" class="btn btn-remove"
+                                                        (click)="removeSpecialGuests(i)" style="width: 2rem;"
+                                                        *ngIf="specialGuestDetails.guestsInfo[i].active_flag != 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                        <i class="fas fa-minus-circle" style="color: red !important;
+                                        font-size: 20px;"></i>
+                                                    </button>
+                                                    <button type="button" class="btn btn-remove" style="width: 2rem;"
+                                                        *ngIf="specialGuestDetails.guestsInfo[i].active_flag == 'D' && specificSchoolEventDetails?.modalType!='view'">
+                                                        <i class="fas fa-minus-circle" style="color: #f57676 !important;
+                                    font-size: 20px;"></i>
+                                                    </button>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <div class="card" style="background: whitesmoke; border: none;
+                border-radius: 14px; height: 58px; margin-top: -75px;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md">
+                                    <h4 class="card-title">Events :&nbsp;<span class="text-danger">*&nbsp;</span></h4>
+                                </div>
+                                <div class="col-md"><input class="form-check-input" type="checkbox" value=""
+                                        id="flexCheckDefault">&nbsp;&nbsp;Rally</div>
+                                <div class="col-md"> <input class="form-check-input" type="checkbox" value=""
+                                        id="flexCheckDefault">&nbsp;&nbsp;Seminar</div>
+                                <div class="col-md"><input class="form-check-input" type="checkbox" value=""
+                                        id="flexCheckDefault">&nbsp;&nbsp;FGD</div>
                             </div>
 
                         </div>
                     </div>
-                </div> 
+                </div>
 
             </div>
 
-        </div>
+            <div class="row">
+                <div class="form-group col-md">
+                    <label for="rallySeminarDate">Date of Rally/ Seminar :&nbsp;<span
+                            class="text-danger">*&nbsp;</span></label>
+                    <input type="date" class="form-control" formControlName="rallySeminarDate"
+                        (keydown)="restrictTypeOfDate()"
+                        [ngClass]="{'is-invalid': l.rallySeminarDate.invalid 
+                    && l.rallySeminarDate.touched, 'is-valid':l.rallySeminarDate.valid &&(l.rallySeminarDate.dirty || l.rallySeminarDate.touched)}"
+                        [min]="createEventRegisterForm.value.eventDateFrom"
+                        [max]="createEventRegisterForm.value.eventDateTo" />
+                    <div *ngIf="l.rallySeminarDate.errors" class="invalid-feedback">
+                        <div *ngIf="l.rallySeminarDate.errors.required">
+                            Please select the date
+                        </div>
+                    </div>
+                </div>
 
+                <div class="form-group col-md">
+                    <label for="rallySeminarPlace">Place of Rally/ Seminar :&nbsp;<span
+                            class="text-danger">*&nbsp;</span></label>
+                    <input type="text" class="form-control" [attr.readonly]="isReadOnly"
+                        (keypress)="validationService.onlyAlphabets($event)"
+                        (keypress)="validationService.titleCase($event)" placeholder="Enter Place Name"
+                        [ngModelOptions]="{standalone: true}" formControlName="rallySeminarPlace" [ngClass]="{'is-invalid': l.rallySeminarPlace.invalid 
+                        && l.rallySeminarPlace.touched, 'is-valid':l.rallySeminarPlace.valid &&(l.rallySeminarPlace.dirty ||
+                         l.rallySeminarPlace.touched)}">
+                    <div *ngIf="l.rallySeminarPlace.errors" class="invalid-feedback">
+                        <div *ngIf="l.rallySeminarPlace.errors.required">
+                            Please enter the place name</div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="card" style="background: whitesmoke; border: none;
+                                border-radius: 14px; height: 150px;">
+                    <div class="card-body" style="height: 40vh;">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <h4 class="card-title">Participants attended Rally/ Seminar :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></h4>
+                            </div>
+
+                            <!-- <div class="form-group col-md-4" 
+                                style="color:#0d6efd; text-decoration: none; cursor: pointer;">Click here to see<br> all
+                                selected family</div> -->
+
+                            <div class="form-group col-md-6">
+                                <!-- <label for="village">Village Name:&nbsp;<span class="text-danger">*&nbsp;</span></label> -->
+                                <select class="form-select" formControlName="village" id="village" [ngClass]="{'is-invalid':l.village.invalid && 
+                            l.village.touched,'is-valid':l.village.valid && (l.village.dirty ||l.village.touched) }"
+                                    (change)="getFamiliesWithStatusForAVillage($event.target.value)">
+                                    <option value="">-- Select Village --</option>
+                                    <option value="allFamilies">-- All Selected Families --</option>
+                                    <option *ngFor="let vill of specialEventVillList" value="{{vill.villageId}}">
+                                        {{ vill.villageName }}
+                                    </option>
+                                </select>
+                                <div *ngIf="l.village.errors" class="invalid-feedback">
+                                    <div *ngIf="l.village.errors.required">
+                                        Village selection is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tbodyFam">
+                            <div id="table_wrapper">
+                                <table class="table table-striped" id="table_wrapper">
+                                    <thead id="header_fixed">
+                                        <tr style="text-align: center;">
+                                            <th style="width: 3%;">Sl. No.</th>
+                                            <th style="width: 3%;">Family No.</th>
+                                            <th style="width: 25%;">Name</th>
+                                            <th style="width: 25%;"   *ngIf="createEventRegisterForm.value.village=='allFamilies'">Village Name</th>
+                                            <th style="width: 30%;">Status</th>
+                                            <th style="width: 5%;">Select</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody style="text-align:center;">
+                                        <tr *ngFor="let fam of familiesWithStatusOfVillage; index as i">
+                                            <td style="width: 3%;">{{i+1}}</td>
+                                            <td style="width: 3%;">{{fam.familyNumber}}</td>
+                                            <td style="width: 25%;">{{fam.name}}</td>
+                                            <td style="width: 25%;"
+                                                *ngIf="createEventRegisterForm.value.village=='allFamilies'">
+                                                {{fam.villageName}}</td>
+                                            <td style="width: 30%;">{{fam.setStatus}}</td>
+                                            <td style="width: 5%;"><input *ngIf="fam.is_checked== true"
+                                                    class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault" checked
+                                                    (change)="selectMultipleFamilies($event,fam)">
+                                                <input *ngIf="fam.is_checked== false" class="form-check-input"
+                                                    type="checkbox" value="" id="flexCheckDefault"
+                                                    (change)="selectMultipleFamilies($event,fam)">
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
 
     </form>
 </div>

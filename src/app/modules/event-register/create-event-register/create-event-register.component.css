@@ -107,3 +107,10 @@ legend.scheduler-border {
 ::ng-deep .mat-dialog-container {
   overflow: hidden;
 }
+
+#tbodyFam {
+  display: block;
+  height: 166px;
+  overflow: scroll;
+  overflow-x: hidden;
+}

@@ -28,6 +28,9 @@ export class CreateEventRegisterComponent {
   issuesList: Array<any> = [];
   designationList: Array<any> = [];
   staffListID: Array<any> = [];
+  specialEventVillList: Array<any> = [];
+  familiesWithStatusOfVillage: Array<any> = [];
+  familiesListID: Array<any> = [];
 
   facilitatorDetails = {
     facilitatorInfo: []
@@ -39,6 +42,11 @@ export class CreateEventRegisterComponent {
 
   attendeeDetails = {
     attendeeInfo: []
+  }
+
+
+  specialGuestDetails = {
+    guestsInfo: []
   }
 
   classList: Array<any> = [];
@@ -85,7 +93,11 @@ export class CreateEventRegisterComponent {
       issueType: [this.specificSchoolEventDetails?.issueId ? this.specificSchoolEventDetails?.issueId : '', Validators.required],
 
       eventDateFrom: ['', Validators.required],
-      eventDateTo: ['', Validators.required]
+      eventDateTo: ['', Validators.required],
+      rallySeminarDate: ['', Validators.required],
+      rallySeminarPlace: ['', Validators.required],
+      village: ['', Validators.required]
+
     });
 
 
@@ -190,7 +202,7 @@ export class CreateEventRegisterComponent {
 
       });
     } else {
-      this.facilitatorDetails.facilitatorInfo=[]
+      this.facilitatorDetails.facilitatorInfo = []
       this.facilitatorDetails.facilitatorInfo.push({
         facilitatorStakeholderMapId: 0,
         name: '',
@@ -211,7 +223,7 @@ export class CreateEventRegisterComponent {
 
       })
     } else {
-      this.stakeHolderDetails.stakeHolderInfo=[]
+      this.stakeHolderDetails.stakeHolderInfo = []
       this.stakeHolderDetails.stakeHolderInfo.push({
         facilitatorStakeholderMapId: 0,
         name: '',
@@ -248,12 +260,6 @@ export class CreateEventRegisterComponent {
 
       // console.log(this.specificSchoolEventDetails?.facilitatorList);
 
-
-     
-
-
- 
-
       if (this.specificSchoolEventDetails?.attendeeList) {
         this.specificSchoolEventDetails?.attendeeList.forEach(x => {
           this.attendeeDetails.attendeeInfo.push({
@@ -287,7 +293,15 @@ export class CreateEventRegisterComponent {
     }
 
     if (this.event_is_special == 'Y') {
+      this.specialGuestDetails.guestsInfo = []
+      this.specialGuestDetails.guestsInfo.push({
+        specialGuestMapId: 0,
+        name: '',
+        designationId: '',
+        active_flag: 'A'
+      });
 
+      this.getSimpleListOfVillagesOfABranch();
     }
   }
 
@@ -594,4 +608,257 @@ export class CreateEventRegisterComponent {
     }
 
   }
+
+  addMoreSpecialGuests() {
+    this.specialGuestDetails.guestsInfo.push({
+      specialGuestMapId: 0,
+      name: '',
+      designationId: '',
+      active_flag: 'A'
+    });
+    console.log(this.specialGuestDetails.guestsInfo);
+
+  }
+
+  removeSpecialGuests(i) {
+    this.specialGuestDetails.guestsInfo.splice(i, 1);
+  }
+
+  getSimpleListOfVillagesOfABranch() {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
+    this.eventService.getSimpleListOfVillagesOfABranch(req).subscribe((res: any) => {
+      this.specialEventVillList = res.responseObject
+      console.log(this.specialEventVillList, 'specialEventVillList');
+    });
+  }
+
+  getFamiliesWithStatusForAVillage(villageID) {
+    console.log(villageID);
+    var showVillageName = this.specialEventVillList.find(x => x.villageId == villageID)?.villageName
+    if (villageID == '') { this.familiesListID = [] }
+
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, date: this.createEventRegisterForm.value.rallySeminarDate, villageId: villageID }
+    this.eventService.getFamiliesWithStatusForAVillage(req).subscribe((res: any) => {
+      this.familiesWithStatusOfVillage = res.responseObject;
+      // console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
+
+      this.familiesWithStatusOfVillage = this.familiesWithStatusOfVillage?.map(({
+        setStatus = '', is_checked = false, villageName = showVillageName,
+        ...rest
+      }) => ({
+        setStatus, is_checked, villageName,
+        ...rest
+      }));
+
+      this.setStatusForAll(this.familiesWithStatusOfVillage);
+      console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
+
+      if (this.familiesListID?.length > 0) {
+        console.log(this.familiesListID);
+
+        this.familiesListID?.forEach(y => {
+          this.familiesWithStatusOfVillage?.filter(x => x.familyId == y.familyId).forEach(x => {
+            x.is_checked = true
+          })
+        })
+      }
+
+      if (villageID == 'allFamilies') {
+        this.familiesWithStatusOfVillage = this.familiesListID.filter(x => x.is_checked == true);
+      }
+
+    })
+  }
+
+  selectMultipleFamilies(e, fam) {
+    console.log(e.target.checked, fam);
+    if (e.target.checked == true) {
+      fam.is_checked = true;
+      // this.familiesListID.push(fam)
+    }
+    else {
+      fam.is_checked = false;
+      // this.familiesListID.forEach(x => {
+      //   if(x.familyId == fam.familyId)  this.familiesListID.splice(fam,1)
+      // })
+    }
+
+    this.familiesListID.forEach(x => {
+      if (x.familyId == fam.familyId) {
+        x.is_checked = fam.is_checked
+      }
+    })
+
+    if (fam.is_checked == true) { this.familiesListID.push(fam) }
+    this.familiesListID = this.familiesListID.filter(x => x.is_checked == true);
+    console.log(this.familiesListID);
+  }
+
+  //Set PW,PEM,LM,2-5YR,Adol Status
+  setStatusForAll(familys: any) {
+    familys?.forEach(family => {
+      if (family.lactatingMother == "Y" &&
+        family.pregnantWoman == "Y" &&
+        family.pem == "Y" &&
+        family.twoToFive == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "PEM, LM, PW, 2to5, AG"
+      } else if (family.lactatingMother == "Y" &&
+        family.pregnantWoman?.includes("N") &&
+        family.pem?.includes("N") &&
+        family.adolescentGirl?.includes("N") &&
+        family.twoToFive?.includes("N")
+      ) {
+        family.setStatus = "LM"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman == "Y" &&
+        family.pem?.includes("N") &&
+        family.adolescentGirl?.includes("N") &&
+        family.twoToFive?.includes("N")
+      ) {
+        family.setStatus = "PW"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.pem == "Y" &&
+        family.adolescentGirl?.includes("N") &&
+        family.twoToFive?.includes("N")
+      ) {
+        family.setStatus = "PEM"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.twoToFive == "Y" &&
+        family.adolescentGirl?.includes("N") &&
+        family.pem?.includes("N")
+      ) {
+        family.setStatus = "2to5"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.adolescentGirl == "Y" &&
+        family.twoToFive?.includes("N") &&
+        family.pem?.includes("N")
+      ) {
+        family.setStatus = "AG"
+      } else if (family.lactatingMother == "Y" &&
+        family.pregnantWoman == "Y" &&
+        family.pem?.includes("N") &&
+        family.twoToFive?.includes("N") &&
+        family.adolescentGirl?.includes("N")
+      ) {
+        family.setStatus = "LM, PW"
+      } else if (family.lactatingMother == "Y" &&
+        family.pregnantWoman?.includes("N") &&
+        family.pem == "Y" &&
+        family.twoToFive?.includes("N") &&
+        family.adolescentGirl?.includes("N")
+      ) {
+        family.setStatus = "LM, PEM"
+      } else if (family.lactatingMother == "Y" &&
+        family.pregnantWoman?.includes("N") &&
+        family.twoToFive == "Y" &&
+        family.pem?.includes("N") &&
+        family.adolescentGirl?.includes("N")
+      ) {
+        family.setStatus = "LM, 2to5"
+      } else if (family.lactatingMother == "Y" &&
+        family.pregnantWoman?.includes("N") &&
+        family.adolescentGirl == "Y" &&
+        family.twoToFive?.includes("N") &&
+        family.pem?.includes("N") &&
+        family.adolescentGirl?.includes("N")
+      ) {
+        family.setStatus = "LM, AG"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.twoToFive?.includes("N") &&
+        family.adolescentGirl?.includes("N") &&
+        family.pregnantWoman == "Y" &&
+        family.pem == "Y"
+      ) {
+        family.setStatus = "PW, PEM"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pem?.includes("N") &&
+        family.adolescentGirl?.includes("N") &&
+        family.pregnantWoman == "Y" &&
+        family.twoToFive == "Y"
+      ) {
+        family.setStatus = "PW, 2to5"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pem?.includes("N") &&
+        family.twoToFive?.includes("N") &&
+        family.pregnantWoman == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "PW, AG"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.adolescentGirl?.includes("N") &&
+        family.pem == "Y" &&
+        family.twoToFive == "Y"
+      ) {
+        family.setStatus = "PEM, 2to5"
+      }
+      else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.twoToFive?.includes("N") &&
+        family.pem == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "PEM, AG"
+      }
+      else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.twoToFive == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "2to5, AG"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pem == "Y" &&
+        family.pregnantWoman == "Y" &&
+        family.twoToFive == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "PEM, PW, 2to5, AG"
+      } else if (family.pem?.includes("N") &&
+        family.lactatingMother == "Y" &&
+        family.pregnantWoman == "Y" &&
+        family.twoToFive == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "LM, PW, 2to5, AG"
+      } else if (family.pregnantWoman?.includes("N") &&
+        family.lactatingMother == "Y" &&
+        family.pem == "Y" &&
+        family.twoToFive == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "LM, PEM, 2to5, AG"
+      } else if (family.twoToFive?.includes("N") &&
+        family.lactatingMother == "Y" &&
+        family.pem == "Y" &&
+        family.pregnantWoman == "Y" &&
+        family.adolescentGirl == "Y"
+      ) {
+        family.setStatus = "LM, PEM, PW, AG"
+      }
+      else if (family.adolescentGirl?.includes("N") &&
+        family.lactatingMother == "Y" &&
+        family.pem == "Y" &&
+        family.pregnantWoman == "Y" &&
+        family.twoToFive == "Y"
+      ) {
+        family.setStatus = "LM, PEM, PW, 2to5"
+      } else if (family.lactatingMother?.includes("N") &&
+        family.pregnantWoman?.includes("N") &&
+        family.pem?.includes("N") &&
+        family.twoToFive?.includes("N") &&
+        family.adolescentGirl?.includes("N")
+      ) {
+        family.setStatus = "--"
+      } else {
+        family.setStatus = "--"
+      }
+    });
+  }
+
 }

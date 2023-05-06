@@ -42,4 +42,11 @@ export class EventRegisterService {
     return this.http.post(`${this.baseURL}eventRegister/viewSpecificSchoolEventRegister`, obj)
   }
 
+  getSimpleListOfVillagesOfABranch(obj): any {
+    return this.http.post(`${this.baseURL}village/getSimpleListOfVillagesOfABranch`, obj)
+  }
+
+  getFamiliesWithStatusForAVillage(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/getFamiliesWithStatusForAVillage`, obj)
+  }
 }

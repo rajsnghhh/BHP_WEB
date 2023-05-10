@@ -49,4 +49,16 @@ export class EventRegisterService {
   getFamiliesWithStatusForAVillage(obj): any {
     return this.http.post(`${this.baseURL}eventRegister/getFamiliesWithStatusForAVillage`, obj)
   }
+
+  getAllSsOfARegion(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/getAllSsOfARegion`, obj)
+  }
+
+  specialEventSaveOrUpdate(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/specialEventSaveOrUpdate`, obj)
+  }
+
+  imageSchoolEventSave(obj): any {
+    return this.http.post(`${this.baseURL}image/schoolEvent/saveFile`, obj)
+  }
 }

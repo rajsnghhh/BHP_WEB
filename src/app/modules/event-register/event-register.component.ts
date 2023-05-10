@@ -25,6 +25,7 @@ export class EventRegisterComponent {
   regionList: Array<any> = [];
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
+  lowerRankRegionId: any;
   lowerRankbranchId: any;
   branchOpenDate: any;
   index: number = 0;
@@ -42,11 +43,13 @@ export class EventRegisterComponent {
   }
 
   ngOnInit(): void {
+
     this.eventRegisterForms();
     this.loader = false;
     this.sidebarService.checkRoledetailDTO().then((res: any) => {
       this.loader = true;
       this.lowerRankbranchId = res.branchId;
+      this.lowerRankRegionId = res.regionID;
       this.branchOpenDate = !this.lowerRankbranchId ? null : res.branchLIST[0]?.branchOpenDate;
       console.log(this.branchOpenDate, 'branchOpenDate')
       if (res.regionBranchHide) {
@@ -130,7 +133,7 @@ export class EventRegisterComponent {
       height: '570px',
       data: {
         branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
-        specificSchoolEventDetails: specificSchoolEventDetails
+        specificSchoolEventDetails: specificSchoolEventDetails, regionID: this.eventRegisterForm.value.region || this.lowerRankRegionId
       }
     });
 

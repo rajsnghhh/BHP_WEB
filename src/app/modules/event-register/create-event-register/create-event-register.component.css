@@ -114,3 +114,7 @@ legend.scheduler-border {
   overflow: scroll;
   overflow-x: hidden;
 }
+
+#width {
+  width: 228px;
+}

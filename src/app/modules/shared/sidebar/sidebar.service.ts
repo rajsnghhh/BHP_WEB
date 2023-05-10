@@ -24,6 +24,7 @@ export class SidebarService {
   donorMasterDto: any;
   villagesOfBranch: Array<any> = [];
   branchLIST: Array<any> = [];
+  regionID: any;
   constructor(private http: HttpClient) { }
 
   checkRoledetailDTO() {
@@ -46,13 +47,15 @@ export class SidebarService {
           this.donorName = res?.responseObject[0]?.donorMasterDto?.donorName;
           this.districtName = res?.responseObject[0]?.districtMasterDto?.districtName;
           this.branchLIST = res?.responseObject;
+          this.regionID = res?.responseObject[0]?.regionMasterDto?.regionMasterId;
           resolve({
             regionBranchHide: false,
             branchId: this.branchId,
             branchName: this.branchName,
             districtName: this.districtName,
             dataAccessDTO: req.dataAccessDTO,
-            branchLIST: res?.responseObject
+            branchLIST: res?.responseObject,
+            regionID: this.regionID
           })
         });
       })

@@ -61,4 +61,8 @@ export class EventRegisterService {
   imageSchoolEventSave(obj): any {
     return this.http.post(`${this.baseURL}image/schoolEvent/saveFile`, obj)
   }
+
+  viewSpecificSpecialEventRegister(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/viewSpecificSpecialEventRegister`, obj)
+  }
 }

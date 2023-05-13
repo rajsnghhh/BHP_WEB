@@ -31,7 +31,10 @@ export class EventRegisterComponent {
   index: number = 0;
   SchoolEventsOfBranch: Array<any> = [];
   specificSchoolEventDetails: any;
+  specificSpecialEventDetails: any;
+  SpecialEventsOfBranch: Array<any> = [];
   p: any;
+  p2: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
@@ -120,20 +123,22 @@ export class EventRegisterComponent {
       this.loader = true;
       this.SchoolEventsOfBranch = res.responseObject.schoolEvents;
       console.log(this.SchoolEventsOfBranch, 'SchoolEventsOfBranch');
+      this.SpecialEventsOfBranch = res.responseObject.specialEvents;
+      console.log(this.SpecialEventsOfBranch, 'SpecialEventsOfBranch');
     });
 
     this.SchoolEventsOfBranch = [];
   }
 
-  createEventRegister(specificSchoolEventDetails) {
-    console.log(specificSchoolEventDetails);
+  createEventRegister(specificEventDetails) {
+    console.log(specificEventDetails, 'specificEventDetails');
 
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
       height: '570px',
       data: {
         branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
-        specificSchoolEventDetails: specificSchoolEventDetails, regionID: this.eventRegisterForm.value.region || this.lowerRankRegionId
+        specificEventDetails: specificEventDetails, regionID: this.eventRegisterForm.value.region || this.lowerRankRegionId
       }
     });
 
@@ -157,6 +162,17 @@ export class EventRegisterComponent {
       this.createEventRegister(this.specificSchoolEventDetails);
     });
 
+  }
+
+  editSpecialEvent(special) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId };
+    this.loader = false;
+    this.eventService.viewSpecificSpecialEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSpecialEventDetails = res.responseObject;
+      this.specificSpecialEventDetails.modalType = "edit";
+      this.createEventRegister(this.specificSpecialEventDetails);
+    });
   }
 
   deleteSchoolEvent(school) {

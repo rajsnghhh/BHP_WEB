@@ -8,12 +8,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { eventRegisterSearchFilterPipe } from '../shared/sidebar/event-register-search.pipe';
 
 
 @NgModule({
   declarations: [
     EventRegisterComponent,
-    CreateEventRegisterComponent
+    CreateEventRegisterComponent,
+    eventRegisterSearchFilterPipe
   ],
   imports: [
     CommonModule,

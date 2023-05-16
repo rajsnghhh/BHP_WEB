@@ -130,8 +130,30 @@ export class EventRegisterComponent {
     this.SchoolEventsOfBranch = [];
   }
 
+  viewSchoolEvent(school) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
+    this.loader = false;
+    this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSchoolEventDetails = res.responseObject;
+      this.specificSchoolEventDetails.modalType = "view";
+      this.createEventRegister(this.specificSchoolEventDetails);
+    });
+  }
+
+  viewSpecialEvent(special) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId };
+    this.loader = false;
+    this.eventService.viewSpecificSpecialEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSpecialEventDetails = res.responseObject;
+      this.specificSpecialEventDetails.modalType = "view";
+      this.createEventRegister(this.specificSpecialEventDetails);
+    });
+  }
+
   createEventRegister(specificEventDetails) {
-    console.log(specificEventDetails, 'specificEventDetails');
+    // console.log(specificEventDetails, 'specificEventDetails');
 
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
@@ -177,12 +199,12 @@ export class EventRegisterComponent {
 
   deleteSchoolEvent(school) {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
-      .then(() => this.delete(school)
+      .then(() => this.schoolDelete(school)
       )
       .catch(() => '');
   }
 
-  delete(school) {
+  schoolDelete(school) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId, active_flag: 'D' }
     this.eventService.schoolEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
       console.log(res);
@@ -195,25 +217,35 @@ export class EventRegisterComponent {
     })
   }
 
-  viewSchoolEvent(school) {
-    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
-    this.loader = false;
-    this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
-      this.loader = true;
-      this.specificSchoolEventDetails = res.responseObject;
-      this.specificSchoolEventDetails.modalType = "view";
-      this.createEventRegister(this.specificSchoolEventDetails);
-    });
+  deleteSpecialEvent(special) {
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+      .then(() => this.specialDelete(special)
+      )
+      .catch(() => '');
   }
 
+  specialDelete(special) {
+    let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId, active_flag: 'D' }
+    this.eventService.specialEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.changeBranch(this.eventRegisterForm.value.branch || this.lowerRankbranchId);
+      } else {
+        this.showError(res.message);
+      }
+    })
+  }
+
+
   showSuccess(message) {
-    this.toaster.success(message, 'Event Delete', {
+    this.toaster.success(message, 'Event Deleted', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Event Delete', {
+    this.toaster.error(message, 'Event Deleted', {
       timeOut: 3000,
     });
   }

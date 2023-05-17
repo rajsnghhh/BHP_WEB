@@ -250,5 +250,10 @@ export class EventRegisterComponent {
     });
   }
 
+  // FGD CRUD OPERATIONS
+  fgdCrudOperation(special) {
+    console.log(special);
+  }
+
 }
 

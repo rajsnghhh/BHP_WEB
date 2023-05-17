@@ -132,11 +132,11 @@
                                         <thead id="header_fixed">
                                             <tr style="text-align: center;">
                                                 <th style="width: 2%;">Sl. No.</th>
-                                                <th style="width: 15%;">From Date</th>
-                                                <th style="width: 15%;">To Date</th>
+                                                <th style="width: 12%;">From Date</th>
+                                                <th style="width: 12%;">To Date</th>
                                                 <th style="width: 25%;">Event Name</th>
                                                 <th style="width: 30%;">Place</th>
-                                                <th style="width: 12%;">Action</th>
+                                                <th style="width: 30%;">Action</th>
                                             </tr>
                                         </thead>
 
@@ -144,13 +144,15 @@
                                             <tr *ngFor="let special of SpecialEventsOfBranch|
                                             paginate: { itemsPerPage: 5, currentPage: p2 };index as i;">
                                                 <td style="width: 2%;">{{(p2-1)*5+i+1 ? (p2-1)*5+i+1 : i+1}}</td>
-                                                <td style="width: 15%;">
+                                                <td style="width: 12%;">
                                                     {{special.startDate.split("-").reverse().join("-")}}</td>
-                                                <td style="width: 15%;">
+                                                <td style="width: 12%;">
                                                     {{special.endDate.split("-").reverse().join("-")}}</td>
                                                 <td style="width: 25%;">{{special.eventName}}</td>
-                                                <td style="width: 30%;">{{special.place}}</td>
-                                                <td style="width: 12%;">
+                                                <td style="width: 30%;">{{special.place?special.place:'-'}}</td>
+                                                <td style="width: 30%;">
+                                                    <i class="fa fa-group" title="Focused Group Discussion"
+                                                        (click)="fgdCrudOperation(special)"></i>
                                                     <i class="fa fa-eye fa-lg" title="View Details"
                                                         (click)="viewSpecialEvent(special)"></i>
                                                     <i class="fas fa-edit" title="Edit Event"

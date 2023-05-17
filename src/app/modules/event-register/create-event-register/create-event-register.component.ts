@@ -6,6 +6,7 @@ import { HttpService } from '../../core/http/http.service';
 import { ValidationService } from '../../shared/services/validation.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { designationList, issueList, specialEventVillList, Response, hcoUserList } from '../event_interface';
 
 @Component({
   selector: 'app-create-event-register',
@@ -24,11 +25,11 @@ export class CreateEventRegisterComponent {
   maxToDate: any;
   toDateMin: any;
   toDateMax: any;
-  hcoUserList: Array<any> = [];
-  issuesList: Array<any> = [];
-  designationList: Array<any> = [];
+  hcoUserList: hcoUserList[];
+  issuesList: issueList[];
+  designationList: designationList[];
   staffListID: Array<any> = [];
-  specialEventVillList: Array<any> = [];
+  specialEventVillList: specialEventVillList[];
   familiesWithStatusOfVillage: Array<any> = [];
   onEditfamiliesWithStatusOfVillage: Array<any> = [];
   familiesListID: Array<any> = [];
@@ -165,8 +166,16 @@ export class CreateEventRegisterComponent {
         this.createEventRegisterForm.controls['eventDate'].disable();
         this.createEventRegisterForm.controls['eventDateFrom'].disable();
         this.createEventRegisterForm.controls['eventDateTo'].disable();
-        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
-        this.createEventRegisterForm.controls['rallySeminarPlace'].disable();
+        console.log(this.createEventRegisterForm.value.rally);
+        console.log(this.createEventRegisterForm.value.seminar)
+        if (this.specificEventDetails?.rally == 'Y' || this.specificEventDetails?.seminar == 'Y') {
+          this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+          // this.createEventRegisterForm.controls['rallySeminarPlace'].disable();
+        } else {
+          this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+          // this.createEventRegisterForm.controls['rallySeminarPlace'].enable();
+        }
+
         return this.createEventRegisterForm.markAllAsTouched();
       }
 
@@ -195,6 +204,13 @@ export class CreateEventRegisterComponent {
       this.createEventRegisterForm.controls['eventDateTo'].disable();
     }
 
+    if ((this.createEventRegisterForm.value.eventDateFrom || this.specificEventDetails?.startDate) &&
+      (this.createEventRegisterForm.value.eventDateTo || this.specificEventDetails?.endDate)) {
+      this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+    } else {
+      this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+    }
+
   }
 
   get l() {
@@ -215,7 +231,9 @@ export class CreateEventRegisterComponent {
 
     let hcoUserReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
     this.loader = false;
-    this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res) => {
+    this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res: Response) => {
+
+
       this.loader = true;
       this.hcoUserList = res.responseObject.fullStaffList;
       this.hcoUserList = this.hcoUserList?.map(({
@@ -225,6 +243,8 @@ export class CreateEventRegisterComponent {
         is_checked,
         ...rest
       }));
+
+      console.log(this.hcoUserList);
 
 
       this.specificEventDetails?.staffList?.forEach(e => {
@@ -282,13 +302,13 @@ export class CreateEventRegisterComponent {
 
     let getEventPreRequisiteReg = { dataAccessDTO: this.httpService.dataAccessDTO, event_type_master_id: null };
     this.loader = false;
-    this.eventService.getEventPreRequisite(getEventPreRequisiteReg).subscribe((res) => {
+    this.eventService.getEventPreRequisite(getEventPreRequisiteReg).subscribe((res: Response) => {
       this.loader = true;
       // console.log(res.responseObject.issueList);
       this.issuesList = res.responseObject.issueList.filter(x => x.eventTypeMasterId == eventTypeMasterId);
       // console.log(this.issuesList, 'issuesList');
       this.designationList = res.responseObject.designationList;
-      // console.log(this.designationList, 'designationList')
+      console.log(res, 'designationList')
     });
 
     if (this.event_is_special == 'N') {
@@ -395,6 +415,7 @@ export class CreateEventRegisterComponent {
         }));
         this.setStatusForAll(this.onEditfamiliesWithStatusOfVillage);
         this.familiesWithStatusOfVillage = this.onEditfamiliesWithStatusOfVillage;
+        this.familiesListID = this.onEditfamiliesWithStatusOfVillage;
         console.log(this.specificEventDetails?.rallyOrSeminarDetails.familyList);
 
         console.log(this.familiesWithStatusOfVillage, 'this.familiesWithStatusOfVillage');
@@ -698,7 +719,7 @@ export class CreateEventRegisterComponent {
         flag = false
       }
 
-      if (this.hcoUserList.filter(x => x.is_checked == true).length == 0) {
+      if (this.hcoUserList?.filter(x => x.is_checked == true).length == 0) {
         flag = false
       }
 
@@ -756,9 +777,9 @@ export class CreateEventRegisterComponent {
         flag = false;
       }
 
-      if (!this.url1 && !this.url2 && !this.url3 && !this.url4) {
-        flag = false;
-      }
+      // if (!this.url1 && !this.url2 && !this.url3 && !this.url4) {
+      //   flag = false;
+      // }
     }
     return flag;
   }
@@ -914,7 +935,10 @@ export class CreateEventRegisterComponent {
     console.log(this.createEventRegisterForm.value.seminar);
     console.log(this.createEventRegisterForm.value.fgd);
 
-    if (this.createEventRegisterForm.value.eventDateFrom && this.createEventRegisterForm.value.eventDateTo) {
+    console.log(this.createEventRegisterForm.value.eventDateFrom, this.createEventRegisterForm.value.eventDateTo);
+
+    if ((this.createEventRegisterForm.value.eventDateFrom || this.specificEventDetails.startDate) &&
+      (this.createEventRegisterForm.value.eventDateTo || this.specificEventDetails.endDate)) {
       this.createEventRegisterForm.controls['rallySeminarDate'].enable();
     } else {
       this.createEventRegisterForm.controls['rallySeminarDate'].disable();
@@ -924,7 +948,8 @@ export class CreateEventRegisterComponent {
   getSimpleListOfVillagesOfABranch() {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
     this.eventService.getSimpleListOfVillagesOfABranch(req).subscribe((res: any) => {
-      this.specialEventVillList = res.responseObject
+      this.specialEventVillList = res.responseObject;
+
       // console.log(this.specialEventVillList, 'specialEventVillList');
     });
   }
@@ -1328,7 +1353,7 @@ export class CreateEventRegisterComponent {
       flag = false
     } else if (!x.eventDateTo && !this.specificEventDetails?.endDate) {
       flag = false
-    } else if (this.hcoUserList.filter(x => x.is_checked == true).length == 0) {
+    } else if (this.hcoUserList?.filter(x => x.is_checked == true).length == 0) {
       flag = false
     }
 
@@ -1379,7 +1404,7 @@ export class CreateEventRegisterComponent {
     if (x.rally == true || x.seminar == true) {
       if (!x.rallySeminarDate && !this.specificEventDetails?.rallyOrSeminarDetails?.date) {
         flag = false
-      } else if (!x.rallySeminarPlace && !this.specificEventDetails?.rallyOrSeminarDetails?.place) {
+      } else if (!x.rallySeminarPlace) {
         flag = false
       } else if (!x.ssAttended) {
         flag = false
@@ -1397,10 +1422,14 @@ export class CreateEventRegisterComponent {
 
   saveUpdateSpecialEvent() {
     console.log(this.familiesListID);
-    if (this.familiesListID.filter(x => x.is_checked == true && x.active_flag == 'A').length == 0) {
-      this.showError('Please select atleast one active participant');
-      return;
+
+    if (this.createEventRegisterForm.value.rally == true || this.createEventRegisterForm.value.seminar == true) {
+      if (this.familiesListID.filter(x => x.is_checked == true && x.active_flag == 'A').length == 0) {
+        this.showError('Please select atleast one active participant');
+        return;
+      }
     }
+
 
     this.facilitatorDetails.facilitatorInfo.forEach(x => {
       x.name = this.validationService.camelize(x.name.trim())
@@ -1430,32 +1459,45 @@ export class CreateEventRegisterComponent {
       stakeHolderList: this.stakeHolderDetails.stakeHolderInfo.filter(x => x.name).length == 0 ? [] : this.stakeHolderDetails.stakeHolderInfo.filter(x => x.name),
       specialGuestList: this.specialGuestDetails.guestsInfo.filter(x => x.name).length == 0 ? [] : this.specialGuestDetails.guestsInfo.filter(x => x.name),
       rallyOrSeminarDetails: {
-        eventSpecialRallySeminarMapId: this.specificEventDetails?.rallyOrSeminarDetails?.eventSpecialRallySeminarMapId,
-        place: this.createEventRegisterForm.value.rallySeminarPlace ?
-          this.validationService.camelize(this.createEventRegisterForm.value.rallySeminarPlace?.trim()) :
-          this.specificEventDetails?.rallyOrSeminarDetails?.place,
-        date: this.createEventRegisterForm.value.rallySeminarDate,
+        eventSpecialRallySeminarMapId: this.specificEventDetails?.rallyOrSeminarDetails?.eventSpecialRallySeminarMapId ?
+          this.specificEventDetails?.rallyOrSeminarDetails?.eventSpecialRallySeminarMapId : 0,
+        place: this.validationService.camelize(this.createEventRegisterForm.value.rallySeminarPlace?.trim()),
+        date: this.createEventRegisterForm.value.rallySeminarDate ? this.createEventRegisterForm.value.rallySeminarDate :
+          this.specificEventDetails?.rallyOrSeminarDetails.date,
         active_flag: 'A',
         familyList: this.familiesListID,
         ssList: this.createEventRegisterForm.value.ssAttended == 'Y' ? this.ssListID : null
       }
     }
 
-    if (specialEventReq.rally == 'N' && specialEventReq.seminar == 'N') {
-      specialEventReq.rallyOrSeminarDetails = null
+
+    if (this.specificEventDetails?.rallyOrSeminarDetails) {
+      if (specialEventReq.rally == 'N' && specialEventReq.seminar == 'N') {
+        specialEventReq.rallyOrSeminarDetails.eventSpecialRallySeminarMapId = this.specificEventDetails?.rallyOrSeminarDetails?.eventSpecialRallySeminarMapId
+        specialEventReq.rallyOrSeminarDetails.active_flag = 'D'
+      }
+    } else {
+      if (specialEventReq.rally == 'N' && specialEventReq.seminar == 'N') {
+        specialEventReq.rallyOrSeminarDetails = null
+      }
     }
 
     if (this.specificEventDetails?.eventRegisterSpecialId) {
       delete specialEventReq.eventTypeMasterId
-      delete specialEventReq.specialEventBranchId
-      delete specialEventReq.startDate
-      delete specialEventReq.endDate
-      delete specialEventReq.rallyOrSeminarDetails.date
-      delete specialEventReq.rallyOrSeminarDetails.place
-      delete specialEventReq.rallyOrSeminarDetails.active_flag
-    } else {
-      delete specialEventReq.rallyOrSeminarDetails.eventSpecialRallySeminarMapId
+      //   delete specialEventReq.specialEventBranchId
+      //   delete specialEventReq.startDate
+      //   delete specialEventReq.endDate
+      //   delete specialEventReq.rallyOrSeminarDetails.date
+      //   delete specialEventReq.rallyOrSeminarDetails.place
+      //   delete specialEventReq.rallyOrSeminarDetails.active_flag
     }
+    // else {
+    //   if (specialEventReq.rally == 'Y' || specialEventReq.seminar == 'Y')
+    //     delete specialEventReq.rallyOrSeminarDetails.eventSpecialRallySeminarMapId
+    // }
+    // if (this.specificEventDetails?.eventRegisterSpecialId) {
+    //   delete specialEventReq.eventTypeMasterId
+    // }
 
     console.log(specialEventReq, 'specialEventReq');
 

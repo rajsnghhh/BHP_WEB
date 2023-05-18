@@ -197,7 +197,7 @@ input[type="file"] {
 
 .serach_field_23 .search_inner_fullscreen input {
   width: 75%;
-  margin-left: 8px;
+  margin-left: 87px;
   margin-bottom: 5px;
   font-size: 13px;
   height: 40px;
@@ -205,14 +205,28 @@ input[type="file"] {
   padding-left: 55px;
   border: 1px solid #2daab8;
   padding-right: 15px;
-  margin-top: 19px;
+  margin-top: 0px;
 }
 
 .serach_field_23 .search_inner_fullscreen button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: -609px;
-  margin-top: 21px;
+  margin-left: -1190px;
+}
+
+.search_inner_fullscreen button {
+  padding-right: 1px;
+  margin-left: 690px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 90%;
+  background: transparent;
+  font-size: 12px;
+  padding-left: 19px;
+  font-size: 18px;
+  color: #2daab8;
+  border: 0;
 }
 
 img {

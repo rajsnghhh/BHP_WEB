@@ -65,4 +65,8 @@ export class EventRegisterService {
   viewSpecificSpecialEventRegister(obj): any {
     return this.http.post(`${this.baseURL}eventRegister/viewSpecificSpecialEventRegister`, obj)
   }
+
+  getAllSsOfABranchSimpler(obj): any {
+    return this.http.post(`${this.baseURL}swasthyasahayika/getSSOfABranchSimpler`, obj)
+  }
 }

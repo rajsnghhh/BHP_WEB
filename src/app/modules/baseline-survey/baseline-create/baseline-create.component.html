@@ -240,8 +240,8 @@
               <div class="form-group col-md" *ngIf="idTypeField == 3">
                 <label for="voter">
                   VOTER CARD NO :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                <input type="text" class="form-control" maxlength="16" placeholder="NDF1758462"
-                  formControlName="voter" [ngClass]="{
+                <input type="text" class="form-control" maxlength="16" placeholder="NDF1758462" formControlName="voter"
+                  [ngClass]="{
                     'is-invalid': f.voter.invalid && f.voter.touched,
                     'is-valid':
                       f.voter.valid && (f.voter.dirty || f.voter.touched)
@@ -343,14 +343,13 @@
                   <div *ngIf="f.fmale.errors.required">Male is required</div>
                 </div>
               </div>
-
+              <!-- (keydown)="restrictZero($event)" (keyup)="zeroFemale()" -->
               <div class="form-group col-md">
                 <label for="ffemale">
                   Total Female Family Member:&nbsp;<span class="text-danger">*&nbsp;</span></label>
                 <input type="text" class="form-control" placeholder="Child, Adult, and Senior" maxlength="2"
                   formControlName="ffemale" (keypress)="validationService.onlyInteger($event)" (keyup)="addMF()"
-                  (change)="checkChildren()" (keyup)="familyCountChecking()" (keyup)="checkHousehold()"
-                  (keydown)="restrictZero($event)" (keyup)="zeroFemale()" [ngClass]="{
+                  (change)="checkChildren()" (keyup)="familyCountChecking()" (keyup)="checkHousehold()" [ngClass]="{
                     'is-invalid': f.ffemale.invalid && f.ffemale.touched,
                     'is-valid':
                       f.ffemale.valid && (f.ffemale.dirty || f.ffemale.touched)
@@ -442,6 +441,88 @@
                       (change)="changesanitary($event)" />
                     <label class="form-check-label" for="">
                       &nbsp;&nbsp;No</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md">
+                <label for="waterSource">
+                  Drinking Water Sources at Home or in Individual Vicinity?&nbsp;<span
+                    class="text-danger">*&nbsp;</span></label>
+
+                <div class="form-check-inline">
+                  <input class="form-check-input" type="radio" id="yes" value="Y" formControlName="waterSource"
+                    (change)="changewaterSource($event.target.value)" />
+                  <label class="form-check-label" for="">
+                    &nbsp;&nbsp;Yes</label>
+
+                  <div class="form-check-inline">
+                    &nbsp;&nbsp;&nbsp;
+                    <input class="form-check-input" type="radio" id="no" value="N" formControlName="waterSource"
+                      (change)="changewaterSource($event.target.value)" />
+                    <label class="form-check-label" for="">
+                      &nbsp;&nbsp;No</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md">
+                <label for="waterSourceType">Drinking water source:&nbsp;<span
+                    class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="waterSourceType" id="waterSourceType" [ngClass]="{
+                    'is-invalid': f.waterSourceType.invalid && f.waterSourceType.touched,
+                    'is-valid':
+                      f.waterSourceType.valid &&
+                      (f.waterSourceType.dirty || f.waterSourceType.touched)
+                  }">
+                  <option value="">-- Select --</option>
+                  <option value="1">source of drinking water </option>
+                </select>
+                <div *ngIf="f.waterSourceType.errors" class="invalid-feedback">
+                  <div *ngIf="f.waterSourceType.errors.required">
+                    Drinking water source selection is required
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md">
+                <label for="electricityAtHome">
+                  Electricity at Home?&nbsp;<span class="text-danger">*&nbsp;</span></label>
+
+                <div class="form-check-inline">
+                  <input class="form-check-input" name="electricityAtHome" type="radio" id="yes" value="Y"
+                    formControlName="electricityAtHome" (change)="changesanitary($event)" />
+                  <label class="form-check-label" for="">
+                    &nbsp;&nbsp;Yes</label>
+
+                  <div class="form-check-inline">
+                    &nbsp;&nbsp;&nbsp;
+                    <input class="form-check-input" type="radio" id="no" value="N" formControlName="electricityAtHome"
+                      (change)="changesanitary($event)" />
+                    <label class="form-check-label" for="">
+                      &nbsp;&nbsp;No</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md">
+                <label for="cookingFuel">Fuel for Cooking:&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <select class="form-select" formControlName="cookingFuel" id="cookingFuel" [ngClass]="{
+                    'is-invalid': f.cookingFuel.invalid && f.cookingFuel.touched,
+                    'is-valid':
+                      f.cookingFuel.valid &&
+                      (f.cookingFuel.dirty || f.cookingFuel.touched)
+                  }">
+                  <option value="">-- Select --</option>
+                  <option value="1">Gas</option>
+                  <option value="2">Firewood</option>
+                  <option value="3">Kerosene</option>
+                </select>
+                <div *ngIf="f.cookingFuel.errors" class="invalid-feedback">
+                  <div *ngIf="f.cookingFuel.errors.required">
+                    Fuel for Cooking selection is required
                   </div>
                 </div>
               </div>
@@ -634,6 +715,8 @@
               <th>Child Name</th>
               <th>Date of Birth</th>
               <th>Sex</th>
+              <th>Marital status</th>
+              <th>Residence</th>
               <th>Remove</th>
             </tr>
           </thead>
@@ -651,11 +734,36 @@
                   [max]="today" (keydown)="restrictTypeOfDate()" />
               </td>
               <td>
-                <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex">
-                  <option value="">-- Select Sex --</option>
+                <select class="form-select" id="sex" [(ngModel)]="childDetails.childInfo[i].sex"
+                  (change)="checkSex($event.target.value,i)">
+                  <option value="">-- Select --</option>
                   <option value="M">Male</option>
                   <option value="F">Female</option>
                   <option value="O">Others</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-select" *ngIf="childDetails.childInfo[i].sex == 'F'" id="maritalStatus"
+                  [(ngModel)]="childDetails.childInfo[i].maritalStatus"
+                  (change)="checkmaritalStatus($event.target.value,i)">
+                  <option value="">-- Select --</option>
+                  <option value="Married">Married</option>
+                  <option value="Unmarried">Unmarried</option>
+                </select>
+                <select class="form-select" *ngIf="childDetails.childInfo[i].sex != 'F'" id="maritalStatus" disabled>
+                  <option value="">-- Select --</option>
+                </select>
+              </td>
+              <td>
+                <select class="form-select" *ngIf="childDetails.childInfo[i].maritalStatus == 'Married'" id="residence"
+                  [(ngModel)]="childDetails.childInfo[i].residence">
+                  <option value="">-- Select --</option>
+                  <option value="PH">Parents House</option>
+                  <option value="IH">Inlaw's house</option>
+                </select>
+                <select class="form-select" *ngIf="childDetails.childInfo[i].maritalStatus != 'Married'" id="residence"
+                  disabled>
+                  <option value="">-- Select --</option>
                 </select>
               </td>
               <td>

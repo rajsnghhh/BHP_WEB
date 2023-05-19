@@ -48,6 +48,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
   @ViewChild(LocationComponent) locationComponent: LocationComponent;
   timeToTentativeEndDate: any;
+  sexStatus: boolean;
 
   constructor(private fb: UntypedFormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
@@ -75,6 +76,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
+      maritalStatus: '',
+      residence: '',
       status: 'A'
     });
 
@@ -182,6 +185,10 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       childbelow5: this.childbelow5,
       institutional: ['', Validators.required],
       breastFeeding: this.breastfeeding,
+      waterSource: ['N', Validators.required],
+      waterSourceType: [{ value: '', disabled: this.changewaterSource }, Validators.required],
+      electricityAtHome: ['', Validators.required],
+      cookingFuel: ['', Validators.required],
     });
   }
 
@@ -191,6 +198,23 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
 
   changesanitary(e) {
     this.haveSanitaryLatrine = e.target.value;
+  }
+
+  changewaterSource(value: string) {
+    if (value == 'Y') {
+      this.baselineSurvey.controls['waterSourceType'].enable();
+    } else {
+      this.baselineSurvey.controls['waterSourceType'].disable();
+    }
+    this.baselineSurvey.controls.waterSourceType.setValue('');
+  }
+
+  checkSex(value, index) {
+    this.childDetails.childInfo[index].maritalStatus = "";
+    this.childDetails.childInfo[index].residence = "";
+  }
+  checkmaritalStatus(value, index) {
+    this.childDetails.childInfo[index].residence = "";
   }
 
   havesChildren(e) {
@@ -209,6 +233,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
+      maritalStatus: '',
+      residence: '',
       status: 'A'
     }]
   }
@@ -226,6 +252,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
+      maritalStatus: '',
+      residence: '',
       status: 'A'
     }]
   }
@@ -258,6 +286,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
     this.breastfeeding = 'NA';
     this.institutionalDelivery = '';
     this.showChildDetails = false;
+    this.baselineSurvey.reset();
     this.createForm();
     this.locationComponent.createForm();
     this.addSum = 0;
@@ -269,6 +298,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
+      maritalStatus: '',
+      residence: '',
       status: 'A'
     }];
   }
@@ -771,7 +802,24 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
     this.modalReference = this.modalService.open(child, {
       windowClass: 'Child-Create-ModalClass',
     });
+    // this.childDetails?.childInfo.forEach((x, index) => {
+    //   if (x.sex == 'F') {
+    //     (document?.getElementById(index.toString()) as any).disabled = false;
+    //   } else {
+    //     (document?.getElementById(index.toString()) as any).disabled = true;
+    //   }
+    // })
   }
+
+  // abc() {
+  //   this.childDetails?.childInfo.forEach((x, index) => {
+  //     if (x.sex == 'F') {
+  //       (document?.getElementById(index.toString()) as any).disabled = false;
+  //     } else {
+  //       (document?.getElementById(index.toString()) as any).disabled = true;
+  //     }
+  //   })
+  // }
 
   addNewChild() {
     this.childDetails.childInfo.push({
@@ -782,6 +830,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
+      maritalStatus: '',
+      residence: '',
       status: 'A'
     });
   }
@@ -898,6 +948,16 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
     this.childDetails.childInfo.forEach((item) => {
       if (!item.childName || !item.dob || !item.sex) {
         flag = false;
+      } else {
+        if (item.sex == 'F' && !item.maritalStatus) {
+          flag = false;
+        } else {
+          if (item.maritalStatus == 'Married' && !item.residence) {
+            flag = false;
+          } else {
+            flag = true;
+          }
+        }
       }
     });
 
@@ -1005,14 +1065,53 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       totalChildren = parseInt(item.child);
     }
 
+
+
     if (totalChildren < this.childDetails.childInfo.length) {
       this.showError(' Entered child data should not be more than children count');
       // return;
     } else {
       console.log(this.childDetails);
-      this.modalReference.close();
+      this.childDetails.childInfo.forEach((x) => {
+        let age = Math.floor((+new Date() - new Date(x.dob).getTime()) / 3.15576e+10);
+        if (age < 10) {
+          this.showError(' Girl Child age is below 10 years not allowed ');
+        } else {
+          this.modalReference.close();
+        }
+      })
+
     }
 
+  }
+
+  //Calculate age using DOB
+  getAge(dateString: any) {
+    var mdate = dateString;
+    var dobYear = parseInt(mdate.substring(0, 4), 10);
+    var dobMonth = parseInt(mdate.substring(5, 7), 10);
+    var dobDate = parseInt(mdate.substring(8, 10), 10);
+    var today = new Date();
+    var birthday = new Date(dobYear, dobMonth - 1, dobDate);
+    var diffInMillisecond = today.valueOf() - birthday.valueOf();
+    var year_age = Math.floor(diffInMillisecond / 31536000000);
+    var day_age = Math.floor((diffInMillisecond % 31536000000) / 86400000);
+    var month_age = Math.floor(day_age / 30);
+    day_age = day_age % 30;
+    var tMnt = (month_age + (year_age * 12));
+
+    let age = year_age + " y " + month_age + " m " + day_age + " d"
+
+    let y = age?.indexOf("y");
+    let year = parseInt(age?.slice(0, y - 1));
+    let m = age?.indexOf("y");
+    let m1 = age?.indexOf("m");
+    let month = parseInt(age?.slice(m + 2, m1 - 1));
+    let d = age?.indexOf("m");
+    let d1 = age?.indexOf("d");
+    let day = parseInt(age?.slice(d + 2, d1 - 1));
+
+    return ({ 'year': year, 'month': month, 'day': day })
   }
 
   restrictTypeOfDate() {

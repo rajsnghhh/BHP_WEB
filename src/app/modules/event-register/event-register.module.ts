@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { eventRegisterSearchFilterPipe } from '../shared/sidebar/event-register-search.pipe';
 import { FocusedGroupDiscussionComponent } from './focused-group-discussion/focused-group-discussion.component';
+import { FgdViewComponent } from './fgd-view/fgd-view.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FocusedGroupDiscussionComponent } from './focused-group-discussion/focu
     EventRegisterComponent,
     CreateEventRegisterComponent,
     eventRegisterSearchFilterPipe,
-    FocusedGroupDiscussionComponent
+    FocusedGroupDiscussionComponent,
+    FgdViewComponent
   ],
   imports: [
     CommonModule,

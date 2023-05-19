@@ -1,7 +1,7 @@
 <app-loader [hidden]="loader"></app-loader>
 <h1 mat-dialog-title>
     <div class="dialog-header">
-        <h3 class="dialog-title">Focused Group Discussion(FGD)</h3>
+        <h3 class="dialog-title">Focused Group Discussion (FGD)</h3>
         <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
     </div>
 </h1>
@@ -13,8 +13,8 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="fgdDate">Date of FGD :&nbsp;<span class="text-danger">*&nbsp;</span></label>
-                <input type="date" class="form-control" formControlName="fgdDate" (keydown)="restrictTypeOfDate()"
-                    [ngClass]="{'is-invalid': l.fgdDate.invalid 
+                <input type="date" class="form-control" formControlName="fgdDate"
+                    (change)="dateOfFGD($event.target.value)" (keydown)="restrictTypeOfDate()" [ngClass]="{'is-invalid': l.fgdDate.invalid 
                     && l.fgdDate.touched, 'is-valid':l.fgdDate.valid &&(l.fgdDate.dirty || l.fgdDate.touched)}" />
                 <div *ngIf="l.fgdDate.errors" class="invalid-feedback">
                     <div *ngIf="l.fgdDate.errors.required">
@@ -67,10 +67,11 @@
                             <label for="gram">Vill/ Gram Sansad/ Locality :&nbsp;<span
                                     class="text-danger">*&nbsp;</span></label>
                             <select class="form-select" formControlName="gram" id="gram" [ngClass]="{'is-invalid':l.gram.invalid && 
-                            l.gram.touched,'is-valid':l.gram.valid && (l.gram.dirty ||l.gram.touched) }">
+                            l.gram.touched,'is-valid':l.gram.valid && (l.gram.dirty ||l.gram.touched) }"
+                                (change)="beneficiaryAttendedList($event.target.value)">
                                 <option value="">-- Select Village --</option>
                                 <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
-                                    {{ vill.villageName }}
+                                    {{vill.villageName}}
                                 </option>
                             </select>
                             <div *ngIf="l.gram.errors" class="invalid-feedback">
@@ -131,17 +132,13 @@
                                         <td style="width: 4%;">{{i+1}}</td>
                                         <td style="width: 25%;">{{ss.ssName}}</td>
                                         <td style="width: 25%;">{{ss.ssHusbandOrGuardianName}}</td>
-                                        <td style="width: 5%;">select</td>
-
-                                        <!-- <td style="width: 5%;"> <input
-                                                *ngIf="ss.is_checked== true && specificEventDetails?.modalType!='view'"
+                                        <td style="width: 5%;"> <input *ngIf="ss.is_checked== true"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleSS($event,ss)">
-                                            <input
-                                                *ngIf="ss.is_checked== false && specificEventDetails?.modalType!='view'"
-                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                            <input *ngIf="ss.is_checked== false" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
                                                 (change)="selectMultipleSS($event,ss)">
-                                            <input
+                                            <!--  <input
                                                 *ngIf="ss.is_checked== true  && specificEventDetails?.modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleSS($event,ss)" disabled>
@@ -165,15 +162,15 @@
 
         <div class="row">
             <div class="card" style="background: whitesmoke; border: none;
-                        border-radius: 14px; height: 260px;">
+                        border-radius: 14px; height: 400px;">
                 <div class="card-body" style="height: 40vh;">
                     <div class="row">
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-3">
                             <h4 class="card-title">Beneficiary Attended:&nbsp;<span class="text-danger">*&nbsp;</span>
                             </h4>
                         </div>
 
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-4">
                             <div class="serach_field_23">
                                 <div>
                                     <form active="#"
@@ -186,20 +183,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-5">
-                            <select class="form-select" formControlName="village" id="village" [ngClass]="{'is-invalid':l.village.invalid && 
-                    l.village.touched,'is-valid':l.village.valid && (l.village.dirty ||l.village.touched) }">
-                                <option value="">-- Select Village --</option>
-                                <option value="allFamilies">All Selected Families</option>
-                                <!-- <option *ngFor="let vill of specialEventVillList" value="{{vill.villageId}}">
-                                    {{ vill.villageName }}
-                                </option> -->
-                            </select>
-                            <div *ngIf="l.village.errors" class="invalid-feedback">
-                                <div *ngIf="l.village.errors.required">
-                                    Village selection is required
-                                </div>
-                            </div>
+                        <div class="form-group col-md-5" *ngIf="showVillageName">
+                            <h3> Village Name : {{showVillageName}}</h3>
                         </div>
                     </div>
 
@@ -211,52 +196,42 @@
                                         <th style="width: 3%;">Sl. No.</th>
                                         <th style="width: 3%;">Family No.</th>
                                         <th style="width: 25%;">Name</th>
-                                        <!-- <th style="width: 25%;"
-                                            *ngIf="createEventRegisterForm.value.village=='allFamilies'">Village
-                                            Name</th> -->
                                         <th style="width: 30%;">Status</th>
                                         <th style="width: 5%;">Select</th>
                                     </tr>
                                 </thead>
 
-                                <!-- <tbody style="text-align:center;">
-                                    <tr *ngFor="let fam of familiesWithStatusOfVillage | eventRegisterFilter: {familyNumber : familySearch,
-                                               name :familySearch}; index as i">
+                                <tbody style="text-align:center;">
+                                    <tr *ngFor="let fam of familiesWithStatusOfVillage; index as i">
                                         <td style="width: 3%;">{{i+1}}</td>
                                         <td style="width: 3%;">{{fam.familyNumber}}</td>
                                         <td style="width: 25%;">{{fam.name}}</td>
-                                        <td style="width: 25%;"
-                                            *ngIf="createEventRegisterForm.value.village=='allFamilies'">
-                                            {{fam.villageName}}</td>
                                         <td style="width: 30%;">{{fam.setStatus}}</td>
-                                        <td style="width: 5%;"><input
-                                                *ngIf="fam.is_checked== true && specificEventDetails?.modalType!='view'"
+                                        <td style="width: 5%;"><input *ngIf="fam.is_checked== true"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleFamilies($event,fam)">
-                                            <input
-                                                *ngIf="fam.is_checked== false  && specificEventDetails?.modalType!='view'"
-                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                            <input *ngIf="fam.is_checked== false" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
                                                 (change)="selectMultipleFamilies($event,fam)">
-                                            <input
+                                            <!-- <input
                                                 *ngIf="fam.is_checked== true  && specificEventDetails?.modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleFamilies($event,fam)" disabled>
                                             <input
                                                 *ngIf="fam.is_checked== false  && specificEventDetails?.modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                                (change)="selectMultipleFamilies($event,fam)" disabled>
+                                                (change)="selectMultipleFamilies($event,fam)" disabled> -->
                                         </td>
 
                                     </tr>
-                                </tbody> -->
+                                </tbody>
                             </table>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
-
+        </div><br>
 
     </form>
 </div>
@@ -264,6 +239,6 @@
 
 <div class="modal-footer">
     <div class="row">
-        <button type="button" class="btn btn-primary btn-sm">Save</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="saveOrUpdateFGD()">Save</button>
     </div>
 </div>

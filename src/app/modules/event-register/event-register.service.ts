@@ -69,4 +69,8 @@ export class EventRegisterService {
   getAllSsOfABranchSimpler(obj): any {
     return this.http.post(`${this.baseURL}swasthyasahayika/getSSOfABranchSimpler`, obj)
   }
+
+  saveOrUpdateFgd(obj): any {
+    return this.http.post(`${this.baseURL}eventRegister/saveOrUpdateFgd`, obj)
+  }
 }

@@ -12,6 +12,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { FocusedGroupDiscussionComponent } from './focused-group-discussion/focused-group-discussion.component';
+import { FgdViewComponent } from './fgd-view/fgd-view.component';
 
 @Component({
   selector: 'app-event-register',
@@ -251,16 +252,13 @@ export class EventRegisterComponent {
     });
   }
 
-  // FGD CRUD OPERATIONS
-  fgdCrudOperation(special) {
-    console.log(special, 'special');
-
-    const dialogRef = this.dialog.open(FocusedGroupDiscussionComponent, {
-      width: '1000px',
-      height: '550px',
+  fgdViewModal(special) {
+    const dialogRef = this.dialog.open(FgdViewComponent, {
+      width: '750px',
+      height: '380px',
       data: {
         branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
-        // specificEventDetails: specificEventDetails, regionID: this.eventRegisterForm.value.region || this.lowerRankRegionId
+        specialEventID: special.eventRegisterSpecialId
       }
     });
 

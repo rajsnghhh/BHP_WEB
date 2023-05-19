@@ -97,7 +97,7 @@ legend.scheduler-border {
   padding-left: 55px;
   border: 1px solid #2daab8;
   padding-right: 15px;
-  margin-left: 40px;
+  margin-left: -34px;
 }
 
 .serach_field_23 {
@@ -125,7 +125,7 @@ legend.scheduler-border {
   font-size: 12px;
   border: 0;
   padding-left: 19px;
-  margin-left: 30px;
+  margin-left: -45px;
 }
 
 .serach_field_23 .search_inner button i {
@@ -150,7 +150,7 @@ legend.scheduler-border {
 
 .serach_field_23 .search_inner_fullscreen input {
   width: 75%;
-  margin-left: 50px;
+  margin-left: -25px;
   margin-bottom: 5px;
   font-size: 13px;
   height: 40px;
@@ -164,7 +164,7 @@ legend.scheduler-border {
 .serach_field_23 .search_inner_fullscreen button i {
   font-size: 18px;
   color: #2daab8;
-  margin-left: -1273px;
+  margin-left: -1425px;
   /* margin-top: 21px; */
 }
 
@@ -181,4 +181,11 @@ legend.scheduler-border {
   font-size: 18px;
   color: #2daab8;
   border: 0;
+}
+
+#tbodyFam {
+  display: block;
+  height: 286px;
+  overflow: scroll;
+  overflow-x: hidden;
 }

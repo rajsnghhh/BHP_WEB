@@ -45,6 +45,7 @@
 
 #table_wrapper .table tbody td {
   padding: 2px;
+  height: 30px;
 }
 
 #tbodyFam {
@@ -62,4 +63,10 @@
   position: sticky;
   top: 0;
   z-index: 999;
+}
+
+.fa-eye:hover {
+  color: #70caf7 !important;
+  cursor: pointer;
+  font-size: 1.8em;
 }

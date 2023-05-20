@@ -52,4 +52,21 @@ export class FgdViewComponent {
       this.fgdLists();
     });
   }
+
+  editFGD(fgd) {
+    const dialogRef = this.dialog.open(FocusedGroupDiscussionComponent, {
+      width: '1000px',
+      height: '550px',
+      data: {
+        branchID: this.data.branchID,
+        specialEventID: this.data.specialEventID,
+        fgdDetails:fgd
+      }
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.fgdLists();
+    });
+  }
 }

@@ -239,6 +239,7 @@
 
 <div class="modal-footer">
     <div class="row">
-        <button type="button" class="btn btn-primary btn-sm" (click)="saveOrUpdateFGD()">Save</button>
+        <button type="button" class="btn btn-primary btn-sm" [disabled]="!fgdSaveDisabled()"
+            (click)="saveOrUpdateFGD()">Save</button>
     </div>
 </div>

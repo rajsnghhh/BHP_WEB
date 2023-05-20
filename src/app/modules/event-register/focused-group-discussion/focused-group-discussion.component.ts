@@ -25,7 +25,6 @@ export class FocusedGroupDiscussionComponent {
   ssListID: Array<any> = [];
   familiesListID: Array<any> = [];
 
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<FocusedGroupDiscussionComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
     public validationService: ValidationService, private toaster: ToastrService) {
@@ -38,15 +37,17 @@ export class FocusedGroupDiscussionComponent {
 
   ngOnInit(): void {
     console.log(this.data);
-    this.FGDFormGroup();
+
+
     let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
     this.loader = false;
     this.eventService.getVillagesOfBranch(villageReg).subscribe((res) => {
       this.loader = true;
       this.villagesOfBranch = res.responseObject;
-      // console.log(this.villagesOfBranch, 'villagesOfBranch');
+      console.log(this.villagesOfBranch);
     });
 
+    this.FGDFormGroup();
   }
 
   closeDialog() {
@@ -54,20 +55,43 @@ export class FocusedGroupDiscussionComponent {
   }
 
   FGDFormGroup() {
+    var x = this.data.fgdDetails;
+    var ssAttended;
+    if (x?.ssList?.length > 0) {
+      ssAttended = 'Y'
+      this.getAllSsOfABranch();
+    } else {
+      ssAttended = 'N'
+    }
+
     this.FGDForm = this.fb.group({
-      fgdDate: ['', Validators.required],
-      block: ['', Validators.required],
+      fgdDate: [x?.dateOfFgd ? x?.dateOfFgd : '', Validators.required],
+      block: [x?.blockId ? x?.blockId : '', Validators.required],
       gp: ['', Validators.required],
       gram: ['', Validators.required],
-      ssAttended: ['', Validators.required]
+      ssAttended: [ssAttended ? ssAttended : '', Validators.required]
     });
+
+    setTimeout(() => {
+      if (this.data.fgdDetails) {
+        this.changeBlock(x?.blockId)
+        this.FGDForm.controls.gp.setValue(x.gpId)
+        this.changeGp(x?.gpId);
+        this.FGDForm.controls.gram.setValue(x.villageId)
+        this.beneficiaryAttendedList(x.villageId)
+        this.FGDForm.controls['fgdDate'].disable();
+        this.FGDForm.controls['block'].disable();
+        this.FGDForm.controls['gp'].disable();
+        this.FGDForm.controls['gram'].disable();
+      }
+    }, 200);
 
     if (!this.FGDForm.value.fgdDate) {
       this.FGDForm.controls['block'].disable();
       this.FGDForm.controls['gp'].disable();
       this.FGDForm.controls['gram'].disable();
     }
-
+    return this.FGDForm.markAllAsTouched();
   }
 
   get l() {
@@ -79,24 +103,24 @@ export class FocusedGroupDiscussionComponent {
   }
 
   changeBlock(blockId) {
-    // console.log(blockId, 'blockId');
+    console.log(true);
+
     this.gpList = this.villagesOfBranch.find(block => block.blockMasterId == blockId)?.gpDtoList;
-    // console.log(this.gpList, 'gplist');
 
     this.FGDForm.controls.gp.setValue('');
     this.FGDForm.controls.gram.setValue('');
     this.villageList = [];
     this.familiesWithStatusOfVillage = []
+    this.familiesListID = []
   }
 
   changeGp(gpId) {
-    // console.log(gpId, 'GpId');
     this.villageList = this.gpList?.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
-    console.log(this.villageList);
+    // console.log(this.villageList);
 
-    // console.log(this.villageList, 'villageList');
     this.FGDForm.controls.gram.setValue('');
     this.familiesWithStatusOfVillage = []
+    this.familiesListID = []
   }
 
 
@@ -110,6 +134,7 @@ export class FocusedGroupDiscussionComponent {
       this.FGDForm.controls.gp.setValue('');
       this.FGDForm.controls.gram.setValue('');
       this.familiesWithStatusOfVillage = []
+      this.familiesListID = []
     } else {
       this.FGDForm.controls['block'].enable();
       this.FGDForm.controls['gp'].enable();
@@ -121,12 +146,23 @@ export class FocusedGroupDiscussionComponent {
     console.log(value);
     if (value == 'Y') {
       this.getAllSsOfABranch();
-    } else {
-      // this.ssListID = []
+    }
+    else {
+      if (this.data?.fgdDetails?.ssList) {
+        this.ssListID.forEach((x, i) => {
+          if (x.fgdSsMapId) {
+            x.active_flag = 'D'
+          }
+          //ss splice left
+        })
+      } else {
+        this.ssListID = []
+      }
     }
   }
 
   getAllSsOfABranch() {
+    this.ssListID = []
     let ssReq = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
     this.eventService.getAllSsOfABranchSimpler(ssReq).subscribe((res: any) => {
       this.ssListOfBranch = res.responseObject?.ssDtoList;
@@ -138,13 +174,17 @@ export class FocusedGroupDiscussionComponent {
         ...rest
       }));
 
-      // if (this.specificEventDetails?.rallyOrSeminarDetails) {
-      //   this.specificEventDetails?.rallyOrSeminarDetails?.ssList.forEach(x => {
-      //     this.ssListOfBranch.find(y => y.swasthya_sahayika_id == x.ssId).is_checked = true
-      //     this.ssListOfBranch.find(y => y.swasthya_sahayika_id == x.ssId).rallySeminarSsMapId = x.rallySeminarSsMapId;
-      //     this.ssListID.push({ rallySeminarSsMapId: x.rallySeminarSsMapId, ssId: x.ssId, active_flag: 'A' });
-      //   })
-      // }
+      if (this.data?.fgdDetails?.ssList) {
+        this.data?.fgdDetails?.ssList.forEach(x => {
+          this.ssListOfBranch.forEach(y => {
+            if (y.ssId == x.ssId) {
+              y.is_checked = true
+              y.fgdSsMapId = x.fgdSsMapId
+            }
+          })
+          this.ssListID.push({ fgdSsMapId: x.fgdSsMapId, ssId: x.ssId, active_flag: 'A' });
+        })
+      }
 
       console.log(this.ssListOfBranch, 'ssListOfBranch');
     })
@@ -162,15 +202,17 @@ export class FocusedGroupDiscussionComponent {
     console.log(this.ssListOfBranch, 'ssListOfBranch');
 
     this.ssListOfBranch.forEach(x => {
-      // if (x.rallySeminarSsMapId) {
-      //   this.ssListID.push({
-      //     rallySeminarSsMapId: x.rallySeminarSsMapId ? x.rallySeminarSsMapId : 0, ssId: x.swasthya_sahayika_id,
-      //     active_flag: x.is_checked == false ? 'D' : 'A'
-      //   })
-      // } else {
-      if (x.is_checked == true)
-        this.ssListID.push({ fgdSsMapId: 0, ssId: x.ssId, active_flag: 'A' });
-      // }
+      if (x.fgdSsMapId) {
+        this.ssListID.push({
+          fgdSsMapId: x.fgdSsMapId ? x.fgdSsMapId : 0, ssId: x.ssId,
+          active_flag: x.is_checked == false ? 'D' : 'A'
+        })
+      } else {
+        if (x.is_checked == true) {
+          this.ssListID.push({ fgdSsMapId: 0, ssId: x.ssId, active_flag: 'A' });
+        }
+      }
+
     })
 
     console.log(this.ssListID);
@@ -178,21 +220,8 @@ export class FocusedGroupDiscussionComponent {
 
 
   beneficiaryAttendedList(villageID) {
-    console.log(villageID);
-    // if (villageID == '') { this.familiesListID = [] }
+    if (villageID == '') { this.familiesListID = [] }
 
-    // if (villageID == 'allFamilies') {
-    //   if (this.specificEventDetails) {
-    //     this.familiesWithStatusOfVillage = this.onEditfamiliesWithStatusOfVillage.filter(x => x.is_checked == true)
-    //       .concat(this.familiesListID.filter(x => x.is_checked == true))
-
-    //     this.familiesWithStatusOfVillage = [...new Map(this.familiesWithStatusOfVillage.map((m) => [m.familyId, m])).values()];
-
-    //   } else {
-    //     this.familiesWithStatusOfVillage = this.familiesListID.filter(x => x.is_checked == true);
-
-    //   }
-    // } else {
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       date: this.FGDForm.value.fgdDate,
@@ -203,8 +232,7 @@ export class FocusedGroupDiscussionComponent {
       console.log(this.villageList);
 
       this.showVillageName = this.villageList.find(x => x.villageMasterId == villageID)?.villageName
-      console.log(this.showVillageName);
-      // this.FGDForm.controls.village.setValue(this.showVillageName)
+
       this.familiesWithStatusOfVillage = this.familiesWithStatusOfVillage?.map(({
         setStatus = '', is_checked = false,
         ...rest
@@ -214,12 +242,33 @@ export class FocusedGroupDiscussionComponent {
       }));
 
 
-
       this.setStatusForAll(this.familiesWithStatusOfVillage);
       console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
-      // console.log(this.onEditfamiliesWithStatusOfVillage);
+      console.log(this.data.fgdDetails.familyList);
+
+      if (this.data.fgdDetails) {
+        this.data.fgdDetails.familyList.forEach(x => {
+          this.familiesWithStatusOfVillage.forEach(y => {
+            if (y.familyId == x.familyId) {
+              y.is_checked = true;
+              y.fgdFamilyMapId = x.fgdFamilyMapId
+            }
+          })
+          this.familiesListID.push({
+            fgdFamilyMapId: x.fgdFamilyMapId, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
+            lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
+          });
+        })
+
+
+      }
+      // else {
+      //   this.familiesWithStatusOfVillage = this.familiesListID.filter(x => x.is_checked == true);
+
+      // }
 
     })
+
   }
 
 
@@ -400,53 +449,85 @@ export class FocusedGroupDiscussionComponent {
     else {
       fam.is_checked = false;
     }
-    // console.log(this.familiesWithStatusOfVillage);
-    this.familiesWithStatusOfVillage.filter(x => x.is_checked == true).forEach(x => {
-      this.familiesListID.push({
-        fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
-        lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
-      });
-    })
-    // this.familiesWithStatusOfVillage.forEach(x => {
-    //   // if (x.rallySeminarSsMapId) {
-    //   //   this.ssListID.push({
-    //   //     rallySeminarSsMapId: x.rallySeminarSsMapId ? x.rallySeminarSsMapId : 0, ssId: x.swasthya_sahayika_id,
-    //   //     active_flag: x.is_checked == false ? 'D' : 'A'
-    //   //   })
-    //   // } else {
-    //   if (x.is_checked == true)
-    //     this.familiesListID.push({
-    //       fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
-    //       lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
-    //     });
-    //   // }
+
+    // this.familiesWithStatusOfVillage.filter(x => x.is_checked == true).forEach(x => {
+    //   this.familiesListID.push({
+    //     fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
+    //     lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
+    //   });
     // })
 
+    this.familiesWithStatusOfVillage.forEach(x => {
+      if (x.fgdFamilyMapId) {
+        this.familiesListID.push({
+          fgdFamilyMapId: x.fgdFamilyMapId ? x.fgdFamilyMapId : 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
+          lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl,
+          active_flag: x.is_checked == false ? 'D' : 'A'
+        })
+      } else {
+        if (x.is_checked == true)
+          this.familiesListID.push({
+            fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
+            lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
+          });
+      }
+    })
+
     console.log(this.familiesListID);
+  }
+
+  fgdSaveDisabled() {
+    let flag = true;
+    // console.log(this.data.fgdDetails);
+
+    if (!this.FGDForm.value.fgdDate && !this.data?.fgdDetails?.dateOfFgd) {
+      flag = false
+    } else if (!this.FGDForm.value.gram && !this.data?.fgdDetails?.villageId) {
+      flag = false
+    } else if (!this.FGDForm.value.ssAttended) {
+      flag = false
+    } else if (this.FGDForm.value.ssAttended == 'Y') {
+      if (this.ssListID.filter(x => x.active_flag == 'A').length < 1) {
+        flag = false
+      }
+    }
+
+    // console.log(this.familiesListID);
+    if (this.familiesListID.filter(y => y.active_flag == 'A').length < 1) {
+      flag = false
+    }
+
+    return flag;
   }
 
   saveOrUpdateFGD() {
     let saveORUpdateObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       eventRegisterSpecialId: this.data.specialEventID,
-      eventSpecialFgdMapId: 0,
-      villageId: this.FGDForm.value.gram,
-      dateOfFgd: this.FGDForm.value.fgdDate,
+      eventSpecialFgdMapId: this.data?.fgdDetails?.eventSpecialFgdMapId ? this.data?.fgdDetails?.eventSpecialFgdMapId : 0,
+      villageId: this.data?.fgdDetails?.villageId ? this.data?.fgdDetails?.villageId : this.FGDForm.value.gram,
+      dateOfFgd: this.data?.fgdDetails?.dateOfFgd ? this.data?.fgdDetails?.dateOfFgd : this.FGDForm.value.fgdDate,
       active_flag: 'A',
       familyList: this.familiesListID,
       ssList: this.ssListID
     }
 
-    this.eventService.saveOrUpdateFgd(saveORUpdateObj).subscribe((res: any) => {
-      console.log(res);
-      if (res.status == true) {
-        this.showSuccess('success');
-        this.closeDialog();
-      } else {
-        this.showError(res.message);
-      }
+    console.log(this.ssListID);
 
-    })
+
+
+    console.log(saveORUpdateObj, 'saveORUpdateObj');
+
+    // this.eventService.saveOrUpdateFgd(saveORUpdateObj).subscribe((res: any) => {
+    //   console.log(res);
+    //   if (res.status == true) {
+    //     this.showSuccess('success');
+    //     this.closeDialog();
+    //   } else {
+    //     this.showError(res.message);
+    //   }
+
+    // })
   }
 
   showSuccess(message) {

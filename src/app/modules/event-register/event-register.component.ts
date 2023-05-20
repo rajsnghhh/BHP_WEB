@@ -11,7 +11,6 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
-import { FocusedGroupDiscussionComponent } from './focused-group-discussion/focused-group-discussion.component';
 import { FgdViewComponent } from './fgd-view/fgd-view.component';
 
 @Component({
@@ -254,7 +253,7 @@ export class EventRegisterComponent {
 
   fgdViewModal(special) {
     const dialogRef = this.dialog.open(FgdViewComponent, {
-      width: '750px',
+      width: '800px',
       height: '380px',
       data: {
         branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,

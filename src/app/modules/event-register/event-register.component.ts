@@ -41,6 +41,7 @@ export class EventRegisterComponent {
   createMode: boolean;
   updateMode: boolean;
   deleteMode: boolean;
+  registerSearch: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
@@ -148,9 +149,16 @@ export class EventRegisterComponent {
     this.loader = false;
     this.eventService.viewAllEventsOfABranch(req).subscribe((res) => {
       this.loader = true;
-      this.SchoolEventsOfBranch = res.responseObject.schoolEvents;
+      this.SchoolEventsOfBranch = res.responseObject?.schoolEvents;
+      this.SchoolEventsOfBranch.forEach(x => {
+        if (x.eventName.includes('Primary')) {
+          x.eventName = 'Primary School Goers'
+        } else {
+          x.eventName = 'For Adolescent Girls'
+        }
+      })
       console.log(this.SchoolEventsOfBranch, 'SchoolEventsOfBranch');
-      this.SpecialEventsOfBranch = res.responseObject.specialEvents;
+      this.SpecialEventsOfBranch = res.responseObject?.specialEvents;
       console.log(this.SpecialEventsOfBranch, 'SpecialEventsOfBranch');
     });
 
@@ -262,8 +270,12 @@ export class EventRegisterComponent {
         this.showError(res.message);
       }
     })
+
   }
 
+  fgdViewModalMessage() {
+    this.showErrors('FGD is not accessible')
+  }
 
   showSuccess(message) {
     this.toaster.success(message, 'Event Deleted', {
@@ -273,6 +285,12 @@ export class EventRegisterComponent {
 
   showError(message) {
     this.toaster.error(message, 'Event Deleted', {
+      timeOut: 3000,
+    });
+  }
+
+  showErrors(message) {
+    this.toaster.error(message, '', {
       timeOut: 3000,
     });
   }

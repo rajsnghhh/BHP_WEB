@@ -197,7 +197,8 @@ const routes = [{
   canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
 }, {
   path: 'event-register',
-  loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_event-register_event-register_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./modules/event-register/event-register.module */ 53093)).then(m => m.EventRegisterModule)
+  loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("default-node_modules_ngx-pagination___ivy_ngcc___dist_ngx-pagination_js"), __webpack_require__.e("src_app_modules_event-register_event-register_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./modules/event-register/event-register.module */ 53093)).then(m => m.EventRegisterModule),
+  canActivate: [_login_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard]
 }, {
   path: '**',
   redirectTo: ''
@@ -2597,13 +2598,15 @@ class SidebarService {
           this.donorName = res?.responseObject[0]?.donorMasterDto?.donorName;
           this.districtName = res?.responseObject[0]?.districtMasterDto?.districtName;
           this.branchLIST = res?.responseObject;
+          this.regionID = res?.responseObject[0]?.regionMasterDto?.regionMasterId;
           resolve({
             regionBranchHide: false,
             branchId: this.branchId,
             branchName: this.branchName,
             districtName: this.districtName,
             dataAccessDTO: req.dataAccessDTO,
-            branchLIST: res?.responseObject
+            branchLIST: res?.responseObject,
+            regionID: this.regionID
           });
         });
       });
@@ -2658,9 +2661,9 @@ const environment = {
   // Test
   // apiUrl: 'http://192.168.149.229:6181/bhp/api/v1/test/'
   // New Test Server
-  // apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
+  apiUrl: 'http://192.168.149.71:6181/bhp/api/v1/test/'
   // Training
-  apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
+  // apiUrl: 'https://bhp-training.bandhan-konnagar.org:6184/bhp/api/v1/training/'
   // Staging
   // apiUrl: 'http://192.168.149.221:6182/bhp/api/v1/staging/'
   // New Staging Server

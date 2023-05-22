@@ -202,7 +202,8 @@
                                 </thead>
 
                                 <tbody style="text-align:center;">
-                                    <tr *ngFor="let fam of familiesWithStatusOfVillage; index as i">
+                                    <tr *ngFor="let fam of familiesWithStatusOfVillage| eventRegisterFilter: {familyNumber : familySearch,
+                                        name :familySearch}; ; index as i">
                                         <td style="width: 3%;">{{i+1}}</td>
                                         <td style="width: 3%;">{{fam.familyNumber}}</td>
                                         <td style="width: 25%;">{{fam.name}}</td>

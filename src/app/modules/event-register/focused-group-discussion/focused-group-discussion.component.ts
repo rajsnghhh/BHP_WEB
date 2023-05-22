@@ -96,7 +96,7 @@ export class FocusedGroupDiscussionComponent {
         this.changeGp(x?.gpId);
         this.FGDForm.controls.gram.setValue(x.villageId)
         this.beneficiaryAttendedList(x.villageId)
-        this.FGDForm.controls['fgdDate'].disable();
+        // this.FGDForm.controls['fgdDate'].disable();
         this.FGDForm.controls['block'].disable();
         this.FGDForm.controls['gp'].disable();
         this.FGDForm.controls['gram'].disable();
@@ -265,7 +265,7 @@ export class FocusedGroupDiscussionComponent {
 
       this.setStatusForAll(this.familiesWithStatusOfVillage);
       console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
-      console.log(this.data.fgdDetails.familyList);
+      console.log(this.data?.fgdDetails?.familyList);
 
       if (this.data.fgdDetails) {
         this.data.fgdDetails.familyList.forEach(x => {
@@ -524,7 +524,7 @@ export class FocusedGroupDiscussionComponent {
   saveOrUpdateFGD() {
     let saveORUpdateObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
-      eventRegisterSpecialId: this.data.specialEventID,
+      eventRegisterSpecialId: this.data?.special?.eventRegisterSpecialId,
       eventSpecialFgdMapId: this.data?.fgdDetails?.eventSpecialFgdMapId ? this.data?.fgdDetails?.eventSpecialFgdMapId : 0,
       villageId: this.data?.fgdDetails?.villageId ? this.data?.fgdDetails?.villageId : this.FGDForm.value.gram,
       dateOfFgd: this.data?.fgdDetails?.dateOfFgd ? this.data?.fgdDetails?.dateOfFgd : this.FGDForm.value.fgdDate,

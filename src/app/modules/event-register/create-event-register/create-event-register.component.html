@@ -35,8 +35,7 @@
                 <div class="form-group col-md">
                     <label for="schoolName">School Name :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                     <input type="text" class="form-control" placeholder="Enter School Name" formControlName="schoolName"
-                        maxlength="100" minlength="3" (keypress)="validationService.onlyAlphabetsAndSpace($event)"
-                        style="text-transform: capitalize" [ngClass]="{'is-invalid': l.schoolName.invalid && l.schoolName.touched,
+                        maxlength="100" minlength="3" style="text-transform: capitalize" [ngClass]="{'is-invalid': l.schoolName.invalid && l.schoolName.touched,
                 'is-valid':l.schoolName.valid &&(l.schoolName.dirty || l.schoolName.touched)}" />
                     <div *ngIf="l.schoolName.errors" class="invalid-feedback">
                         <div *ngIf="l.schoolName.errors.required">

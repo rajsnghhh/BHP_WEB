@@ -71,6 +71,9 @@ export class CreateEventRegisterComponent {
   specificEventDetails: any;
   isReadOnly: boolean;
   dialogTitle: any;
+  fgdMaxDate: any;
+  rallyMaxMinDate: any;
+  fgdMinDate: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<CreateEventRegisterComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
@@ -150,6 +153,63 @@ export class CreateEventRegisterComponent {
     setTimeout(() => {
       if (this.specificEventDetails?.eventTypeMasterId && this.specificEventDetails?.modalType == 'edit') {
         // console.log(true);
+        /*Fgd Max and Min Date*/
+        if (this.specificEventDetails?.fgdDetails?.length > 0) {
+          var fgd = this.specificEventDetails?.fgdDetails
+          this.rallyMaxMinDate = this.specificEventDetails?.rallyOrSeminarDetails?.date
+          if (this.rallyMaxMinDate == null) {
+            this.fgdMinDate = fgd[0]?.dateOfFgd.toString()
+            this.fgdMaxDate = fgd[fgd.length - 1]?.dateOfFgd.toString()
+          } else {
+            this.fgdMinDate = fgd[0]?.dateOfFgd.toString()
+            this.fgdMaxDate = fgd[fgd.length - 1]?.dateOfFgd.toString()
+            if (this.rallyMaxMinDate.toString() < this.fgdMinDate.toString())
+              this.fgdMinDate = this.rallyMaxMinDate
+            if (this.rallyMaxMinDate.toString() > this.fgdMaxDate.toString())
+              this.fgdMaxDate = this.rallyMaxMinDate
+          }
+
+        } else {
+          this.rallyMaxMinDate = this.specificEventDetails?.rallyOrSeminarDetails?.date
+          this.fgdMaxDate = this.rallyMaxMinDate
+          this.fgdMinDate = this.rallyMaxMinDate
+        }
+
+        setTimeout(() => {
+          this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
+          this.maxToDate = moment(this.fgdMinDate).add(0, 'days').format('YYYY-MM-DD');
+          this.toDateMin = moment(this.fgdMaxDate).add(0, 'days').format('YYYY-MM-DD');
+          console.log(this.minToDate, this.maxToDate, this.toDateMin);
+
+        }, 1000);
+        //       it.fgdDetails?.let {
+        //         fgd ->
+        // if (fgd.isEmpty()) {
+        //           rallyMaxMinDate = it.rallyOrSeminarDetails?.date
+        //           fgdMaxDate = rallyMaxMinDate
+        //           fgdMinDate = rallyMaxMinDate
+        //         } else {
+        //           rallyMaxMinDate = it.rallyOrSeminarDetails?.date
+        //           if (rallyMaxMinDate == null) {
+        //             fgdMinDate = fgd[0].dateOfFgd.toString()
+        //             fgdMaxDate = fgd[fgd.size - 1].dateOfFgd.toString()
+        //           } else {
+        //             fgdMinDate = fgd[0].dateOfFgd.toString()
+        //             fgdMaxDate = fgd[fgd.size - 1].dateOfFgd.toString()
+        //             if (rallyMaxMinDate.toString() < fgdMinDate.toString())
+        //               fgdMinDate = rallyMaxMinDate
+        //             if (rallyMaxMinDate.toString() > fgdMaxDate.toString())
+        //               fgdMaxDate = rallyMaxMinDate
+        //           }
+        //         }
+        //       } ?: run {
+        //         rallyMaxMinDate = it.rallyOrSeminarDetails?.date
+        //         fgdMaxDate = rallyMaxMinDate
+        //         fgdMinDate = rallyMaxMinDate
+        //       }
+
+        //       Log.e("FGD DATE", "$rallyMaxMinDate ** $fgdMinDate -- $fgdMaxDate")
+
 
         this.changeEventTypes(this.specificEventDetails?.eventTypeMasterId);
         setTimeout(() => {
@@ -164,8 +224,8 @@ export class CreateEventRegisterComponent {
         }, 100);
         this.createEventRegisterForm.controls['eventType'].disable();
         this.createEventRegisterForm.controls['eventDate'].disable();
-        this.createEventRegisterForm.controls['eventDateFrom'].disable();
-        this.createEventRegisterForm.controls['eventDateTo'].disable();
+        // this.createEventRegisterForm.controls['eventDateFrom'].disable();
+        // this.createEventRegisterForm.controls['eventDateTo'].disable();
         console.log(this.createEventRegisterForm.value.rally);
         console.log(this.createEventRegisterForm.value.seminar)
         if (this.specificEventDetails?.rally == 'Y' || this.specificEventDetails?.seminar == 'Y') {
@@ -176,8 +236,8 @@ export class CreateEventRegisterComponent {
           // this.createEventRegisterForm.controls['rallySeminarPlace'].enable();
         }
 
-        if (this.specificEventDetails.fgdDetails.length > 0) {
-          this.createEventRegisterForm.controls['fgd'].disable();
+        if (this.specificEventDetails?.fgdDetails?.length > 0) {
+          // this.createEventRegisterForm.controls['fgd'].disable();
         }
 
         return this.createEventRegisterForm.markAllAsTouched();
@@ -825,30 +885,10 @@ export class CreateEventRegisterComponent {
 
     this.eventService.schoolEventSaveOrUpdate(schoolEventReq).subscribe((res: any) => {
       console.log(res);
-      console.log(this.url1);
 
       if (res.status == true) {
-        var formdata = new FormData();
-        if (this.url1) { formdata.append("images", this.file1, this.path1) }
-        if (this.url2) { formdata.append("images", this.file2, this.path2) }
-        if (this.url3) { formdata.append("images", this.file3, this.path3) }
-        if (this.url4) { formdata.append("images", this.file4, this.path4) }
-        console.log(this.url1);
-
-
-        formdata.append("status", "C");
-        formdata.append("eventMasterId", res.message);
-        formdata.append("userId", this.httpService.dataAccessDTO.userId);
-
-        this.eventService.imageSchoolEventSave(formdata).subscribe((res: any) => {
-          if (res.status == true) {
-            this.showSuccess(res.message);
-            this.closeDialog();
-          } else {
-            this.showError(res.message);
-          }
-        });
-
+        this.showSuccess('Success');
+        this.closeDialog();
       } else {
         this.showError(res.message);
       }
@@ -870,28 +910,69 @@ export class CreateEventRegisterComponent {
 
   //Special event functionalities begins from here...
   setEventDateTo(value) {
-    if (value) {
-      this.toDateMin = moment(value).add(0, 'days').format('YYYY-MM-DD');
-      this.createEventRegisterForm.controls['eventDateTo'].enable();
-      this.createEventRegisterForm.controls.eventDateTo.setValue('');
-      this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
-      this.createEventRegisterForm.controls['rallySeminarDate'].disable();
-    } else if (value && this.createEventRegisterForm.value.eventDateTo) {
-      this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+    console.log(this.fgdMinDate, 'fgdMinDate');
+    console.log(this.fgdMaxDate, 'fgdMaxDate');
+
+    console.log(this.rallyMaxMinDate, 'rallyMaxMinDate');
+
+    if (!this.fgdMaxDate) {
+      if (value) {
+        this.toDateMin = moment(value).add(0, 'days').format('YYYY-MM-DD');
+        this.createEventRegisterForm.controls['eventDateTo'].enable();
+        this.createEventRegisterForm.controls.eventDateTo.setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      } else if (value && this.createEventRegisterForm.value.eventDateTo) {
+        this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+      } else {
+        this.createEventRegisterForm.controls['eventDateTo'].disable();
+        this.createEventRegisterForm.controls.eventDateTo.setValue('')
+        this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      }
     } else {
-      this.createEventRegisterForm.controls['eventDateTo'].disable();
-      this.createEventRegisterForm.controls.eventDateTo.setValue('')
-      this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
-      this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      if (value) {
+        this.createEventRegisterForm.controls['eventDateTo'].enable();
+        this.createEventRegisterForm.controls.eventDateTo.setValue('');
+        // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      } else if (value && this.createEventRegisterForm.value.eventDateTo) {
+        this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+      } else {
+        // this.createEventRegisterForm.controls['eventDateTo'].disable();
+        this.createEventRegisterForm.controls.eventDateTo.setValue('')
+        // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      }
+      /*   this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
+    this.maxToDate = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10); */
     }
+
+    if (!this.specificEventDetails) {
+      this.createEventRegisterForm.controls['rallySeminarDate'].setValue('')
+    }
+
+
   }
 
   eventDateTo(value) {
-    if (this.createEventRegisterForm.value.eventDateFrom && value) {
-      this.createEventRegisterForm.controls['rallySeminarDate'].enable();
-    } else if (!value) {
-      this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
-      this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+    if (!this.fgdMaxDate) {
+      if (this.createEventRegisterForm.value.eventDateFrom && value) {
+        this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+        this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+      } else if (!value) {
+        this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      }
+    }
+
+    else {
+      if (this.createEventRegisterForm.value.eventDateFrom && value) {
+        this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+      } else if (!value) {
+        // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
+        this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+      }
     }
   }
 
@@ -1452,8 +1533,8 @@ export class CreateEventRegisterComponent {
       eventRegisterSpecialId: this.specificEventDetails?.eventRegisterSpecialId ? this.specificEventDetails?.eventRegisterSpecialId : 0,
       eventTypeMasterId: this.createEventRegisterForm.value.eventType,
       specialEventBranchId: this.data.branchID,
-      startDate: this.specificEventDetails?.startDate ? this.specificEventDetails?.startDate : this.createEventRegisterForm.value.eventDateFrom,
-      endDate: this.specificEventDetails?.endDate ? this.specificEventDetails?.endDate : this.createEventRegisterForm.value.eventDateTo,
+      startDate: this.createEventRegisterForm.value.eventDateFrom,
+      endDate: this.createEventRegisterForm.value.eventDateTo,
       rally: this.createEventRegisterForm.value.rally == true ? 'Y' : 'N',
       seminar: this.createEventRegisterForm.value.seminar == true ? 'Y' : 'N',
       fgd: this.createEventRegisterForm.value.fgd == true ? 'Y' : 'N',
@@ -1467,7 +1548,7 @@ export class CreateEventRegisterComponent {
           this.specificEventDetails?.rallyOrSeminarDetails?.eventSpecialRallySeminarMapId : 0,
         place: this.validationService.camelize(this.createEventRegisterForm.value.rallySeminarPlace?.trim()),
         date: this.createEventRegisterForm.value.rallySeminarDate ? this.createEventRegisterForm.value.rallySeminarDate :
-          this.specificEventDetails?.rallyOrSeminarDetails.date,
+          this.specificEventDetails?.rallyOrSeminarDetails?.date,
         active_flag: 'A',
         familyList: this.familiesListID,
         ssList: this.createEventRegisterForm.value.ssAttended == 'Y' ? this.ssListID : null

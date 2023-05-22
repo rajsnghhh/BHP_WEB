@@ -24,6 +24,10 @@ export class FocusedGroupDiscussionComponent {
   showVillageName: any;
   ssListID: Array<any> = [];
   familiesListID: Array<any> = [];
+  specialFromDate: any;
+  specialTodate: any;
+  modalType: any;
+  capturedImagesList: Array<any> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<FocusedGroupDiscussionComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
@@ -37,6 +41,18 @@ export class FocusedGroupDiscussionComponent {
 
   ngOnInit(): void {
     console.log(this.data);
+    this.modalType = this.data?.fgdDetails?.modalType
+    this.capturedImagesList = this.data?.fgdDetails?.imageList
+
+    this.specialFromDate = this.data?.special?.startDate
+    this.specialTodate = this.data?.special?.endDate
+    let currentDate = new Date().toJSON().slice(0, 10);
+    if (this.specialTodate > currentDate) {
+      this.specialTodate = currentDate
+    }
+    console.log(this.specialFromDate, 'this.specialFromDate ');
+    console.log(this.specialTodate, 'this.specialTodate');
+
 
 
     let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
@@ -70,6 +86,7 @@ export class FocusedGroupDiscussionComponent {
       gp: ['', Validators.required],
       gram: ['', Validators.required],
       ssAttended: [ssAttended ? ssAttended : '', Validators.required]
+
     });
 
     setTimeout(() => {
@@ -83,6 +100,9 @@ export class FocusedGroupDiscussionComponent {
         this.FGDForm.controls['block'].disable();
         this.FGDForm.controls['gp'].disable();
         this.FGDForm.controls['gram'].disable();
+        if (this.modalType == 'view') {
+          this.FGDForm.controls['ssAttended'].disable()
+        }
       }
     }, 200);
 
@@ -149,12 +169,13 @@ export class FocusedGroupDiscussionComponent {
     }
     else {
       if (this.data?.fgdDetails?.ssList) {
-        this.ssListID.forEach((x, i) => {
+        this.ssListID.forEach(x => {
           if (x.fgdSsMapId) {
             x.active_flag = 'D'
           }
-          //ss splice left
         })
+        this.ssListID = this.ssListID.filter(x => x.active_flag == 'D');
+
       } else {
         this.ssListID = []
       }
@@ -473,7 +494,7 @@ export class FocusedGroupDiscussionComponent {
       }
     })
 
-    console.log(this.familiesListID);
+    // console.log(this.familiesListID);
   }
 
   fgdSaveDisabled() {
@@ -512,22 +533,22 @@ export class FocusedGroupDiscussionComponent {
       ssList: this.ssListID
     }
 
-    console.log(this.ssListID);
+    // console.log(this.ssListID);
 
 
 
     console.log(saveORUpdateObj, 'saveORUpdateObj');
 
-    // this.eventService.saveOrUpdateFgd(saveORUpdateObj).subscribe((res: any) => {
-    //   console.log(res);
-    //   if (res.status == true) {
-    //     this.showSuccess('success');
-    //     this.closeDialog();
-    //   } else {
-    //     this.showError(res.message);
-    //   }
+    this.eventService.saveOrUpdateFgd(saveORUpdateObj).subscribe((res: any) => {
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess('success');
+        this.closeDialog();
+      } else {
+        this.showError(res.message);
+      }
 
-    // })
+    })
   }
 
   showSuccess(message) {

@@ -12,6 +12,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { FgdViewComponent } from './fgd-view/fgd-view.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-register',
@@ -36,10 +37,15 @@ export class EventRegisterComponent {
   SpecialEventsOfBranch: Array<any> = [];
   p: any;
   p2: any;
+  viewMode: boolean;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
-    private eventService: EventRegisterService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService) {
+    private eventService: EventRegisterService, private router: Router,
+    public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService) {
   }
 
   ngDoCheck(): void {
@@ -81,6 +87,26 @@ export class EventRegisterComponent {
     });
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/event-register']) : this.router.navigate(['/error']);
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   eventRegisterForms() {
@@ -257,7 +283,7 @@ export class EventRegisterComponent {
       height: '380px',
       data: {
         branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
-        specialEventID: special.eventRegisterSpecialId
+        special: special
       }
     });
 

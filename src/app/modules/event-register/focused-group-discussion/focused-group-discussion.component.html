@@ -14,7 +14,8 @@
             <div class="form-group col-md-6">
                 <label for="fgdDate">Date of FGD :&nbsp;<span class="text-danger">*&nbsp;</span></label>
                 <input type="date" class="form-control" formControlName="fgdDate"
-                    (change)="dateOfFGD($event.target.value)" (keydown)="restrictTypeOfDate()" [ngClass]="{'is-invalid': l.fgdDate.invalid 
+                    (change)="dateOfFGD($event.target.value)" (keydown)="restrictTypeOfDate()" [min]="specialFromDate"
+                    [max]="specialTodate" [ngClass]="{'is-invalid': l.fgdDate.invalid 
                     && l.fgdDate.touched, 'is-valid':l.fgdDate.valid &&(l.fgdDate.dirty || l.fgdDate.touched)}" />
                 <div *ngIf="l.fgdDate.errors" class="invalid-feedback">
                     <div *ngIf="l.fgdDate.errors.required">
@@ -132,21 +133,20 @@
                                         <td style="width: 4%;">{{i+1}}</td>
                                         <td style="width: 25%;">{{ss.ssName}}</td>
                                         <td style="width: 25%;">{{ss.ssHusbandOrGuardianName}}</td>
-                                        <td style="width: 5%;"> <input *ngIf="ss.is_checked== true"
+                                        <td style="width: 5%;"> <input *ngIf="ss.is_checked== true && !modalType"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleSS($event,ss)">
-                                            <input *ngIf="ss.is_checked== false" class="form-check-input"
+                                            <input *ngIf="ss.is_checked== false && !modalType" class="form-check-input"
                                                 type="checkbox" value="" id="flexCheckDefault"
                                                 (change)="selectMultipleSS($event,ss)">
-                                            <!--  <input
-                                                *ngIf="ss.is_checked== true  && specificEventDetails?.modalType=='view'"
+
+                                            <input *ngIf="ss.is_checked== true  && modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleSS($event,ss)" disabled>
-                                            <input
-                                                *ngIf="ss.is_checked== false && specificEventDetails?.modalType=='view'"
+                                            <input *ngIf="ss.is_checked== false && modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 (change)="selectMultipleSS($event,ss)" disabled>
-                                        </td> -->
+                                        </td>
                                     </tr>
                                     <tr *ngIf="ssListOfBranch?.length == 0">
                                         <td colspan="6">No list is available.</td>
@@ -207,20 +207,19 @@
                                         <td style="width: 3%;">{{fam.familyNumber}}</td>
                                         <td style="width: 25%;">{{fam.name}}</td>
                                         <td style="width: 30%;">{{fam.setStatus}}</td>
-                                        <td style="width: 5%;"><input *ngIf="fam.is_checked== true"
+                                        <td style="width: 5%;"><input *ngIf="fam.is_checked== true && !modalType"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleFamilies($event,fam)">
-                                            <input *ngIf="fam.is_checked== false" class="form-check-input"
+                                            <input *ngIf="fam.is_checked== false && !modalType" class="form-check-input"
                                                 type="checkbox" value="" id="flexCheckDefault"
                                                 (change)="selectMultipleFamilies($event,fam)">
-                                            <!-- <input
-                                                *ngIf="fam.is_checked== true  && specificEventDetails?.modalType=='view'"
+
+                                            <input *ngIf="fam.is_checked== true  && modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                                 checked (change)="selectMultipleFamilies($event,fam)" disabled>
-                                            <input
-                                                *ngIf="fam.is_checked== false  && specificEventDetails?.modalType=='view'"
+                                            <input *ngIf="fam.is_checked== false  && modalType=='view'"
                                                 class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                                (change)="selectMultipleFamilies($event,fam)" disabled> -->
+                                                (change)="selectMultipleFamilies($event,fam)" disabled>
                                         </td>
 
                                     </tr>
@@ -233,12 +232,23 @@
             </div>
         </div><br>
 
+        <div *ngIf="modalType=='view' && capturedImagesList.length > 0">
+            <legend class="scheduler-border">FGD Captured Images</legend>
+            <div class="row">
+                <div class="col-md" *ngFor="let image of capturedImagesList; index as i">
+                    <a href="{{image.image_url}}" target="_blank">
+                        <img src="{{image.image_url}}">
+                        <h4 style="margin-left:100px;">Image : {{i+1}}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </form>
 </div>
 
-
 <div class="modal-footer">
-    <div class="row">
+    <div class="row" *ngIf="!modalType">
         <button type="button" class="btn btn-primary btn-sm" [disabled]="!fgdSaveDisabled()"
             (click)="saveOrUpdateFGD()">Save</button>
     </div>

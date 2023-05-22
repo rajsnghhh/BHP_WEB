@@ -23,15 +23,13 @@
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
                         *ngIf="!eventRegisterForm.value.branch && !lowerRankbranchId ">
-                        <!-- *ngIf=" !eventRegisterForm.value.branch || !createMode" -->
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
                             title="Create Event Register"></i>
                     </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="eventRegisterForm.value.branch || lowerRankbranchId">
-                        <!-- *ngIf="(eventRegisterForm.value.branch && createMode) || (lowerRankbranchId && createMode)" -->
+                        *ngIf="(eventRegisterForm.value.branch && createMode) || (lowerRankbranchId && createMode)">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
                             title="Create Event Register" (click)="createEventRegister()"></i>
@@ -106,9 +104,9 @@
                                                     <i class="fa fa-eye fa-lg" title="View Details"
                                                         (click)="viewSchoolEvent(school)"></i>
                                                     <i class="fas fa-edit" title="Edit Event"
-                                                        (click)="editSchoolEvent(school)"></i>
+                                                        (click)="editSchoolEvent(school)" *ngIf="updateMode"></i>
                                                     <i class="fas fa-trash" title="Delete Event"
-                                                        (click)="deleteSchoolEvent(school)"></i>
+                                                        (click)="deleteSchoolEvent(school)" *ngIf="deleteMode"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -156,9 +154,9 @@
                                                     <i class="fa fa-eye fa-lg" title="View Details"
                                                         (click)="viewSpecialEvent(special)"></i>
                                                     <i class="fas fa-edit" title="Edit Event"
-                                                        (click)="editSpecialEvent(special)"></i>
+                                                        (click)="editSpecialEvent(special)" *ngIf="updateMode"></i>
                                                     <i class="fas fa-trash" title="Delete Event"
-                                                        (click)="deleteSpecialEvent(special)"></i>
+                                                        (click)="deleteSpecialEvent(special)" *ngIf="deleteMode"></i>
                                                 </td>
                                             </tr>
                                         </tbody>

@@ -176,6 +176,10 @@ export class CreateEventRegisterComponent {
           // this.createEventRegisterForm.controls['rallySeminarPlace'].enable();
         }
 
+        if (this.specificEventDetails.fgdDetails.length > 0) {
+          this.createEventRegisterForm.controls['fgd'].disable();
+        }
+
         return this.createEventRegisterForm.markAllAsTouched();
       }
 

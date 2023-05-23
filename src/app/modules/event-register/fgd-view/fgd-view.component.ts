@@ -110,8 +110,9 @@ export class FgdViewComponent {
       dataAccessDTO: this.httpService.dataAccessDTO,
       eventSpecialFgdMapId: fgd.eventSpecialFgdMapId, active_flag: "D"
     }
-
+    this.loader = false;
     this.eventService.saveOrUpdateFgd(deleteObj).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess('success');

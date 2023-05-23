@@ -224,6 +224,10 @@
                                         </td>
 
                                     </tr>
+
+                                    <tr *ngIf="familiesWithStatusOfVillage.length == 0">
+                                        <td colspan="6">No list is available.</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

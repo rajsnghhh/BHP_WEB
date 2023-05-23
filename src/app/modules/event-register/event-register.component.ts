@@ -125,7 +125,9 @@ export class EventRegisterComponent {
     console.log(regionId, 'regionMasterId');
     if (regionId) {
       let req = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: regionId };
+      this.loader = false;
       this.eventService.getBranchesOfRegion(req).subscribe((res) => {
+        this.loader = true;
         this.branchList = res.responseObject;
         console.log(this.branchList, 'branchList');
       });
@@ -241,7 +243,9 @@ export class EventRegisterComponent {
 
   schoolDelete(school) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId, active_flag: 'D' }
+    this.loader = false;
     this.eventService.schoolEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
@@ -261,7 +265,9 @@ export class EventRegisterComponent {
 
   specialDelete(special) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId, active_flag: 'D' }
+    this.loader = false;
     this.eventService.specialEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);

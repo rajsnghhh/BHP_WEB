@@ -35,21 +35,10 @@ export class CreateEventRegisterComponent {
   familiesListID: Array<any> = [];
   ssListID: Array<any> = [];
   ssListOfRegion: Array<any> = [];
-  url1: any;
-  url2: any;
-  url3: any;
-  url4: any;
-  path1: any = 'No file chosen';
-  path2: any = 'No file chosen';
-  path3: any = 'No file chosen';
-  path4: any = 'No file chosen';
-  file1: any;
-  file2: any;
-  file3: any;
-  file4: any;
   searchFullscreen: boolean;
   familySearch: any;
   capturedImagesList: any;
+  eventName: any;
 
   facilitatorDetails = {
     facilitatorInfo: []
@@ -81,14 +70,6 @@ export class CreateEventRegisterComponent {
     dialogRef.disableClose = true;
   }
 
-  // @ViewChild('fileUploader1') fileUploader1: ElementRef;
-
-  // @ViewChild('fileUploader2') fileUploader2: ElementRef;
-
-  // @ViewChild('fileUploader3') fileUploader3: ElementRef;
-
-  // @ViewChild('fileUploader4') fileUploader4: ElementRef;
-
   ngDoCheck(): void {
     this.searchFullscreen = this.validationService.val;
   }
@@ -97,7 +78,7 @@ export class CreateEventRegisterComponent {
     // console.log(this.data);
     this.specificEventDetails = this.data?.specificEventDetails;
     this.capturedImagesList = this.data?.specificEventDetails?.imageList;
-    console.log(this.capturedImagesList, 'this.capturedImagesList');
+    // console.log(this.capturedImagesList, 'this.capturedImagesList');
 
     console.log(this.specificEventDetails, 'specificEventDetails');
     if (this.specificEventDetails?.modalType == 'edit') {
@@ -111,7 +92,9 @@ export class CreateEventRegisterComponent {
     this.createEventForm();
 
     let eventListReq = { dataAccessDTO: this.httpService.dataAccessDTO };
+    this.loader = false;
     this.eventService.getEventMasterTypeList(eventListReq).subscribe(res => {
+      this.loader = true;
       this.eventTypeLists = res.responseObject;
       // console.log(this.eventTypeLists, 'eventTypeLists');
     });
@@ -155,6 +138,7 @@ export class CreateEventRegisterComponent {
         // console.log(true);
         /*Fgd Max and Min Date*/
         if (this.specificEventDetails?.fgdDetails?.length > 0) {
+          this.createEventRegisterForm.controls['fgd'].disable();
           var fgd = this.specificEventDetails?.fgdDetails
           this.rallyMaxMinDate = this.specificEventDetails?.rallyOrSeminarDetails?.date
           if (this.rallyMaxMinDate == null) {
@@ -182,34 +166,6 @@ export class CreateEventRegisterComponent {
           console.log(this.minToDate, this.maxToDate, this.toDateMin);
 
         }, 1000);
-        //       it.fgdDetails?.let {
-        //         fgd ->
-        // if (fgd.isEmpty()) {
-        //           rallyMaxMinDate = it.rallyOrSeminarDetails?.date
-        //           fgdMaxDate = rallyMaxMinDate
-        //           fgdMinDate = rallyMaxMinDate
-        //         } else {
-        //           rallyMaxMinDate = it.rallyOrSeminarDetails?.date
-        //           if (rallyMaxMinDate == null) {
-        //             fgdMinDate = fgd[0].dateOfFgd.toString()
-        //             fgdMaxDate = fgd[fgd.size - 1].dateOfFgd.toString()
-        //           } else {
-        //             fgdMinDate = fgd[0].dateOfFgd.toString()
-        //             fgdMaxDate = fgd[fgd.size - 1].dateOfFgd.toString()
-        //             if (rallyMaxMinDate.toString() < fgdMinDate.toString())
-        //               fgdMinDate = rallyMaxMinDate
-        //             if (rallyMaxMinDate.toString() > fgdMaxDate.toString())
-        //               fgdMaxDate = rallyMaxMinDate
-        //           }
-        //         }
-        //       } ?: run {
-        //         rallyMaxMinDate = it.rallyOrSeminarDetails?.date
-        //         fgdMaxDate = rallyMaxMinDate
-        //         fgdMinDate = rallyMaxMinDate
-        //       }
-
-        //       Log.e("FGD DATE", "$rallyMaxMinDate ** $fgdMinDate -- $fgdMaxDate")
-
 
         this.changeEventTypes(this.specificEventDetails?.eventTypeMasterId);
         setTimeout(() => {
@@ -285,6 +241,7 @@ export class CreateEventRegisterComponent {
     if (!this.specificEventDetails?.eventTypeMasterId) {
       this.createEventRegisterForm.controls.issueType.setValue('');
     }
+    this.eventName = this.eventTypeLists.find(x => x.eventTypeMasterId == eventTypeMasterId)?.eventName;
 
     this.event_is_special = this.eventTypeLists.find(x => x.eventTypeMasterId == eventTypeMasterId)?.is_special;
     // console.log(this.event_is_special, 'this.event_is_special');
@@ -296,8 +253,6 @@ export class CreateEventRegisterComponent {
     let hcoUserReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
     this.loader = false;
     this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res: Response) => {
-
-
       this.loader = true;
       this.hcoUserList = res.responseObject.fullStaffList;
       this.hcoUserList = this.hcoUserList?.map(({
@@ -313,12 +268,18 @@ export class CreateEventRegisterComponent {
 
       this.specificEventDetails?.staffList?.forEach(e => {
         this.hcoUserList.find(v => v.user_id == e.staffId).is_checked = true;
+
         this.hcoUserList.find(v => v.user_id == e.staffId).staffEventMapId = e.staffEventMapId;
         this.staffListID.push({
           staffEventMapId: e.staffEventMapId, staffId: e.staffId,
           active_flag: 'A'
         })
       })
+
+      if (this.specificEventDetails?.modalType == 'view') {
+        this.hcoUserList = this.hcoUserList.filter(v => v.is_checked == true);
+      }
+
     });
 
 
@@ -416,31 +377,8 @@ export class CreateEventRegisterComponent {
       if (eventTypeMasterId == 1) {
         this.classList.push('LN', 'UN', 'KG', '1', '2', '3', '4', '5')
       } else if (eventTypeMasterId == 2) {
-        this.classList.push('6', '7', '8', '9', '10', '11', '12')
+        this.classList.push('8', '9', '10', '11', '12')
       }
-
-      if (this.specificEventDetails) {
-        this.url1 = this.specificEventDetails?.imageList[0]?.event_school_register_image_url;
-        this.path1 = this.url1
-        this.url2 = this.specificEventDetails?.imageList[1]?.event_school_register_image_url;
-        this.path2 = this.url2
-        this.url3 = this.specificEventDetails?.imageList[2]?.event_school_register_image_url;
-        this.path3 = this.url3
-        this.url4 = this.specificEventDetails?.imageList[3]?.event_school_register_image_url;
-        this.path4 = this.url4
-      }
-
-      // this.file1 = this.convertURLToFile(this.url1);
-      // // this.path1 = this.convertURLToFile(this.url1).name;
-      // this.file2 = this.convertURLToFile(this.url2);
-      // // this.path2 = this.convertURLToFile(this.url2).name;
-      // this.file3 = this.convertURLToFile(this.url3);
-      // // this.path3 = this.convertURLToFile(this.url3).name;
-      // this.file4 = this.convertURLToFile(this.url4);
-      // // this.path4 = this.convertURLToFile(this.url4).name;
-      // console.log(this.file1);
-
-
 
     }
 
@@ -663,101 +601,6 @@ export class CreateEventRegisterComponent {
     }
   }
 
-  onSelectFiles(e, url, remove) {
-    console.log(e.target.value, url, remove);
-
-    if (remove == '' && e.target.value) {
-      if (url == 'url1') {
-        this.path1 = e.target.files[0].name;
-        this.file1 = e.target.files[0]
-        console.log(this.file1);
-
-        console.log(this.path1, 'path1');
-      } else if (url == 'url2') {
-        this.path2 = e.target.files[0].name
-        this.file2 = e.target.files[0]
-        console.log(this.path2, 'path2');
-      } else if (url == 'url3') {
-        this.path3 = e.target.files[0].name
-        this.file3 = e.target.files[0]
-        console.log(this.path2, 'path3');
-      } else if (url == 'url4') {
-        this.path4 = e.target.files[0].name
-        this.file4 = e.target.files[0]
-        console.log(this.path2, 'path4');
-      }
-    }
-
-
-    if (remove == 'remove1') {
-      // this.fileUploader1.nativeElement.value = null;
-      this.path1 = 'No file chosen';
-      this.url1 = '';
-    } else if (remove == 'remove2') {
-      // this.fileUploader2.nativeElement.value = null;
-      this.path2 = 'No file chosen';
-      this.url2 = '';
-    } else if (remove == 'remove3') {
-      // this.fileUploader3.nativeElement.value = null;
-      this.path3 = 'No file chosen';
-      this.url3 = '';
-    } else if (remove == 'remove4') {
-      // this.fileUploader4.nativeElement.value = null;
-      this.path4 = 'No file chosen';
-      this.url4 = '';
-    }
-
-    if (!e.target.value && url == 'url1') {
-      this.url1 = '';
-      this.path1 = 'No file chosen';
-    } else if (!e.target.value && url == 'url2') {
-      this.url2 = '';
-      this.path2 = 'No file chosen';
-    } else if (!e.target.value && url == 'url3') {
-      this.url3 = '';
-      this.path3 = 'No file chosen';
-    } else if (!e.target.value && url == 'url4') {
-      this.url4 = '';
-      this.path4 = 'No file chosen';
-    }
-
-    if (e.target.files[0].type.match('image/jpeg|image/png|image/jpg')) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event: any) => {
-        if (url == 'url1') {
-          this.url1 = event.target.result;
-        } else if (url == 'url2') {
-          this.url2 = event.target.result;
-        } else if (url == 'url3') {
-          this.url3 = event.target.result;
-        } else if (url == 'url4') {
-          this.url4 = event.target.result;
-        }
-      }
-    } else {
-      this.showError('Wrong Format Selected')
-      if (url == 'url1') {
-        this.path1 = 'No file chosen';
-        // this.fileUploader1.nativeElement.value = null;
-        this.url1 = '';
-      } else if (url == 'url2') {
-        this.path2 = 'No file chosen';
-        // this.fileUploader2.nativeElement.value = null;
-        this.url2 = '';
-      } else if (url == 'url3') {
-        this.path3 = 'No file chosen';
-        // this.fileUploader3.nativeElement.value = null;
-        this.url3 = '';
-      } else if (url == 'url4') {
-        this.path4 = 'No file chosen';
-        // this.fileUploader4.nativeElement.value = null;
-        this.url4 = '';
-      }
-
-    }
-  }
-
   disableSchoolEvent() {
 
     let flag = true;
@@ -882,10 +725,10 @@ export class CreateEventRegisterComponent {
     }
 
     console.log(schoolEventReq, 'schoolEventReq');
-
+    this.loader = false;
     this.eventService.schoolEventSaveOrUpdate(schoolEventReq).subscribe((res: any) => {
       console.log(res);
-
+      this.loader = true;
       if (res.status == true) {
         this.showSuccess('Success');
         this.closeDialog();
@@ -958,7 +801,8 @@ export class CreateEventRegisterComponent {
   eventDateTo(value) {
     if (!this.fgdMaxDate) {
       if (this.createEventRegisterForm.value.eventDateFrom && value) {
-        this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+        this.specificEventDetails?.rallyOrSeminarDetails ? this.createEventRegisterForm.controls['rallySeminarDate'].disable()
+          : this.createEventRegisterForm.controls['rallySeminarDate'].enable();
         this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
       } else if (!value) {
         this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
@@ -968,12 +812,14 @@ export class CreateEventRegisterComponent {
 
     else {
       if (this.createEventRegisterForm.value.eventDateFrom && value) {
-        this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+        this.specificEventDetails?.rallyOrSeminarDetails ? this.createEventRegisterForm.controls['rallySeminarDate'].disable()
+          : this.createEventRegisterForm.controls['rallySeminarDate'].enable();
       } else if (!value) {
         // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
         this.createEventRegisterForm.controls['rallySeminarDate'].disable();
       }
     }
+
   }
 
 
@@ -1022,17 +868,19 @@ export class CreateEventRegisterComponent {
 
     console.log(this.createEventRegisterForm.value.eventDateFrom, this.createEventRegisterForm.value.eventDateTo);
 
-    if ((this.createEventRegisterForm.value.eventDateFrom || this.specificEventDetails.startDate) &&
-      (this.createEventRegisterForm.value.eventDateTo || this.specificEventDetails.endDate)) {
-      this.createEventRegisterForm.controls['rallySeminarDate'].enable();
-    } else {
-      this.createEventRegisterForm.controls['rallySeminarDate'].disable();
-    }
+    // if ((this.createEventRegisterForm.value.eventDateFrom || this.specificEventDetails.startDate) &&
+    //   (this.createEventRegisterForm.value.eventDateTo || this.specificEventDetails.endDate)) {
+    //   this.createEventRegisterForm.controls['rallySeminarDate'].enable();
+    // } else {
+    //   this.createEventRegisterForm.controls['rallySeminarDate'].disable();
+    // }
   }
 
   getSimpleListOfVillagesOfABranch() {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
+    this.loader = false;
     this.eventService.getSimpleListOfVillagesOfABranch(req).subscribe((res: any) => {
+      this.loader = true;
       this.specialEventVillList = res.responseObject;
 
       // console.log(this.specialEventVillList, 'specialEventVillList');
@@ -1060,9 +908,12 @@ export class CreateEventRegisterComponent {
         dataAccessDTO: this.httpService.dataAccessDTO,
         date: this.createEventRegisterForm.value.rallySeminarDate ? this.createEventRegisterForm.value.rallySeminarDate
           : this.specificEventDetails?.rallyOrSeminarDetails?.date,
-        villageId: villageID
+        villageId: villageID,
+        eventName: this.eventName
       }
+      this.loader = false;
       this.eventService.getFamiliesWithStatusForAVillage(req).subscribe((res: any) => {
+        this.loader = true;
         this.familiesWithStatusOfVillage = res.responseObject;
         // console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
 
@@ -1381,7 +1232,9 @@ export class CreateEventRegisterComponent {
 
   getAllSsOfARegion() {
     let ssReq = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: this.data.regionID }
+    this.loader = false;
     this.eventService.getAllSsOfARegion(ssReq).subscribe((res: any) => {
+      this.loader = true;
       this.ssListOfRegion = res.responseObject;
       this.ssListOfRegion = this.ssListOfRegion?.map(({
         is_checked = false,
@@ -1434,9 +1287,9 @@ export class CreateEventRegisterComponent {
     let x = this.createEventRegisterForm.value;
     if (!x.eventType && !this.specificEventDetails?.eventTypeMasterId) {
       flag = false
-    } else if (!x.eventDateFrom && !this.specificEventDetails?.startDate) {
+    } else if (!x.eventDateFrom) {
       flag = false
-    } else if (!x.eventDateTo && !this.specificEventDetails?.endDate) {
+    } else if (!x.eventDateTo) {
       flag = false
     } else if (this.hcoUserList?.filter(x => x.is_checked == true).length == 0) {
       flag = false
@@ -1482,9 +1335,17 @@ export class CreateEventRegisterComponent {
       }
     })
 
-    if (x.rally != true && x.seminar != true && x.fgd != true) {
-      flag = false
+    if (this.specificEventDetails) {
+      if (this.specificEventDetails?.rally == 'N' && this.specificEventDetails?.seminar == 'N' && this.specificEventDetails?.fgd == 'N') {
+        flag = false
+      }
+    } else {
+      if (x.rally != true && x.seminar != true && x.fgd != true) {
+        flag = false
+      }
     }
+
+
 
     if (x.rally == true || x.seminar == true) {
       if (!x.rallySeminarDate && !this.specificEventDetails?.rallyOrSeminarDetails?.date) {
@@ -1527,6 +1388,27 @@ export class CreateEventRegisterComponent {
     this.specialGuestDetails.guestsInfo.forEach(x => {
       x.name = this.validationService.camelize(x.name.trim())
     })
+    // this.specificEventDetails?.fgd 
+    // this.createEventRegisterForm.controls.fgd.setValue(this.specificEventDetails?.fgd)
+    console.log(this.createEventRegisterForm.value.fgd);
+    console.log(this.createEventRegisterForm.value.rally);
+    console.log(this.createEventRegisterForm.value.seminar);
+    var fgd;
+
+    if (this.specificEventDetails) {
+      if (this.specificEventDetails?.fgdDetails?.length == 0) {
+        fgd = this.createEventRegisterForm.value.fgd == true ? 'Y' : 'N'
+      } else {
+        fgd = this.specificEventDetails?.fgd
+      }
+
+    } else {
+      if (this.createEventRegisterForm.value.fgd == true) {
+        fgd = 'Y'
+      } else {
+        fgd = 'N'
+      }
+    }
 
     let specialEventReq = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -1537,7 +1419,7 @@ export class CreateEventRegisterComponent {
       endDate: this.createEventRegisterForm.value.eventDateTo,
       rally: this.createEventRegisterForm.value.rally == true ? 'Y' : 'N',
       seminar: this.createEventRegisterForm.value.seminar == true ? 'Y' : 'N',
-      fgd: this.createEventRegisterForm.value.fgd == true ? 'Y' : 'N',
+      fgd: fgd,
       active_flag: 'A',
       staffList: this.staffListID,
       facilitatorList: this.facilitatorDetails.facilitatorInfo.filter(x => x.name),
@@ -1569,24 +1451,12 @@ export class CreateEventRegisterComponent {
 
     if (this.specificEventDetails?.eventRegisterSpecialId) {
       delete specialEventReq.eventTypeMasterId
-      //   delete specialEventReq.specialEventBranchId
-      //   delete specialEventReq.startDate
-      //   delete specialEventReq.endDate
-      //   delete specialEventReq.rallyOrSeminarDetails.date
-      //   delete specialEventReq.rallyOrSeminarDetails.place
-      //   delete specialEventReq.rallyOrSeminarDetails.active_flag
     }
-    // else {
-    //   if (specialEventReq.rally == 'Y' || specialEventReq.seminar == 'Y')
-    //     delete specialEventReq.rallyOrSeminarDetails.eventSpecialRallySeminarMapId
-    // }
-    // if (this.specificEventDetails?.eventRegisterSpecialId) {
-    //   delete specialEventReq.eventTypeMasterId
-    // }
 
     console.log(specialEventReq, 'specialEventReq');
-
+    this.loader = false;
     this.eventService.specialEventSaveOrUpdate(specialEventReq).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess('success');

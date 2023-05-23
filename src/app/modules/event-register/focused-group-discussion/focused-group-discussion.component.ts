@@ -28,6 +28,8 @@ export class FocusedGroupDiscussionComponent {
   specialTodate: any;
   modalType: any;
   capturedImagesList: Array<any> = [];
+  eventName: any;
+  eventTypeLists: Array<any> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<FocusedGroupDiscussionComponent>,
     private eventService: EventRegisterService, private httpService: HttpService, private fb: FormBuilder,
@@ -41,6 +43,8 @@ export class FocusedGroupDiscussionComponent {
 
   ngOnInit(): void {
     console.log(this.data);
+    console.log(this.data?.special?.eventTypeMasterId);
+    this.eventList()
     this.modalType = this.data?.fgdDetails?.modalType
     this.capturedImagesList = this.data?.fgdDetails?.imageList
 
@@ -64,6 +68,18 @@ export class FocusedGroupDiscussionComponent {
     });
 
     this.FGDFormGroup();
+  }
+
+  eventList() {
+    let eventListReq = { dataAccessDTO: this.httpService.dataAccessDTO };
+    this.loader = false;
+    this.eventService.getEventMasterTypeList(eventListReq).subscribe(res => {
+      this.loader = true;
+      this.eventTypeLists = res.responseObject;
+      this.eventName = this.eventTypeLists.find(x => x.eventTypeMasterId == this.data?.special?.eventTypeMasterId)?.eventName;
+
+      console.log(this.eventName);
+    });
   }
 
   closeDialog() {
@@ -96,7 +112,7 @@ export class FocusedGroupDiscussionComponent {
         this.changeGp(x?.gpId);
         this.FGDForm.controls.gram.setValue(x.villageId)
         this.beneficiaryAttendedList(x.villageId)
-        // this.FGDForm.controls['fgdDate'].disable();
+        this.FGDForm.controls['fgdDate'].disable();
         this.FGDForm.controls['block'].disable();
         this.FGDForm.controls['gp'].disable();
         this.FGDForm.controls['gram'].disable();
@@ -185,7 +201,9 @@ export class FocusedGroupDiscussionComponent {
   getAllSsOfABranch() {
     this.ssListID = []
     let ssReq = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
+    this.loader = false;
     this.eventService.getAllSsOfABranchSimpler(ssReq).subscribe((res: any) => {
+      this.loader = true;
       this.ssListOfBranch = res.responseObject?.ssDtoList;
       this.ssListOfBranch = this.ssListOfBranch?.map(({
         is_checked = false,
@@ -246,9 +264,12 @@ export class FocusedGroupDiscussionComponent {
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       date: this.FGDForm.value.fgdDate,
-      villageId: villageID
+      villageId: villageID,
+      eventName: this.eventName
     }
+    this.loader = false;
     this.eventService.getFamiliesWithStatusForAVillage(req).subscribe((res: any) => {
+      this.loader = true;
       this.familiesWithStatusOfVillage = res.responseObject;
       console.log(this.villageList);
 
@@ -538,8 +559,9 @@ export class FocusedGroupDiscussionComponent {
 
 
     console.log(saveORUpdateObj, 'saveORUpdateObj');
-
+    this.loader = false;
     this.eventService.saveOrUpdateFgd(saveORUpdateObj).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess('success');

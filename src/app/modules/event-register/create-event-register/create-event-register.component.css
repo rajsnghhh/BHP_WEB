@@ -145,6 +145,7 @@ input[type="file"] {
   border: 1px solid #2daab8;
   padding-right: 15px;
   margin-left: 77px;
+  margin-top: 19px;
 }
 
 .serach_field_23 {
@@ -165,8 +166,8 @@ input[type="file"] {
 
 .serach_field_23 .search_inner button {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: -1px;
+  top: 9px;
   height: 100%;
   background: transparent;
   font-size: 12px;
@@ -205,13 +206,14 @@ input[type="file"] {
   padding-left: 55px;
   border: 1px solid #2daab8;
   padding-right: 15px;
-  margin-top: 0px;
+  margin-top: 19px;
 }
 
 .serach_field_23 .search_inner_fullscreen button i {
   font-size: 18px;
   color: #2daab8;
   margin-left: -1190px;
+  margin-top: 23px;
 }
 
 .search_inner_fullscreen button {

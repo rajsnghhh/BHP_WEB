@@ -306,6 +306,10 @@
                                                 </button>
                                             </td>
                                         </tr>
+
+                                        <tr *ngIf="specificEventDetails?.stakeHolderList?.length ==0"
+                                            style="color:#dc3545;">
+                                            Stakeholder Details is not available.</tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -404,97 +408,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 
-            <div class="row" *ngIf="specificEventDetails?.modalType!='view' && capturedImagesList.length > 0">
-                <div class="form-group col-md">
-                    <fieldset class="scheduler-border" style="height: 250px;">
-                        <legend class="scheduler-border">Event Captured Images</legend>
-                        <div class="col-md" *ngFor="let image of capturedImagesList; index as i">
-                            <a href="{{image.event_school_register_image_url}}" target="_blank">
-                                <img src="{{image.event_school_register_image_url}}">
-                            </a>
-                        </div>
-                        <div class="row" *ngIf="specificEventDetails?.modalType!='view'">
-                            <div class="form-group col-md-3">
-                                <img [src]="url1" height="170" width="240">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                      
-                                        <input type="file" id="file-upload1" accept=".png, .jpg, .jpeg"
-                                            (change)="onSelectFiles($event,'url1','')" />
-                                        <label for="file-upload1" id="fileLabel">Browse</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" placeholder={{path1}} disabled id="filePath" />
-                                    </div>
-
-                                    <div class="col-md-2"> <i class="fas fa-minus-circle" style="color: red !important;
-                                                       font-size: 20px; margin-left: 10px; margin-top: 3px;"
-                                            (click)="onSelectFiles($event,'url1','remove1')"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <img [src]="url2" height="170" width="240">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <input type="file" id="file-upload2" accept=".png, .jpg, .jpeg"
-                                            (change)="onSelectFiles($event,'url2','')" />
-                                        <label for="file-upload2" id="fileLabel">Browse</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" placeholder={{path2}} disabled id="filePath" />
-                                    </div>
-
-                                    <div class="col-md-2"> <i class="fas fa-minus-circle" style="color: red !important;
-                                                       font-size: 20px; margin-left: 10px; margin-top: 3px;"
-                                            (click)="onSelectFiles($event,'url2','remove2')"></i>
-                                    </div>
-                                
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <img [src]="url3" height="170" width="240">
-                                <div class="row">
-                                   
-                                    <div class="col-md-3">
-                                        <input type="file" id="file-upload3" accept=".png, .jpg, .jpeg"
-                                            (change)="onSelectFiles($event,'url3','')" />
-                                        <label for="file-upload3" id="fileLabel">Browse</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" placeholder={{path3}} disabled id="filePath" />
-                                    </div>
-
-                                    <div class="col-md-2"> <i class="fas fa-minus-circle" style="color: red !important;
-                                                               font-size: 20px; margin-left: 10px; margin-top: 3px;"
-                                            (click)="onSelectFiles($event,'url3','remove3')"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <img [src]="url4" height="170" width="240">
-                                <div class="row">
-                                  
-                                    <div class="col-md-3">
-                                        <input type="file" id="file-upload4" accept=".png, .jpg, .jpeg"
-                                            (change)="onSelectFiles($event,'url4','')" />
-                                        <label for="file-upload4" id="fileLabel">Browse</label>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <input type="text" placeholder={{path4}} disabled id="filePath" />
-                                    </div>
-
-                                    <div class="col-md-2"> <i class="fas fa-minus-circle" style="color: red !important;
-                                                               font-size: 20px; margin-left: 10px; margin-top: 3px;"
-                                            (click)="onSelectFiles($event,'url4','remove4')"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-            </div> -->
 
         </div>
 
@@ -685,6 +598,11 @@
                                                     </button>
                                                 </td>
                                             </tr>
+
+                                            <tr *ngIf="specificEventDetails?.stakeHolderList?.length ==0"
+                                                style="color:#dc3545;">
+                                                Stakeholder Details is not available.</tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -742,6 +660,11 @@
                                                 </td>
 
                                             </tr>
+
+                                            <tr *ngIf="specificEventDetails?.specialGuestList?.length ==0"
+                                                style="color:#dc3545;">
+                                                Special Guest Details is not available.</tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -772,6 +695,7 @@
                                         formControlName="fgd" id="flexCheckDefault"
                                         (change)="multipleEventsSelect($event)">&nbsp;&nbsp;FGD
                                 </div>
+
                             </div>
 
                         </div>
@@ -802,7 +726,6 @@
                         <label for="rallySeminarPlace">Place of Rally/ Seminar :&nbsp;<span
                                 class="text-danger">*&nbsp;</span></label>
                         <input type="text" class="form-control" [attr.readonly]="isReadOnly"
-                            (keypress)="validationService.onlyAlphabetsAndSpace($event)"
                             (keypress)="validationService.titleCase($event)" placeholder="Enter Place Name"
                             [ngModelOptions]="{standalone: true}" formControlName="rallySeminarPlace" [ngClass]="{'is-invalid': l.rallySeminarPlace.invalid 
                         && l.rallySeminarPlace.touched, 'is-valid':l.rallySeminarPlace.valid &&(l.rallySeminarPlace.dirty ||
@@ -841,7 +764,8 @@
                                 </div>
 
                                 <div class="form-group col-md-5">
-                                    <!-- <label for="village">Village Name:&nbsp;<span class="text-danger">*&nbsp;</span></label> -->
+                                    <label for="village">Village Name:&nbsp;<span
+                                            class="text-danger">*&nbsp;</span></label>
                                     <select class="form-select" formControlName="village" id="village" [ngClass]="{'is-invalid':l.village.invalid && 
                             l.village.touched,'is-valid':l.village.valid && (l.village.dirty ||l.village.touched) }"
                                         (change)="getFamiliesWithStatusForAVillage($event.target.value)">

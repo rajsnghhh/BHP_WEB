@@ -186,7 +186,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       institutional: ['', Validators.required],
       breastFeeding: this.breastfeeding,
       waterSource: ['N', Validators.required],
-      waterSourceType: [{ value: '', disabled: this.changewaterSource }, Validators.required],
+      waterSourceType: [{ value: '', disabled: this.changewaterSource }],
       electricityAtHome: ['', Validators.required],
       cookingFuel: ['', Validators.required],
     });
@@ -203,8 +203,12 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
   changewaterSource(value: string) {
     if (value == 'Y') {
       this.baselineSurvey.controls['waterSourceType'].enable();
+      this.baselineSurvey.get('waterSourceType').setValidators(Validators.required);
+      this.baselineSurvey.get('waterSourceType').updateValueAndValidity();
     } else {
       this.baselineSurvey.controls['waterSourceType'].disable();
+      this.baselineSurvey.get('waterSourceType').clearValidators();
+      this.baselineSurvey.get('waterSourceType').updateValueAndValidity();
     }
     this.baselineSurvey.controls.waterSourceType.setValue('');
   }
@@ -423,7 +427,12 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
             totaFamilyMemberFemales: item.ffemale,
             totaFamilyMemberMales: item.fmale,
             totaFamilyMemberSrcitizen: item.fsenior,
-            totalNumberOfChildren: item.child ? item.child : 0
+            totalNumberOfChildren: item.child ? item.child : 0,
+            waterSource: item.waterSource,
+            waterSourceType: item.waterSourceType,
+            electricityAtHome: item.electricityAtHome,
+            cookingFuel: item.cookingFuel,
+
           }
         ],
         familyType: item.family,
@@ -636,6 +645,21 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
 
     if (!this.baselineSurvey.value.pregnancy) {
       this.showError('Please select Pregnancy');
+      return;
+    }
+
+    if (this.baselineSurvey.value.waterSource == 'Y' && !this.baselineSurvey.value.waterSourceType) {
+      this.showError('Please select Water Source Type');
+      return;
+    }
+
+    if (!this.baselineSurvey.value.electricityAtHome) {
+      this.showError('Please select Electricity at Home');
+      return;
+    }
+
+    if (!this.baselineSurvey.value.cookingFuel) {
+      this.showError('Please select Cooking Fuel');
       return;
     }
 
@@ -952,7 +976,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
         if (item.sex == 'F' && !item.maritalStatus) {
           flag = false;
         } else {
-          if (item.maritalStatus == 'Married' && !item.residence) {
+          if (item.maritalStatus == 'M' && !item.residence) {
             flag = false;
           } else {
             flag = true;
@@ -1074,7 +1098,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       console.log(this.childDetails);
       this.childDetails.childInfo.forEach((x) => {
         let age = Math.floor((+new Date() - new Date(x.dob).getTime()) / 3.15576e+10);
-        if (age < 10) {
+        if (age < 13 && x.sex == 'F' && x.maritalStatus == 'M') {
           this.showError(' Girl Child age is below 10 years not allowed ');
         } else {
           this.modalReference.close();

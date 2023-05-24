@@ -747,21 +747,21 @@
                   [(ngModel)]="childDetails.childInfo[i].maritalStatus"
                   (change)="checkmaritalStatus($event.target.value,i)">
                   <option value="">-- Select --</option>
-                  <option value="Married">Married</option>
-                  <option value="Unmarried">Unmarried</option>
+                  <option value="M">Married</option>
+                  <option value="UM">Unmarried</option>
                 </select>
                 <select class="form-select" *ngIf="childDetails.childInfo[i].sex != 'F'" id="maritalStatus" disabled>
                   <option value="">-- Select --</option>
                 </select>
               </td>
               <td>
-                <select class="form-select" *ngIf="childDetails.childInfo[i].maritalStatus == 'Married'" id="residence"
+                <select class="form-select" *ngIf="childDetails.childInfo[i].maritalStatus == 'M'" id="residence"
                   [(ngModel)]="childDetails.childInfo[i].residence">
                   <option value="">-- Select --</option>
                   <option value="PH">Parents House</option>
                   <option value="IH">Inlaw's house</option>
                 </select>
-                <select class="form-select" *ngIf="childDetails.childInfo[i].maritalStatus != 'Married'" id="residence"
+                <select class="form-select" *ngIf="childDetails.childInfo[i].maritalStatus != 'M'" id="residence"
                   disabled>
                   <option value="">-- Select --</option>
                 </select>

@@ -42,12 +42,13 @@ export class FocusedGroupDiscussionComponent {
   }
 
   ngOnInit(): void {
+    // data variable containing necessary details for creating FGD 
     console.log(this.data);
-    console.log(this.data?.special?.eventTypeMasterId);
     this.eventList()
     this.modalType = this.data?.fgdDetails?.modalType
     this.capturedImagesList = this.data?.fgdDetails?.imageList
 
+    //specialFromDate, specialTodate, currentDate are the variables used for date validation
     this.specialFromDate = this.data?.special?.startDate
     this.specialTodate = this.data?.special?.endDate
     let currentDate = new Date().toJSON().slice(0, 10);
@@ -58,7 +59,7 @@ export class FocusedGroupDiscussionComponent {
     console.log(this.specialTodate, 'this.specialTodate');
 
 
-
+    //Branch wise village list
     let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
     this.loader = false;
     this.eventService.getVillagesOfBranch(villageReg).subscribe((res) => {
@@ -70,6 +71,7 @@ export class FocusedGroupDiscussionComponent {
     this.FGDFormGroup();
   }
 
+  // Event list called here for getting selected event name
   eventList() {
     let eventListReq = { dataAccessDTO: this.httpService.dataAccessDTO };
     this.loader = false;
@@ -86,6 +88,7 @@ export class FocusedGroupDiscussionComponent {
     this.dialogRef.close();
   }
 
+  //FGD Form with the formcontrols used in creating & updating form
   FGDFormGroup() {
     var x = this.data.fgdDetails;
     var ssAttended;
@@ -160,7 +163,7 @@ export class FocusedGroupDiscussionComponent {
   }
 
 
-
+  // blocking & unblocking formcontrols on the basis of FGD date
   dateOfFGD(date) {
     if (!this.FGDForm.value.fgdDate) {
       this.FGDForm.controls['block'].disable();
@@ -178,8 +181,10 @@ export class FocusedGroupDiscussionComponent {
     }
   }
 
+  // Select unselect SS from SSlist 
   SSAttendedRally(value) {
-    console.log(value);
+    // if value is 'Y' then only ss list called else if available ss list set active_flag = 'D'
+
     if (value == 'Y') {
       this.getAllSsOfABranch();
     }
@@ -198,6 +203,7 @@ export class FocusedGroupDiscussionComponent {
     }
   }
 
+  //Branch wise SS List
   getAllSsOfABranch() {
     this.ssListID = []
     let ssReq = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
@@ -221,14 +227,21 @@ export class FocusedGroupDiscussionComponent {
               y.fgdSsMapId = x.fgdSsMapId
             }
           })
+          //ssListID Array list variable used for manipulation of selected SS
           this.ssListID.push({ fgdSsMapId: x.fgdSsMapId, ssId: x.ssId, active_flag: 'A' });
         })
+      }
+
+      // In details view part, only showing selected ss 
+      if (this.data?.fgdDetails?.modalType == 'view') {
+        this.ssListOfBranch = this.ssListOfBranch.filter(v => v.is_checked == true);
       }
 
       console.log(this.ssListOfBranch, 'ssListOfBranch');
     })
   }
 
+  //check uncheck SS
   selectMultipleSS(e, ss) {
     this.ssListID = [];
     console.log(e.target.checked, ss);
@@ -257,7 +270,7 @@ export class FocusedGroupDiscussionComponent {
     console.log(this.ssListID);
   }
 
-
+  // getFamilies list With status of a Village
   beneficiaryAttendedList(villageID) {
     if (villageID == '') { this.familiesListID = [] }
 
@@ -283,7 +296,7 @@ export class FocusedGroupDiscussionComponent {
         ...rest
       }));
 
-
+      //setStatusForAll function for showing status of all families
       this.setStatusForAll(this.familiesWithStatusOfVillage);
       console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
       console.log(this.data?.fgdDetails?.familyList);
@@ -302,12 +315,12 @@ export class FocusedGroupDiscussionComponent {
           });
         })
 
-
       }
-      // else {
-      //   this.familiesWithStatusOfVillage = this.familiesListID.filter(x => x.is_checked == true);
 
-      // }
+      //In view part showing only selected families
+      if (this.data?.fgdDetails?.modalType == 'view') {
+        this.familiesWithStatusOfVillage = this.familiesWithStatusOfVillage.filter(v => v.is_checked == true);
+      }
 
     })
 
@@ -481,7 +494,7 @@ export class FocusedGroupDiscussionComponent {
     });
   }
 
-
+  //multiple families manipulation
   selectMultipleFamilies(e, fam) {
     this.familiesListID = [];
     console.log(e.target.checked, fam);
@@ -491,13 +504,6 @@ export class FocusedGroupDiscussionComponent {
     else {
       fam.is_checked = false;
     }
-
-    // this.familiesWithStatusOfVillage.filter(x => x.is_checked == true).forEach(x => {
-    //   this.familiesListID.push({
-    //     fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
-    //     lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
-    //   });
-    // })
 
     this.familiesWithStatusOfVillage.forEach(x => {
       if (x.fgdFamilyMapId) {
@@ -518,9 +524,9 @@ export class FocusedGroupDiscussionComponent {
     // console.log(this.familiesListID);
   }
 
+  // save button should be disabled before selecting all necessary fields
   fgdSaveDisabled() {
     let flag = true;
-    // console.log(this.data.fgdDetails);
 
     if (!this.FGDForm.value.fgdDate && !this.data?.fgdDetails?.dateOfFgd) {
       flag = false
@@ -542,6 +548,7 @@ export class FocusedGroupDiscussionComponent {
     return flag;
   }
 
+  //function for save & update FGD
   saveOrUpdateFGD() {
     let saveORUpdateObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -553,10 +560,6 @@ export class FocusedGroupDiscussionComponent {
       familyList: this.familiesListID,
       ssList: this.ssListID
     }
-
-    // console.log(this.ssListID);
-
-
 
     console.log(saveORUpdateObj, 'saveORUpdateObj');
     this.loader = false;

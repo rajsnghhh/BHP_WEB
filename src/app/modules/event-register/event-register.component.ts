@@ -89,6 +89,7 @@ export class EventRegisterComponent {
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
 
+    // Access for CRUD operation 
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
@@ -110,6 +111,7 @@ export class EventRegisterComponent {
       .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
+  // Form created for region & branch access
   eventRegisterForms() {
     this.eventRegisterForm = this.fb.group({
       region: ['', Validators.required],
@@ -147,6 +149,8 @@ export class EventRegisterComponent {
       this.branchOpenDate = this.branchList.find(x => x.branchId == branchId)?.branchOpenDate;
       console.log(this.branchOpenDate, 'branchOpenDate');
     }
+
+    // API called for get event list of school & special
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
     this.loader = false;
     this.eventService.viewAllEventsOfABranch(req).subscribe((res) => {
@@ -167,6 +171,7 @@ export class EventRegisterComponent {
     this.SchoolEventsOfBranch = [];
   }
 
+  //view specific school event details 
   viewSchoolEvent(school) {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
     this.loader = false;
@@ -178,6 +183,7 @@ export class EventRegisterComponent {
     });
   }
 
+  //view specific special event details 
   viewSpecialEvent(special) {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId };
     this.loader = false;
@@ -189,8 +195,8 @@ export class EventRegisterComponent {
     });
   }
 
+  //Modal for creating school & special event register
   createEventRegister(specificEventDetails) {
-    // console.log(specificEventDetails, 'specificEventDetails');
 
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
@@ -211,6 +217,7 @@ export class EventRegisterComponent {
     this.index = tabChangeEvent.index;
   }
 
+  //Updating school event register
   editSchoolEvent(school) {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
     this.loader = false;
@@ -223,6 +230,7 @@ export class EventRegisterComponent {
 
   }
 
+  //Updating special event register
   editSpecialEvent(special) {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId };
     this.loader = false;
@@ -234,6 +242,7 @@ export class EventRegisterComponent {
     });
   }
 
+  //Deleting school event register confirmation
   deleteSchoolEvent(school) {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
       .then(() => this.schoolDelete(school)
@@ -241,6 +250,7 @@ export class EventRegisterComponent {
       .catch(() => '');
   }
 
+  //Deleting school event register
   schoolDelete(school) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId, active_flag: 'D' }
     this.loader = false;
@@ -256,6 +266,7 @@ export class EventRegisterComponent {
     })
   }
 
+   //Deleting special event register confirmation
   deleteSpecialEvent(special) {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
       .then(() => this.specialDelete(special)
@@ -263,6 +274,7 @@ export class EventRegisterComponent {
       .catch(() => '');
   }
 
+   //Deleting special event register 
   specialDelete(special) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId, active_flag: 'D' }
     this.loader = false;
@@ -301,6 +313,7 @@ export class EventRegisterComponent {
     });
   }
 
+  // FGD modal for viweing created FGD lists 
   fgdViewModal(special) {
     const dialogRef = this.dialog.open(FgdViewComponent, {
       width: '800px',

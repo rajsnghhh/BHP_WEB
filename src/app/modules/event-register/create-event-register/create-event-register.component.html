@@ -307,7 +307,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr *ngIf="specificEventDetails?.stakeHolderList?.length ==0"
+                                        <tr *ngIf="specificEventDetails?.stakeHolderList?.length == 0 && specificEventDetails?.modalType=='view'"
                                             style="color:#dc3545;">
                                             Stakeholder Details is not available.</tr>
                                     </tbody>
@@ -396,6 +396,7 @@
                 </div>
             </div>
 
+            <!-- showing school event captured images -->
             <div *ngIf="specificEventDetails?.modalType=='view' && capturedImagesList.length > 0">
                 <legend class="scheduler-border">Event Captured Images
                 </legend>
@@ -599,7 +600,7 @@
                                                 </td>
                                             </tr>
 
-                                            <tr *ngIf="specificEventDetails?.stakeHolderList?.length ==0"
+                                            <tr *ngIf="specificEventDetails?.stakeHolderList?.length == 0 && specificEventDetails?.modalType=='view'"
                                                 style="color:#dc3545;">
                                                 Stakeholder Details is not available.</tr>
 
@@ -661,7 +662,7 @@
 
                                             </tr>
 
-                                            <tr *ngIf="specificEventDetails?.specialGuestList?.length ==0"
+                                            <tr *ngIf="specificEventDetails?.specialGuestList?.length == 0 && specificEventDetails?.modalType=='view'"
                                                 style="color:#dc3545;">
                                                 Special Guest Details is not available.</tr>
 
@@ -686,14 +687,11 @@
                                     <h4 class="card-title">Events :&nbsp;<span class="text-danger">*&nbsp;</span></h4>
                                 </div>
                                 <div class="col-md"><input class="form-check-input" type="checkbox" value="R"
-                                        id="flexCheckDefault" formControlName="rally"
-                                        (change)="multipleEventsSelect($event)">&nbsp;&nbsp;Rally</div>
+                                        id="flexCheckDefault" formControlName="rally">&nbsp;&nbsp;Rally</div>
                                 <div class="col-md"> <input class="form-check-input" type="checkbox" value="S"
-                                        id="flexCheckDefault" formControlName="seminar"
-                                        (change)="multipleEventsSelect($event)">&nbsp;&nbsp;Seminar</div>
+                                        id="flexCheckDefault" formControlName="seminar">&nbsp;&nbsp;Seminar</div>
                                 <div class="col-md"><input class="form-check-input" type="checkbox" value="FGD"
-                                        formControlName="fgd" id="flexCheckDefault"
-                                        (change)="multipleEventsSelect($event)">&nbsp;&nbsp;FGD
+                                        formControlName="fgd" id="flexCheckDefault">&nbsp;&nbsp;FGD
                                 </div>
 
                             </div>
@@ -832,6 +830,10 @@
                                                 </td>
 
                                             </tr>
+
+                                            <tr *ngIf="familiesWithStatusOfVillage?.length == 0">
+                                                <td colspan="6">No list is available.</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -918,6 +920,7 @@
                     </div>
                 </div>
 
+                <!-- showing special event captured images -->
                 <div *ngIf="specificEventDetails?.modalType=='view' && capturedImagesList.length > 0">
                     <legend class="scheduler-border">Event Captured Images</legend>
                     <div class="row">
@@ -937,6 +940,7 @@
     </form>
 </div>
 
+<!-- school event save button -->
 <div class="modal-footer" *ngIf="event_is_special == 'N'">
     <div class="row">
         <button type="button" class="btn btn-primary btn-sm" [disabled]="!disableSchoolEvent()"
@@ -944,6 +948,7 @@
     </div>
 </div>
 
+<!-- special event save button -->
 <div class="modal-footer" *ngIf="event_is_special == 'Y'">
     <div class="row">
         <button type="button" class="btn btn-primary btn-sm" (click)="saveUpdateSpecialEvent()"

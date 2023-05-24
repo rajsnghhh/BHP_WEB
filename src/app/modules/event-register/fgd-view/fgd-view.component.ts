@@ -29,6 +29,8 @@ export class FgdViewComponent {
   ngOnInit(): void {
     console.log(this.data);
     this.fgdLists();
+
+    //CRUD Access
     this.createMode = this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
@@ -49,22 +51,24 @@ export class FgdViewComponent {
     this.dialogRef.close();
   }
 
+  //view already created FGDs
   fgdLists() {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: this.data?.special?.eventRegisterSpecialId };
     this.loader = false;
     this.eventService.viewSpecificSpecialEventRegister(req).subscribe((res) => {
       this.loader = true;
-      this.fgdDetails = res.responseObject.fgdDetails
+      this.fgdDetails = res.responseObject?.fgdDetails
       console.log(this.fgdDetails, 'fgdDetails');
     });
   }
 
+  //view specific FGD details
   viewFGDDetails(fgd) {
     fgd.modalType = 'view'
     this.editFGD(fgd)
-
   }
 
+  //create FGD modal
   CreateFGDModal() {
     const dialogRef = this.dialog.open(FocusedGroupDiscussionComponent, {
       width: '1000px',
@@ -81,6 +85,7 @@ export class FgdViewComponent {
     });
   }
 
+  //updateFGD modal
   editFGD(fgd) {
     const dialogRef = this.dialog.open(FocusedGroupDiscussionComponent, {
       width: '1000px',
@@ -98,6 +103,7 @@ export class FgdViewComponent {
     });
   }
 
+  //delete FGD modal confirmation
   deleteFGDEvent(fgd) {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this FGD ?')
       .then(() => this.fdgDelete(fgd)
@@ -105,6 +111,7 @@ export class FgdViewComponent {
       .catch(() => '');
   }
 
+  //delete FGD modal
   fdgDelete(fgd) {
     let deleteObj = {
       dataAccessDTO: this.httpService.dataAccessDTO,

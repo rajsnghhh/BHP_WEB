@@ -39,22 +39,10 @@ export class CreateEventRegisterComponent {
   familySearch: any;
   capturedImagesList: any;
   eventName: any;
-
-  facilitatorDetails = {
-    facilitatorInfo: []
-  }
-
-  stakeHolderDetails = {
-    stakeHolderInfo: []
-  }
-
-  attendeeDetails = {
-    attendeeInfo: []
-  }
-
-  specialGuestDetails = {
-    guestsInfo: []
-  }
+  facilitatorDetails = { facilitatorInfo: [] }
+  stakeHolderDetails = { stakeHolderInfo: [] }
+  attendeeDetails = { attendeeInfo: [] }
+  specialGuestDetails = { guestsInfo: [] }
 
   classList: Array<any> = [];
   specificEventDetails: any;
@@ -75,12 +63,12 @@ export class CreateEventRegisterComponent {
   }
 
   ngOnInit(): void {
-    // console.log(this.data);
+    //data variable is containing all necessary details for creating events
     this.specificEventDetails = this.data?.specificEventDetails;
     this.capturedImagesList = this.data?.specificEventDetails?.imageList;
-    // console.log(this.capturedImagesList, 'this.capturedImagesList');
 
     console.log(this.specificEventDetails, 'specificEventDetails');
+    //dialogTitle variable contains modal naming convention according to create, update & view
     if (this.specificEventDetails?.modalType == 'edit') {
       this.dialogTitle = 'Edit Event Register';
     } else if (this.specificEventDetails?.modalType == 'view') {
@@ -91,6 +79,7 @@ export class CreateEventRegisterComponent {
 
     this.createEventForm();
 
+    //eventTypeLists containing school & special events name
     let eventListReq = { dataAccessDTO: this.httpService.dataAccessDTO };
     this.loader = false;
     this.eventService.getEventMasterTypeList(eventListReq).subscribe(res => {
@@ -132,10 +121,10 @@ export class CreateEventRegisterComponent {
 
     });
 
-
+    // data setting in form during updating event
     setTimeout(() => {
       if (this.specificEventDetails?.eventTypeMasterId && this.specificEventDetails?.modalType == 'edit') {
-        // console.log(true);
+
         /*Fgd Max and Min Date*/
         if (this.specificEventDetails?.fgdDetails?.length > 0) {
           this.createEventRegisterForm.controls['fgd'].disable();
@@ -180,25 +169,19 @@ export class CreateEventRegisterComponent {
         }, 100);
         this.createEventRegisterForm.controls['eventType'].disable();
         this.createEventRegisterForm.controls['eventDate'].disable();
-        // this.createEventRegisterForm.controls['eventDateFrom'].disable();
-        // this.createEventRegisterForm.controls['eventDateTo'].disable();
         console.log(this.createEventRegisterForm.value.rally);
         console.log(this.createEventRegisterForm.value.seminar)
         if (this.specificEventDetails?.rally == 'Y' || this.specificEventDetails?.seminar == 'Y') {
           this.createEventRegisterForm.controls['rallySeminarDate'].disable();
-          // this.createEventRegisterForm.controls['rallySeminarPlace'].disable();
         } else {
           this.createEventRegisterForm.controls['rallySeminarDate'].enable();
-          // this.createEventRegisterForm.controls['rallySeminarPlace'].enable();
-        }
-
-        if (this.specificEventDetails?.fgdDetails?.length > 0) {
-          // this.createEventRegisterForm.controls['fgd'].disable();
         }
 
         return this.createEventRegisterForm.markAllAsTouched();
       }
 
+
+      // view specific event details
       else if (this.specificEventDetails?.eventTypeMasterId && this.specificEventDetails?.modalType == 'view') {
         this.changeEventTypes(this.specificEventDetails?.eventTypeMasterId);
         setTimeout(() => {
@@ -237,6 +220,7 @@ export class CreateEventRegisterComponent {
     return this.createEventRegisterForm.controls;
   }
 
+
   changeEventTypes(eventTypeMasterId) {
     if (!this.specificEventDetails?.eventTypeMasterId) {
       this.createEventRegisterForm.controls.issueType.setValue('');
@@ -244,12 +228,11 @@ export class CreateEventRegisterComponent {
     this.eventName = this.eventTypeLists.find(x => x.eventTypeMasterId == eventTypeMasterId)?.eventName;
 
     this.event_is_special = this.eventTypeLists.find(x => x.eventTypeMasterId == eventTypeMasterId)?.is_special;
-    // console.log(this.event_is_special, 'this.event_is_special');
 
-    // console.log(this.data.branchOpenDate);
     this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
     this.maxToDate = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10);
 
+    //hcoUserList variable containing staffs of a branch
     let hcoUserReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
     this.loader = false;
     this.eventService.getAllStaffOfABrancsRegion(hcoUserReg).subscribe((res: Response) => {
@@ -265,7 +248,7 @@ export class CreateEventRegisterComponent {
 
       console.log(this.hcoUserList);
 
-
+      // In update checking selected stafflist 
       this.specificEventDetails?.staffList?.forEach(e => {
         this.hcoUserList.find(v => v.user_id == e.staffId).is_checked = true;
 
@@ -276,13 +259,14 @@ export class CreateEventRegisterComponent {
         })
       })
 
+      // In specific view showing only selected user
       if (this.specificEventDetails?.modalType == 'view') {
         this.hcoUserList = this.hcoUserList.filter(v => v.is_checked == true);
       }
 
     });
 
-
+    //facilitatorDetails.facilitatorInfo manipulation
     if (this.specificEventDetails?.facilitatorList?.length > 0) {
       this.specificEventDetails?.facilitatorList.forEach(x => {
         this.facilitatorDetails.facilitatorInfo.push({
@@ -304,6 +288,7 @@ export class CreateEventRegisterComponent {
       });
     }
 
+    //stakeHolderDetails.stakeHolderInfo manipulation
     if (this.specificEventDetails?.stakeHolderList?.length > 0) {
       this.specificEventDetails?.stakeHolderList.forEach(x => {
         this.stakeHolderDetails.stakeHolderInfo.push({
@@ -325,6 +310,7 @@ export class CreateEventRegisterComponent {
       });
     }
 
+    //prerequisite details API called for getting issuesList & designationList
     let getEventPreRequisiteReg = { dataAccessDTO: this.httpService.dataAccessDTO, event_type_master_id: null };
     this.loader = false;
     this.eventService.getEventPreRequisite(getEventPreRequisiteReg).subscribe((res: Response) => {
@@ -336,6 +322,7 @@ export class CreateEventRegisterComponent {
       console.log(res, 'designationList')
     });
 
+    // event_is_special == 'N' refers to school event
     if (this.event_is_special == 'N') {
       let villageReg = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID };
       this.loader = false;
@@ -345,12 +332,9 @@ export class CreateEventRegisterComponent {
         // console.log(this.villagesOfBranch, 'villagesOfBranch');
       });
 
-      // this.facilitatorDetails.facilitatorInfo = [];
-      // this.stakeHolderDetails.stakeHolderInfo = [];
       this.attendeeDetails.attendeeInfo = [];
 
-      // console.log(this.specificEventDetails?.facilitatorList);
-
+      // attendeeDetails.attendeeInfo manipulation
       if (this.specificEventDetails?.attendeeList) {
         this.specificEventDetails?.attendeeList.forEach(x => {
           this.attendeeDetails.attendeeInfo.push({
@@ -372,7 +356,7 @@ export class CreateEventRegisterComponent {
         });
       }
 
-
+      // class list for primary & adolescent school goers
       this.classList = [];
       if (eventTypeMasterId == 1) {
         this.classList.push('LN', 'UN', 'KG', '1', '2', '3', '4', '5')
@@ -382,7 +366,9 @@ export class CreateEventRegisterComponent {
 
     }
 
+    // event_is_special == 'Y' refers to special event
     if (this.event_is_special == 'Y') {
+      // specialGuestDetails.guestsInfo manipulation
       if (this.specificEventDetails?.specialGuestList?.length > 0) {
         this.specificEventDetails?.specialGuestList.forEach(x => {
           this.specialGuestDetails.guestsInfo.push({
@@ -437,6 +423,7 @@ export class CreateEventRegisterComponent {
     }
   }
 
+  //change Rally date manipulation
   changeDateOfRally(value) {
     this.createEventRegisterForm.controls['village'].setValue('');
     this.familiesWithStatusOfVillage = [];
@@ -458,19 +445,14 @@ export class CreateEventRegisterComponent {
   }
 
   changeBlock(blockId) {
-    // console.log(blockId, 'blockId');
     this.gpList = this.villagesOfBranch.find(block => block.blockMasterId == blockId)?.gpDtoList;
-    // console.log(this.gpList, 'gplist');
-
     this.createEventRegisterForm.controls.gp.setValue('');
     this.createEventRegisterForm.controls.gram.setValue('');
     this.villageList = [];
   }
 
   changeGp(gpId) {
-    // console.log(gpId, 'GpId');
     this.villageList = this.gpList?.find(gp => gp.gpMunicipalId == gpId)?.villageDtoList;
-    // console.log(this.villageList, 'villageList');
     this.createEventRegisterForm.controls.gram.setValue('');
   }
 
@@ -478,6 +460,7 @@ export class CreateEventRegisterComponent {
     return false;
   }
 
+  //select multiple staff manipulation
   selectMultipleStaff(e, user) {
     this.staffListID = [];
     console.log(e.target.checked, user);
@@ -777,18 +760,13 @@ export class CreateEventRegisterComponent {
       if (value) {
         this.createEventRegisterForm.controls['eventDateTo'].enable();
         this.createEventRegisterForm.controls.eventDateTo.setValue('');
-        // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
         this.createEventRegisterForm.controls['rallySeminarDate'].disable();
       } else if (value && this.createEventRegisterForm.value.eventDateTo) {
         this.createEventRegisterForm.controls['rallySeminarDate'].enable();
       } else {
-        // this.createEventRegisterForm.controls['eventDateTo'].disable();
         this.createEventRegisterForm.controls.eventDateTo.setValue('')
-        // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
         this.createEventRegisterForm.controls['rallySeminarDate'].disable();
       }
-      /*   this.minToDate = moment(this.data.branchOpenDate).add(1, 'days').format('YYYY-MM-DD');
-    this.maxToDate = new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10); */
     }
 
     if (!this.specificEventDetails) {
@@ -815,7 +793,6 @@ export class CreateEventRegisterComponent {
         this.specificEventDetails?.rallyOrSeminarDetails ? this.createEventRegisterForm.controls['rallySeminarDate'].disable()
           : this.createEventRegisterForm.controls['rallySeminarDate'].enable();
       } else if (!value) {
-        // this.createEventRegisterForm.controls['rallySeminarDate'].setValue('');
         this.createEventRegisterForm.controls['rallySeminarDate'].disable();
       }
     }
@@ -854,28 +831,7 @@ export class CreateEventRegisterComponent {
     }
   }
 
-  multipleEventsSelect(e) {
-    // if (this.createEventRegisterForm.value.rally == true) {
-    //   this.createEventRegisterForm.controls.rally.setValue('R')
-    // } else if (this.createEventRegisterForm.value.seminar == true) {
-    //   this.createEventRegisterForm.controls.seminar.setValue('S')
-    // } else if (this.createEventRegisterForm.value.fgd == true) {
-    //   this.createEventRegisterForm.controls.fgd.setValue('FGD')
-    // }
-    console.log(this.createEventRegisterForm.value.rally);
-    console.log(this.createEventRegisterForm.value.seminar);
-    console.log(this.createEventRegisterForm.value.fgd);
-
-    console.log(this.createEventRegisterForm.value.eventDateFrom, this.createEventRegisterForm.value.eventDateTo);
-
-    // if ((this.createEventRegisterForm.value.eventDateFrom || this.specificEventDetails.startDate) &&
-    //   (this.createEventRegisterForm.value.eventDateTo || this.specificEventDetails.endDate)) {
-    //   this.createEventRegisterForm.controls['rallySeminarDate'].enable();
-    // } else {
-    //   this.createEventRegisterForm.controls['rallySeminarDate'].disable();
-    // }
-  }
-
+  // specialEventVillList contains branch wise village list
   getSimpleListOfVillagesOfABranch() {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.data.branchID }
     this.loader = false;
@@ -887,8 +843,8 @@ export class CreateEventRegisterComponent {
     });
   }
 
+  // familiesWithStatusOfVillage contains village wise family list
   getFamiliesWithStatusForAVillage(villageID) {
-    // console.log(villageID);
     var showVillageName = this.specialEventVillList.find(x => x.villageId == villageID)?.villageName
     if (villageID == '') { this.familiesListID = [] }
 
@@ -929,29 +885,6 @@ export class CreateEventRegisterComponent {
         console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
         console.log(this.onEditfamiliesWithStatusOfVillage);
 
-        //   this.onEditfamiliesWithStatusOfVillage.forEach(x => {
-        //     this.familiesWithStatusOfVillage.forEach(y => {
-
-        //    if( y.familyId == x.familyId){
-
-        //     y.is_checked=x.is_checked;
-        //     console.log(y);
-
-        //    }
-        //   })
-        // })
-
-        // if (this.onEditfamiliesWithStatusOfVillage.length > 0) {
-        //   this.onEditfamiliesWithStatusOfVillage.forEach(x => {
-        //     this.familiesWithStatusOfVillage.forEach(y => {
-        //       if (y.familyId == x.familyId) {
-        //         y.is_checked = x.is_checked
-        //       }
-        //     })
-        //   })
-        // }
-
-
 
         this.specificEventDetails?.rallyOrSeminarDetails?.familyList?.forEach(x => {
           this.familiesWithStatusOfVillage?.forEach(y => {
@@ -969,7 +902,6 @@ export class CreateEventRegisterComponent {
 
           this.familiesListID?.forEach(y => {
             this.familiesWithStatusOfVillage?.filter(x => x.familyId == y.familyId).forEach(x => {
-              // if(x.active_flag=='A')
               x.is_checked = y.is_checked
             })
           })
@@ -980,6 +912,7 @@ export class CreateEventRegisterComponent {
 
   }
 
+  //select multiple families manipulation
   selectMultipleFamilies(e, fam) {
     console.log(e.target.checked, fam);
     if (e.target.checked == true) {
@@ -998,57 +931,31 @@ export class CreateEventRegisterComponent {
 
     if (this.specificEventDetails?.rallyOrSeminarDetails) {
       this.onEditfamiliesWithStatusOfVillage?.forEach(x => {
-        // console.log(x);
 
         if (x.familyId == fam.familyId) {
           x.is_checked = fam.is_checked
-          console.log(x);
-
         }
-        // console.log(x);
 
       })
     }
 
     if (fam.is_checked == true) { this.familiesListID.push(fam) }
-
     this.familiesListID = this.familiesListID.filter(x => x.is_checked == true);
-
-    // this.familiesListID = this.familiesListID.concat(this.onEditfamiliesWithStatusOfVillage.filter(x => x.is_checked == true))
     this.familiesListID = this.familiesListID.concat(this.onEditfamiliesWithStatusOfVillage)
-
-    this.familiesListID = [...new Map(this.familiesListID.map((m) => [m.familyId, m])).values()];
+    this.familiesListID = [...new Map(this.familiesListID.map((m) => [m.familyId, m])).values()];//used to remove duplicate families
 
 
     this.familiesListID.forEach(x => {
-      // console.log(x);
       if (!x.rallySeminarFamilyMapId) {
         x.rallySeminarFamilyMapId = 0,
           x.active_flag = 'A'
       }
       if (x.is_checked == false && x.rallySeminarFamilyMapId != 0) {
         this.onEditfamiliesWithStatusOfVillage.find(y => y.familyId == x.familyId).active_flag = 'D'
-        //   this.onEditfamiliesWithStatusOfVillage.find(y => y.familyId == x.familyId).is_checked = false
-        //   this.familiesWithStatusOfVillage.find(y => y.familyId == x.familyId).is_checked = false
-        //   x.active_flag = 'D'
       } else {
         x.active_flag = 'A'
       }
-
     })
-
-
-    // this.familiesListID.forEach(x => {
-    //   if (x.rallySeminarFamilyMapId) {
-    //     this.staffListID.push({
-    //       staffEventMapId: x.staffEventMapId ? x.staffEventMapId : 0, staffId: x.user_id,
-    //       active_flag: x.is_checked == false ? 'D' : 'A'
-    //     })
-    //   } else {
-    //     if (x.is_checked == true)
-    //       this.staffListID.push({ staffEventMapId: 0, staffId: x.user_id, active_flag: 'A' });
-    //   }
-    // })
 
     console.log(this.familiesListID, 'familiesListID');
 
@@ -1221,6 +1128,7 @@ export class CreateEventRegisterComponent {
     });
   }
 
+
   SSAttendedRally(value) {
     console.log(value);
     if (value == 'Y') {
@@ -1230,6 +1138,7 @@ export class CreateEventRegisterComponent {
     }
   }
 
+  //ssListOfRegion contains region wise ss list
   getAllSsOfARegion() {
     let ssReq = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: this.data.regionID }
     this.loader = false;
@@ -1252,6 +1161,9 @@ export class CreateEventRegisterComponent {
         })
       }
 
+      if (this.specificEventDetails?.modalType == 'view') {
+        this.ssListOfRegion = this.ssListOfRegion.filter(v => v.is_checked == true);
+      }
       // console.log(this.ssListOfRegion, 'this.ssListOfRegion');
     })
   }

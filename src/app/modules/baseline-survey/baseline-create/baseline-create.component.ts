@@ -48,7 +48,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
   @ViewChild('aadhaarId') aadhaarId: ElementRef;
   @ViewChild(LocationComponent) locationComponent: LocationComponent;
   timeToTentativeEndDate: any;
-  sexStatus: boolean;
+  // sexStatus: boolean;
 
   constructor(private fb: UntypedFormBuilder, private modalService: NgbModal, private baselineService: BaselineSurveyService,
     private httpService: HttpService, public validationService: ValidationService, private toaster: ToastrService,
@@ -76,8 +76,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
-      maritalStatus: '',
-      residence: '',
+      // maritalStatus: '',
+      // residence: '',
       status: 'A'
     });
 
@@ -185,10 +185,10 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       childbelow5: this.childbelow5,
       institutional: ['', Validators.required],
       breastFeeding: this.breastfeeding,
-      waterSource: ['N', Validators.required],
-      waterSourceType: [{ value: '', disabled: this.changewaterSource }],
-      electricityAtHome: ['', Validators.required],
-      cookingFuel: ['', Validators.required],
+      // waterSource: ['N', Validators.required],
+      // waterSourceType: [{ value: '', disabled: this.changewaterSource }],
+      // electricityAtHome: ['', Validators.required],
+      // cookingFuel: ['', Validators.required],
     });
   }
 
@@ -200,26 +200,26 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
     this.haveSanitaryLatrine = e.target.value;
   }
 
-  changewaterSource(value: string) {
-    if (value == 'Y') {
-      this.baselineSurvey.controls['waterSourceType'].enable();
-      this.baselineSurvey.get('waterSourceType').setValidators(Validators.required);
-      this.baselineSurvey.get('waterSourceType').updateValueAndValidity();
-    } else {
-      this.baselineSurvey.controls['waterSourceType'].disable();
-      this.baselineSurvey.get('waterSourceType').clearValidators();
-      this.baselineSurvey.get('waterSourceType').updateValueAndValidity();
-    }
-    this.baselineSurvey.controls.waterSourceType.setValue('');
-  }
+  // changewaterSource(value: string) {
+  //   if (value == 'Y') {
+  //     this.baselineSurvey.controls['waterSourceType'].enable();
+  //     this.baselineSurvey.get('waterSourceType').setValidators(Validators.required);
+  //     this.baselineSurvey.get('waterSourceType').updateValueAndValidity();
+  //   } else {
+  //     this.baselineSurvey.controls['waterSourceType'].disable();
+  //     this.baselineSurvey.get('waterSourceType').clearValidators();
+  //     this.baselineSurvey.get('waterSourceType').updateValueAndValidity();
+  //   }
+  //   this.baselineSurvey.controls.waterSourceType.setValue('');
+  // }
 
-  checkSex(value, index) {
-    this.childDetails.childInfo[index].maritalStatus = "";
-    this.childDetails.childInfo[index].residence = "";
-  }
-  checkmaritalStatus(value, index) {
-    this.childDetails.childInfo[index].residence = "";
-  }
+  // checkSex(value, index) {
+  //   this.childDetails.childInfo[index].maritalStatus = "";
+  //   this.childDetails.childInfo[index].residence = "";
+  // }
+  // checkmaritalStatus(value, index) {
+  //   this.childDetails.childInfo[index].residence = "";
+  // }
 
   havesChildren(e) {
     this.haveChildren = e.target.value;
@@ -237,8 +237,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
-      maritalStatus: '',
-      residence: '',
+      // maritalStatus: '',
+      // residence: '',
       status: 'A'
     }]
   }
@@ -256,8 +256,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
-      maritalStatus: '',
-      residence: '',
+      // maritalStatus: '',
+      // residence: '',
       status: 'A'
     }]
   }
@@ -290,7 +290,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
     this.breastfeeding = 'NA';
     this.institutionalDelivery = '';
     this.showChildDetails = false;
-    this.baselineSurvey.reset();
+    // this.baselineSurvey.reset();
     this.createForm();
     this.locationComponent.createForm();
     this.addSum = 0;
@@ -302,8 +302,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
-      maritalStatus: '',
-      residence: '',
+      // maritalStatus: '',
+      // residence: '',
       status: 'A'
     }];
   }
@@ -428,10 +428,10 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
             totaFamilyMemberMales: item.fmale,
             totaFamilyMemberSrcitizen: item.fsenior,
             totalNumberOfChildren: item.child ? item.child : 0,
-            waterSource: item.waterSource,
-            waterSourceType: item.waterSourceType,
-            electricityAtHome: item.electricityAtHome,
-            cookingFuel: item.cookingFuel,
+            // waterSource: item.waterSource,
+            // waterSourceType: item.waterSourceType,
+            // electricityAtHome: item.electricityAtHome,
+            // cookingFuel: item.cookingFuel,
 
           }
         ],
@@ -648,20 +648,20 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       return;
     }
 
-    if (this.baselineSurvey.value.waterSource == 'Y' && !this.baselineSurvey.value.waterSourceType) {
-      this.showError('Please select Water Source Type');
-      return;
-    }
+    // if (this.baselineSurvey.value.waterSource == 'Y' && !this.baselineSurvey.value.waterSourceType) {
+    //   this.showError('Please select Water Source Type');
+    //   return;
+    // }
 
-    if (!this.baselineSurvey.value.electricityAtHome) {
-      this.showError('Please select Electricity at Home');
-      return;
-    }
+    // if (!this.baselineSurvey.value.electricityAtHome) {
+    //   this.showError('Please select Electricity at Home');
+    //   return;
+    // }
 
-    if (!this.baselineSurvey.value.cookingFuel) {
-      this.showError('Please select Cooking Fuel');
-      return;
-    }
+    // if (!this.baselineSurvey.value.cookingFuel) {
+    //   this.showError('Please select Cooking Fuel');
+    //   return;
+    // }
 
     if (this.baselineSurvey.value.haveChildren == 'Y') {
       if (!this.baselineSurvey.value.child) {
@@ -854,8 +854,8 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       dob: '',
       familyDetailId: 0,
       sex: '',
-      maritalStatus: '',
-      residence: '',
+      // maritalStatus: '',
+      // residence: '',
       status: 'A'
     });
   }
@@ -972,17 +972,18 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
     this.childDetails.childInfo.forEach((item) => {
       if (!item.childName || !item.dob || !item.sex) {
         flag = false;
-      } else {
-        if (item.sex == 'F' && !item.maritalStatus) {
-          flag = false;
-        } else {
-          if (item.maritalStatus == 'M' && !item.residence) {
-            flag = false;
-          } else {
-            flag = true;
-          }
-        }
       }
+      // else {
+      //   if (item.sex == 'F' && !item.maritalStatus) {
+      //     flag = false;
+      //   } else {
+      //     if (item.maritalStatus == 'M' && !item.residence) {
+      //       flag = false;
+      //     } else {
+      //       flag = true;
+      //     }
+      //   }
+      // }
     });
 
     return flag;
@@ -1096,14 +1097,14 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       // return;
     } else {
       console.log(this.childDetails);
-      this.childDetails.childInfo.forEach((x) => {
-        let age = Math.floor((+new Date() - new Date(x.dob).getTime()) / 3.15576e+10);
-        if (age < 13 && x.sex == 'F' && x.maritalStatus == 'M') {
-          this.showError(' Girl Child age is below 10 years not allowed ');
-        } else {
-          this.modalReference.close();
-        }
-      })
+      // this.childDetails.childInfo.forEach((x) => {
+      //   let age = Math.floor((+new Date() - new Date(x.dob).getTime()) / 3.15576e+10);
+      //   if (age < 13 && x.sex == 'F' && x.maritalStatus == 'M') {
+      //     this.showError(' Girl Child age is below 10 years not allowed ');
+      //   } else {
+      this.modalReference.close();
+      //   }
+      // })
 
     }
 

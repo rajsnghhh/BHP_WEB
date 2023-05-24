@@ -1,0 +1,73 @@
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialog-title {
+  background-color: #499;
+  display: inline-block;
+  padding: 10px;
+  position: relative;
+  color: #ffffff;
+}
+
+.dialog-title::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -14px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid #277;
+  border-right: 7px solid #277;
+  border-bottom: 7px solid #0000;
+  border-left: 7px solid #0000;
+}
+
+
+#table_wrapper .table thead {
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFFFFF;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0;
+  background: #499;
+  text-align: center;
+  overflow-y: auto;
+}
+
+#table_wrapper .table tbody td {
+  padding: 2px;
+  height: 30px;
+}
+
+#tbodyFam {
+  display: block;
+  height: 216px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+::ng-deep .mat-dialog-container {
+  overflow: hidden;
+}
+
+#header_fixed {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.fa-eye:hover {
+  color: #70caf7 !important;
+  cursor: pointer;
+  font-size: 1.8em;
+}
+

@@ -1,0 +1,49 @@
+<app-loader [hidden]="loader"></app-loader>
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h3 class="dialog-title">List Of FGD's</h3>
+        <h3 class="btn-link" style="color:#0d6efd; cursor: pointer;margin-left: 225px;" (click)="CreateFGDModal()"
+            *ngIf="createMode">click
+            here to create FGD
+        </h3>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+    </div>
+</h1>
+<hr>
+
+<div mat-dialog-content style="overflow-y: auto; height: 375px; overflow-x: hidden;">
+
+    <div id="tbodyFam">
+        <div id="table_wrapper">
+            <table class="table table-striped" id="table_wrapper">
+                <thead id="header_fixed">
+                    <tr style="text-align: center;">
+                        <th style="width: 8%;">Sl. No.</th>
+                        <th style="width: 15%;">FGD Date</th>
+                        <th style="width: 30%;">FGD Place</th>
+                        <th style="width: 15%;">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody style="text-align:center;">
+                    <tr *ngFor="let fgd of fgdDetails; index as i">
+                        <td style="width: 8%;">{{i+1}}</td>
+                        <td style="width: 15%;">{{fgd.dateOfFgd.split("-").reverse().join("-")}}</td>
+                        <td style="width: 30%;">{{fgd.villageName}}</td>
+                        <td style="width: 15%;">
+                            <i class="fa fa-eye fa-lg" title="View Details" (click)="viewFGDDetails(fgd)"></i>
+                            <i class="fas fa-edit" title="Edit FGD" (click)="editFGD(fgd)" *ngIf="updateMode"></i>
+                            <i class="fas fa-trash" title="Delete FGD" (click)="deleteFGDEvent(fgd)"
+                                *ngIf="deleteMode"></i>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="data?.fgdDetails?.length == 0">
+                        <td colspan="4">No list is available.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

@@ -11,6 +11,8 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import { CreateEventRegisterComponent } from './create-event-register/create-event-register.component';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
+import { FgdViewComponent } from './fgd-view/fgd-view.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-register',
@@ -35,10 +37,16 @@ export class EventRegisterComponent {
   SpecialEventsOfBranch: Array<any> = [];
   p: any;
   p2: any;
+  viewMode: boolean;
+  createMode: boolean;
+  updateMode: boolean;
+  deleteMode: boolean;
+  registerSearch: any;
 
   constructor(private fb: FormBuilder, private sidebarService: SidebarService, private http: HttpClient,
     private toaster: ToastrService, public validationService: ValidationService, private httpService: HttpService,
-    private eventService: EventRegisterService, public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService) {
+    private eventService: EventRegisterService, private router: Router,
+    public dialog: MatDialog, private confirmationDialogService: ConfirmationDialogService) {
   }
 
   ngDoCheck(): void {
@@ -80,6 +88,26 @@ export class EventRegisterComponent {
     });
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+
+    this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/event-register']) : this.router.navigate(['/error']);
+
+    this.createMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
+
+    this.updateMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
+
+    this.deleteMode = this.sidebarService.subMenuList
+      .find(functionShortName => functionShortName.functionMasterId == 5)?.subMenuDetailList
+      .find(item => item.subFunctionMasterId == 286 || item.subFunctionMasterId == 287 || item.subFunctionMasterId == 288 || item.subFunctionMasterId == 289)?.accessDetailList
+      .find(accessType => accessType.accessType == 'delete')?.accessType ? true : false;
   }
 
   eventRegisterForms() {
@@ -97,7 +125,9 @@ export class EventRegisterComponent {
     console.log(regionId, 'regionMasterId');
     if (regionId) {
       let req = { dataAccessDTO: this.httpService.dataAccessDTO, regionId: regionId };
+      this.loader = false;
       this.eventService.getBranchesOfRegion(req).subscribe((res) => {
+        this.loader = true;
         this.branchList = res.responseObject;
         console.log(this.branchList, 'branchList');
       });
@@ -121,17 +151,46 @@ export class EventRegisterComponent {
     this.loader = false;
     this.eventService.viewAllEventsOfABranch(req).subscribe((res) => {
       this.loader = true;
-      this.SchoolEventsOfBranch = res.responseObject.schoolEvents;
+      this.SchoolEventsOfBranch = res.responseObject?.schoolEvents;
+      this.SchoolEventsOfBranch.forEach(x => {
+        if (x.eventName.includes('Primary')) {
+          x.eventName = 'Primary School Goers'
+        } else {
+          x.eventName = 'For Adolescent Girls'
+        }
+      })
       console.log(this.SchoolEventsOfBranch, 'SchoolEventsOfBranch');
-      this.SpecialEventsOfBranch = res.responseObject.specialEvents;
+      this.SpecialEventsOfBranch = res.responseObject?.specialEvents;
       console.log(this.SpecialEventsOfBranch, 'SpecialEventsOfBranch');
     });
 
     this.SchoolEventsOfBranch = [];
   }
 
+  viewSchoolEvent(school) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
+    this.loader = false;
+    this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSchoolEventDetails = res.responseObject;
+      this.specificSchoolEventDetails.modalType = "view";
+      this.createEventRegister(this.specificSchoolEventDetails);
+    });
+  }
+
+  viewSpecialEvent(special) {
+    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId };
+    this.loader = false;
+    this.eventService.viewSpecificSpecialEventRegister(req).subscribe((res) => {
+      this.loader = true;
+      this.specificSpecialEventDetails = res.responseObject;
+      this.specificSpecialEventDetails.modalType = "view";
+      this.createEventRegister(this.specificSpecialEventDetails);
+    });
+  }
+
   createEventRegister(specificEventDetails) {
-    console.log(specificEventDetails, 'specificEventDetails');
+    // console.log(specificEventDetails, 'specificEventDetails');
 
     const dialogRef = this.dialog.open(CreateEventRegisterComponent, {
       width: '1100px',
@@ -177,14 +236,16 @@ export class EventRegisterComponent {
 
   deleteSchoolEvent(school) {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
-      .then(() => this.delete(school)
+      .then(() => this.schoolDelete(school)
       )
       .catch(() => '');
   }
 
-  delete(school) {
+  schoolDelete(school) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId, active_flag: 'D' }
+    this.loader = false;
     this.eventService.schoolEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
+      this.loader = true;
       console.log(res);
       if (res.status == true) {
         this.showSuccess(res.message);
@@ -195,26 +256,63 @@ export class EventRegisterComponent {
     })
   }
 
-  viewSchoolEvent(school) {
-    let req = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSchoolId: school.eventRegisterSchoolId };
+  deleteSpecialEvent(special) {
+    this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
+      .then(() => this.specialDelete(special)
+      )
+      .catch(() => '');
+  }
+
+  specialDelete(special) {
+    let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId, active_flag: 'D' }
     this.loader = false;
-    this.eventService.viewSpecificSchoolEventRegister(req).subscribe((res) => {
+    this.eventService.specialEventSaveOrUpdate(schoolDelReq).subscribe((res: any) => {
       this.loader = true;
-      this.specificSchoolEventDetails = res.responseObject;
-      this.specificSchoolEventDetails.modalType = "view";
-      this.createEventRegister(this.specificSchoolEventDetails);
-    });
+      console.log(res);
+      if (res.status == true) {
+        this.showSuccess(res.message);
+        this.changeBranch(this.eventRegisterForm.value.branch || this.lowerRankbranchId);
+      } else {
+        this.showError(res.message);
+      }
+    })
+
+  }
+
+  fgdViewModalMessage() {
+    this.showErrors('FGD is not accessible')
   }
 
   showSuccess(message) {
-    this.toaster.success(message, 'Event Delete', {
+    this.toaster.success(message, 'Event Deleted', {
       timeOut: 3000,
     });
   }
 
   showError(message) {
-    this.toaster.error(message, 'Event Delete', {
+    this.toaster.error(message, 'Event Deleted', {
       timeOut: 3000,
+    });
+  }
+
+  showErrors(message) {
+    this.toaster.error(message, '', {
+      timeOut: 3000,
+    });
+  }
+
+  fgdViewModal(special) {
+    const dialogRef = this.dialog.open(FgdViewComponent, {
+      width: '800px',
+      height: '380px',
+      data: {
+        branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
+        special: special
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.changeBranch(this.eventRegisterForm.value.branch || this.lowerRankbranchId);
     });
   }
 

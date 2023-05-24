@@ -7,31 +7,29 @@
                 <div id="header-fixed" style="display: flex;">
                     <h2 class="page-title">Event Register</h2>
 
-                    <!-- <div class="box_right d-flex lms_block col-md-6">
+                    <div class="box_right d-flex lms_block col-md-6">
                         <div class="serach_field_2">
                             <div [ngClass]=" searchFullscreen? 'search_inner_fullscreen ' : ' search_inner' ">
                                 <form active="#">
                                     <div class="search_field">
-                                        <input type="text" name="search" placeholder="search by staff or ss name ..."
+                                        <input type="text" name="search" placeholder="search by event, name & place ..."
                                             [(ngModel)]="registerSearch">
                                     </div>
                                     <button type="submit"> <i class="fa fa-search"></i> </button>
                                 </form>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
                         *ngIf="!eventRegisterForm.value.branch && !lowerRankbranchId ">
-                        <!-- *ngIf=" !eventRegisterForm.value.branch || !createMode" -->
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #a8d7d7; font-size: 30px; margin-top: 5px;"
                             title="Create Event Register"></i>
                     </div>
 
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
-                        *ngIf="eventRegisterForm.value.branch || lowerRankbranchId">
-                        <!-- *ngIf="(eventRegisterForm.value.branch && createMode) || (lowerRankbranchId && createMode)" -->
+                        *ngIf="(eventRegisterForm.value.branch && createMode) || (lowerRankbranchId && createMode)">
                         <i class="fas fa-plus-circle"
                             style="cursor: pointer; color: #499; font-size: 30px; margin-top: 5px;"
                             title="Create Event Register" (click)="createEventRegister()"></i>
@@ -87,28 +85,31 @@
                                         <thead id="header_fixed">
                                             <tr style="text-align: center;">
                                                 <th style="width: 4%;">Sl. No.</th>
+                                                <th style="width: 12%;">Date of Event</th>
+                                                <th style="width: 20%;">Event Type</th>
                                                 <th style="width: 25%;">School Name</th>
-                                                <th style="width: 30%;">School Place</th>
-                                                <th style="width: 15%;">Date of Event</th>
-                                                <th style="width: 12%;">Action</th>
+                                                <th style="width: 25%;">School Place</th>
+                                                <th style="width: 15%;">Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody id="tbodyy" style="text-align:center;">
-                                            <tr *ngFor="let school of SchoolEventsOfBranch|
-                                            paginate: { itemsPerPage: 5, currentPage: p };index as i;">
+                                            <tr
+                                                *ngFor="let school of SchoolEventsOfBranch | eventRegisterFilter: {eventName : registerSearch,
+                                                    schoolName :registerSearch,  villageName :registerSearch} | paginate: { itemsPerPage: 5, currentPage: p };index as i;">
                                                 <td style="width: 4%;">{{(p-1)*5+i+1 ? (p-1)*5+i+1 : i+1}}</td>
-                                                <td style="width: 25%;">{{school.schoolName}}</td>
-                                                <td style="width: 30%;">{{school.villageName}}</td>
-                                                <td style="width: 15%;">
-                                                    {{school.eventDate.split("-").reverse().join("-")}}</td>
                                                 <td style="width: 12%;">
+                                                    {{school.eventDate.split("-").reverse().join("-")}}</td>
+                                                <td style="width: 20%;">{{school.eventName}}</td>
+                                                <td style="width: 25%;">{{school.schoolName}}</td>
+                                                <td style="width: 25%;">{{school.villageName}}</td>
+                                                <td style="width: 15%;">
                                                     <i class="fa fa-eye fa-lg" title="View Details"
                                                         (click)="viewSchoolEvent(school)"></i>
                                                     <i class="fas fa-edit" title="Edit Event"
-                                                        (click)="editSchoolEvent(school)"></i>
+                                                        (click)="editSchoolEvent(school)" *ngIf="updateMode"></i>
                                                     <i class="fas fa-trash" title="Delete Event"
-                                                        (click)="deleteSchoolEvent(school)"></i>
+                                                        (click)="deleteSchoolEvent(school)" *ngIf="deleteMode"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -132,31 +133,36 @@
                                         <thead id="header_fixed">
                                             <tr style="text-align: center;">
                                                 <th style="width: 2%;">Sl. No.</th>
-                                                <th style="width: 15%;">From Date</th>
-                                                <th style="width: 15%;">To Date</th>
+                                                <th style="width: 12%;">From Date</th>
+                                                <th style="width: 12%;">To Date</th>
                                                 <th style="width: 25%;">Event Name</th>
                                                 <th style="width: 30%;">Place</th>
-                                                <th style="width: 12%;">Action</th>
+                                                <th style="width: 30%;">Action</th>
                                             </tr>
                                         </thead>
 
                                         <tbody id="tbodyy" style="text-align:center;">
-                                            <tr *ngFor="let special of SpecialEventsOfBranch|
-                                            paginate: { itemsPerPage: 5, currentPage: p2 };index as i;">
+                                            <tr
+                                                *ngFor="let special of SpecialEventsOfBranch | eventRegisterFilter: {eventName : registerSearch,
+                                                    place :registerSearch} | paginate: { itemsPerPage: 5, currentPage: p2 };index as i;">
                                                 <td style="width: 2%;">{{(p2-1)*5+i+1 ? (p2-1)*5+i+1 : i+1}}</td>
-                                                <td style="width: 15%;">
+                                                <td style="width: 12%;">
                                                     {{special.startDate.split("-").reverse().join("-")}}</td>
-                                                <td style="width: 15%;">
+                                                <td style="width: 12%;">
                                                     {{special.endDate.split("-").reverse().join("-")}}</td>
                                                 <td style="width: 25%;">{{special.eventName}}</td>
-                                                <td style="width: 30%;">{{special.place}}</td>
-                                                <td style="width: 12%;">
+                                                <td style="width: 30%;">{{special.place?special.place:'-'}}</td>
+                                                <td style="width: 30%;">
+                                                    <i class="fa fa-group" title="Focused Group Discussion"
+                                                        (click)="fgdViewModal(special)" *ngIf="special.fgd=='Y'"></i>
+                                                    <i class="fa fa-group" title="Focused Group Discussion"
+                                                        *ngIf="special.fgd=='N'" (click)="fgdViewModalMessage()"></i>
                                                     <i class="fa fa-eye fa-lg" title="View Details"
-                                                        (click)="viewSchoolEvent(special)"></i>
+                                                        (click)="viewSpecialEvent(special)"></i>
                                                     <i class="fas fa-edit" title="Edit Event"
-                                                        (click)="editSpecialEvent(special)"></i>
+                                                        (click)="editSpecialEvent(special)" *ngIf="updateMode"></i>
                                                     <i class="fas fa-trash" title="Delete Event"
-                                                        (click)="deleteSchoolEvent(school)"></i>
+                                                        (click)="deleteSpecialEvent(special)" *ngIf="deleteMode"></i>
                                                 </td>
                                             </tr>
                                         </tbody>

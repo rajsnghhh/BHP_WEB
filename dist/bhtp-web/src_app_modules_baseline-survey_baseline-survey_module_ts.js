@@ -1223,7 +1223,7 @@ class BaselineCreateComponent {
       fsenior: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required],
       bbMicro: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required],
       pregnancy: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required],
-      sanitary: this.haveSanitaryLatrine,
+      sanitary: ['N'],
       haveChildren: this.haveChildren,
       child: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_7__.Validators.required],
       childbelow18: this.childbelow18,

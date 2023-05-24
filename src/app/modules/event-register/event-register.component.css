@@ -1,26 +1,92 @@
 #table_wrapper .table thead {
-    border-bottom: 0 solid transparent;
-    background-color: #fff;
-    padding: 17px 30px;
-    line-height: 16px;
-    font-size: 15px;
-    font-weight: 600;
-    color: #FFFFFF;
-    white-space: nowrap;
-    text-transform: capitalize;
-    font-family: "Rajdhani", sans-serif;
-    border: 0;
-    background: #499;
-    text-align: center;
-    overflow-y: auto;
-  }
-  
-  #table_wrapper .table tbody td {
-    padding: 4px;
-  }
+  border-bottom: 0 solid transparent;
+  background-color: #fff;
+  padding: 17px 30px;
+  line-height: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFFFFF;
+  white-space: nowrap;
+  text-transform: capitalize;
+  font-family: "Rajdhani", sans-serif;
+  border: 0;
+  background: #499;
+  text-align: center;
+  overflow-y: auto;
+}
 
-  .fa-eye:hover {
-    color: #70caf7 !important;
-    cursor: pointer;
-    font-size: 1.8em;
-  }
+#table_wrapper .table tbody td {
+  padding: 4px;
+  font-size: 15px;
+  color: #828bb2;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(130, 139, 178, 0.1);
+  height: 35px;
+}
+
+.fa-eye:hover {
+  color: #70caf7 !important;
+  cursor: pointer;
+  font-size: 1.8em;
+}
+
+.fa-group:hover {
+  color: green !important;
+  cursor: pointer;
+  font-size: 1.6em;
+}
+
+
+.search_inner button {
+  padding-right: 1px;
+  margin-left: 500px;
+  margin-top: -8px;
+}
+
+.search_inner_fullscreen button {
+  padding-right: 1px;
+  margin-left: 690px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 90%;
+  background: transparent;
+  font-size: 12px;
+  padding-left: 19px;
+  font-size: 18px;
+  color: #2daab8;
+  border: 0;
+}
+
+.search_inner input {
+  width: 80%;
+  margin-left: 490px;
+  margin-bottom: 4px;
+}
+
+.search_inner_fullscreen input {
+  width: 80%;
+  margin-left: 667px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  height: 40px;
+  border-radius: 5px;
+  padding-left: 55px;
+  border: 1px solid #2daab8;
+  padding-right: 15px;
+}
+
+.serach_field_2 .search_inner button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: -20px;
+  margin-top: 4px;
+}
+
+.serach_field_2 .search_inner_fullscreen button i {
+  font-size: 18px;
+  color: #2daab8;
+  margin-left: -35px;
+  margin-bottom: 11px;
+  margin-top: 2px;
+}

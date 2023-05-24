@@ -1,0 +1,260 @@
+<app-loader [hidden]="loader"></app-loader>
+<h1 mat-dialog-title>
+    <div class="dialog-header">
+        <h3 class="dialog-title">Focused Group Discussion (FGD)</h3>
+        <div><i class="fas fa-times" (click)="closeDialog()"></i></div>
+    </div>
+</h1>
+<hr>
+
+<div mat-dialog-content style="overflow-y: auto; height: 375px; overflow-x: hidden;">
+    <form class="form-signin" [formGroup]="FGDForm">
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="fgdDate">Date of FGD :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                <input type="date" class="form-control" formControlName="fgdDate"
+                    (change)="dateOfFGD($event.target.value)" (keydown)="restrictTypeOfDate()" [min]="specialFromDate"
+                    [max]="specialTodate" [ngClass]="{'is-invalid': l.fgdDate.invalid 
+                    && l.fgdDate.touched, 'is-valid':l.fgdDate.valid &&(l.fgdDate.dirty || l.fgdDate.touched)}" />
+                <div *ngIf="l.fgdDate.errors" class="invalid-feedback">
+                    <div *ngIf="l.fgdDate.errors.required">
+                        Please select date of FGD
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md">
+                <fieldset class="scheduler-borders">
+                    <legend class="scheduler-border">Place Of FGD :&nbsp;<span class="text-danger">*&nbsp;</span>
+                    </legend>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label for="block">Block :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeBlock($event.target.value)"
+                                formControlName="block" id="block" [ngClass]="{'is-invalid':l.block.invalid
+                                 && l.block.touched,'is-valid':l.block.valid &&
+                                  (l.block.dirty ||l.block.touched) }">
+                                <option value="">-- Select Block --</option>
+                                <option *ngFor="let block of villagesOfBranch" value="{{block.blockMasterId}}">
+                                    {{ block.blockName }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.block.errors" class="invalid-feedback">
+                                <div *ngIf="l.block.errors.required">Block selection is required</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gp">GP/ Municipality :&nbsp;<span class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" (change)="changeGp($event.target.value)" formControlName="gp"
+                                id="gp" [ngClass]="{'is-invalid':l.gp.invalid && l.gp.touched,
+                                       'is-valid':l.gp.valid && (l.gp.dirty || l.gp.touched) }">
+                                <option value="">-- Select GP --</option>
+                                <option *ngFor="let gp of gpList" value="{{gp.gpMunicipalId}}">
+                                    {{ gp.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="l.gp.errors" class="invalid-feedback">
+                                <div *ngIf="l.gp.errors.required">
+                                    GP selection is required
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md">
+                            <label for="gram">Vill/ Gram Sansad/ Locality :&nbsp;<span
+                                    class="text-danger">*&nbsp;</span></label>
+                            <select class="form-select" formControlName="gram" id="gram" [ngClass]="{'is-invalid':l.gram.invalid && 
+                            l.gram.touched,'is-valid':l.gram.valid && (l.gram.dirty ||l.gram.touched) }"
+                                (change)="beneficiaryAttendedList($event.target.value)">
+                                <option value="">-- Select Village --</option>
+                                <option *ngFor="let vill of villageList" value="{{vill.villageMasterId}}">
+                                    {{vill.villageName}}
+                                </option>
+                            </select>
+                            <div *ngIf="l.gram.errors" class="invalid-feedback">
+                                <div *ngIf="l.gram.errors.required">
+                                    Village selection is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <div class="card" style="background: whitesmoke; border: none;
+        border-radius: 14px; height: 50px; margin-top: -33px">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4 class="card-title" style="margin-left: 25px;">SS Present :&nbsp;<span
+                                        class="text-danger">*&nbsp;</span></h4>
+                            </div>
+                            <div class="col-md-4"><input class="form-check-input" type="radio" value="Y"
+                                    id="flexCheckDefault" formControlName="ssAttended"
+                                    (change)="SSAttendedRally($event.target.value)">&nbsp;&nbsp;Yes</div>
+                            <div class="col-md-2" style="margin-left: -40px;"> <input class="form-check-input"
+                                    type="radio" value="N" id="flexCheckDefault" formControlName="ssAttended"
+                                    (change)="SSAttendedRally($event.target.value)">&nbsp;&nbsp;No</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="FGDForm.value.ssAttended=='Y'">
+            <div class="form-group col-md">
+                <fieldset class="scheduler-border">
+                    <legend class="scheduler-border">SS List :&nbsp;<span class="text-danger">*&nbsp;</span>
+                    </legend>
+                    <div id="tbodyStaff">
+                        <div id="table_wrapper">
+                            <table class="table table-striped" id="table_wrapper">
+                                <thead id="header_fixed">
+                                    <tr style="text-align: center;">
+                                        <th style="width: 4%;">Sl. No.</th>
+                                        <th style="width: 25%;">SS Name</th>
+                                        <th style="width: 25%;">Husband/ Guardian Name</th>
+                                        <th style="width: 5%;">Select</th>
+                                    </tr>
+                                </thead>
+
+
+                                <tbody style="text-align:center;">
+                                    <tr *ngFor="let ss of ssListOfBranch; index as i">
+                                        <td style="width: 4%;">{{i+1}}</td>
+                                        <td style="width: 25%;">{{ss.ssName}}</td>
+                                        <td style="width: 25%;">{{ss.ssHusbandOrGuardianName}}</td>
+                                        <td style="width: 5%;"> <input *ngIf="ss.is_checked== true && !modalType"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleSS($event,ss)">
+                                            <input *ngIf="ss.is_checked== false && !modalType" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleSS($event,ss)">
+
+                                            <input *ngIf="ss.is_checked== true  && modalType=='view'"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleSS($event,ss)" disabled>
+                                            <input *ngIf="ss.is_checked== false && modalType=='view'"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleSS($event,ss)" disabled>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="ssListOfBranch?.length == 0">
+                                        <td colspan="6">No list is available.</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="card" style="background: whitesmoke; border: none;
+                        border-radius: 14px; height: 400px;">
+                <div class="card-body" style="height: 40vh;">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <h4 class="card-title">Beneficiary Attended:&nbsp;<span class="text-danger">*&nbsp;</span>
+                            </h4>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div class="serach_field_23">
+                                <div>
+                                    <form active="#"
+                                        [ngClass]=" searchFullscreen? 'search_inner_fullscreen' : ' search_inner' ">
+                                        <input type="text" name="search" placeholder="search by Family No. & Name ..."
+                                            [(ngModel)]="familySearch">
+                                        <button type="submit"> <i class="fa fa-search"></i> </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-5" *ngIf="showVillageName">
+                            <h3> Village Name : {{showVillageName}}</h3>
+                        </div>
+                    </div>
+
+                    <div id="tbodyFam">
+                        <div id="table_wrapper">
+                            <table class="table table-striped" id="table_wrapper">
+                                <thead id="header_fixed">
+                                    <tr style="text-align: center;">
+                                        <th style="width: 3%;">Sl. No.</th>
+                                        <th style="width: 3%;">Family No.</th>
+                                        <th style="width: 25%;">Name</th>
+                                        <th style="width: 30%;">Status</th>
+                                        <th style="width: 5%;">Select</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody style="text-align:center;">
+                                    <tr *ngFor="let fam of familiesWithStatusOfVillage| eventRegisterFilter: {familyNumber : familySearch,
+                                        name :familySearch}; ; index as i">
+                                        <td style="width: 3%;">{{i+1}}</td>
+                                        <td style="width: 3%;">{{fam.familyNumber}}</td>
+                                        <td style="width: 25%;">{{fam.name}}</td>
+                                        <td style="width: 30%;">{{fam.setStatus}}</td>
+                                        <td style="width: 5%;"><input *ngIf="fam.is_checked== true && !modalType"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleFamilies($event,fam)">
+                                            <input *ngIf="fam.is_checked== false && !modalType" class="form-check-input"
+                                                type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleFamilies($event,fam)">
+
+                                            <input *ngIf="fam.is_checked== true  && modalType=='view'"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                checked (change)="selectMultipleFamilies($event,fam)" disabled>
+                                            <input *ngIf="fam.is_checked== false  && modalType=='view'"
+                                                class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                                (change)="selectMultipleFamilies($event,fam)" disabled>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr *ngIf="familiesWithStatusOfVillage.length == 0">
+                                        <td colspan="6">No list is available.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><br>
+
+        <div *ngIf="modalType=='view' && capturedImagesList.length > 0">
+            <legend class="scheduler-border">FGD Captured Images</legend>
+            <div class="row">
+                <div class="col-md" *ngFor="let image of capturedImagesList; index as i">
+                    <a href="{{image.image_url}}" target="_blank">
+                        <img src="{{image.image_url}}">
+                        <h4 style="margin-left:100px;">Image : {{i+1}}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <div class="row" *ngIf="!modalType">
+        <button type="button" class="btn btn-primary btn-sm" [disabled]="!fgdSaveDisabled()"
+            (click)="saveOrUpdateFGD()">Save</button>
+    </div>
+</div>

@@ -178,7 +178,7 @@ export class BaselineCreateComponent implements OnInit, DoCheck {
       fsenior: ['', Validators.required],
       bbMicro: ['', Validators.required],
       pregnancy: ['', Validators.required],
-      sanitary: this.haveSanitaryLatrine,
+      sanitary: ['N'],
       haveChildren: this.haveChildren,
       child: ['', Validators.required],
       childbelow18: this.childbelow18,

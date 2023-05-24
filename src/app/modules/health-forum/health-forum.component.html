@@ -21,6 +21,7 @@
                         </div>
                     </div>
 
+                    <!-- condition wise create button disabled -->
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
                         *ngIf="!healthForumForm.value.branch || !createMode">
                         <i class="fas fa-plus-circle"
@@ -28,6 +29,7 @@
                             title="Create Health Forum"></i>
                     </div>
 
+                    <!-- condition wise create button enabled -->
                     <div class="form-group col-md" style="display: flex; justify-content:flex-end"
                         *ngIf="(healthForumForm.value.branch && createMode) || (lowerRankbranchId && createMode)">
                         <i class="fas fa-plus-circle"
@@ -165,6 +167,7 @@
     </div>
 </div>
 
+<!-- #HFeventDetails refers to view event details -->
 <ng-template #HFeventDetails>
 
     <div class="modal-content">
@@ -293,6 +296,7 @@
 
 </ng-template>
 
+<!-- #ViewFamilyDetails refers to view family list inside event view list -->
 <ng-template #ViewFamilyDetails>
 
     <div class="modal-content">
@@ -446,6 +450,7 @@
 
 </ng-template>
 
+<!-- #createHF refers to create & update Health Forum -->
 <ng-template #createHF>
 
     <div class="modal-contents">
@@ -630,6 +635,8 @@
 
 </ng-template>
 
+
+<!-- #createEditHFEvent refers to create & update Health Forum Event -->
 <ng-template #createEditHFEvent>
 
     <div class="modal-conten">
@@ -1174,7 +1181,7 @@
     </div>
 </ng-template>
 
-
+<!-- #rescheduleHF refers to reschdedule a Health Form -->
 <ng-template #rescheduleHF>
 
     <div class="modal-HF">

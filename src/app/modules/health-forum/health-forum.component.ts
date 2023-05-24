@@ -59,9 +59,7 @@ export class HealthForumComponent implements OnInit {
   editHFDetailsTime: Array<any> = [];
   loader: boolean = false;
   p: any;
-  visitorDetails = {
-    visitorInfo: [],
-  };
+  visitorDetails = { visitorInfo: [] };
   index: number = 0;
   eventVillList: Array<any> = [];
   eventVillListID: Array<any> = [];
@@ -139,6 +137,7 @@ export class HealthForumComponent implements OnInit {
 
     this.regionBranchHide = this.sidebarService.regionBranchHide;
 
+    // Access Type acc. to CRUD access
     this.sidebarService.subMenuList
       .find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList
       .find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList
@@ -191,6 +190,7 @@ export class HealthForumComponent implements OnInit {
 
   }
 
+  // Form for accessing region & branch
   healthForumForms() {
     this.healthForumForm = this.fb.group({
       region: ['', Validators.required],
@@ -218,13 +218,15 @@ export class HealthForumComponent implements OnInit {
   changeBranch(branchId) {
     console.log(branchId, 'branchId');
     this.branchId = branchId;
+
+    //viewHealthForumsOfBranch refers to the list of HFs of a branch
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: branchId };
     this.loader = false;
     this.healthForumService.viewHealthForumsOfABranch(req).subscribe((res) => {
       this.viewHealthForumsOfBranch = res?.responseObject;
       this.loader = true;
       this.viewHealthForumsOfBranch = this.viewHealthForumsOfBranch?.map(({
-        isIndex = 0,
+        isIndex = 0,  //var isIndex is used here for displaying Sl. No.
         ...rest
       }) => ({
         isIndex,
@@ -239,6 +241,7 @@ export class HealthForumComponent implements OnInit {
     this.viewHealthForumsOfBranch = [];
   }
 
+  // to view specific HF event list
   viewHFEventDetails(HFeventDetails, health) {
     this.viewForumList = health;
     console.log(this.viewForumList, 'viewForumList');
@@ -256,6 +259,7 @@ export class HealthForumComponent implements OnInit {
     this.viewHFEventModal.close();
   }
 
+  //viewing family lists inside a HF event
   viewFamilyAttendedDetails(ViewFamilyDetails, event) {
     console.log(event);
     if (event.forumEventFamilyPresent == 0) {
@@ -286,6 +290,7 @@ export class HealthForumComponent implements OnInit {
     this.viewFamilyDetailModal.close();
   }
 
+  //display hour list dropdown
   hourLists() {
     for (let i = 1; i <= 12; i++) {
       if (i < 10) {
@@ -293,10 +298,10 @@ export class HealthForumComponent implements OnInit {
       } else {
         this.hourList.push({ hourName: i, hourValue: i });
       }
-      // console.log(this.hourList);
     }
   }
 
+  //display minute list dropdown
   minuteLists() {
     for (let i = 0; i <= 59; i++) {
       if (i < 10) {
@@ -308,6 +313,7 @@ export class HealthForumComponent implements OnInit {
     }
   }
 
+  //staff list of a branch
   getAllStaffAndTheirSSOfABranch() {
     let req = { dataAccessDTO: this.httpService.dataAccessDTO, branchId: this.branchId };
 
@@ -405,6 +411,7 @@ export class HealthForumComponent implements OnInit {
     }
   }
 
+  //get here topic and area list 
   getTopicListAndAreasOfStaffAndOrSS() {
     this.areaList = [];
 
@@ -466,7 +473,8 @@ export class HealthForumComponent implements OnInit {
 
   createHFForms() {
     this.editHFDetailsTime = [];
-    if (this.editHFDetails?.healthForumMasterId) {
+
+    if (this.editHFDetails?.healthForumMasterId) {    //while updating health forum this function continues
       var text = this.editHFDetails?.scheduleDetails?.time;
       text.trim().replace(" ", ":").trim().split(":").forEach(e => {
         if (e.length < 2) {
@@ -514,7 +522,7 @@ export class HealthForumComponent implements OnInit {
         this.changeStaff(this.editHFDetails.staffDetails.staffId);
       }, 500);
 
-    } else {
+    } else {  //while creating health forum this function continues
       this.createHFForm = this.fb.group({
         date: ['', Validators.required],
         staffName: ['', Validators.required],
@@ -530,7 +538,7 @@ export class HealthForumComponent implements OnInit {
 
   }
 
-  saveIsDisabled() {
+  saveIsDisabled() { // save button will be disabled till enter these required fields
     let flag = true;
     if (this.editHFDetails?.rescheduleDetails?.rescheduleToDate) {
       if (!this.createHFForm.value.date) {
@@ -572,7 +580,7 @@ export class HealthForumComponent implements OnInit {
 
   }
 
-  HfSaveOrUpdate() {
+  HfSaveOrUpdate() { // HF save or update with single obj i.e, saveObj
     console.log(this.editHFDetails, 'editHFDetails');
     console.log(this.areaList);
 

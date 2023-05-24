@@ -16,7 +16,7 @@ export class HealthForumAngularMatModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data.villLists);
+    console.log(this.data.villLists);//village list to show in a dialog
   }
 
   closeDialog() {

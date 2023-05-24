@@ -1379,5 +1379,4 @@ export class CreateEventRegisterComponent {
     })
   }
 
-
 }

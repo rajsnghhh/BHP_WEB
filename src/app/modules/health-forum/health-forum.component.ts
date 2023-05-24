@@ -620,7 +620,6 @@ export class HealthForumComponent implements OnInit {
       } : null
     }
 
-    console.log(saveObj, 'savObj');
     console.log(saveObj.villageList);
 
     if (saveObj.villageList.length == 0) {
@@ -644,7 +643,7 @@ export class HealthForumComponent implements OnInit {
 
   }
 
-  editHealthForum(createHF, health: any) {
+  editHealthForum(createHF, health: any) { // update of HF begins from here
     console.log(health);
     var currentTime = new Date().toJSON().slice(0, 10);
 
@@ -694,7 +693,7 @@ export class HealthForumComponent implements OnInit {
     }
   }
 
-  deleteHealthForum(health) {
+  deleteHealthForum(health) {  // delete a HF begins from here
     var currentTime = new Date().toJSON().slice(0, 10);
 
     if (health?.rescheduleDetails?.rescheduleToDate) {
@@ -755,7 +754,7 @@ export class HealthForumComponent implements OnInit {
 
   }
 
-  approveHealthForum(health) {
+  approveHealthForum(health) { // approve health forum begins from here
     console.log(health);
     var currentTime = new Date().toJSON().slice(0, 10);
 
@@ -817,7 +816,7 @@ export class HealthForumComponent implements OnInit {
     return false;
   }
 
-  openDialog(health) {
+  openDialog(health) { //open dialog for viewing family list
     this.dialog.open(HealthForumAngularMatModalComponent, {
       width: '400px',
       height: '250px',

@@ -28,7 +28,7 @@ export class EventRegisterComponent {
   branchList: Array<any> = [];
   villagesOfBranch: Array<any> = [];
   lowerRankRegionId: any;
-  lowerRankbranchId: any;
+  lowerRankbranchId: any; // HCO, HCOI/ TL
   branchOpenDate: any;
   index: number = 0;
   SchoolEventsOfBranch: Array<any> = [];
@@ -202,8 +202,10 @@ export class EventRegisterComponent {
       width: '1100px',
       height: '570px',
       data: {
-        branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId, branchOpenDate: this.branchOpenDate,
-        specificEventDetails: specificEventDetails, regionID: this.eventRegisterForm.value.region || this.lowerRankRegionId
+        branchID: this.eventRegisterForm.value.branch || this.lowerRankbranchId,
+        branchOpenDate: this.branchOpenDate,
+        specificEventDetails: specificEventDetails,
+        regionID: this.eventRegisterForm.value.region || this.lowerRankRegionId
       }
     });
 
@@ -266,7 +268,7 @@ export class EventRegisterComponent {
     })
   }
 
-   //Deleting special event register confirmation
+  //Deleting special event register confirmation
   deleteSpecialEvent(special) {
     this.confirmationDialogService.confirm('', 'Are you sure you want to delete this event ?')
       .then(() => this.specialDelete(special)
@@ -274,7 +276,7 @@ export class EventRegisterComponent {
       .catch(() => '');
   }
 
-   //Deleting special event register 
+  //Deleting special event register 
   specialDelete(special) {
     let schoolDelReq = { dataAccessDTO: this.httpService.dataAccessDTO, eventRegisterSpecialId: special.eventRegisterSpecialId, active_flag: 'D' }
     this.loader = false;

@@ -310,7 +310,7 @@ export class CreateEventRegisterComponent {
       });
     }
 
-    //prerequisite details API called for getting issuesList & designationList
+    //prerequisite details API called for getting issuesList(Issue Addressed) & designationList 
     let getEventPreRequisiteReg = { dataAccessDTO: this.httpService.dataAccessDTO, event_type_master_id: null };
     this.loader = false;
     this.eventService.getEventPreRequisite(getEventPreRequisiteReg).subscribe((res: Response) => {
@@ -356,7 +356,7 @@ export class CreateEventRegisterComponent {
         });
       }
 
-      // class list for primary & adolescent school goers
+      // class list for primary school goers & adolescent school 
       this.classList = [];
       if (eventTypeMasterId == 1) {
         this.classList.push('LN', 'UN', 'KG', '1', '2', '3', '4', '5')

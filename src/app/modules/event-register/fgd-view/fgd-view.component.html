@@ -21,6 +21,7 @@
                         <th style="width: 8%;">Sl. No.</th>
                         <th style="width: 15%;">FGD Date</th>
                         <th style="width: 30%;">FGD Place</th>
+                        <th style="width: 15%;">Beneficiary</th>
                         <th style="width: 15%;">Action</th>
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                         <td style="width: 8%;">{{i+1}}</td>
                         <td style="width: 15%;">{{fgd.dateOfFgd.split("-").reverse().join("-")}}</td>
                         <td style="width: 30%;">{{fgd.villageName}}</td>
+                        <td style="width: 15%;">{{fgd.beneficiaryLength}}</td>
                         <td style="width: 15%;">
                             <i class="fa fa-eye fa-lg" title="View Details" (click)="viewFGDDetails(fgd)"></i>
                             <i class="fas fa-edit" title="Edit FGD" (click)="editFGD(fgd)" *ngIf="updateMode"></i>

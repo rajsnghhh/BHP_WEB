@@ -767,7 +767,7 @@
                                     <select class="form-select" formControlName="village" id="village" [ngClass]="{'is-invalid':l.village.invalid && 
                             l.village.touched,'is-valid':l.village.valid && (l.village.dirty ||l.village.touched) }"
                                         (change)="getFamiliesWithStatusForAVillage($event.target.value)">
-                                        <option value="" *ngIf="!specificEventDetails">-- Select Village --</option>
+                                        <!-- <option value="" *ngIf="!specificEventDetails">-- Select Village --</option> -->
                                         <option value="allFamilies">All Selected Families</option>
                                         <option *ngFor="let vill of specialEventVillList" value="{{vill.villageId}}">
                                             {{ vill.villageName }}
@@ -789,6 +789,7 @@
                                                 <th style="width: 3%;">Sl. No.</th>
                                                 <th style="width: 3%;">Family No.</th>
                                                 <th style="width: 25%;">Name</th>
+                                                <th style="width: 25%;">Child Name</th>
                                                 <th style="width: 25%;"
                                                     *ngIf="createEventRegisterForm.value.village=='allFamilies'">Village
                                                     Name</th>
@@ -803,6 +804,7 @@
                                                 <td style="width: 3%;">{{i+1}}</td>
                                                 <td style="width: 3%;">{{fam.familyNumber}}</td>
                                                 <td style="width: 25%;">{{fam.name}}</td>
+                                                <td style="width: 25%;">{{fam.childName?fam.childName:'-'}}</td>
                                                 <td style="width: 25%;"
                                                     *ngIf="createEventRegisterForm.value.village=='allFamilies'">
                                                     {{fam.villageName}}</td>
@@ -832,7 +834,7 @@
                                             </tr>
 
                                             <tr *ngIf="familiesWithStatusOfVillage?.length == 0">
-                                                <td colspan="6">No list is available.</td>
+                                                <td colspan="7">No list is available.</td>
                                             </tr>
                                         </tbody>
                                     </table>

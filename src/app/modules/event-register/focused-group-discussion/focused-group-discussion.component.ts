@@ -273,6 +273,7 @@ export class FocusedGroupDiscussionComponent {
   // getFamilies list With status of a Village
   beneficiaryAttendedList(villageID) {
     if (villageID == '') { this.familiesListID = [] }
+    this.showVillageName = this.villageList.find(x => x.villageMasterId == villageID)?.villageName
 
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -283,16 +284,22 @@ export class FocusedGroupDiscussionComponent {
     this.loader = false;
     this.eventService.getFamiliesWithStatusForAVillage(req).subscribe((res: any) => {
       this.loader = true;
-      this.familiesWithStatusOfVillage = res.responseObject;
-      console.log(this.villageList);
 
-      this.showVillageName = this.villageList.find(x => x.villageMasterId == villageID)?.villageName
+      if (res?.responseObject?.childList == null && res?.responseObject?.familyList != null) {
+        this.familiesWithStatusOfVillage = res?.responseObject?.familyList
+      } else if (res?.responseObject?.childList != null && res?.responseObject?.familyList == null) {
+        this.familiesWithStatusOfVillage = res?.responseObject?.childList
+      } else if (res?.responseObject?.childList != null && res?.responseObject?.familyList != null) {
+        this.familiesWithStatusOfVillage = res?.responseObject?.familyList?.concat(res?.responseObject?.childList)
+      }
+      console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
+
 
       this.familiesWithStatusOfVillage = this.familiesWithStatusOfVillage?.map(({
-        setStatus = '', is_checked = false,
+        setStatus = '', is_checked = false, fgdChildMapId = 0, active_flag = "A",
         ...rest
       }) => ({
-        setStatus, is_checked,
+        setStatus, is_checked, fgdChildMapId, active_flag,
         ...rest
       }));
 
@@ -304,18 +311,26 @@ export class FocusedGroupDiscussionComponent {
       if (this.data.fgdDetails) {
         this.data.fgdDetails.familyList.forEach(x => {
           this.familiesWithStatusOfVillage.forEach(y => {
-            if (y.familyId == x.familyId) {
+            if (y.familyId == x.familyId && y.childId == null) {
               y.is_checked = true;
               y.fgdFamilyMapId = x.fgdFamilyMapId
             }
           })
-          this.familiesListID.push({
-            fgdFamilyMapId: x.fgdFamilyMapId, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
-            lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
-          });
+        })
+        this.data.fgdDetails.childList.forEach(x => {
+          this.familiesWithStatusOfVillage.forEach(y => {
+            if (y.childId == x.childId) {
+              y.is_checked = true;
+              y.fgdChildMapId = x.fgdChildMapId
+            }
+          })
         })
 
       }
+
+      this.familiesListID = this.familiesWithStatusOfVillage
+      console.log(this.familiesListID, '11');
+
 
       //In view part showing only selected families
       if (this.data?.fgdDetails?.modalType == 'view') {
@@ -330,173 +345,177 @@ export class FocusedGroupDiscussionComponent {
   //Set PW,PEM,LM,2-5YR,Adol Status
   setStatusForAll(familys: any) {
     familys?.forEach(family => {
-      if (family.lactatingMother == "Y" &&
-        family.pregnantWoman == "Y" &&
-        family.pem == "Y" &&
-        family.twoToFive == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "PEM, LM, PW, 2to5, AG"
-      } else if (family.lactatingMother == "Y" &&
-        family.pregnantWoman?.includes("N") &&
-        family.pem?.includes("N") &&
-        family.adolescentGirl?.includes("N") &&
-        family.twoToFive?.includes("N")
-      ) {
-        family.setStatus = "LM"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman == "Y" &&
-        family.pem?.includes("N") &&
-        family.adolescentGirl?.includes("N") &&
-        family.twoToFive?.includes("N")
-      ) {
-        family.setStatus = "PW"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.pem == "Y" &&
-        family.adolescentGirl?.includes("N") &&
-        family.twoToFive?.includes("N")
-      ) {
-        family.setStatus = "PEM"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.twoToFive == "Y" &&
-        family.adolescentGirl?.includes("N") &&
-        family.pem?.includes("N")
-      ) {
-        family.setStatus = "2to5"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.adolescentGirl == "Y" &&
-        family.twoToFive?.includes("N") &&
-        family.pem?.includes("N")
-      ) {
-        family.setStatus = "AG"
-      } else if (family.lactatingMother == "Y" &&
-        family.pregnantWoman == "Y" &&
-        family.pem?.includes("N") &&
-        family.twoToFive?.includes("N") &&
-        family.adolescentGirl?.includes("N")
-      ) {
-        family.setStatus = "LM, PW"
-      } else if (family.lactatingMother == "Y" &&
-        family.pregnantWoman?.includes("N") &&
-        family.pem == "Y" &&
-        family.twoToFive?.includes("N") &&
-        family.adolescentGirl?.includes("N")
-      ) {
-        family.setStatus = "LM, PEM"
-      } else if (family.lactatingMother == "Y" &&
-        family.pregnantWoman?.includes("N") &&
-        family.twoToFive == "Y" &&
-        family.pem?.includes("N") &&
-        family.adolescentGirl?.includes("N")
-      ) {
-        family.setStatus = "LM, 2to5"
-      } else if (family.lactatingMother == "Y" &&
-        family.pregnantWoman?.includes("N") &&
-        family.adolescentGirl == "Y" &&
-        family.twoToFive?.includes("N") &&
-        family.pem?.includes("N") &&
-        family.adolescentGirl?.includes("N")
-      ) {
-        family.setStatus = "LM, AG"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.twoToFive?.includes("N") &&
-        family.adolescentGirl?.includes("N") &&
-        family.pregnantWoman == "Y" &&
-        family.pem == "Y"
-      ) {
-        family.setStatus = "PW, PEM"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pem?.includes("N") &&
-        family.adolescentGirl?.includes("N") &&
-        family.pregnantWoman == "Y" &&
-        family.twoToFive == "Y"
-      ) {
-        family.setStatus = "PW, 2to5"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pem?.includes("N") &&
-        family.twoToFive?.includes("N") &&
-        family.pregnantWoman == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "PW, AG"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.adolescentGirl?.includes("N") &&
-        family.pem == "Y" &&
-        family.twoToFive == "Y"
-      ) {
-        family.setStatus = "PEM, 2to5"
-      }
-      else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.twoToFive?.includes("N") &&
-        family.pem == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "PEM, AG"
-      }
-      else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.twoToFive == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "2to5, AG"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pem == "Y" &&
-        family.pregnantWoman == "Y" &&
-        family.twoToFive == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "PEM, PW, 2to5, AG"
-      } else if (family.pem?.includes("N") &&
-        family.lactatingMother == "Y" &&
-        family.pregnantWoman == "Y" &&
-        family.twoToFive == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "LM, PW, 2to5, AG"
-      } else if (family.pregnantWoman?.includes("N") &&
-        family.lactatingMother == "Y" &&
-        family.pem == "Y" &&
-        family.twoToFive == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "LM, PEM, 2to5, AG"
-      } else if (family.twoToFive?.includes("N") &&
-        family.lactatingMother == "Y" &&
-        family.pem == "Y" &&
-        family.pregnantWoman == "Y" &&
-        family.adolescentGirl == "Y"
-      ) {
-        family.setStatus = "LM, PEM, PW, AG"
-      }
-      else if (family.adolescentGirl?.includes("N") &&
-        family.lactatingMother == "Y" &&
-        family.pem == "Y" &&
-        family.pregnantWoman == "Y" &&
-        family.twoToFive == "Y"
-      ) {
-        family.setStatus = "LM, PEM, PW, 2to5"
-      } else if (family.lactatingMother?.includes("N") &&
-        family.pregnantWoman?.includes("N") &&
-        family.pem?.includes("N") &&
-        family.twoToFive?.includes("N") &&
-        family.adolescentGirl?.includes("N")
-      ) {
-        family.setStatus = "--"
+      if (family?.childId == null) {
+        if (family.lactatingMother == "Y" &&
+          family.pregnantWoman == "Y" &&
+          family.pem == "Y" &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "PEM, LM, PW, 2to5, AG"
+        } else if (family.lactatingMother == "Y" &&
+          family.pregnantWoman?.includes("N") &&
+          family.pem?.includes("N") &&
+          family.adolescentGirl?.includes("N") &&
+          family.twoToFive?.includes("N")
+        ) {
+          family.setStatus = "LM"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman == "Y" &&
+          family.pem?.includes("N") &&
+          family.adolescentGirl?.includes("N") &&
+          family.twoToFive?.includes("N")
+        ) {
+          family.setStatus = "PW"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.pem == "Y" &&
+          family.adolescentGirl?.includes("N") &&
+          family.twoToFive?.includes("N")
+        ) {
+          family.setStatus = "PEM"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl?.includes("N") &&
+          family.pem?.includes("N")
+        ) {
+          family.setStatus = "2to5"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.adolescentGirl == "Y" &&
+          family.twoToFive?.includes("N") &&
+          family.pem?.includes("N")
+        ) {
+          family.setStatus = "AG"
+        } else if (family.lactatingMother == "Y" &&
+          family.pregnantWoman == "Y" &&
+          family.pem?.includes("N") &&
+          family.twoToFive?.includes("N") &&
+          family.adolescentGirl?.includes("N")
+        ) {
+          family.setStatus = "LM, PW"
+        } else if (family.lactatingMother == "Y" &&
+          family.pregnantWoman?.includes("N") &&
+          family.pem == "Y" &&
+          family.twoToFive?.includes("N") &&
+          family.adolescentGirl?.includes("N")
+        ) {
+          family.setStatus = "LM, PEM"
+        } else if (family.lactatingMother == "Y" &&
+          family.pregnantWoman?.includes("N") &&
+          family.twoToFive == "Y" &&
+          family.pem?.includes("N") &&
+          family.adolescentGirl?.includes("N")
+        ) {
+          family.setStatus = "LM, 2to5"
+        } else if (family.lactatingMother == "Y" &&
+          family.pregnantWoman?.includes("N") &&
+          family.adolescentGirl == "Y" &&
+          family.twoToFive?.includes("N") &&
+          family.pem?.includes("N") &&
+          family.adolescentGirl?.includes("N")
+        ) {
+          family.setStatus = "LM, AG"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.twoToFive?.includes("N") &&
+          family.adolescentGirl?.includes("N") &&
+          family.pregnantWoman == "Y" &&
+          family.pem == "Y"
+        ) {
+          family.setStatus = "PW, PEM"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pem?.includes("N") &&
+          family.adolescentGirl?.includes("N") &&
+          family.pregnantWoman == "Y" &&
+          family.twoToFive == "Y"
+        ) {
+          family.setStatus = "PW, 2to5"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pem?.includes("N") &&
+          family.twoToFive?.includes("N") &&
+          family.pregnantWoman == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "PW, AG"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.adolescentGirl?.includes("N") &&
+          family.pem == "Y" &&
+          family.twoToFive == "Y"
+        ) {
+          family.setStatus = "PEM, 2to5"
+        }
+        else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.twoToFive?.includes("N") &&
+          family.pem == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "PEM, AG"
+        }
+        else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "2to5, AG"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pem == "Y" &&
+          family.pregnantWoman == "Y" &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "PEM, PW, 2to5, AG"
+        } else if (family.pem?.includes("N") &&
+          family.lactatingMother == "Y" &&
+          family.pregnantWoman == "Y" &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "LM, PW, 2to5, AG"
+        } else if (family.pregnantWoman?.includes("N") &&
+          family.lactatingMother == "Y" &&
+          family.pem == "Y" &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "LM, PEM, 2to5, AG"
+        } else if (family.twoToFive?.includes("N") &&
+          family.lactatingMother == "Y" &&
+          family.pem == "Y" &&
+          family.pregnantWoman == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "LM, PEM, PW, AG"
+        }
+        else if (family.adolescentGirl?.includes("N") &&
+          family.lactatingMother == "Y" &&
+          family.pem == "Y" &&
+          family.pregnantWoman == "Y" &&
+          family.twoToFive == "Y"
+        ) {
+          family.setStatus = "LM, PEM, PW, 2to5"
+        } else if (family.lactatingMother?.includes("N") &&
+          family.pregnantWoman?.includes("N") &&
+          family.pem?.includes("N") &&
+          family.twoToFive?.includes("N") &&
+          family.adolescentGirl?.includes("N")
+        ) {
+          family.setStatus = "--"
+        } else {
+          family.setStatus = "--"
+        }
       } else {
-        family.setStatus = "--"
+        family.setStatus = "AG"
       }
     });
   }
 
   //multiple families manipulation
   selectMultipleFamilies(e, fam) {
-    this.familiesListID = [];
+    // this.familiesListID = [];
     console.log(e.target.checked, fam);
     if (e.target.checked == true) {
       fam.is_checked = true;
@@ -505,23 +524,57 @@ export class FocusedGroupDiscussionComponent {
       fam.is_checked = false;
     }
 
-    this.familiesWithStatusOfVillage.forEach(x => {
-      if (x.fgdFamilyMapId) {
-        this.familiesListID.push({
-          fgdFamilyMapId: x.fgdFamilyMapId ? x.fgdFamilyMapId : 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
-          lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl,
-          active_flag: x.is_checked == false ? 'D' : 'A'
-        })
+    // this.familiesListID.push(fam)
+
+
+    this.familiesListID.forEach(x => {
+      if (x.childId == null) {
+        if (!x.fgdFamilyMapId) {
+          x.fgdFamilyMapId = 0,
+            x.active_flag = 'A'
+        }
+        if (x.is_checked == false && x.fgdFamilyMapId != 0) {
+          x.active_flag = 'D'
+        } else {
+          x.active_flag = 'A'
+        }
       } else {
-        if (x.is_checked == true)
-          this.familiesListID.push({
-            fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
-            lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
-          });
+        if (!x.fgdChildMapId) {
+          x.fgdChildMapId = 0,
+            x.active_flag = 'A'
+        }
+
+        if (x.is_checked == false && x.fgdChildMapId != 0) {
+          x.active_flag = 'D'
+        } else {
+          x.active_flag = 'A'
+        }
       }
     })
 
-    // console.log(this.familiesListID);
+
+
+
+    // this.familiesWithStatusOfVillage.forEach(x => {
+    //   if (x.fgdFamilyMapId) {
+    //     this.familiesListID.push(x)
+    //     // x.active_flag = x.is_checked == false ? 'D' : 'A'
+    //     // this.familiesListID.push({
+    //     //   fgdFamilyMapId: x.fgdFamilyMapId ? x.fgdFamilyMapId : 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
+    //     //   lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl,
+    //     //   active_flag: x.is_checked == false ? 'D' : 'A'
+    //     // })
+    //   } else {
+    //     if (x.is_checked == true)
+    //       this.familiesListID.push(x)
+    //     // this.familiesListID.push({
+    //     //   fgdFamilyMapId: 0, familyId: x.familyId, pregnantWoman: x.pregnantWoman,
+    //     //   lactatingMother: x.lactatingMother, twoToFive: x.twoToFive, pem: x.pem, adolescentGirl: x.adolescentGirl, active_flag: 'A'
+    //     // });
+    //   }
+    // })
+
+    console.log(this.familiesListID);
   }
 
   // save button should be disabled before selecting all necessary fields
@@ -541,7 +594,7 @@ export class FocusedGroupDiscussionComponent {
     }
 
     // console.log(this.familiesListID);
-    if (this.familiesListID.filter(y => y.active_flag == 'A').length < 1) {
+    if (this.familiesListID.filter(y => y.active_flag == 'A' && y.is_checked == true).length < 1) {
       flag = false
     }
 
@@ -557,7 +610,8 @@ export class FocusedGroupDiscussionComponent {
       villageId: this.data?.fgdDetails?.villageId ? this.data?.fgdDetails?.villageId : this.FGDForm.value.gram,
       dateOfFgd: this.data?.fgdDetails?.dateOfFgd ? this.data?.fgdDetails?.dateOfFgd : this.FGDForm.value.fgdDate,
       active_flag: 'A',
-      familyList: this.familiesListID,
+      familyList: this.familiesListID.filter(v => (v.childId == null && v.is_checked == true) || (v.childId == null && v.active_flag == "D")),
+      childList: this.familiesListID.filter(v => (v.childId != null && v.is_checked == true) || (v.childId != null && v.active_flag == "D")),
       ssList: this.ssListID
     }
 

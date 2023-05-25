@@ -58,8 +58,12 @@ export class FgdViewComponent {
     this.eventService.viewSpecificSpecialEventRegister(req).subscribe((res) => {
       this.loader = true;
       this.fgdDetails = res.responseObject?.fgdDetails
+      this.fgdDetails.forEach(x => {
+        x.beneficiaryLength = x.familyList?.length + x.childList?.length
+      })
       console.log(this.fgdDetails, 'fgdDetails');
     });
+
   }
 
   //view specific FGD details

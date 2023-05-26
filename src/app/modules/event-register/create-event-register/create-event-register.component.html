@@ -157,19 +157,31 @@
             <div class="row">
                 <div class="form-group col-md">
                     <fieldset class="scheduler-border">
-                        <legend class="scheduler-border">Staff/ Role/ Branch :&nbsp;<span
-                                class="text-danger">*&nbsp;</span></legend>
+                        <legend class="scheduler-border">Staff List :&nbsp;<span class="text-danger">*&nbsp;</span>
+                        </legend>
                         <div id="tbodyStaff">
                             <div id="table_wrapper">
                                 <table class="table table-striped" id="table_wrapper">
+                                    <thead id="header_fixed">
+                                        <tr style="text-align: center;">
+                                            <th style="width: 4%;">Sl. No.</th>
+                                            <th style="width: 30%;">Staff Name</th>
+                                            <th style="width: 20%;">Role</th>
+                                            <th style="width: 20%;">Region</th>
+                                            <th style="width: 20%;">Branch</th>
+                                            <th style="width: 5%;">Select</th>
+                                        </tr>
+                                    </thead>
 
                                     <tbody style="text-align:center;">
                                         <tr *ngFor="let user of hcoUserList; index as i">
                                             <td style="width: 4%;">{{i+1}}</td>
-                                            <td style="width: 25%;">{{user.user_firstname}}{{user.user_middlename}}
-                                                {{user.user_lastname}} ({{user.role_shortname}}) -
-                                                {{user.branch_name?user.branch_name:'NA'}}
+                                            <td style="width: 30%;">{{user.user_firstname}}{{user.user_middlename}}
+                                                {{user.user_lastname}}
                                             </td>
+                                            <td style="width: 20%;">{{user.role_shortname}}</td>
+                                            <td style="width: 20%;">{{user.region_name?user.region_name:'-'}}</td>
+                                            <td style="width: 20%;">{{user.branch_name?user.branch_name:'-'}}</td>
                                             <td style="width: 5%;"> <input
                                                     *ngIf="user.is_checked== true && specificEventDetails?.modalType!='view'"
                                                     class="form-check-input" type="checkbox" value=""
@@ -446,20 +458,30 @@
             <div class="row">
                 <div class="form-group col-md">
                     <fieldset class="scheduler-border">
-                        <legend class="scheduler-border">Staff/ Role/ Branch :&nbsp;<span
-                                class="text-danger">*&nbsp;</span>
+                        <legend class="scheduler-border">Staff List :&nbsp;<span class="text-danger">*&nbsp;</span>
                         </legend>
                         <div id="tbodyStaff">
                             <div id="table_wrapper">
                                 <table class="table table-striped" id="table_wrapper">
+                                    <thead id="header_fixed">
+                                        <tr style="text-align: center;">
+                                            <th style="width: 4%;">Sl. No.</th>
+                                            <th style="width: 30%;">Staff Name</th>
+                                            <th style="width: 20%;">Role</th>
+                                            <th style="width: 20%;">Region</th>
+                                            <th style="width: 20%;">Branch</th>
+                                            <th style="width: 5%;">Select</th>
+                                        </tr>
+                                    </thead>
 
                                     <tbody style="text-align:center;">
                                         <tr *ngFor="let user of hcoUserList; index as i">
                                             <td style="width: 4%;">{{i+1}}</td>
-                                            <td style="width: 25%;">{{user.user_firstname}}{{user.user_middlename}}
-                                                {{user.user_lastname}} ({{user.role_shortname}}) -
-                                                {{user.branch_name?user.branch_name:'NA'}}
-                                            </td>
+                                            <td style="width: 30%;">{{user.user_firstname}}{{user.user_middlename}}
+                                                {{user.user_lastname}}</td>
+                                            <td style="width: 20%;">{{user.role_shortname}}</td>
+                                            <td style="width: 20%;">{{user.region_name?user.region_name:'-'}}</td>
+                                            <td style="width: 20%;">{{user.branch_name?user.branch_name:'-'}}</td>
                                             <td style="width: 5%;"> <input
                                                     *ngIf="user.is_checked== true && specificEventDetails?.modalType!='view'"
                                                     class="form-check-input" type="checkbox" value=""

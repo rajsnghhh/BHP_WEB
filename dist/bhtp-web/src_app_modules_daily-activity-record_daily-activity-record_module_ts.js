@@ -2102,6 +2102,7 @@ class DailyActivityRecordComponent {
       this.loader = true;
       this.darListByRegionID = res.responseObject;
       this.viewDARByRegionBranch = res.responseObject;
+      this.countFunction(this.darListByRegionID);
       console.log(this.viewDARByRegionBranch, 'viewDARByRegion');
       console.log(this.darListByRegionID);
       if (this.darListByRegionID?.length == 0) {
@@ -2204,8 +2205,10 @@ class DailyActivityRecordComponent {
     return x;
   }
   countFunction(arr) {
+    console.log(true);
     //cumulative
     this.totalFamilyVisitedSum = this.totalCount(arr, 'totalFamilyVisitedSum');
+    console.log(this.totalFamilyVisitedSum);
     this.pwCounsellingFamilySum = this.totalCount(arr, 'pwCounsellingFamilySum');
     this.lmCounsellingFamilySum = this.totalCount(arr, 'lmCounsellingFamilySum');
     this.pemCounsellingFamilySum = this.totalCount(arr, 'pemCounsellingFamilySum');

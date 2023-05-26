@@ -44,8 +44,9 @@ class HealthForumAngularMatModalComponent {
     dialogRef.disableClose = true;
   }
   ngOnInit() {
-    console.log(this.data.villLists);
+    console.log(this.data.villLists); //village list to show in a dialog
   }
+
   closeDialog() {
     this.dialogRef.close();
   }
@@ -2573,6 +2574,7 @@ class HealthForumComponent {
       }
     });
     this.regionBranchHide = this.sidebarService.regionBranchHide;
+    // Access Type acc. to CRUD access
     this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'view')?.accessType ? this.router.navigate(['/health-forum']) : this.router.navigate(['/error']);
     this.createMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'create')?.accessType ? true : false;
     this.updateMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'update')?.accessType ? true : false;
@@ -2584,6 +2586,7 @@ class HealthForumComponent {
     this.eventUpdateMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'event update')?.accessType ? true : false;
     this.eventDeleteMode = this.sidebarService.subMenuList.find(functionShortName => functionShortName.functionMasterId == 8)?.subMenuDetailList.find(item => item.subFunctionMasterId == 246 || item.subFunctionMasterId == 247 || item.subFunctionMasterId == 248 || item.subFunctionMasterId == 249)?.accessDetailList.find(accessType => accessType.accessType == 'event delete')?.accessType ? true : false;
   }
+  // Form for accessing region & branch
   healthForumForms() {
     this.healthForumForm = this.fb.group({
       region: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
@@ -2609,6 +2612,7 @@ class HealthForumComponent {
   changeBranch(branchId) {
     console.log(branchId, 'branchId');
     this.branchId = branchId;
+    //viewHealthForumsOfBranch refers to the list of HFs of a branch
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
       branchId: branchId
@@ -2619,6 +2623,7 @@ class HealthForumComponent {
       this.loader = true;
       this.viewHealthForumsOfBranch = this.viewHealthForumsOfBranch?.map(({
         isIndex = 0,
+        //var isIndex is used here for displaying Sl. No.
         ...rest
       }) => ({
         isIndex,
@@ -2631,6 +2636,7 @@ class HealthForumComponent {
     });
     this.viewHealthForumsOfBranch = [];
   }
+  // to view specific HF event list
   viewHFEventDetails(HFeventDetails, health) {
     this.viewForumList = health;
     console.log(this.viewForumList, 'viewForumList');
@@ -2644,6 +2650,7 @@ class HealthForumComponent {
   viewHFEventModalDismiss() {
     this.viewHFEventModal.close();
   }
+  //viewing family lists inside a HF event
   viewFamilyAttendedDetails(ViewFamilyDetails, event) {
     console.log(event);
     if (event.forumEventFamilyPresent == 0) {
@@ -2669,6 +2676,7 @@ class HealthForumComponent {
   viewFamilyModalDismiss() {
     this.viewFamilyDetailModal.close();
   }
+  //display hour list dropdown
   hourLists() {
     for (let i = 1; i <= 12; i++) {
       if (i < 10) {
@@ -2682,10 +2690,9 @@ class HealthForumComponent {
           hourValue: i
         });
       }
-      // console.log(this.hourList);
     }
   }
-
+  //display minute list dropdown
   minuteLists() {
     for (let i = 0; i <= 59; i++) {
       if (i < 10) {
@@ -2702,7 +2709,7 @@ class HealthForumComponent {
       // console.log(this.minuteList);
     }
   }
-
+  //staff list of a branch
   getAllStaffAndTheirSSOfABranch() {
     let req = {
       dataAccessDTO: this.httpService.dataAccessDTO,
@@ -2788,6 +2795,7 @@ class HealthForumComponent {
       this.createHFForm.controls.topic.setValue('');
     }
   }
+  //get here topic and area list 
   getTopicListAndAreasOfStaffAndOrSS() {
     this.areaList = [];
     if (!this.createHFForm?.value?.ssName) {
@@ -2843,6 +2851,7 @@ class HealthForumComponent {
   createHFForms() {
     this.editHFDetailsTime = [];
     if (this.editHFDetails?.healthForumMasterId) {
+      //while updating health forum this function continues
       var text = this.editHFDetails?.scheduleDetails?.time;
       text.trim().replace(" ", ":").trim().split(":").forEach(e => {
         if (e.length < 2) {
@@ -2887,6 +2896,7 @@ class HealthForumComponent {
         this.changeStaff(this.editHFDetails.staffDetails.staffId);
       }, 500);
     } else {
+      //while creating health forum this function continues
       this.createHFForm = this.fb.group({
         date: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
         staffName: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_11__.Validators.required],
@@ -2977,7 +2987,6 @@ class HealthForumComponent {
         rescheduleToDate: this.createHFForm.value.date
       } : null
     };
-    console.log(saveObj, 'savObj');
     console.log(saveObj.villageList);
     if (saveObj.villageList.length == 0) {
       this.showError('Area selection is required');

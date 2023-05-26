@@ -425,7 +425,7 @@ export class FocusedGroupDiscussionComponent {
           family.adolescentGirl == "Y" &&
           family.twoToFive?.includes("N") &&
           family.pem?.includes("N") &&
-          family.adolescentGirl?.includes("N")
+          family.adolescentGirl == 'Y'
         ) {
           family.setStatus = "LM, AG"
         } else if (family.lactatingMother?.includes("N") &&
@@ -467,7 +467,7 @@ export class FocusedGroupDiscussionComponent {
         }
         else if (family.lactatingMother?.includes("N") &&
           family.pregnantWoman?.includes("N") &&
-          family.pregnantWoman?.includes("N") &&
+          family.pem?.includes("N") &&
           family.twoToFive == "Y" &&
           family.adolescentGirl == "Y"
         ) {
@@ -581,7 +581,6 @@ export class FocusedGroupDiscussionComponent {
       }
     });
   }
-
   //multiple families manipulation
   selectMultipleFamilies(e, fam) {
     // this.familiesListID = [];

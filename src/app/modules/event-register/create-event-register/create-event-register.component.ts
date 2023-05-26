@@ -893,7 +893,7 @@ export class CreateEventRegisterComponent {
         }
 
         console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
-        this.familiesWithStatusOfVillage.sort((a, b) => { 
+        this.familiesWithStatusOfVillage.sort((a, b) => {
           let fa = parseInt(a.familyNumber)
           let fb = parseInt(b.familyNumber);
 
@@ -1148,7 +1148,7 @@ export class CreateEventRegisterComponent {
           family.adolescentGirl == "Y" &&
           family.twoToFive?.includes("N") &&
           family.pem?.includes("N") &&
-          family.adolescentGirl?.includes("N")
+          family.adolescentGirl == 'Y'
         ) {
           family.setStatus = "LM, AG"
         } else if (family.lactatingMother?.includes("N") &&
@@ -1190,7 +1190,7 @@ export class CreateEventRegisterComponent {
         }
         else if (family.lactatingMother?.includes("N") &&
           family.pregnantWoman?.includes("N") &&
-          family.pregnantWoman?.includes("N") &&
+          family.pem?.includes("N") &&
           family.twoToFive == "Y" &&
           family.adolescentGirl == "Y"
         ) {

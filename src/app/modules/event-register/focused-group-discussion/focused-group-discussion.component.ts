@@ -178,6 +178,9 @@ export class FocusedGroupDiscussionComponent {
       this.FGDForm.controls['block'].enable();
       this.FGDForm.controls['gp'].enable();
       this.FGDForm.controls['gram'].enable();
+      this.FGDForm.controls.gram.setValue('');
+      this.familiesWithStatusOfVillage = []
+      this.familiesListID = []
     }
   }
 
@@ -293,7 +296,7 @@ export class FocusedGroupDiscussionComponent {
         this.familiesWithStatusOfVillage = res?.responseObject?.familyList?.concat(res?.responseObject?.childList)
       }
       console.log(this.familiesWithStatusOfVillage, 'familiesWithStatusOfVillage');
-      this.familiesWithStatusOfVillage.sort((a, b) => { 
+      this.familiesWithStatusOfVillage.sort((a, b) => {
         let fa = parseInt(a.familyNumber)
         let fb = parseInt(b.familyNumber);
 
@@ -346,6 +349,18 @@ export class FocusedGroupDiscussionComponent {
       //In view part showing only selected families
       if (this.data?.fgdDetails?.modalType == 'view') {
         this.familiesWithStatusOfVillage = this.familiesWithStatusOfVillage.filter(v => v.is_checked == true);
+        this.familiesWithStatusOfVillage.sort((a, b) => {
+          let fa = parseInt(a.familyNumber)
+          let fb = parseInt(b.familyNumber);
+  
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
+          return 0;
+        });
       }
 
     })
@@ -420,7 +435,15 @@ export class FocusedGroupDiscussionComponent {
           family.adolescentGirl?.includes("N")
         ) {
           family.setStatus = "LM, 2to5"
-        } else if (family.lactatingMother == "Y" &&
+        } else if (family.pregnantWoman?.includes("N") &&
+          family.pem?.includes("N") &&
+          family.lactatingMother == "Y" &&
+          family.twoToFive == "Y" &&
+          family.adolescentGirl == "Y"
+        ) {
+          family.setStatus = "LM, 2to5, AG"
+        }
+        else if (family.lactatingMother == "Y" &&
           family.pregnantWoman?.includes("N") &&
           family.adolescentGirl == "Y" &&
           family.twoToFive?.includes("N") &&
